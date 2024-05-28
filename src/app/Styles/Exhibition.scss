@@ -1,0 +1,23 @@
+@use "variable" as var;
+
+.main-background{
+    background-image: url('/HomeImages/background-earth.png') !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 10px 20px; /* Optional padding for content */
+    width: 100%;
+    height: 200px;
+}
+.arrow-forward{
+    background-color: var.$arrow-link;
+    border-radius: 7px;
+    color: white;
+    font-size: 30px;
+    padding: 5px;
+
+}
+.arrow-backward{
+    color: var.$arrow-link;
+    font-size: 30px;
+    padding: 5px;
+}

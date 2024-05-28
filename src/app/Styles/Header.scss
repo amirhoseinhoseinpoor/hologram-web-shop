@@ -1,0 +1,5 @@
+@use "variable" as var;
+
+.header-main-background{
+    background-color: var.$footer-background;
+}
