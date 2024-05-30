@@ -2,9 +2,7 @@ import { Inter } from "next/font/google";
 
 import "./Styles/globals.scss";
 import "./Styles/reset.css";
-if (typeof window !== "undefined") {
-  require("bootstrap/dist/js/bootstrap.bundle.min.js");
-}
+
 
 const inter = Inter({ subsets: ["latin"] });
 
