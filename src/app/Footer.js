@@ -8,6 +8,7 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CallIcon from '@mui/icons-material/Call';
 export default function Footer(){
   return(
     <section className="main-color">
@@ -19,12 +20,31 @@ export default function Footer(){
         </div>
         {/* picture box */}
         <div className="row p-4 responsive-row">
-            <div className="col-2 d-flex flex-column responsive-picture-person">
+            <div className="col-3 d-flex flex-column responsive-picture-person">
                 <div className="footer-top-person p-3 text-footer-rs-p">
-                    <p>شتیبان‌های ما همه روزه در ساعت‌های اداری آماده پاسخگو سوالات شما هستند.</p>
-                    <p className="mt-2"><span>۰۲۱-</span><span>۶۶۹۷۱۴۰۲-۵</span></p>
+                    <div className="image-footer-rs-b d-block d-lg-none">
+                      <Box className="f-c-b"
+                        component="img"
+                        sx={{
+                            width: '100%', // Ensures responsiveness
+                            maxHeight: 200, // Set a maximum height (optional)
+                            objectFit: 'contain',
+                            aspectRatio : 0.8
+                        }}
+                        alt="a man"
+                        src="/HomeImages/person.png"
+                      />
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+                      <p>شتیبان‌های ما همه روزه در ساعت‌های اداری آماده پاسخگو سوالات شما هستند.</p>
+                      <div className="d-flex flex-row">
+                         <p className="mt-2"><span>۰۲۱-</span><span>۶۶۹۷۱۴۰۲-۵</span></p>
+                         <CallIcon className="test"></CallIcon>
+                      </div>
+                    </div>
+                    
                 </div>
-                <div className="image-footer-rs-b d-md-none d-sm-none">
+                <div className="image-footer-rs-b d-none d-lg-block">
                   <Box className="f-c-b"
                     component="img"
                     sx={{
@@ -38,7 +58,7 @@ export default function Footer(){
                   />
                 </div>
             </div>
-         <div className="col-10 responsive-row">
+         <div className="col-9 responsive-row">
             <div className="d-flex flex-row responsive-text responsive-logo">
                 <div className="footer-logo bg-light mb-3 w-50 responsive-text">
                     <p>لوگو</p>

@@ -76,6 +76,16 @@
     .text-footer-rs-p{
         width: 50%;
     }
+    .footer-top-person{
+        width: 100%; 
+        display: flex;
+        flex-direction: row;
+    }
+    .responsive-logo{
+        width: 100%;
+        margin-top: 20px;
+    }
+    
 }
 
 @media (max-width :768px) {
