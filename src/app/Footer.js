@@ -65,8 +65,8 @@ export default function Footer(){
                   <Box className="f-c-b"
                     component="img"
                     sx={{
-                        width: '100%', // Ensures responsiveness
-                        maxHeight: 200, // Set a maximum height (optional)
+                        width: '100%', 
+                        maxHeight: 200, 
                         objectFit: 'cover',
                         aspectRatio : 0.8
                     }}
