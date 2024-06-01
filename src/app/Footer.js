@@ -1,4 +1,4 @@
-
+'use client'
 
 import "./Styles/footer.scss"
 import Box from '@mui/material/Box';
@@ -10,18 +10,27 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CallIcon from '@mui/icons-material/Call';
 export default function Footer(){
+ 
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
+
   return(
     <section className="main-color">
         {/* upward arrow */}
         <div className="text-center align-upward-arrow">
+          <button className="border-0" onClick={scrollToTop}>
             <div className="footer-upward-arrow-inner-div">
               <ArrowUpwardIcon className="footer-upward-arrow"></ArrowUpwardIcon>
-            </div>    
+            </div>  
+          </button>
         </div>
         {/* picture box */}
         <div className="row p-4 responsive-row">
             <div className="col-3 d-flex flex-column responsive-picture-person">
-                <div className="footer-top-person p-3 text-footer-rs-p">
+                <div className="footer-top-person p-3 text-footer-rs-p position-relative ">
                     <div className="image-footer-rs-b d-block d-lg-none">
                       <Box className="f-c-b"
                         component="img"
@@ -37,9 +46,17 @@ export default function Footer(){
                     </div>
                     <div className="d-flex flex-column justify-content-center">
                       <p>شتیبان‌های ما همه روزه در ساعت‌های اداری آماده پاسخگو سوالات شما هستند.</p>
-                      <div className="d-flex flex-row">
+                      <div className="d-flex flex-row footer-number-flex-rp">
                          <p className="mt-2"><span>۰۲۱-</span><span>۶۶۹۷۱۴۰۲-۵</span></p>
-                         <CallIcon className="test"></CallIcon>
+                         <a href="#">
+                           <div className="phonecall-footer-div">
+                             <div>
+                               <CallIcon></CallIcon>
+                             </div>
+                           </div>
+                         </a>
+                         
+                         
                       </div>
                     </div>
                     
