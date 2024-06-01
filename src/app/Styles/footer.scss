@@ -36,6 +36,7 @@
     border-bottom-right-radius: 3px;
 
 }
+
 //second coulumn
 .footer-logo{
     padding: 25px;
@@ -61,6 +62,19 @@
     }
     .responsive-logo{
       width: 100%;
+    }
+    .responsive-picture-person{
+        flex-direction: row !important;
+        width: 100%;
+    }
+    .image-footer-rs-b{
+        width: 50%;
+        img{
+            border-radius: 0;
+        }
+    }
+    .text-footer-rs-p{
+        width: 50%;
     }
 }
 

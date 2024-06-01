@@ -19,12 +19,12 @@ export default function Footer(){
         </div>
         {/* picture box */}
         <div className="row p-4 responsive-row">
-            <div className="col-3 d-flex flex-column responsive-row">
-                <div className="footer-top-person p-3">
+            <div className="col-2 d-flex flex-column responsive-picture-person">
+                <div className="footer-top-person p-3 text-footer-rs-p">
                     <p>شتیبان‌های ما همه روزه در ساعت‌های اداری آماده پاسخگو سوالات شما هستند.</p>
                     <p className="mt-2"><span>۰۲۱-</span><span>۶۶۹۷۱۴۰۲-۵</span></p>
                 </div>
-                <div>
+                <div className="image-footer-rs-b d-md-none d-sm-none">
                   <Box className="f-c-b"
                     component="img"
                     sx={{
@@ -33,12 +33,12 @@ export default function Footer(){
                         objectFit: 'cover',
                         aspectRatio : 0.8
                     }}
-                    alt="The house from the offer."
+                    alt="a man"
                     src="/HomeImages/person.png"
                   />
                 </div>
             </div>
-         <div className="col-9 responsive-row">
+         <div className="col-10 responsive-row">
             <div className="d-flex flex-row responsive-text responsive-logo">
                 <div className="footer-logo bg-light mb-3 w-50 responsive-text">
                     <p>لوگو</p>
@@ -105,11 +105,40 @@ export default function Footer(){
                    </div>
                  </div>
                  
- 
              </div>
+                {/* trust-logo */}
+                <div className="d-flex flex-row justify-content-between w-50 mt-2 mb-2">
+                    <Box
+                     component="img"
+                     sx={{
+                        objectFit : 'contain',
+                        maxHeight : '100px'
+                     }}
+                     alt="logo"
+                     src="/HomeImages/footer-brand-1.png"
+                    />
+                    <Box
+                     component="img"
+                     sx={{
+                        objectFit : 'contain',
+                        maxHeight : '100px'
+                     }}
+                     alt="logo"
+                     src="/HomeImages/footer-brand-2.png"
+                    />
+                    <Box
+                     component="img"
+                     sx={{
+                        objectFit : 'contain',
+                        maxHeight : '100px'
+                     }}
+                     alt="logo"
+                     src="/HomeImages/footer-brand-3.png"
+                    />
+                </div>
             </div>
 
-            <p className="text-center mt-3">تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است.</p>
+            <p className="text-center mt-4">تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است.</p>
         </div>
     </section>
   )
