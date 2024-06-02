@@ -63,7 +63,15 @@ export default function Honors() {
                     loop={true}
                     // autoplay={{ delay: 4000 }}
                     spaceBetween={2}
-                    slidesPerView={3} 
+                    slidesPerView={1} 
+                    breakpoints={{
+                      770 : {
+                        slidesPerView : 2,
+                      },
+                      990 : {
+                        slidesPerView : 3 ,
+                      },
+                    }}
                     navigation={{nextEl: '.review-swiper-button-next2',prevEl: '.review-swiper-button-prev2',}} 
                     modules={[Navigation]} 
                     

@@ -15,3 +15,41 @@
     z-index: 4;
     top: 0;
 }
+
+
+       
+
+@media (max-width :980px) {
+   .header-responsive-main{
+     display: block !important;
+     
+
+   }
+   .header-responsive-main >div{
+    margin-bottom: 15px;
+   }
+   .phone-number-call-header-icon{
+    display: flex !important;
+   }
+   .phone-call-header-icon{
+        svg{
+            stroke: black;
+            fill: none ;
+        }
+   }
+   .basic-navbar-nav{
+     border: none ;
+   }
+   .basic-navbar-nav:focus{
+    outline: none !important;
+   }
+   .navbar-item-header{
+     margin: 0 !important;
+   }
+   .navbar-item-header > div{
+     align-items: unset !important;
+   }
+}
+@media (max-width :768px) {
+
+}

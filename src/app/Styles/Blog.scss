@@ -15,3 +15,11 @@
 .studing-time-text{
     color : #5F5F5F;
 }
+@media (max-width :768px) {
+    .mobile-picture-responsive-blog{
+        img{
+            max-height: 198px;
+        }
+    }
+
+}

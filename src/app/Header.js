@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import CallIcon from '@mui/icons-material/Call';
 
 
 
@@ -39,66 +40,114 @@ export default function Header() {
         <section className="header-main-background  section-header-fix">
      
             <Navbar expand="lg" className="bg-body-tertiary">
-            <Container>
-              <Navbar.Brand href="#"><p className="m-0">لوگو</p></Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse className="justify-content-between me-5" id="basic-navbar-nav">
-                <Nav className="align-items-center">
-
+            <Container className="header-responsive-main">
+              <div className="d-flex flex-row justify-content-between">
+               <Navbar.Brand href="#"><p className="m-0">لوگو</p></Navbar.Brand>
+               <div className="d-none phone-number-call-header-icon d-flex flex-row align-items-center">
+                 <p><span>۰۲۱-</span>۶۶۹۷۱۴۰۲-۵</p>
+                 
+                    <div className="phone-call-header-icon ">
+                      <CallIcon></CallIcon>
+                    </div>
                   
-                  {mainItemObject.map((item) => (<React.Fragment key={item.id}>
-
-                    {item.subItems.length == 0 && (<React.Fragment key={item.id}>
-                      <Nav.Link key={item.id} href="#home">{item.title}</Nav.Link>
-                    </React.Fragment>)}
-                    
-                    
-                    {item.subItems.length > 0 && (<React.Fragment key={item.id}>
-                      
-                        <NavDropdown key={item.id} title={
-                          <React.Fragment key={item.id}>
-                            {item.title}
-                            <KeyboardArrowDownIcon key={item.id}></KeyboardArrowDownIcon> 
-                          </React.Fragment>
-                          
-                          } id="basic-nav-dropdown">
-                      
-                          {item.subItems.map((subItem)=>(<React.Fragment key={subItem.id}>
-                            
-                           
-                           <NavDropdown.Item  key={subItem.id} href="#action/3.1">{subItem.sub}</NavDropdown.Item>
-                          </React.Fragment>))}         
-                                            
-                        </NavDropdown> 
-                       
-                     
-                    </React.Fragment>)}
+               </div>
+              </div>
               
-                  </React.Fragment>))}
-                </Nav>
-               
-                  <NavDropdown  title={
-                    <>
-                        <Box className="f-c-b"
-                        component="img"
-                        sx={{
-                            width: '60%', // Ensures responsiveness
-                            maxHeight: 16, // Set a maximum height (optional)
-                            objectFit: 'cover',
-                            aspectRatio : 1.7
-                        }}
-                        alt="The house from the offer."
-                        src="/HomeImages/iran-logo.png"
-                        />
-                        <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
-                    </>
-                   
-                  }
-                   id="basic-nav-dropdown">
-                    
-                  </NavDropdown>
+              <div className="d-flex flex-row justify-content-between">
+                   <div>
+                     <Navbar.Toggle className="basic-navbar-nav" aria-controls="basic-navbar-nav" />
+
+                   </div>
+                   <div className="d-lg-none">
+                     <NavDropdown  title={
+                         <>
+                             <Box className="f-c-b"
+                             component="img"
+                             sx={{
+                                 
+                                 maxHeight: 16, // Set a maximum height (optional)
+                                 objectFit: 'cover',
+                                 aspectRatio : 1.7
+                             }}
+                             alt="iran"
+                             src="/HomeImages/iran-logo.png"
+                             />
+                             <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
+                         </>
+                        
+                       }
+                        id="basic-nav-dropdown">
+                         
+                    </NavDropdown>
+                   </div>
+                  </div>
+                  
+                  <Navbar.Collapse className="justify-content-between me-5 navbar-item-header" id="basic-navbar-nav">
+                    <Nav className="align-items-center">
+    
+                      
+                      {mainItemObject.map((item) => (<React.Fragment key={item.id}>
+    
+                        {item.subItems.length == 0 && (<React.Fragment key={item.id}>
+                          <Nav.Link key={item.id} href="#home">{item.title}</Nav.Link>
+                        </React.Fragment>)}
+                        
+                        
+                        {item.subItems.length > 0 && (<React.Fragment key={item.id}>
+                          
+                            <NavDropdown key={item.id} title={
+                              <React.Fragment key={item.id}>
+                                {item.title}
+                                <KeyboardArrowDownIcon key={item.id}></KeyboardArrowDownIcon> 
+                              </React.Fragment>
+                              
+                              } id="basic-nav-dropdown">
+                          
+                              {item.subItems.map((subItem)=>(<React.Fragment key={subItem.id}>
+                                
+                               
+                               <NavDropdown.Item  key={subItem.id} href="#action/3.1">{subItem.sub}</NavDropdown.Item>
+                              </React.Fragment>))}         
+                                                
+                            </NavDropdown> 
+                           
+                         
+                        </React.Fragment>)}
+                  
+                      </React.Fragment>))}
+                    </Nav>
+                  </Navbar.Collapse>
+                
+                  <div className="d-lg-block d-none">
+                     <NavDropdown  title={
+                         <>
+                             <Box className="f-c-b"
+                             component="img"
+                             sx={{
+                                 
+                                 maxHeight: 16, // Set a maximum height (optional)
+                                 objectFit: 'cover',
+                                 aspectRatio : 1.7
+                             }}
+                             alt="iran"
+                             src="/HomeImages/iran-logo.png"
+                             />
+                             <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
+                         </>
+                        
+                       }
+                        id="basic-nav-dropdown">
+                         
+                    </NavDropdown>
+                   </div>
+                 
+                           
+   
+                  
+              
+              
              
-              </Navbar.Collapse>
+              
             </Container>
           </Navbar>
     

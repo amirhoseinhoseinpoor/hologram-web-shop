@@ -17,7 +17,7 @@ export default function  Magazine() {
             </div>
             <div className="d-flex flex-row gap-3 mt-4 justify-content-center">
                 <div className="d-flex flex-column justify-content-center">
-                    <div>
+                    <div className="mobile-picture-responsive-blog">
                       <Box
                        component="img"
                        sx={{
