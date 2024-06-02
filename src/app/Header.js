@@ -40,7 +40,7 @@ export default function Header() {
      
             <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
-              <Navbar.Brand href="#"><p>لوگو</p><p></p></Navbar.Brand>
+              <Navbar.Brand href="#"><p className="m-0">لوگو</p></Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse className="justify-content-between me-5" id="basic-navbar-nav">
                 <Nav className="align-items-center">
@@ -76,7 +76,7 @@ export default function Header() {
               
                   </React.Fragment>))}
                 </Nav>
-                <div className="d-flex flex-row align-items-center"></div>
+               
                   <NavDropdown  title={
                     <>
                         <Box className="f-c-b"

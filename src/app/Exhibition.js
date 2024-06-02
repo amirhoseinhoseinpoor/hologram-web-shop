@@ -49,7 +49,7 @@ export default function Exhibition(){
       <section className="main-background">
         <div className="d-flex flex-row container h-100">
           <div className="rigth-text-slide  d-flex flex-column justify-content-center">
-            <div>
+            <div className="fs-4">
              <p>در سرتاسر جهان ما </p>
              <p className="slider-next-text mt-1">حضور داریم...</p>
             </div>

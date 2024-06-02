@@ -1,5 +1,24 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
 body{
     overflow-x: hidden;
     background-color: #F7F8FC;
+}
+p{
+    line-height: normal ;
+    margin-bottom: 0;
+}
+span{
+    line-height: normal;
+}
+
+@media (max-width :980px) {
+    p{
+       font-size: 15px;
+    }
+    span{
+      font-size: 15px;
+    }
+
+}
+@media (max-width :768px) {
+    
 }

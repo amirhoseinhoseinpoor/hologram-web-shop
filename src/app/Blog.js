@@ -7,8 +7,9 @@ export default function  Magazine() {
     return(
         <section className="mb-5 mt-4 container">
             <div className="d-flex flex-row justify-content-between">
-                <div>
-                    <p>مجله آذر هولگرام</p>
+                <div className="fs-5">
+                    <span>مجله آذر هولگرام </span>
+                    <span className="slider-next-text pe-1">برای مطالعه بیشتر...</span>
                 </div>
                 <div className="arrowback-link">
                     <Link href="#">مطالعه بیشتر <ArrowBackIcon></ArrowBackIcon></Link>
@@ -23,7 +24,7 @@ export default function  Magazine() {
                         width: '100%', // Ensures responsiveness
                         maxHeight: 300, // Set a maximum height (optional)
                         objectFit: 'cover',
-                     
+                        aspectRatio : 1.48,
                       }}
                         alt="image."
                         src="/HomeImages/coin.png"

@@ -1,10 +1,12 @@
-import { Inter } from "next/font/google";
+import localFont from 'next/font/local';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import "./Styles/globals.scss";
 import "./Styles/reset.css";
 
+import "./Styles/globals.scss";
 
-const inter = Inter({ subsets: ["latin"] });
+const myFont = localFont({ src: './Fonts/IRANSansXV.woff2' , src : './Fonts/IRANSansXV.woff' })
+
 
 export const metadata = {
   title: "Create Next App",
@@ -12,10 +14,11 @@ export const metadata = {
   metadata: 'name="viewport" content="initial-scale=1, width=device-width"',
 };
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" dir="rtl">
-      <body className={inter.className}>{children}</body>
+      <body className={myFont.className}>{children}</body>
     </html>
   );
 }

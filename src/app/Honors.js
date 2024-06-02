@@ -43,7 +43,7 @@ export default function Honors() {
         <section className="main-background-honor mt-5 mb-5">
             <div className="d-flex flex-row container h-100">
                 <div className="rigth-text-slide  d-flex flex-column justify-content-center">
-                    <div>
+                    <div className="fs-4">
                       <p>افتخاراتی که به آن‌ها</p>
                       <p className="slider-next-text mt-1">افتخار می‌کنیم...</p>
                     </div>

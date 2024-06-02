@@ -47,7 +47,7 @@ export default function Footer(){
                     <div className="d-flex flex-column justify-content-center">
                       <p>شتیبان‌های ما همه روزه در ساعت‌های اداری آماده پاسخگو سوالات شما هستند.</p>
                       <div className="d-flex flex-row footer-number-flex-rp">
-                         <p className="mt-2"><span>۰۲۱-</span><span>۶۶۹۷۱۴۰۲-۵</span></p>
+                         <p className="mt-2"><span className="fs-6">۰۲۱-</span><span className="fs-5">۶۶۹۷۱۴۰۲-۵</span></p>
                          <a href="#">
                            <div className="phonecall-footer-div">
                              <div>
