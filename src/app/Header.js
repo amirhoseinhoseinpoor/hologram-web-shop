@@ -1,34 +1,42 @@
 'use client'
-import "./Styles/Header.scss";
+import styles from "./Styles/Header.scss";
 
 import Box from '@mui/material/Box';
-import React from 'react';
+import React, { useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import CallIcon from '@mui/icons-material/Call';
-
-
+import CloseIcon from '@mui/icons-material/Close';
+import Fade from '@mui/material/Fade';
 
 
 export default function Header() {
+  const [activeLink, setActiveLink] = useState('خانه'); 
+  const [isVisible, setIsVisible] = useState(true);
+  const handleLinkClick = (linkTitle) => {
+    setActiveLink(linkTitle);
+    setIsVisible(false); 
+    setTimeout(() => setIsVisible(true), 250); 
+  };
 
   const mainItems = [
-    {   title: 'خانه', subItems: [] },
-    {   title: 'محصولات', subItems: ['Product A', 'Product B', 'Product C'] },
-    {   title: 'معرفی هولگرام‌ها', subItems: [] },
-    {   title: 'ثبت سفارش', subItems: [] },
-    {   title: 'مقالات', subItems: [] },
-    {   title: 'ارتباط با ما', subItems: [] },
-    {   title: 'درباره‌ی ما', subItems: [] },
+    {  link:'#home', title: 'خانه', subItems: [] },
+    {  link:'#test2', title: 'محصولات', subItems: ['Product A', 'Product B', 'Product C'] },
+    {  link:'#test3', title: 'معرفی هولگرام‌ها', subItems: [] },
+    {  link:'#test4', title: 'ثبت سفارش', subItems: [] },
+    {  link:'#test5', title: 'مقالات', subItems: [] },
+    {  link:'#test6', title: 'ارتباط با ما', subItems: [] },
+    {  link:'#test7', title: 'درباره‌ی ما', subItems: [] },
 
   ];
    
   const mainItemObject = mainItems.map((item , i)=> ({
     id : i,
     title : item.title ,
+    link: item.link,
     subItems: item.subItems.map((item , i)=>({
       id : i,
       sub : item
@@ -36,27 +44,69 @@ export default function Header() {
     
   }))
 
+  
+
     return(
         <section className="header-main-background  section-header-fix">
      
-            <Navbar expand="lg" className="bg-body-tertiary">
+            <Navbar expand="lg" collapseOnSelect className="bg-body-tertiary">
             <Container className="header-responsive-main">
               <div className="d-flex flex-row justify-content-between">
-               <Navbar.Brand href="#"><p className="m-0">لوگو</p></Navbar.Brand>
-               <div className="d-none phone-number-call-header-icon d-flex flex-row align-items-center">
-                 <p><span>۰۲۱-</span>۶۶۹۷۱۴۰۲-۵</p>
-                 
-                    <div className="phone-call-header-icon ">
-                      <CallIcon></CallIcon>
-                    </div>
-                  
-               </div>
-              </div>
-              
-              <div className="d-flex flex-row justify-content-between">
-                   <div>
-                     <Navbar.Toggle className="basic-navbar-nav" aria-controls="basic-navbar-nav" />
+                   <Navbar.Brand href="#"><p className="ms-4">لوگو</p></Navbar.Brand>
+                   {/* phone number descktop div */}
+                   <div className="d-none phone-number-call-header-icon d-flex flex-row align-items-center">
+                     <p><span>۰۲۱-</span>۶۶۹۷۱۴۰۲-۵</p>         
+                        <div className="phone-call-header-icon ">
+                          <CallIcon></CallIcon>
+                        </div>      
+                   </div>
+                    {/* navbar descktop */}
+                    <div className="d-lg-block d-none justify-content-between  navbar-item-header">
+                     <Nav className="align-items-center ">
+                       {mainItemObject.map((item) => (
+                         <React.Fragment key={item.id}>
+                           {item.subItems.length === 0 && (
+                            <Fade key={item.title} in={isVisible} timeout={250}>
+                              <Nav.Link               
+                                className={`${activeLink === item.title ? 'active' : ''}`}       
+                                key={item.id} 
+                                href={item.link}
+                                onClick={() => handleLinkClick(item.title)}
+                              >
+                                {item.title}
+                              </Nav.Link>
+                            </Fade>
+                             
 
+                           )}
+                           {item.subItems.length > 0 && (
+                             <NavDropdown
+                               key={item.id}
+                               title={
+                                 <React.Fragment key={item.id}>
+                                   {item.title}
+                                   <KeyboardArrowDownIcon key={item.id} />
+                                 </React.Fragment>
+                               }
+                               id={`basic-nav-dropdown-${item.id}`} 
+                             >
+                               {item.subItems.map((subItem) => (
+                                 <NavDropdown.Item key={subItem.id} href="#action/3.1">
+                                   {subItem.sub}
+                                 </NavDropdown.Item>
+                               ))}
+                             </NavDropdown>
+                           )}
+                         </React.Fragment>
+                       ))}
+                     </Nav>
+                   </div>
+              </div>
+
+                  {/* iran logo */}
+                 <div className="d-flex flex-row justify-content-between d-block d-lg-none">
+                   <div className="d-lg-none">
+                     <Navbar.Toggle className="basic-navbar-nav" aria-controls="basic-navbar-nav" />
                    </div>
                    <div className="d-lg-none">
                      <NavDropdown  title={
@@ -65,7 +115,7 @@ export default function Header() {
                              component="img"
                              sx={{
                                  
-                                 maxHeight: 16, // Set a maximum height (optional)
+                                 maxHeight: 16, 
                                  objectFit: 'cover',
                                  aspectRatio : 1.7
                              }}
@@ -81,42 +131,60 @@ export default function Header() {
                     </NavDropdown>
                    </div>
                   </div>
-                  
-                  <Navbar.Collapse className="justify-content-between me-5 navbar-item-header" id="basic-navbar-nav">
-                    <Nav className="align-items-center">
-    
-                      
-                      {mainItemObject.map((item) => (<React.Fragment key={item.id}>
-    
-                        {item.subItems.length == 0 && (<React.Fragment key={item.id}>
-                          <Nav.Link key={item.id} href="#home">{item.title}</Nav.Link>
-                        </React.Fragment>)}
+
+
+
+                     {/* navbar responsive */}
+                  <div className="d-lg-none d-block">
+                     <Navbar.Collapse className="justify-content-between me-5 navbar-item-header " id="basic-navbar-nav">
+                      <div className="d-flex flex-row justify-content-between">
+                        <p className="mb-4">لوگو</p>
+                        <Navbar.Toggle className="basic-navbar-nav" aria-controls="basic-navbar-nav" ><CloseIcon /></Navbar.Toggle>              
+                      </div>
                         
-                        
-                        {item.subItems.length > 0 && (<React.Fragment key={item.id}>
-                          
-                            <NavDropdown key={item.id} title={
-                              <React.Fragment key={item.id}>
-                                {item.title}
-                                <KeyboardArrowDownIcon key={item.id}></KeyboardArrowDownIcon> 
-                              </React.Fragment>
-                              
-                              } id="basic-nav-dropdown">
-                          
-                              {item.subItems.map((subItem)=>(<React.Fragment key={subItem.id}>
-                                
-                               
-                               <NavDropdown.Item  key={subItem.id} href="#action/3.1">{subItem.sub}</NavDropdown.Item>
-                              </React.Fragment>))}         
-                                                
-                            </NavDropdown> 
-                           
+                       <Nav className="align-items-center">
+       
                          
-                        </React.Fragment>)}
+                         {mainItemObject.map((item) => (<React.Fragment key={item.id}>
+       
+                           {item.subItems.length == 0 && (<React.Fragment key={item.id}>
+                             <Nav.Link key={item.id} href="#home">{item.title}</Nav.Link>
+                           </React.Fragment>)}
+                           
+                           
+                           {item.subItems.length > 0 && (<React.Fragment key={item.id}>
+                             
+                               <NavDropdown key={item.id} title={
+                                 <React.Fragment key={item.id}>
+                                   {item.title}
+                                   <KeyboardArrowDownIcon key={item.id}></KeyboardArrowDownIcon> 
+                                 </React.Fragment>
+                                 
+                                 } id="basic-nav-dropdown">
+                             
+                                 {item.subItems.map((subItem)=>(<React.Fragment key={subItem.id}>
+                                   
+                                  
+                                  <NavDropdown.Item  key={subItem.id} href="#action/3.1">{subItem.sub}</NavDropdown.Item>
+                                 </React.Fragment>))}         
+                                                   
+                               </NavDropdown> 
+                              
+                            
+                           </React.Fragment>)}
+                     
+                         </React.Fragment>))}
+                         {/* phone number */}
+                         <div className="d-none phone-number-call-header-icon d-flex flex-row align-items-center mt-3">
+                            <p><span>۰۲۱-</span>۶۶۹۷۱۴۰۲-۵</p>         
+                               <div className="phone-call-header-icon ">
+                                 <CallIcon></CallIcon>
+                               </div>      
+                          </div>
+                       </Nav>
+                     </Navbar.Collapse>
+                  </div>
                   
-                      </React.Fragment>))}
-                    </Nav>
-                  </Navbar.Collapse>
                 
                   <div className="d-lg-block d-none">
                      <NavDropdown  title={
@@ -125,7 +193,7 @@ export default function Header() {
                              component="img"
                              sx={{
                                  
-                                 maxHeight: 16, // Set a maximum height (optional)
+                                 maxHeight: 16, 
                                  objectFit: 'cover',
                                  aspectRatio : 1.7
                              }}
@@ -140,14 +208,6 @@ export default function Header() {
                          
                     </NavDropdown>
                    </div>
-                 
-                           
-   
-                  
-              
-              
-             
-              
             </Container>
           </Navbar>
     

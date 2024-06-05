@@ -61,7 +61,7 @@ export default function Honors() {
                 <Swiper
                     
                     loop={true}
-                    // autoplay={{ delay: 4000 }}
+                    autoplay={{ delay: 4000 }}
                     spaceBetween={2}
                     slidesPerView={1} 
                     breakpoints={{
