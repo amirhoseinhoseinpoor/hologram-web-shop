@@ -1,11 +1,8 @@
-@use "variable" as var;
+@use "../variable" as var;
 
 .headermainbackground{
     background-color: var.$footer-background;
 }
-// .btn-ac{
-//     color:  !important;
-// }
 
 .sectionheaderfix{
     position:fixed;
@@ -37,8 +34,6 @@
   
 }
 
-
-       
 
 @media (max-width :980px) {
    .headerresponsivemain{

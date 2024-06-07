@@ -1,5 +1,5 @@
 'use client'
-import style from "../Styles/Header.module.scss";
+import style from "../Styles/MainStyle/Header.module.scss";
 
 import Box from '@mui/material/Box';
 import React, { useState } from 'react';
