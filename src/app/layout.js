@@ -5,6 +5,8 @@ import "./Styles/reset.css";
 
 import "./Styles/globals.scss";
 
+
+
 const myFont = localFont({ src: './Fonts/IRANSansXV.woff2' , src : './Fonts/IRANSansXV.woff' })
 
 

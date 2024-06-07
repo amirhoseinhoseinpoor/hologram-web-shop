@@ -1,6 +1,6 @@
 'use client'
 
-import "./Styles/footer.scss"
+import style from "./Styles/Footer.module.scss"
 import Box from '@mui/material/Box';
 
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
@@ -18,27 +18,27 @@ export default function Footer(){
   
 
   return(
-    <section className="main-color">
+    <section className={style.mainColor}>
         {/* upward arrow */}
-        <div className="text-center align-upward-arrow">
+        <div className={`text-center ${style.alignUpwardArrow}`}>
           <button className="border-0" onClick={scrollToTop}>
-            <div className="footer-upward-arrow-inner-div">
-              <ArrowUpwardIcon className="footer-upward-arrow"></ArrowUpwardIcon>
+            <div className={style.upwardArrowInner}>
+              <ArrowUpwardIcon className={style.footerUpwardArrow}></ArrowUpwardIcon>
             </div>  
           </button>
         </div>
         {/* picture box */}
-        <div className="row p-4 responsive-row">
-            <div className="col-3 d-flex flex-column responsive-picture-person">
-                <div className="footer-top-person p-3 text-footer-rs-p position-relative ">
-                    <div className="image-footer-rs-b d-block d-lg-none">
-                      <Box className="f-c-b"
+        <div className={`row p-4 ${style.responsiveRow}`} >
+            <div className={`col-3 d-flex flex-column ${style.responsivepictureperson}`}>
+                <div className={`${style.footertopperson} ${style.textFooter} p-3 position-relative`}>
+                    <div className={`${style.imagefooterrsb} d-block d-lg-none`}>
+                      <Box className={style.FCB}
                         component="img"
                         sx={{
-                            width: '100%', // Ensures responsiveness
-                            maxHeight: 200, // Set a maximum height (optional)
-                            objectFit: 'contain',
-                            aspectRatio : 0.8
+                            width: '100%', 
+                            maxHeight: '100%', 
+                            objectFit: 'cover',
+                            aspectRatio : 1.2
                         }}
                         alt="a man"
                         src="/HomeImages/person.png"
@@ -46,10 +46,10 @@ export default function Footer(){
                     </div>
                     <div className="d-flex flex-column justify-content-center">
                       <p>شتیبان‌های ما همه روزه در ساعت‌های اداری آماده پاسخگو سوالات شما هستند.</p>
-                      <div className="d-flex flex-row footer-number-flex-rp">
+                      <div className={`d-flex flex-row ${style.footernumberflexrp}`}>
                          <p className="mt-2"><span className="fs-6">۰۲۱-</span><span className="fs-5">۶۶۹۷۱۴۰۲-۵</span></p>
                          <a href="#">
-                           <div className="phonecall-footer-div">
+                           <div className={style.phonecallfooterdiv}>
                              <div>
                                <CallIcon></CallIcon>
                              </div>
@@ -61,12 +61,12 @@ export default function Footer(){
                     </div>
                     
                 </div>
-                <div className="image-footer-rs-b d-none d-lg-block">
-                  <Box className="f-c-b"
+                <div className={`${style.imagefooterrsb} d-none d-lg-block`}>
+                  <Box className={style.FCB}
                     component="img"
                     sx={{
                         width: '100%', 
-                        maxHeight: 200, 
+                        height : '100%',
                         objectFit: 'cover',
                         aspectRatio : 0.8
                     }}
@@ -75,18 +75,18 @@ export default function Footer(){
                   />
                 </div>
             </div>
-         <div className="col-9 responsive-row">
-            <div className="d-flex flex-row responsive-text responsive-logo">
-                <div className="footer-logo bg-light mb-3 w-50 responsive-text">
+         <div className={`col-9 ${style.responsiveRow}`}>
+            <div className={`d-flex flex-row ${style.responsivetext} ${style.responsivelogo} `}>
+                <div className={`bg-light mb-3 w-50 ${style.responsivetext} ${style.footerlogo}`}>
                     <p>لوگو</p>
                 </div>
-                <div className="p-1 mb-2 w-50  responsive-text">
+                <div className={`p-1 mb-2 w-50  ${style.responsivetext}`}>
                  <p>شرکت خانه چاپ چکاوک با نام تجاری آذرهولوگرام ، به دلیل دارا بودن خط کامل تولید هولوگرام در داخل کشور با بالاترین سطح امنیتى موجود زمان چاپ هولوگرام و فروش هولوگرام به کم ترین زمان کاهش پیدا کرده است.</p>
                 </div>
             </div>
              {/* product */}
-            <div className="d-flex flex-row responsive-row">
-             <div className="d-flex flex-row justify-content-around w-50 responsive-text">
+            <div className={`d-flex flex-row ${style.responsiveRow}`}>
+             <div className={`d-flex flex-row justify-content-around w-50 ${style.responsivetext} ${style.productmobilers} `}>
                      <div>
                          <p className="mb-2">محصولات</p>
                          <p className="mb-2">سردسته 1</p>
@@ -107,7 +107,7 @@ export default function Footer(){
                      </div>
                  </div>
                  {/* social media */}
-                 <div className="w-50 responsive-text">
+                 <div className={`w-50 ${style.responsivetext}`}>
                    <div className="p-1 mb-2">
                        <h3>راه‌های ارتباطی</h3>
                    </div>
@@ -125,7 +125,7 @@ export default function Footer(){
                    </div>
                    <div className="p-1 mb-2">
                        <span>شبکه‌های اجتماعی:</span>
-                       <span className="test">
+                       <span className={style.test}>
                            <a href="#">
                              <WhatsAppIcon></WhatsAppIcon>
                            </a>
@@ -149,7 +149,7 @@ export default function Footer(){
                      component="img"
                      sx={{
                         objectFit : 'contain',
-                        maxHeight : '100px'
+                        maxHeight : '90px'
                      }}
                      alt="logo"
                      src="/HomeImages/footer-brand-1.png"
@@ -158,7 +158,7 @@ export default function Footer(){
                      component="img"
                      sx={{
                         objectFit : 'contain',
-                        maxHeight : '100px'
+                        maxHeight : '90px'
                      }}
                      alt="logo"
                      src="/HomeImages/footer-brand-2.png"
@@ -167,7 +167,7 @@ export default function Footer(){
                      component="img"
                      sx={{
                         objectFit : 'contain',
-                        maxHeight : '100px'
+                        maxHeight : '90px'
                      }}
                      alt="logo"
                      src="/HomeImages/footer-brand-3.png"

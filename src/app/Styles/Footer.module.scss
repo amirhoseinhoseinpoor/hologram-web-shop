@@ -3,10 +3,10 @@
 
 
 
-.footer-upward-arrow {
+.footerUpwardArrow {
     color: white;
 }
-.footer-upward-arrow-inner-div{
+.upwardArrowInner{
     background-color: var.$arrow-background;
     display: inline-block;
     padding: 12px;
@@ -19,24 +19,29 @@
 
 
 //first column
-.main-color{
+.mainColor{
     background-color: var.$footer-background;
 }
 
-.footer-top-person{
+.footertopperson{
     background-color: var.$footer-top-person;
     color: white;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+    height: 40%;
 }
-.f-c-b{
+.FCB{
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 
 }
+.imagefooterrsb{
+    height: 60% ;
+   
+}
 
 //second coulumn
-.footer-logo{
+.footerlogo{
     padding: 25px;
     p{
         text-align: center;
@@ -51,13 +56,13 @@
     font-size: medium;
 }
 
-.phonecall-footer-div{
+.phonecallfooterdiv{
     padding: 5px;
     background-color: rgba($color: #ffffff, $alpha: 0.5);
     border-radius: 50%;
     position: absolute;
     left: 10%;
-    top: 75%;
+    top: 84%;
     
     div{
         padding: 10px;
@@ -65,54 +70,55 @@
         border-radius: 50%;
     }
     
-
     svg{
         stroke: black;
         fill: none;
-        
     }
-    
 }
 
 
 @media (max-width :980px) {
-    .responsive-row{
+    .responsiveRow{
         display: block !important;
         width: 100% !important;
     }
-    .responsive-logo{
+    .responsivelogo{
       width: 100%;
     }
-    .responsive-picture-person{
+    .responsivepictureperson{
         flex-direction: row !important;
         width: 100%;
     }
-    .image-footer-rs-b{
-        width: 50%;
+    .imagefooterrsb{
+        height: 100%;
+        width: 36%;
+        margin-left: 15px;
         img{
-            border-radius: 0;
+            border-radius: 9px;
+            height: 100%;
         }
     }
-    .text-footer-rs-p{
+    .textFooter{
         width: 50%;
     }
-    .footer-top-person{
+    .footertopperson{
         width: 100%; 
         display: flex;
         flex-direction: row;
+        height: unset;
     }
-    .responsive-logo{
+    .responsivelogo{
         width: 100%;
         margin-top: 20px;
     }
-    .phonecall-footer-div{
+    .phonecallfooterdiv{
         position: unset;
         padding: 4px;
         div{
             padding: 5px;
         }
     }
-    .footer-number-flex-rp{
+    .footernumberflexrp{
         align-items: center;
         p{
             margin-left: 10px;
@@ -123,19 +129,35 @@
 
 @media (max-width :768px) {
     
-    .responsive-text{
+    .responsivetext{
         width: 100% !important;
     }
-    .responsive-logo{
+    .responsivelogo{
         width: 100%;
         display: block !important;
     }
-    .align-upward-arrow{
+    .alignUpwardArrow{
         text-align: unset !important;
         margin-right: 50px ;
         
     }
-    .footer-upward-arrow-inner-div{
+    .upwardArrowInner{
         margin-top: -23px;
+    }
+    .imagefooterrsb{
+        margin-left: 10px;
+    }
+    .css-13nx2ny{
+        aspect-ratio: 1;
+        border-radius: 9px !important;
+    }
+    .productmobilers{
+        justify-content: space-between  !important;
+        width: 83% !important;
+    }
+}
+@media (max-width :580px) {
+    .imagefooterrsb{
+        width: 100%;
     }
 }

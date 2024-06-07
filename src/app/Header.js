@@ -1,5 +1,5 @@
 'use client'
-import styles from "./Styles/Header.scss";
+import style from "./Styles/Header.module.scss";
 
 import Box from '@mui/material/Box';
 import React, { useState } from 'react';
@@ -47,28 +47,28 @@ export default function Header() {
   
 
     return(
-        <section className="header-main-background  section-header-fix">
+        <section className={`${style.headermainbackground}  ${style.sectionheaderfix}`}>
      
             <Navbar expand="lg" collapseOnSelect className="bg-body-tertiary">
-            <Container className="header-responsive-main">
+            <Container className={style.headerresponsivemain}>
               <div className="d-flex flex-row justify-content-between">
                    <Navbar.Brand href="#"><p className="ms-4">لوگو</p></Navbar.Brand>
                    {/* phone number descktop div */}
-                   <div className="d-none phone-number-call-header-icon d-flex flex-row align-items-center">
+                   <div className={`d-none ${style.phonenumbercall} d-flex flex-row align-items-center`}>
                      <p><span>۰۲۱-</span>۶۶۹۷۱۴۰۲-۵</p>         
-                        <div className="phone-call-header-icon ">
+                        <div className={style.phonecallheadericon}>
                           <CallIcon></CallIcon>
                         </div>      
                    </div>
                     {/* navbar descktop */}
-                    <div className="d-lg-block d-none justify-content-between  navbar-item-header">
+                    <div className={`d-lg-block d-none justify-content-between ${style.navbaritemheader}`}>
                      <Nav className="align-items-center ">
                        {mainItemObject.map((item) => (
                          <React.Fragment key={item.id}>
                            {item.subItems.length === 0 && (
                             <Fade key={item.title} in={isVisible} timeout={250}>
                               <Nav.Link               
-                                className={`${activeLink === item.title ? 'active' : ''}`}       
+                                className={`${activeLink === item.title ? style.active : style.noneactive}`}       
                                 key={item.id} 
                                 href={item.link}
                                 onClick={() => handleLinkClick(item.title)}
@@ -81,6 +81,7 @@ export default function Header() {
                            )}
                            {item.subItems.length > 0 && (
                              <NavDropdown
+                               className={`${activeLink === item.title ? style.active : style.noneactive}`}
                                key={item.id}
                                title={
                                  <React.Fragment key={item.id}>
@@ -111,7 +112,7 @@ export default function Header() {
                    <div className="d-lg-none">
                      <NavDropdown  title={
                          <>
-                             <Box className="f-c-b"
+                             <Box 
                              component="img"
                              sx={{
                                  
@@ -136,7 +137,7 @@ export default function Header() {
 
                      {/* navbar responsive */}
                   <div className="d-lg-none d-block">
-                     <Navbar.Collapse className="justify-content-between me-5 navbar-item-header " id="basic-navbar-nav">
+                     <Navbar.Collapse className={`justify-content-between me-5 ${style.navbaritemheader}`} id="basic-navbar-nav">
                       <div className="d-flex flex-row justify-content-between">
                         <p className="mb-4">لوگو</p>
                         <Navbar.Toggle className="basic-navbar-nav" aria-controls="basic-navbar-nav" ><CloseIcon /></Navbar.Toggle>              
@@ -175,9 +176,9 @@ export default function Header() {
                      
                          </React.Fragment>))}
                          {/* phone number */}
-                         <div className="d-none phone-number-call-header-icon d-flex flex-row align-items-center mt-3">
+                         <div className={`d-none ${style.phonenumbercall} d-flex flex-row align-items-center mt-3`}>
                             <p><span>۰۲۱-</span>۶۶۹۷۱۴۰۲-۵</p>         
-                               <div className="phone-call-header-icon ">
+                               <div className={style.phonecallheadericon}>
                                  <CallIcon></CallIcon>
                                </div>      
                           </div>
@@ -189,7 +190,7 @@ export default function Header() {
                   <div className="d-lg-block d-none">
                      <NavDropdown  title={
                          <>
-                             <Box className="f-c-b"
+                             <Box
                              component="img"
                              sx={{
                                  

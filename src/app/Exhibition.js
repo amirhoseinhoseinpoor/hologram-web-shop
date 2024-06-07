@@ -1,6 +1,6 @@
 'use client'
 
-import "./Styles/Exhibition.scss";
+import style from "./Styles/Exhibition.module.scss";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from '@mui/material/Box';
@@ -36,24 +36,24 @@ export default function Exhibition(){
 
     SwiperCore.use([Autoplay])
     return(
-      <section className="main-background">
-        <div className="d-flex flex-row container h-100 exhibition-responsive-main-div">
-          <div className="rigth-text-slide r-p-right-text d-flex flex-column justify-content-center">
+      <section className={style.mainbackground}>
+        <div className={`d-flex flex-row container h-100 ${style.exhibitionresponsivemaindiv}`}>
+          <div className={`${style.rigthtextslide} ${style.rprighttext} d-flex flex-column justify-content-center`}>
             <div className="fs-4">
              <p>حضور ما در سرتاسر جهان، نشان‌دهنده تعهد ما به </p>
-             <p className="slider-next-text mt-1">پیشرفت و توسعه است...</p>
+             <p className={`${style.slidernexttext} mt-1`}>پیشرفت و توسعه است...</p>
             </div>
-            <div className="mt-4 d-flex gap-3 r-p-exhibition-arrow">
-              <button className="arrow-forward review-swiper-button-prev">
+            <div className={`mt-4 d-flex gap-3 ${style.rpexhibitionarrow}`}>
+              <button className={`${style.arrowforward} review-swiper-button-prev`}>
                <ArrowForwardIcon></ArrowForwardIcon>
               </button>
-              <button className="arrow-backward review-swiper-button-next">
+              <button className={`${style.arrowbackward} review-swiper-button-next`}>
                <ArrowBackIcon></ArrowBackIcon>
               </button>
             </div>
 
           </div>
-          <div className="left-slidewidth">
+          <div className={style.leftslidewidth}>
           <Swiper
             
             loop={true}
@@ -75,8 +75,8 @@ export default function Exhibition(){
               
 
               <SwiperSlide key={item.id}>
-                <div className="reset-exhibition">
-                  <Box key={item.id}  className="h-100 test"
+                <div className={style.resetexhibition}>
+                  <Box key={item.id}  className={`h-100`}
                     component="img"
                     sx={{
                         width: '100%', 
@@ -91,23 +91,10 @@ export default function Exhibition(){
                   />
                     <p>{item.text}</p>
                 </div>
-
-                
-                  
-                
-                
-
-            </SwiperSlide>
-            
-             
-            ))}
-            
-            
+            </SwiperSlide>      
+            ))}       
           </Swiper>            
-
-
           </div>
-
         </div>
       </section>
     )

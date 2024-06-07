@@ -1,5 +1,5 @@
 import Link from "next/link";
-import "./Styles/Blog.scss";
+import style from "./Styles/Blog.module.scss";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
 
@@ -9,20 +9,20 @@ export default function  Magazine() {
             <div className="d-flex flex-row justify-content-between">
                 <div className="fs-5">
                     <span>مجله آذر هولگرام </span>
-                    <span className="slider-next-text pe-1">برای مطالعه بیشتر...</span>
+                    <span className={`${style.slidernexttext} pe-1`}>برای مطالعه بیشتر...</span>
                 </div>
-                <div className="arrowback-link">
+                <div className={style.arrowbacklink}>
                     <Link href="#">مطالعه بیشتر <ArrowBackIcon></ArrowBackIcon></Link>
                 </div>
             </div>
             <div className="d-flex flex-row gap-3 mt-4 justify-content-center">
                 <div className="d-flex flex-column justify-content-center">
-                    <div className="mobile-picture-responsive-blog">
+                    <div className={style.mobilePictureResponsiveBlog}>
                       <Box
                        component="img"
                        sx={{
-                        width: '100%', // Ensures responsiveness
-                        maxHeight: 300, // Set a maximum height (optional)
+                        width: '100%', 
+                        maxHeight: 300, 
                         objectFit: 'cover',
                         aspectRatio : 1.48,
                       }}
@@ -32,7 +32,7 @@ export default function  Magazine() {
                     </div>
 
                     <div>
-                        <p className="studing-time-text  mt-2 mb-2">مطالعه: 5دقیقه</p>
+                        <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
                     </div>
                     <div>
                         <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
@@ -43,17 +43,17 @@ export default function  Magazine() {
                   <Box
                     component="img"
                     sx={{
-                        width: '100%', // Ensures responsiveness
-                        maxHeight: 300, // Set a maximum height (optional)
+                        width: '100%', 
+                        maxHeight: 300, 
                         objectFit: 'cover',
                     }}
                     alt="The house from the offer."
                     src="/HomeImages/cube-coin.png"
                   />
-                  <p className="studing-time-text mt-2 mb-2">مطالعه: 5دقیقه</p>
+                  <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
                   <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
                 </div>
-                <div className="d-flex flex-column d-none d-lg-block">
+                <div className="d-flex flex-column d-none d-lg-block d-md-block d-xl-block">
                   <Box
                     component="img"
                     sx={{
@@ -64,7 +64,7 @@ export default function  Magazine() {
                     alt="The house from the offer."
                     src="/HomeImages/text.png"
                   />
-                 <p className="studing-time-text mt-2 mb-2">مطالعه: 5دقیقه</p>
+                 <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
                  <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
                 </div>
             </div>

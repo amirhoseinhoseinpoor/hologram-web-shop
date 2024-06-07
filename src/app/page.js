@@ -7,6 +7,10 @@ import Footer from "./Footer"
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'; 
 
+
+
+
+
 export default function Home() {
   return (
     <main>

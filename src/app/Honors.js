@@ -1,7 +1,7 @@
 'use client'
 
 
-import "./Styles/Honors.scss"
+import style from "./Styles/Honors.module.scss"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from '@mui/material/Box';
@@ -37,27 +37,24 @@ export default function Honors() {
 
      SwiperCore.use([Autoplay])
 
-
-
     return(
-        <section className="main-background-honor mt-5 mb-5">
+        <section className={`${style.mainbackgroundhonor} mt-5 mb-5`}>
             <div className="d-flex flex-row container h-100">
-                <div className="rigth-text-slide  d-flex flex-column justify-content-center">
+                <div className={`${style.rigthtextslide} d-flex flex-column justify-content-center`}>
                     <div className="fs-4">
                       <p>افتخاراتی که به آن‌ها</p>
-                      <p className="slider-next-text mt-1">افتخار می‌کنیم...</p>
+                      <p className={`${style.slidernexttext} mt-1`}>افتخار می‌کنیم...</p>
                     </div>
                     <div className="mt-4 d-flex gap-3">
-                       <button className="arrow-forward review-swiper-button-prev2">
+                       <button className={`${style.arrowforward} review-swiper-button-prev2`}>
                          <ArrowForwardIcon></ArrowForwardIcon>
                        </button>
-                       <button className="arrow-backward review-swiper-button-next2">
+                       <button className={`${style.arrowbackward} review-swiper-button-next2`}>
                          <ArrowBackIcon></ArrowBackIcon>
                        </button>
-                    </div>
-                    
+                    </div>   
                 </div>
-                <div className="left-slidewidth">
+                <div className={style.leftslidewidth}>
                 <Swiper
                     
                     loop={true}
@@ -79,8 +76,7 @@ export default function Honors() {
                   >
                     {UrlsObject.map((item)=>(
                       
-        
-                      <SwiperSlide className="swiper-slide-Honors" key={item.id}>
+                      <SwiperSlide className={style.swiperslideHonors} key={item.id}>
                         
                         <Box key={item.id}  className="h-100"
                           component="img"
@@ -94,12 +90,8 @@ export default function Honors() {
                           
                         />
                     
-                    </SwiperSlide>
-                    
-                     
+                    </SwiperSlide> 
                     ))}
-                    
-                    
                   </Swiper>    
                 </div>
             </div>

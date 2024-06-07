@@ -1,25 +1,30 @@
 @use "variable" as var;
 
-.header-main-background{
+.headermainbackground{
     background-color: var.$footer-background;
 }
-.btn-ac{
-    color: black;
-}
-.dropdown-toggle::after{
-   display: none;
-}
-.section-header-fix{
+// .btn-ac{
+//     color:  !important;
+// }
+
+.sectionheaderfix{
     position:fixed;
     width: 100%;
     z-index: 4;
     top: 0;
 }
+.noneactive{
+  color: #333333 !important;
+}
+.noneactive a{
+  color: #333333 !important;
+}
 .navbar-nav .nav-link.active, .navbar-nav .nav-link.show{
-  color: var.$arrow-link;
+  color: var.$arrow-link !important;
 }
 .active{
   position: relative;
+  color: var.$arrow-link !important;
 
 }
 .active::before{
@@ -36,33 +41,28 @@
        
 
 @media (max-width :980px) {
-   .header-responsive-main{
+   .headerresponsivemain{
      display: block !important;
      
 
    }
-   .header-responsive-main >div{
+   .headerresponsivemain >div{
     margin-bottom: 15px;
    }
-   .phone-number-call-header-icon{
+   .phonenumbercall{
     display: flex !important;
    }
-   .phone-call-header-icon{
+   .phonecallheadericon{
         svg{
             stroke: black;
             fill: none ;
         }
    }
-   .basic-navbar-nav{
-     border: none ;
-   }
-   .basic-navbar-nav:focus{
-    outline: none !important;
-   }
-   .navbar-item-header{
+   
+   .navbaritemheader{
      margin: 0 !important;
    }
-   .navbar-item-header > div{
+   .navbaritemheader > div{
      align-items: unset !important;
    }
 }

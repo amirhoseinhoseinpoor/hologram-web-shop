@@ -1,0 +1,49 @@
+@use "variable" as var;
+
+.mainbackgroundhonor{
+    background-color: var.$footer-background;
+    width: 100%;
+    height: 400px;
+}
+
+
+//swiper
+.rigthtextslide{
+  width: 30%;
+}
+.leftslidewidth{
+  width: 70%;
+}
+.slidernexttext{
+  color: var.$arrow-background;
+}
+.arrowforward{
+  background-color: var.$arrow-link;
+  border-radius: 7px;
+  color: white;
+  border: none;
+  svg{
+    font-size: 30px;
+    padding: 5px;
+  }
+
+}
+.arrowbackward{
+  color: var.$arrow-link;
+  border: none;
+  background-color: transparent;
+  svg{
+    padding: 5px;
+    font-size: 30px;
+  }
+}
+
+.swiperslideHonors{
+  height: 100% !important ;
+  display: flex;
+
+  img{
+    object-fit: contain;
+  }
+  
+}
