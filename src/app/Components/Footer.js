@@ -1,6 +1,6 @@
 'use client'
 
-import style from "./Styles/Footer.module.scss"
+import style from "../Styles/Footer.module.scss"
 import Box from '@mui/material/Box';
 
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';

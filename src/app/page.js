@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './Header';
-import Blog from './Blog';
-import Exhibition from './Exhibition';
-import Honors from './Honors';
-import Footer from "./Footer"
+import Header from './Components/Header';
+import Blog from './HomeComponent/Blog';
+import Exhibition from './HomeComponent/Exhibition';
+import Honors from './HomeComponent/Honors';
+import Footer from "./Components/Footer"
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'; 
 

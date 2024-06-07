@@ -1,6 +1,6 @@
 'use client'
 
-import style from "./Styles/Exhibition.module.scss";
+import style from "../Styles/Exhibition.module.scss";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from '@mui/material/Box';
