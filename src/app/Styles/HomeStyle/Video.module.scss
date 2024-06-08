@@ -1,0 +1,53 @@
+@use "../variable" as var;
+
+.titleStyle{
+    font-weight: 500;
+    
+}
+.titleColor{
+    color: var.$arrow-background;
+}
+
+.posterIcon{
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    aspect-ratio: 1.48;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50% , -20%);
+    z-index: 2;
+}
+.posterIconArrow{
+    width: 70px;
+    height: 30px;
+    object-fit: cover;
+    aspect-ratio: 1.48;
+    position: absolute;
+    top: 65%;
+    right: 45%;
+    transform: translate(50% , -20%);
+    z-index: 2;
+}
+
+@media (max-width :980px) {
+    .posterIcon{
+        width: 50px;
+        height: 50px;
+    }
+    .posterIconArrow{
+        width: 63px;
+        height: 26px;
+    }
+}
+@media (max-width :768px) {
+    .posterIcon{
+      width: 40px;
+      height: 40px;
+    }
+    .posterIconArrow{
+      width: 50px;
+      height: 20px;
+    }
+}

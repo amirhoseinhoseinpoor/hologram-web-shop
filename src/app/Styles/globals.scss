@@ -87,9 +87,9 @@ span{
 }
 @media (max-width :768px) {
     p{
-        font-size: 16.5px;
+        font-size: 16.5px !important;
     }
      span{
-       font-size: 16.5px;
+       font-size: 16.5px !important;
     }
 }
