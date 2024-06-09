@@ -1,5 +1,7 @@
 @use "../variable" as var;
-
+.responsiveSection{
+    max-width: 900px;
+}
 .titleStyle{
     font-weight: 500;
     
@@ -14,7 +16,7 @@
     object-fit: cover;
     aspect-ratio: 1.48;
     position: absolute;
-    top: 50%;
+    top: 55%;
     right: 50%;
     transform: translate(50% , -20%);
     z-index: 2;
@@ -25,8 +27,8 @@
     object-fit: cover;
     aspect-ratio: 1.48;
     position: absolute;
-    top: 65%;
-    right: 45%;
+    top: 70%;
+    right: 42%;
     transform: translate(50% , -20%);
     z-index: 2;
 }

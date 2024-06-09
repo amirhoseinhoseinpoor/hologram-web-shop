@@ -1,8 +1,21 @@
+'use client'
+import React, { useRef, useEffect, useState } from 'react';
 import style from '../Styles/HomeStyle/Video.module.scss'
 import { Card, CardContent, CardMedia } from '@mui/material';
 import Box from '@mui/material/Box';
 
 export default function Video() {
+  const [videoEnded, setVideoEnded] = useState(false)
+  const videoRef = useRef()
+  useEffect(() => {
+    const video = videoRef.current;
+      video.onplay = () => {
+        setVideoEnded(!videoEnded)
+      }
+  }, [])
+  
+
+
     return(
         <section className={`mt-5 mb-5 container ${style.responsiveSection}`}>
             <div className="position-relative">
@@ -16,33 +29,39 @@ export default function Video() {
                  </div>
                </CardContent>
                <CardMedia
+                id='video'
                 component="video"
                 image="HomeVideo/SampleVideo_1280x720_1mb.mp4" 
                 poster='HomeImages/Video image.png'
                 controls
-              />  
-              <Box
-                 className={style.posterIcon}
-                 component="img"
-                 alt="image."
-                 src="/HomeImages/Video icon.png"
-               />      
-               <Box
-                 className={style.posterIconArrow}
-                 component="img"
-                 sx={{
-                  width: '60px', 
-                  height: '25px', 
-                  objectFit: 'cover',
-                  aspectRatio : 1.48,
-               }}
-                 alt="image."
-                 src="/HomeImages/Video icon arrow.png"
-               />           
+                ref={videoRef}
+              />
+              
+                {!videoEnded &&
+                  <>
+                   <Box
+                    className={style.posterIcon}
+                    component="img"
+                    alt="image."
+                    src="/HomeImages/Video icon.png"
+                  />      
+                  <Box
+                    className={style.posterIconArrow}
+                    component="img"
+                    sx={{
+                     width: '60px', 
+                     height: '25px', 
+                     objectFit: 'cover',
+                     aspectRatio : 1.48,
+                  }}
+                    alt="image."
+                    src="/HomeImages/Video icon arrow.png"
+                  />   
+                  </>
+                }
+            
             </Card>
-            <div>
-               
-            </div>
+         
             </div>
         </section>
     )

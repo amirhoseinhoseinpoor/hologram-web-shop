@@ -75,6 +75,9 @@
         fill: none;
     }
 }
+.responsivepictureperson{
+    max-width: 300px;
+}
 
 
 @media (max-width :980px) {
@@ -86,6 +89,7 @@
       width: 100%;
     }
     .responsivepictureperson{
+        max-width: none;
         flex-direction: row !important;
         width: 100%;
     }
