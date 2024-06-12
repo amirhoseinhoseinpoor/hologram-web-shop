@@ -3,7 +3,7 @@
 
 body{
     overflow-x: hidden;
-    background-color: #F7F8FC;
+    background-color: white;
 }
 html{
     position: relative;
@@ -35,7 +35,35 @@ span{
    outline: none !important;
 }
 
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+  color: hsl(211, 89%, 59%);
+  border: 1px solid #3892F3 !important;
+}
 
+//acoordion
+
+.accordion-button.collapsed{
+  justify-content: space-between !important;
+}
+.accordion-button:focus{
+  outline: none;
+  box-shadow: none;
+  background-color: unset;
+  color: unset;
+}
+.accordion-item:last-of-type>.accordion-header .accordion-button.collapsed{
+  border-radius: unset;
+}
+
+
+
+.accordion-button.collapsed::after { 
+  background-image: url(/HomeImages/acoordion.png);
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url(/HomeImages/acoordion-collapse.png);
+}
 
 //swiper
 
@@ -92,4 +120,44 @@ span{
      span{
        font-size: 16.5px !important;
     }
+    .accordion-button.collapsed::after { 
+      display: none;
+    }
+    
+    .accordion-button:not(.collapsed)::after {
+      display: none;
+    }
+    .accordion-button.collapsed::before { 
+      content: '';
+      background-image: url(/HomeImages/acoordion.png);
+      width: 1.25rem;
+      height: 1.25rem;
+      flex-shrink: 0;
+      background-repeat: no-repeat;
+      background-size: 1.2rem;
+      transition: 0.2s ease-in-out;
+      margin-left: 17px;
+    }
+    
+    .accordion-button:not(.collapsed)::before {
+      content: '';
+      background-image: url(/HomeImages/acoordion-collapse.png);
+      width: 1.25rem;
+      height: 1.25rem;
+      flex-shrink: 0;
+      background-repeat: no-repeat;
+      background-size: 1.2rem;
+      transition: 0.2s ease-in-out;
+      transform: rotate(-180deg);
+      margin-left: 17px;
+    }
+    .accordion-button.collapsed{
+      justify-content: unset !important;
+  }
+  .FAQ_accordionStyle__rCscI div h2 button{
+    justify-content: unset !important;
+
+  }
+
+
 }

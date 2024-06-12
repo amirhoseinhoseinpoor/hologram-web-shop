@@ -18,7 +18,7 @@ export default function Video() {
 
     return(
         <section className={`mt-5 mb-5 container ${style.responsiveSection}`}>
-            <div className="position-relative">
+            <div className={`${style.adjustWidth} position-relative`}>
             <Card>
                 <CardContent>
                  <div className="d-flex flex-column">
@@ -60,8 +60,7 @@ export default function Video() {
                   </>
                 }
             
-            </Card>
-         
+            </Card>       
             </div>
         </section>
     )

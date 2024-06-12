@@ -18,7 +18,7 @@ export default function Footer(){
   
 
   return(
-    <section className={style.mainColor}>
+    <section className={`${style.mainColor} position-relative`}>
         {/* upward arrow */}
         <div className={`text-center ${style.alignUpwardArrow}`}>
           <button className="border-0" onClick={scrollToTop}>

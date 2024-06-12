@@ -1,10 +1,14 @@
 @use "../variable" as var;
 .responsiveSection{
-    max-width: 900px;
+    // max-width: 900px;
+    display: flex;
+    justify-content: center;
+}
+.adjustWidth{
+    max-width: 849px;
 }
 .titleStyle{
     font-weight: 500;
-    
 }
 .titleColor{
     color: var.$arrow-background;

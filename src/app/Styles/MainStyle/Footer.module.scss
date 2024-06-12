@@ -12,8 +12,10 @@
     padding: 12px;
     border-radius: 50%;
     position: absolute;
-    margin-top: -20px;
+    top: -47px;
+
     z-index: 2;
+    transform: translate(-50% , 50%);
 }
 
 
@@ -145,9 +147,7 @@
         margin-right: 50px ;
         
     }
-    .upwardArrowInner{
-        margin-top: -23px;
-    }
+   
     .imagefooterrsb{
         margin-left: 10px;
     }
