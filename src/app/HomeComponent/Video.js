@@ -22,7 +22,7 @@ export default function Video() {
             <Card>
                 <CardContent>
                  <div className="d-flex flex-column">
-                  <div className={`${style.titleStyle} fs-5 `}>
+                  <div className={`${style.titleStyle} title `}>
                    <span>عنوان ویدئو</span><span className={style.titleColor}> که اینجاست</span>
                   </div>
                   <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است.</p>

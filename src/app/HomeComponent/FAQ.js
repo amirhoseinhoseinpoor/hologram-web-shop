@@ -32,7 +32,7 @@ export default function FAQ() {
 
     return(
         <section className="container mt-4 mb-5"> 
-            <div className={`${style.titleStyle} fs-5 mt-2 mb-3`}>
+            <div className={`${style.titleStyle} title mt-2 mb-3`}>
                 <span>همه چیز درباره‌ی </span><span className={`${style.coloerdTitle}`}>هولوگرام</span>
             </div>
 

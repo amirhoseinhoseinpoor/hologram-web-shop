@@ -39,7 +39,7 @@ export default function Exhibition(){
       <section className={style.mainbackground}>
         <div className={`d-flex flex-row container h-100 ${style.exhibitionresponsivemaindiv}`}>
           <div className={`${style.rigthtextslide} ${style.rprighttext} d-flex flex-column justify-content-center`}>
-            <div className="fs-4">
+            <div className="title">
              <p>حضور ما در سرتاسر جهان، نشان‌دهنده تعهد ما به </p>
              <p className={`${style.slidernexttext} mt-1`}>پیشرفت و توسعه است...</p>
             </div>
