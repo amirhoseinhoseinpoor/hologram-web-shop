@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Components/Header';
+import Banner from './HomeComponent/Banner'
 import PurchaseProcessSteps from './HomeComponent/PurchaseProcessSteps'
 import Blog from './HomeComponent/Blog';
 import Exhibition from './HomeComponent/Exhibition';
@@ -23,6 +24,7 @@ export default function Home() {
       <React.StrictMode>
        <ThemeProvider theme={theme}>
          <Header/>
+         <Banner/>
          <PurchaseProcessSteps/>
           <Exhibition/>
           <Video/>
