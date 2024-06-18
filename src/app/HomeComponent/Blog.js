@@ -15,8 +15,8 @@ export default function  Magazine() {
                     <Link href="#">مطالعه بیشتر <ArrowBackIcon></ArrowBackIcon></Link>
                 </div>
             </div>
-            <div className="d-flex flex-row gap-3 mt-4 justify-content-center">
-                <div className="d-flex flex-column justify-content-center">
+            <div className={`${style.responsiveFirstBox} d-flex flex-row gap-3 mt-4 justify-content-center`}>
+                <div className={`${style.boxBackgroundMain} d-flex flex-column justify-content-center`}>
                     <div className={style.mobilePictureResponsiveBlog}>
                       <Box
                        component="img"
@@ -35,11 +35,11 @@ export default function  Magazine() {
                         <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
                     </div>
                     <div>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
+                        <p className="discription">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
                     </div>
                     
                 </div>
-                <div className="d-flex flex-column d-none d-lg-block d-md-block">
+                <div className={`${style.boxBackgroundMain} d-flex flex-column d-none d-lg-block d-md-block`}>
                   <Box
                     component="img"
                     sx={{
@@ -51,9 +51,9 @@ export default function  Magazine() {
                     src="/HomeImages/cube-coin.png"
                   />
                   <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
-                  <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
+                  <p className="discription">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
                 </div>
-                <div className="d-flex flex-column d-none d-lg-block d-md-block d-xl-block">
+                <div className={`${style.boxBackgroundMain} d-flex flex-column d-none d-lg-block d-md-block d-xl-block`}>
                   <Box
                     component="img"
                     sx={{
@@ -65,7 +65,7 @@ export default function  Magazine() {
                     src="/HomeImages/text.png"
                   />
                  <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
-                 <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
+                 <p className="discription">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
                 </div>
             </div>
         </section>

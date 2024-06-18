@@ -4,6 +4,7 @@ import Banner from './HomeComponent/Banner'
 import PurchaseProcessSteps from './HomeComponent/PurchaseProcessSteps'
 import Blog from './HomeComponent/Blog';
 import Exhibition from './HomeComponent/Exhibition';
+import IntroSecure from './HomeComponent/Intro-Secure';
 import Video from './HomeComponent/Video'
 import Honors from './HomeComponent/Honors';
 import FAQ from './HomeComponent/FAQ'
@@ -27,6 +28,7 @@ export default function Home() {
          <Banner/>
          <PurchaseProcessSteps/>
           <Exhibition/>
+          <IntroSecure/>
           <Video/>
           <Blog/>
           <Honors/>

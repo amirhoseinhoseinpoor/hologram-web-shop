@@ -34,7 +34,7 @@ export default function Banner() {
             <div className={`${style.resizeWidth} position-relative`}>
                <Swiper     
                     loop={true}
-                    // autoplay={{ delay: 4000 }}
+                    autoplay={{ delay: 4000 }}
                     slidesPerView={1} 
                    
                     pagination={{

@@ -19,15 +19,19 @@ body {
   font-size: 20px;
   font-weight: 500;
 }
+.discription{
+  font-size: 15px;
+  font-weight: 400;
+}
 .Banner-title{
   font-weight: 500;
   font-size: 35px;
 }
 h1,h2,h3,h4,h5,h6,p,span{
-     line-height: normal ;
+    line-height: normal ;
     margin-bottom: 0;
 }
-
+//end global sizing 
 
 .navbar-toggler:focus{
     box-shadow: none;
@@ -133,6 +137,7 @@ h1,h2,h3,h4,h5,h6,p,span{
     }
 }
 @media (max-width :768px) {
+   // global sizing
     p{
         font-size: 16.5px !important;
     }
@@ -143,9 +148,15 @@ h1,h2,h3,h4,h5,h6,p,span{
       font-size: 17px;
       font-weight: 500;
     }
+    .discription{
+      font-size: 12px !important;
+    }
     .Banner-title{
       font-size: 18px;
     }
+
+
+
     .accordion-button.collapsed::after { 
       display: none;
     }
