@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slice';
+import {authSliceV , adminsliceV} from './slice';
 import { useDispatch, useSelector, useStore } from 'react-redux'
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      auth: authReducer,
+      auth: authSliceV,
+      admin: adminsliceV,
     }
   })
 }

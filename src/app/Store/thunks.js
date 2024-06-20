@@ -7,7 +7,8 @@ export const login = createAsyncThunk(
   async (credentials, thunkAPI) => {
     const { username, password } = credentials;
       try {
-          const response = await axios.post('http://217.60.251.31:7000/auth/login', {
+          const response = await axios.post('https://reqres.in/api/login', {
+            // mode: 'no-cors',
             username,
             password,
           });
@@ -15,8 +16,24 @@ export const login = createAsyncThunk(
           console.log(token);
           return token;
       } catch (error) {
-          return thunkAPI.rejectWithValue(error.message);
+          return thunkAPI.rejectWithValue( error.message);
       }
+  }
+);
+
+export const updateBannerContent = createAsyncThunk(
+  'admin/updateBanner',
+  async (formData, thunkAPI) => {
+    try {
+      const response = await axios.post('/api/admin/banner', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data; // Assuming successful update returns updated banner data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
 );
 

@@ -27,12 +27,12 @@ export default function Home() {
          <Header/>
          <Banner/>
          <PurchaseProcessSteps/>
-          <Exhibition/>
-          <IntroSecure/>
-          <Video/>
-          <Blog/>
-          <Honors/>
-          <FAQ/>
+         <IntroSecure/>
+         <Honors/>
+         <Video/>
+         <Exhibition/>
+         <FAQ/>
+         <Blog/>
          <Footer/>
        </ThemeProvider>
       </React.StrictMode>

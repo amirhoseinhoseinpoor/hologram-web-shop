@@ -57,7 +57,7 @@ export default function Exhibition(){
           <Swiper
             
             loop={true}
-            autoplay={{ delay: 4000 }}
+            // autoplay={{ delay: 4000 }}
             spaceBetween={30}
             slidesPerView={1}
             breakpoints={{

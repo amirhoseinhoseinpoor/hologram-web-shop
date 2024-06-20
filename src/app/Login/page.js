@@ -2,16 +2,15 @@
 import React, { useState , useEffect } from 'react';
 import { useDispatch} from 'react-redux';
 import {login} from '../Store/thunks';
-import { useRouter } from 'next/navigation'
 import Link from 'next/link';
-
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
     const dispatch = useDispatch();
+    const router = useRouter();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const router = useRouter()
     
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -20,8 +19,8 @@ export default function Login() {
       try{
         const credentials = { username, password }; // Create credentials object from form data
         await dispatch(login(credentials)); // Dispatch login thunk with credentials
+        router.push('/AdminPanel');
         
-        // router.push('../page.js')
       }catch (error) {
         console.error('login error me:' , error );
       }

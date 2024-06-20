@@ -1,7 +1,7 @@
 import { createSlice} from '@reduxjs/toolkit';
-import {login ,logout} from './thunks'
+import {login , logout , updateBannerContent} from './thunks'
 
-const initialState = {
+const authinitialState = {
   token: null,
   loading: false,
   error: null,
@@ -11,7 +11,7 @@ const initialState = {
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState : authinitialState,
   reducers: {},
   extraReducers: (builder) => {
       builder
@@ -43,4 +43,31 @@ const authSlice = createSlice({
 });
 
 
-export default authSlice.reducer;
+// export default authSlice.reducer;
+export const authSliceV = authSlice.reducer;
+export const token = (state) => state.auth.token;
+export const loading = (state) => state.auth.loading;
+export const error = (state) => state.auth.error;
+
+
+const AdminInitialState = {
+    banner: null,
+};
+  
+
+const adminSlice = createSlice({
+    name: 'admin',
+    initialState :AdminInitialState,
+    reducers: {},
+    extraReducers: (builder) => {
+      builder
+       
+        .addCase(updateBannerContent.fulfilled, (state, action) => {
+          state.banner = action.payload; // Update banner data on success
+        })
+      
+    },
+  });
+  
+  export const adminsliceV = adminSlice.reducer;
+  export const banner = (state) => state.admin.banner;
