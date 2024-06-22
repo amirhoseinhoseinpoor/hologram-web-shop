@@ -19,13 +19,17 @@
     background-color: var.$IntroImageBackground;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    width: 50%;
+}
+.textStyle{
+    width: 50%;
 }
 .rowBackground{
     background-color: var.$arrow-link;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     justify-content: space-evenly;
-    padding: 10px;
+    padding: 20px;
     
 }
 .rowBox{
@@ -65,6 +69,10 @@
   }
    .imageStyle{
       border-radius: 8px;
+      width: 100%;
+    }
+    .textStyle{
+        width: 100%;
     }
     .rowBackground{
         flex-direction: column !important;

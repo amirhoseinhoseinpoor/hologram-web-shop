@@ -5,7 +5,10 @@
     justify-content: center;
 }
 .adjustWidth{
-    max-width: 849px;
+    div{
+        border: none;
+        box-shadow: none;
+    }
 }
 .titleStyle{
     font-weight: 500;

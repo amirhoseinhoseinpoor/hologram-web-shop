@@ -25,7 +25,7 @@ export default function Video() {
                   <div className={`${style.titleStyle} title `}>
                    <span>عنوان ویدئو</span><span className={style.titleColor}> که اینجاست</span>
                   </div>
-                  <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است.</p>
+                  <p className="subtitle">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است.</p>
                  </div>
                </CardContent>
                <CardMedia

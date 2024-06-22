@@ -18,12 +18,12 @@ export default function IntroSecure() {
           src="/HomeImages/Intro-image.png"
         /> 
         </div>
-        <div className={`${style.responsiveMarginText} d-flex flex-column container justify-content-evenly`}>
+        <div className={`${style.responsiveMarginText} ${style.textStyle} d-flex flex-column container justify-content-evenly`}>
             <div className="title mb-1">
               <span>انواع افکت‌های <span className={style.titleColor}>امنیتی</span></span>
             </div>
             <div>
-                <p>در دنیای پر آشوب جعل و تقلب، هولوگرام‌ها به مثابه گارد‌های نامرئی عمل می‌کنند و با ظرافت و دقت، اصالت و کیفیت را تضمین می‌کنند. هولوگرام‌ها قابل شخصی‌سازی هستند با درج لوگو، تصاویر یا کدهای منحصر به فرد، هولوگرام‌ها به مهر تأیید اصالت محصول تبدیل می‌شوند.</p>
+                <p className="subtitle">در دنیای پر آشوب جعل و تقلب، هولوگرام‌ها به مثابه گارد‌های نامرئی عمل می‌کنند و با ظرافت و دقت، اصالت و کیفیت را تضمین می‌کنند. هولوگرام‌ها قابل شخصی‌سازی هستند با درج لوگو، تصاویر یا کدهای منحصر به فرد، هولوگرام‌ها به مهر تأیید اصالت محصول تبدیل می‌شوند.</p>
             </div>
             <div>
                 <button className={`${style.buttonPclass} d-flex flex-row align-items-center mt-2`}>

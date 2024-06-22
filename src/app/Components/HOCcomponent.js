@@ -10,14 +10,14 @@ const withPageAuthRequired = (WrappedComponent) => (props) => {
     const router = useRouter();
 
     useEffect(() => {
-        if (!authState.token) {
-            router.push('/Login'); 
-        }
+        // if (!authState.token) {
+        //     router.push('/Login'); 
+        // }
     }, [authState.token, router]);
 
-    if (!authState.token) {
-        return null 
-    }
+    // if (!authState.token) {
+    //     return null 
+    // }
     return <WrappedComponent {...props} />;
 };
 

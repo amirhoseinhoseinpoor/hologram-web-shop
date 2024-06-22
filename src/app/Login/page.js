@@ -26,7 +26,7 @@ export default function Login() {
       }
       
       
-      // 
+      
     };
     
     const handleLogi2n = async (e) => {
