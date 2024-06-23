@@ -80,5 +80,5 @@ const AdminPanel = () => {
     </section>
   );
 };
-
+AdminPanel.displayName = 'AdminPanel';
 export default Hoc(AdminPanel);
