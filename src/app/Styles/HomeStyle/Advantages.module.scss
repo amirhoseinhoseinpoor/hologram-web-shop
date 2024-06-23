@@ -1,0 +1,10 @@
+@use "../variable" as var;
+
+
+.mainBackground{
+    background-color: var.$footer-top-person;
+    padding: 25px;
+}
+.textColor{
+    color: white;
+}
