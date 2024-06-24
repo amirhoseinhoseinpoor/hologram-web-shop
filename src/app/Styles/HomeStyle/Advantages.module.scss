@@ -8,3 +8,8 @@
 .textColor{
     color: white;
 }
+@media (max-width :768px) {
+    .mainBackground{
+        padding: 25px 0;
+    }
+}

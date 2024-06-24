@@ -6,25 +6,25 @@ export default function Advantages() {
             <div className="d-flex flex-row justify-content-around">
               <div className={style.textColor}>
                   <div className="d-flex flex-column">
-                    <p className="title">1.000+</p>
+                    <p className="title text-center">1.000+</p>
                     <p>پروژه انجام‌شده</p>
                   </div>
               </div>
               <div className={style.textColor}>
                   <div className="d-flex flex-column">
-                    <p className="title">15+</p>
+                    <p className="title text-center">15+</p>
                     <p>سابقه</p>
                   </div>
               </div>
               <div className={style.textColor}>
                   <div className="d-flex flex-column">
-                    <p className="title">100+</p>
+                    <p className="title text-center">100+</p>
                     <p>تنوع محصولات</p>
                   </div>
               </div>
               <div className={style.textColor}>
                   <div className="d-flex flex-column">
-                    <p className="title">1.000+</p>
+                    <p className="title text-center">2.5000+</p>
                     <p>مشتری وفادار</p>
                   </div>
               </div>

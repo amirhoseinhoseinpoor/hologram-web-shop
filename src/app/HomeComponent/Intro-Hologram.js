@@ -24,14 +24,16 @@ export default function IntroHologram() {
           </div>
           <div className={style.imageStyle}>
           <Box
+          className={style.rotate}
            component="img"
            sx={{
             width: '100%', 
             height : '100%',
             objectFit: 'cover',
+            
           }}
             alt="image."
-            src="/HomeImages/Intro-image.png"
+            src="/HomeImages/Intro-hologram.png"
           /> 
           </div>
         </div>

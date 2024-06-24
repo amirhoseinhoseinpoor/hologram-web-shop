@@ -21,9 +21,7 @@ export default function RootLayout({ children }) {
     <html lang="en" dir="rtl">
       <body className={myFont.className}>
         <StoreProvider>
-          <div>
-           {children}
-          </div>
+          {children}         
         </StoreProvider>
        
         
