@@ -40,13 +40,13 @@ export default function Video() {
                 {!videoEnded &&
                   <>
                    <Box
-                    className={style.posterIcon}
+                    className={`${style.posterIcon} d-none d-lg-block d-xl-block`}
                     component="img"
                     alt="image."
                     src="/HomeImages/Video icon.png"
                   />      
                   <Box
-                    className={style.posterIconArrow}
+                    className={`${style.posterIconArrow} d-none d-lg-block d-xl-block`}
                     component="img"
                     sx={{
                      width: '60px', 

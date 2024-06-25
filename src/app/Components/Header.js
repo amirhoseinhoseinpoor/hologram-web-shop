@@ -4,10 +4,10 @@ import style from "../Styles/MainStyle/Header.module.scss";
 import Box from '@mui/material/Box';
 import React, { useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+
+
+
+import { Navbar, Nav, NavDropdown, Container, Offcanvas } from 'react-bootstrap';
 import CallIcon from '@mui/icons-material/Call';
 import CloseIcon from '@mui/icons-material/Close';
 import Fade from '@mui/material/Fade';

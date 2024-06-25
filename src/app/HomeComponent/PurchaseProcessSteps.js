@@ -7,24 +7,27 @@ export default function PurchaseProcessSteps() {
      <section className={`${style.mainBackground} mt-3`}>
         <div className="container d-flex flex-column">
          <div className={`${style.responsiveDiv} d-flex flex-row`}>
-            <div className={`${style.widthResizing} d-flex flex-column position-relative m-3`}> 
+            <div className={`${style.widthResizing} d-flex flex-column position-relative m-3 justify-content-enenly`}> 
               <h2 className={`${style.titleColor} title mb-2`}>فرایند ثبت سفارش <span>هولوگرام</span></h2>
-              <div style={{marginBottom: '55px'}}>
+              <div className={style.marginbottom}>
                  <p>بت سفارش هولوگرام، فرآیندی ساده و امن است. شما می‌توانید با چند کلیک ساده در وب‌سایت ما، سفارش خود را ثبت کنید.</p>
                  <p>کارشناسان مجرب ما در تمام مراحل سفارش و پس از آن در کنار شما هستند تا به تمامی سوالات شما پاسخ دهند و بهترین خدمات را به شما ارائه دهند.</p>
               </div>
               <div className={style.phoneNumber}>
                     <div className="d-flex flex-column">
+                      <div className="position-relative">
                         <span>۰۲۱-<span className="title">۶۶۹۷۱۴۰۲-۵</span></span>
                         <Box className={style.Arrow}
                          component="img"
                          sx={{
-                             width: 105, 
-                             maxHeight: 80, 
+                             width: 125, 
+                             maxHeight: 60, 
                          }}
                          alt="slieds"
                          src="/HomeImages/PurchuseArrow.png"                
                         />
+                      </div>
+                        
                     </div>
               </div>
             </div>

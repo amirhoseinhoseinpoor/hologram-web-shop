@@ -29,11 +29,13 @@
 .accordionBody{
     background-color: var.$footer-background;
     margin: 0 !important;
+    line-height: normal;
 }
 .accordionItem{
     margin: 10px 0;
 
 }
+
 .accordionStyle div{
     border: none;
 }
@@ -46,4 +48,14 @@
 }
 .accordionStyle div h2 button::after{ 
     margin: 0;
+}
+
+@media (max-width :768px) {
+    .accordionItem :global{
+        .accordion-header button{
+            white-space: nowrap;
+            padding: 8px;
+            font-size: 15px;
+        }
+    }
 }
