@@ -144,7 +144,7 @@ export default function Footer(){
                  
              </div>
                 {/* trust-logo */}
-                <div className="d-flex flex-row justify-content-between w-50 mt-2 mb-2">
+                <div className="d-flex flex-row justify-content-around w-50 mt-2 mb-2">
                     <Box
                      component="img"
                      sx={{

@@ -82,6 +82,12 @@
   grid-template-columns: 2fr 2fr;
 }
 
+.offcanvasheader :global{
+  justify-content: space-between;
+  button{
+    margin: 0 !important;
+  }
+}
 
 @media (max-width :980px) {
    .headerresponsivemain{

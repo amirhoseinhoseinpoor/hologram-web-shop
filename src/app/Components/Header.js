@@ -4,10 +4,9 @@ import style from "../Styles/MainStyle/Header.module.scss";
 import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import { Navbar, Nav, NavDropdown, Container, Offcanvas } from 'react-bootstrap';
+
+
 import CallIcon from "@mui/icons-material/Call";
 import CloseIcon from "@mui/icons-material/Close";
 import Fade from "@mui/material/Fade";
@@ -18,24 +17,20 @@ const renderSubItems = (subItems, depth = 1) => {
       if (subItem.subItems && subItem.subItems.length > 0) {
         return (
           
-           
-            <div key={subItem.id}>
+            <div className="me-2 mb-2" style={{lineHeight:'28px'}} key={subItem.id}>
               <NavDropdown.Item className={style.colornav} key={subItem.id} title={subItem.title}>
                 {subItem.title}
               </NavDropdown.Item>
              {renderSubItems(subItem.subItems, depth + 1)}
             </div>
            
-          
-          
-          
         );
       } else {
         return (
           
-            <NavDropdown.Item key={subItem.id} href={subItem.link}>
+            <Nav.Link key={subItem.id} href={subItem.link}>
               {subItem.title}
-            </NavDropdown.Item>
+            </Nav.Link>
           
           
         );
@@ -43,6 +38,7 @@ const renderSubItems = (subItems, depth = 1) => {
 
   });
 };
+
 
 
 
@@ -55,7 +51,20 @@ export default function Header() {
     setIsVisible(false);
     setTimeout(() => setIsVisible(true), 250);
   };
+
   
+// State to manage visibility of all off-canvas elements dynamically
+const [visibility, setVisibility] = useState({});
+
+// Function to toggle visibility
+const toggleShow = (key) => {
+  setVisibility(prev => ({ ...prev, [key]: !prev[key] }));
+};
+
+// Function to close a specific off-canvas
+const handleClose = (key) => {
+  setVisibility(prev => ({ ...prev, [key]: false }));
+};
 
 
   const mainItems = [
@@ -235,10 +244,11 @@ export default function Header() {
             </div>
           </div>
 
-          {/* iran logo */}
+          
           <div className="d-flex flex-row justify-content-between d-block d-lg-none">
             <div className="d-lg-none">
               <Navbar.Toggle
+                onClick={() => toggleShow('main')}
                 className="basic-navbar-nav"
                 aria-controls="basic-navbar-nav"
               />
@@ -267,50 +277,57 @@ export default function Header() {
 
           {/* navbar responsive */}
           <div className="d-lg-none d-block">
-            <Navbar.Collapse
-              className={`justify-content-between me-5 ${style.navbaritemheader}`}
+            <Navbar.Offcanvas
+              placement="end"
+              className={`me-5 ${style.navbaritemheader}`}
+              show={visibility['main']}
+              onHide={() => handleClose('main')}
               id="basic-navbar-nav"
             >
-              <div className="d-flex flex-row justify-content-between">
-                <p className="mb-4">لوگو</p>
-                <Navbar.Toggle
-                  className="basic-navbar-nav"
-                  aria-controls="basic-navbar-nav"
-                >
-                  <CloseIcon />
-                </Navbar.Toggle>
-              </div>
+              
+              <Offcanvas.Header className={style.offcanvasheader} closeButton>
+                <Offcanvas.Title>لوگو</Offcanvas.Title>
+              </Offcanvas.Header>
+                
+              
 
-              <Nav className="align-items-center">
+              <Nav className="align-items-center me-2">
                 {mainItemObject.map((item) => (
                   <React.Fragment key={item.id}>
 
                     {item.subItems.length > 0 ? (
                       <React.Fragment key={item.id}>
-                        <NavDropdown
-                          key={item.id}
-                          title={
-                            <React.Fragment key={item.id}>
+
+                        <Navbar.Toggle
+                          className="text-end" 
+                          aria-controls={`offcanvas-${item.id}`}
+                          onClick={() => toggleShow(item.id)}
+                        >
+                           <React.Fragment  key={item.id}>
                               {item.title}
                               <KeyboardArrowDownIcon
                                 key={item.id}
                               ></KeyboardArrowDownIcon>
                             </React.Fragment>
-                          }
-                          id={`basic-nav-dropdown-${item.id}`}
+                        </Navbar.Toggle>
+                         
+                          
+                          
+                          
+                        
+                        <Navbar.Offcanvas
+                          placement="end"
+                          key={item.id}
+                          show={visibility[item.id]}
+                          onHide={() => handleClose(item.id)}
+                          id={`offcanvas-${item.id}`}
                         >
+                          <Offcanvas.Header className={style.offcanvasheader} closeButton>
+                           <Offcanvas.Title>{item.title}</Offcanvas.Title>
+                          </Offcanvas.Header>
                           {renderSubItems(item.subItems)}
-                          {/* {item.subItems.map((subItem) => (
-                            <React.Fragment key={subItem.id}>
-                              <NavDropdown.Item
-                                key={subItem.id}
-                                href="#action/3.1"
-                              >
-                                {subItem.sub}
-                              </NavDropdown.Item>
-                            </React.Fragment>
-                          ))} */}
-                        </NavDropdown>
+                          
+                        </Navbar.Offcanvas>
                       </React.Fragment>
                     ) : (
                       <React.Fragment key={item.id}>
@@ -341,8 +358,13 @@ export default function Header() {
                   </div>
                 </div>
               </Nav>
-            </Navbar.Collapse>
+            </Navbar.Offcanvas>
           </div>
+
+
+
+          
+
 
           <div className="d-lg-block d-none">
             <NavDropdown
@@ -366,6 +388,7 @@ export default function Header() {
           </div>
         </Container>
       </Navbar>
+
     </section>
   );
 }
