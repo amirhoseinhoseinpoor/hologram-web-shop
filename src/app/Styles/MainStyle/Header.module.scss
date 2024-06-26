@@ -83,9 +83,21 @@
 }
 
 .offcanvasheader :global{
-  justify-content: space-between;
   button{
     margin: 0 !important;
+  }
+}
+.nextoffcanvas{
+  justify-content: space-between;
+}
+.innnerstyle{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border: none;
+  background-color: unset;
+  svg{
+    padding-left: 5px;
   }
 }
 

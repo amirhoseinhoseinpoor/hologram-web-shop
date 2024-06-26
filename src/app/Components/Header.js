@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Navbar, Nav, NavDropdown, Container, Offcanvas } from 'react-bootstrap';
-
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import CallIcon from "@mui/icons-material/Call";
 import CloseIcon from "@mui/icons-material/Close";
@@ -285,7 +285,7 @@ const handleClose = (key) => {
               id="basic-navbar-nav"
             >
               
-              <Offcanvas.Header className={style.offcanvasheader} closeButton>
+              <Offcanvas.Header className={`${style.offcanvasheader} ${style.nextoffcanvas}`} closeButton>
                 <Offcanvas.Title>لوگو</Offcanvas.Title>
               </Offcanvas.Header>
                 
@@ -322,8 +322,12 @@ const handleClose = (key) => {
                           onHide={() => handleClose(item.id)}
                           id={`offcanvas-${item.id}`}
                         >
-                          <Offcanvas.Header className={style.offcanvasheader} closeButton>
-                           <Offcanvas.Title>{item.title}</Offcanvas.Title>
+                          <Offcanvas.Header className={style.offcanvasheader}>
+                           <button className={style.innnerstyle} onClick={() => handleClose(item.id)}>
+                              <ArrowForwardIcon/>
+                              <Offcanvas.Title>{item.title}</Offcanvas.Title> 
+                           </button>
+                                  
                           </Offcanvas.Header>
                           {renderSubItems(item.subItems)}
                           
