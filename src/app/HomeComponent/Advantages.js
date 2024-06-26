@@ -7,25 +7,25 @@ export default function Advantages() {
               <div className={style.textColor}>
                   <div className="d-flex flex-column">
                     <p className="title text-center">1.000+</p>
-                    <p>پروژه انجام‌شده</p>
+                    <p className="subAdvantages">پروژه انجام‌شده</p>
                   </div>
               </div>
               <div className={style.textColor}>
                   <div className="d-flex flex-column">
                     <p className="title text-center">15+</p>
-                    <p>سابقه</p>
+                    <p className="subAdvantages">سابقه</p>
                   </div>
               </div>
               <div className={style.textColor}>
                   <div className="d-flex flex-column">
                     <p className="title text-center">100+</p>
-                    <p>تنوع محصولات</p>
+                    <p className="subAdvantages">تنوع محصولات</p>
                   </div>
               </div>
               <div className={style.textColor}>
                   <div className="d-flex flex-column">
-                    <p className="title text-center">2.5000+</p>
-                    <p>مشتری وفادار</p>
+                    <p className="title text-center">1.000+</p>
+                    <p className="subAdvantages">مشتری وفادار</p>
                   </div>
               </div>
               
