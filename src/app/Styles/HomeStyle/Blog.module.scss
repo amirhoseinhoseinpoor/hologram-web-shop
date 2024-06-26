@@ -8,6 +8,7 @@
 .arrowbacklink{
     
    color: var.$arrow-link;
+   white-space: nowrap;
     a{
         text-decoration: none;
     }
@@ -19,6 +20,7 @@
     color : #5F5F5F !important;
 }
 .boxBackgroundMain{
+    border-radius: 5px;
     padding: 10px;
     background-color: var.$footer-background;
 }
@@ -26,6 +28,7 @@
     .mobilePictureResponsiveBlog{
         img{
             max-height: 198px;
+            border-radius: 5px;
         }
     }
     .responsiveFirstBox{

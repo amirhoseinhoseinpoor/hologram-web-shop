@@ -28,7 +28,7 @@ export default function Footer(){
           </button>
         </div>
         {/* picture box */}
-        <div className={`row p-4 ${style.responsiveRow}`} >
+        <div className={`row mt-2 ${style.responsiveRow}`} >
             <div className={`col-3 d-flex flex-column ${style.responsivepictureperson}`}>
                 <div className={`${style.footertopperson} ${style.textFooter} p-3 position-relative`}>
                     <div className={`${style.imagefooterrsb} d-block d-lg-none`}>
@@ -175,7 +175,7 @@ export default function Footer(){
                 </div>
             </div>
 
-            <p className="text-center mt-4">تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است.</p>
+            {/* <p className="text-center mt-4">تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است.</p> */}
         </div>
     </section>
   )

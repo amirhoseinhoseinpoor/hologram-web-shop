@@ -13,18 +13,18 @@
     color: var.$tabbed ;
     border: 1px solid var.$tabbed !important;
 
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
-    border-radius: 14px !important;
+    border-radius: 32px !important;
 
 }
 .buttonsTabbed li{
-    padding: 7px;
+    padding: 8px;
 }
 //acordion
 .accordionStyle div h2{
     background-color: var.$footer-background;
-    // border-radius: 9px;
+    
 }
 .accordionBody{
     background-color: var.$footer-background;
@@ -57,5 +57,9 @@
             padding: 8px;
             font-size: 15px;
         }
+    }
+    .buttonsTabbed li button{
+        padding: 7px;
+        font-size: 15px;
     }
 }

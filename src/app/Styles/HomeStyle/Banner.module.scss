@@ -16,15 +16,15 @@
 .swiperMain :global{
   .swiper-pagination{
     padding: 7px !important;
-    width: 90px !important;
+    // width: 90px !important;
     border-radius: 2px;
   }
   .swiper-pagination span{
-    margin-left: 28px !important;
+    // margin-left: 28px !important;
   }
-//   .swiper-pagination-bullet-active-prev{
-//     right: 0 !important;
-//   }
+  .swiper-pagination-bullet{
+    right: unset !important;
+  }
 }
 .resizeWidth{
     max-width: 1050px;
@@ -34,7 +34,6 @@
 .BannerTextDiv{
     position: absolute;
     bottom: 10%;
-    // transform: translate(-50% , -50%);
     right: 10%;
 }
 .BannerTextDiv > div{
@@ -44,7 +43,7 @@
 
 .buttonBanner button{
     border: none;
-    border-radius: 9px;
+    border-radius: 4px;
     padding: 7px 12px;
     font-weight: 500;
 }
@@ -57,18 +56,38 @@
     border-radius: 3px !important;
     width: 20px !important;
 }
+@media (max-width :980px) {
+    .BannerTextDiv{
+        bottom:9%;
+        right: 7%;
+    }
+}
 @media (max-width :768px) {
     .BannerTextDiv{
         bottom: 7%;
-        // transform: translate(-50% , -50%);
         right: 3%;
     }
     .BannerTextDiv > div{
         margin-bottom: 3px !important;
     }
     .buttonBanner button{
-        border-radius: 8px;
+        border-radius: 4px;
         padding: 3px 8px;
         font-weight: 500;
     }
+    .feature-pagination{
+        width: 12px !important;
+    }
 }
+@media (max-width :433px) {
+    .BannerTextDiv{
+        bottom: 4%;
+        right: 2%;
+    }
+    .buttonBanner button{
+        font-size: 15px;
+        padding: 3px 8px;
+        
+    }
+}
+

@@ -2,7 +2,7 @@ import style from '../Styles/HomeStyle/Advantages.module.scss'
 
 export default function Advantages() {
     return(
-        <section className={`${style.mainBackground} mt-5 mb-5`}>
+        <section className={`${style.mainBackground} mb-5`}>
             <div className="d-flex flex-row justify-content-around">
               <div className={style.textColor}>
                   <div className="d-flex flex-column">

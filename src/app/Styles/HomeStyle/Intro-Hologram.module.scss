@@ -10,7 +10,7 @@
     background-color: #333333;
     font-size: 16px;
     padding: 9px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: none;
     svg{
         font-size: 18px;
@@ -20,10 +20,10 @@
     background-color: var.$IntroImageBackground;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    width: 50%;
+    width: 45%;
 }
 .textStyle{
-    width: 50%;
+    width: 55%;
 }
 .rowBackground{
     background-color: var.$arrow-link;
@@ -66,13 +66,14 @@
    margin-bottom: 10px;
   }
   .buttonPclass{
-    font-size: 14px;
+    font-size: 13px;
+    padding: 6px;
     svg{
         font-size: 15px;
     }
   }
    .imageStyle{
-      border-radius: 8px;
+      border-radius: 4px;
       width: 100%;
     }
     .textStyle{
@@ -80,7 +81,7 @@
     }
     .rowBackground{
         flex-direction: column !important;
-        border-radius: 8px;
+        border-radius: 4px;
     }
     .rowBox{
         margin: 5px 0;

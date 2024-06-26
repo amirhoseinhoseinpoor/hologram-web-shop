@@ -18,8 +18,9 @@
   color: var.$arrow-background;
 }
 .arrowforward{
+  padding: 5px;
   background-color: var.$arrow-link;
-  border-radius: 7px;
+  border-radius: 4px;
   color: white;
   border: none;
   svg{
@@ -47,3 +48,12 @@
   }
   
 }
+@media (max-width :768px) {
+  .rigthtextslide{
+    width: 45%;
+  }
+  .leftslidewidth{
+    width: 55%;
+  }
+}
+

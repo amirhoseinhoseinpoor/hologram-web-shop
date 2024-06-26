@@ -37,7 +37,7 @@ export default function Exhibition(){
     SwiperCore.use([Autoplay])
     return(
       <section className={style.mainbackground}>
-        <div className={`d-flex flex-row container h-100 ${style.exhibitionresponsivemaindiv}`}>
+        <div className={`d-flex flex-row container-lg h-100 ${style.exhibitionresponsivemaindiv}`}>
           <div className={`${style.rigthtextslide} ${style.rprighttext} d-flex flex-column justify-content-center`}>
             <div className="title">
              <p>حضور ما در سرتاسر جهان، نشان‌دهنده تعهد ما به </p>
@@ -69,14 +69,14 @@ export default function Exhibition(){
             navigation={{nextEl: '.review-swiper-button-next',prevEl: '.review-swiper-button-prev',}} 
             modules={[Navigation]} 
             
-            className="mySwiper"
+            className={`${style.swiperCustom} mySwiper container`}
           >
             {UrlsObject.map((item)=>(
               
 
               <SwiperSlide key={item.id}>
                 <div className={style.resetexhibition}>
-                  <Box key={item.id}  className={`h-100`}
+                  <Box key={item.id}  className={`${style.adjustaspectratioinner} h-100`}
                     component="img"
                     sx={{
                         width: '100%', 

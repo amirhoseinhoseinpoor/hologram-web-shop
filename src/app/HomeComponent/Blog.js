@@ -7,9 +7,9 @@ export default function  Magazine() {
     return(
         <section className="mb-5 mt-4 container">
             <div className="d-flex flex-row justify-content-between">
-                <div className="fs-5">
-                    <span>مجله آذر هولگرام </span>
-                    <span className={`${style.slidernexttext} pe-1`}>برای مطالعه بیشتر...</span>
+                <div>
+                    <span className="title">مجله آذر هولگرام </span>
+                    <span className={`${style.slidernexttext} pe-1  title`}>برای مطالعه بیشتر...</span>
                 </div>
                 <div className={style.arrowbacklink}>
                     <Link href="#">مطالعه بیشتر <ArrowBackIcon></ArrowBackIcon></Link>
@@ -32,10 +32,10 @@ export default function  Magazine() {
                     </div>
 
                     <div>
-                        <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
+                        <p className={`${style.studingtimetext} mt-2 mb-2 discription`}>مطالعه: 5دقیقه</p>
                     </div>
                     <div>
-                        <p className="discription">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
+                        <p className="subitem">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
                     </div>
                     
                 </div>
@@ -50,8 +50,8 @@ export default function  Magazine() {
                     alt="The house from the offer."
                     src="/HomeImages/cube-coin.png"
                   />
-                  <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
-                  <p className="discription">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
+                  <p className={`${style.studingtimetext} mt-2 mb-2 discription`}>مطالعه: 5دقیقه</p>
+                  <p className="subitem">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
                 </div>
                 <div className={`${style.boxBackgroundMain} d-flex flex-column d-none d-lg-block d-md-block d-xl-block`}>
                   <Box
@@ -64,8 +64,8 @@ export default function  Magazine() {
                     alt="The house from the offer."
                     src="/HomeImages/text.png"
                   />
-                 <p className={`${style.studingtimetext} mt-2 mb-2`}>مطالعه: 5دقیقه</p>
-                 <p className="discription">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
+                 <p className={`${style.studingtimetext} mt-2 mb-2 discription`}>مطالعه: 5دقیقه</p>
+                 <p className="subitem">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
                 </div>
             </div>
         </section>
