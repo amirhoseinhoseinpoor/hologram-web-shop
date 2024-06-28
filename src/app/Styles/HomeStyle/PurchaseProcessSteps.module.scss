@@ -73,6 +73,7 @@
   .boxTextSize{
     font-size: 16px;
  }
+
 }
 @media (max-width :768px) {
     .boxTextSize{
@@ -81,4 +82,8 @@
      .marginbottom{
         margin-bottom: 45px;
     }
+    .bux1Icon{
+        width: 85px !important;
+        height: 85px !important;
+     }
 }

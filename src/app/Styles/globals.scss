@@ -1,86 +1,92 @@
 .row {
-  margin-right: 0 !important;    /* Removes the negative margin on the right */
-  margin-left: 0 !important;     /* Removes the negative margin on the left */
+  margin-right: 0 !important; /* Removes the negative margin on the right */
+  margin-left: 0 !important; /* Removes the negative margin on the left */
   /* Add any other styles you want to reset or override */
 }
-body{
-    // overflow-x: hidden;
-    background-color: white;
+body {
+  // overflow-x: hidden;
+  background-color: white;
 }
-html{
-    position: relative;
-    height: 100%;
+html {
+  position: relative;
+  height: 100%;
 }
 body {
- position: relative;
- height: 100%;
- line-height: normal;
+  position: relative;
+  height: 100%;
+  line-height: normal;
 }
-//global sizing 
+//global sizing
 
-.title{
+.title {
   font-size: 20px;
   font-weight: 500;
 }
-.subtitle{
+.subtitle {
   font-weight: 500;
   font-size: 17px;
 }
-.discription{
+.discription {
   font-size: 15px;
   font-weight: 400;
 }
-.anavigation{
+.anavigation {
   font-size: 14px;
   font-weight: 500;
 }
-.Banner-title{
+.Banner-title {
   font-weight: 500;
   font-size: 35px;
 }
-h1,h2,h3,h4,h5,h6,p,a,span{
-    line-height: normal ;
-    margin-bottom: 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span {
+  line-height: normal;
+  margin-bottom: 0;
 }
-//end global sizing 
+//end global sizing
 
-.navbar-toggler:focus{
-    box-shadow: none;
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+.basic-navbar-nav {
+  border: none;
+}
+.basic-navbar-nav:focus {
+  outline: none !important;
+}
 
-}
-.dropdown-toggle::after{
-    display: none;
-}
-.basic-navbar-nav{
-    border: none;
-}
-.basic-navbar-nav:focus{
-   outline: none !important;
-}
-
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
   color: hsl(211, 89%, 59%);
-  border: 1px solid #3892F3 !important;
+  border: 1px solid #3892f3 !important;
 }
 
 //acoordion
 
-.accordion-button.collapsed{
+.accordion-button.collapsed {
   justify-content: space-between !important;
 }
-.accordion-button:focus{
+.accordion-button:focus {
   outline: none;
   box-shadow: none;
   background-color: unset;
   color: unset;
 }
-.accordion-item:last-of-type>.accordion-header .accordion-button.collapsed{
+.accordion-item:last-of-type > .accordion-header .accordion-button.collapsed {
   border-radius: unset;
 }
 
-
-
-.accordion-button.collapsed::after { 
+.accordion-button.collapsed::after {
   background-image: url(/HomeImages/acoordion.png);
 }
 
@@ -91,125 +97,111 @@ h1,h2,h3,h4,h5,h6,p,a,span{
 //swiper
 
 #app {
-    height: 100%;
-  }
-
-  .swiper {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .swiper-slide {
-    p{
-      margin-right: 10px;
-    }
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60% !important;
-    align-self: center;
-  }
-  
-  .swiper-slide img {
-    
-    object-fit: cover;
-  }
-
-  .swiper .swiper-pagination{
-    background-color: white;
-    padding: 10px 0;
-    bottom: -1% !important;
-    border-radius: 6px;
-  }
-  
-
-
-
-
-
-
-
-
-@media (max-width :980px) {
-    p{
-       font-size: 18px;
-    }
-    span{
-      font-size: 18px;
-    }
-    .title{
-      font-size: 17.5px;
-      font-weight: 500;
-    }
-    .Banner-title{
-      font-size: 27px;
-    }
-    .subtitle{
-      font-weight: unset;
-    }
+  height: 100%;
 }
-@media (max-width :768px) {
-   // global sizing
-    p{
-        font-size: 16.5px;
-    }
-     span{
-       font-size: 16.5px;
-    }
-    .title{
-      font-size: 17px !important;
-      font-weight: 500 !important; 
-    }
-    .discription{
-      font-size: 12px !important;
-    }
-    .Banner-title{
-      font-size: 18px;
-    }
-    .subAdvantages{
-      font-size: 14px !important;
-    }
 
+.swiper {
+  width: 100%;
+  height: 100%;
+}
 
-
-    .accordion-button.collapsed::after { 
-      display: none;
-    }
-    
-    .accordion-button:not(.collapsed)::after {
-      display: none;
-    }
-    .accordion-button.collapsed::before { 
-      content: '';
-      background-image: url(/HomeImages/acoordion.png);
-      width: 1.25rem;
-      height: 1.25rem;
-      flex-shrink: 0;
-      background-repeat: no-repeat;
-      background-size: 1.2rem;
-      transition: 0.2s ease-in-out;
-      margin-left: 17px;
-    }
-    
-    .accordion-button:not(.collapsed)::before {
-      content: '';
-      background-image: url(/HomeImages/acoordion-collapse.png);
-      width: 1.25rem;
-      height: 1.25rem;
-      flex-shrink: 0;
-      background-repeat: no-repeat;
-      background-size: 1.2rem;
-      transition: 0.2s ease-in-out;
-      transform: rotate(-180deg);
-      margin-left: 17px;
-    }
-    .accordion-button.collapsed{
-      justify-content: unset !important;
+.swiper-slide {
+  p {
+    margin-right: 10px;
   }
-  .FAQ_accordionStyle__rCscI div h2 button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60% !important;
+  align-self: center;
+}
+
+.swiper-slide img {
+  object-fit: cover;
+}
+
+.swiper .swiper-pagination {
+  background-color: white;
+  padding: 10px 0;
+  bottom: -1% !important;
+  border-radius: 6px;
+}
+
+@media (max-width: 980px) {
+  p {
+    font-size: 18px;
+  }
+  span {
+    font-size: 18px;
+  }
+  .title {
+    font-size: 17.5px;
+    font-weight: 500;
+  }
+  .Banner-title {
+    font-size: 27px;
+  }
+  .subtitle {
+    font-weight: unset;
+  }
+}
+@media (max-width: 768px) {
+  // global sizing
+  p {
+    font-size: 16.5px;
+  }
+  span {
+    font-size: 16.5px;
+  }
+  .title {
+    font-size: 17px !important;
+    font-weight: 500 !important;
+  }
+  .discription {
+    font-size: 12px !important;
+  }
+  .Banner-title {
+    font-size: 18px;
+  }
+  .subAdvantages {
+    font-size: 14px !important;
+  }
+
+  .accordion-button.collapsed::after {
+    display: none;
+  }
+
+  .accordion-button:not(.collapsed)::after {
+    display: none;
+  }
+  .accordion-button.collapsed::before {
+    content: "";
+    background-image: url(/HomeImages/acoordion.png);
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-size: 1.2rem;
+    transition: 0.2s ease-in-out;
+    margin-left: 17px;
+  }
+
+  .accordion-button:not(.collapsed)::before {
+    content: "";
+    background-image: url(/HomeImages/acoordion-collapse.png);
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-size: 1.2rem;
+    transition: 0.2s ease-in-out;
+    transform: rotate(-180deg);
+    margin-left: 17px;
+  }
+  .accordion-button.collapsed {
     justify-content: unset !important;
-
   }
-
-
+  .FAQ_accordionStyle__rCscI div h2 button {
+    justify-content: unset !important;
+  }
 }

@@ -20,8 +20,8 @@ export default function PurchaseProcessSteps() {
                         <Box className={style.Arrow}
                          component="img"
                          sx={{
-                             width: 125, 
-                             maxHeight: 60, 
+                             width: 138, 
+                             maxHeight: 57, 
                          }}
                          alt="slieds"
                          src="/HomeImages/PurchuseArrow.png"                

@@ -30,8 +30,8 @@ export default function Banner() {
 
      SwiperCore.use([Autoplay])
     return(
-        <section className={`${style.mainSection} container mt-4 mb-4`}>
-            <div className={`${style.resizeWidth} position-relative`}>
+        <section className={`${style.mainSection} mt-4 mb-4`}>
+            <div className={`${style.resizeWidth} container position-relative`}>
                <Swiper     
                     loop={true}
                     autoplay={{ delay: 4000 }}
