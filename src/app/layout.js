@@ -1,7 +1,6 @@
 import localFont from 'next/font/local';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Styles/reset.css";
-
 import "./Styles/globals.scss";
 import  StoreProvider from './Store/storeProvider';
 
@@ -23,9 +22,6 @@ export default function RootLayout({ children }) {
         <StoreProvider>
           {children}         
         </StoreProvider>
-       
-        
-
       </body>
     </html>
   );
