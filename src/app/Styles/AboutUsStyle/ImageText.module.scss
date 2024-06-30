@@ -1,0 +1,64 @@
+@use '../variable' as var;
+
+.mainPicture{
+    gap: 20px;
+    
+}
+.imageOne{
+  background-image: url('../../../../public/AboutImages/aboutbluebackground.jpg');
+  width: 35%;
+  height: 300px;
+  background-size: cover;
+ background-position: center;
+ border-radius: 4px;
+  max-width: 560px;
+}
+.Imagetwo{
+  background-image: url('../../../../public/AboutImages/aboutImage-person.png');
+ background-position: top;
+ background-size: cover;
+ width: 65%;
+ height: 300px;
+ border-radius: 4px;
+ max-width: 560px;
+
+}
+.coloredText{
+    color: var.$arrow-background;
+}
+.ListStyle{
+    list-style: unset;
+    margin-right: 25px;
+    li{
+        margin: 2.5px 0;
+    }
+}
+@media (max-width :980px) {
+    .imageOne{
+        width: 50%;
+
+    }
+    .Imagetwo{
+        width: 50%;
+        
+
+    }
+}
+
+
+@media (max-width :768px) {
+    .Imagetwo{
+        width: 100%;
+        
+
+    }
+}
+@media (max-width :580px) {
+    .Imagetwo{
+        
+       height: 260px;
+        
+
+    }
+}
+

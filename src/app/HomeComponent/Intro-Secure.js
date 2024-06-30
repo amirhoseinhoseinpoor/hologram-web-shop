@@ -1,3 +1,5 @@
+import React from 'react';
+
 import style from '../Styles/HomeStyle/Intro-Secure.module.scss'
 import Box from '@mui/material/Box';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';

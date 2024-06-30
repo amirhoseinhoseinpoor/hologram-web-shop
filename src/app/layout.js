@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Styles/reset.css";
 import "./Styles/globals.scss";
 import  StoreProvider from './Store/storeProvider';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+
 
 
 const myFont = localFont({ src: './Fonts/IRANSansXV.woff2' , src : './Fonts/IRANSansXV.woff' })
@@ -15,12 +18,14 @@ export const metadata = {
 };
 
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children}) {
   return (
     <html lang="en" dir="rtl">
-      <body className={myFont.className}>
+      <body className={`${myFont.className} h-auto`}>
         <StoreProvider>
-          {children}         
+        <Header />
+          {children}      
+        <Footer />
         </StoreProvider>
       </body>
     </html>

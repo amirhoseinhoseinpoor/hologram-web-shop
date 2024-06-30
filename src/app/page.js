@@ -4,12 +4,12 @@ import Banner from './HomeComponent/Banner'
 import PurchaseProcessSteps from './HomeComponent/PurchaseProcessSteps'
 import Blog from './HomeComponent/Blog';
 import Exhibition from './HomeComponent/Exhibition';
-import Advantages from './HomeComponent/Advantages';
+import Advantages from './Components/Advantages';
 import IntroSecure from './HomeComponent/Intro-Secure';
 import IntroHologram from './HomeComponent/Intro-Hologram';
 import Video from './HomeComponent/Video'
 import Honors from './HomeComponent/Honors';
-import FAQ from './HomeComponent/FAQ'
+import FAQ from './Components/FAQ'
 import Footer from "./Components/Footer"
 
 import { ThemeProvider } from '@mui/material/styles';
@@ -20,7 +20,6 @@ export default function Home() {
     <main>
       <React.StrictMode>
        <ThemeProvider theme={theme}>
-         <Header/>
          <Banner/>
          <PurchaseProcessSteps/>
          <IntroSecure/>
@@ -31,7 +30,6 @@ export default function Home() {
          <Advantages/>
          <FAQ/>
          <Blog/>
-         <Footer/>
        </ThemeProvider>
       </React.StrictMode>
     </main>

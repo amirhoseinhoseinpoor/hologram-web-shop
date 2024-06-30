@@ -1,4 +1,5 @@
 'use client'
+import React from 'react';
 
 import style from '../Styles/HomeStyle/Banner.module.scss'
 import Box from '@mui/material/Box';
@@ -30,7 +31,7 @@ export default function Banner() {
 
      SwiperCore.use([Autoplay])
     return(
-        <section className={`${style.mainSection} mt-4 mb-4`}>
+        <section className={`${style.mainSection} mt-3 mb-4`}>
             <div className={`${style.resizeWidth} container position-relative`}>
                <Swiper     
                     loop={true}

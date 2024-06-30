@@ -8,7 +8,6 @@ export const login = createAsyncThunk(
     const { username, password } = credentials;
       try {
           const response = await axios.post('https://reqres.in/api/login', {
-            // mode: 'no-cors',
             username,
             password,
           });

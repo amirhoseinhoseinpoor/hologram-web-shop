@@ -1,4 +1,7 @@
 'use client'
+
+import React from 'react';
+
 import style from '../Styles/HomeStyle/FAQ.module.scss'
 import { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';

@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react';
 
 import style from "../Styles/HomeStyle/Honors.module.scss"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';

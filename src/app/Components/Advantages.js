@@ -1,5 +1,5 @@
 import style from '../Styles/HomeStyle/Advantages.module.scss'
-
+import React from 'react';
 export default function Advantages() {
     return(
         <section className={`${style.mainBackground} mb-5`}>

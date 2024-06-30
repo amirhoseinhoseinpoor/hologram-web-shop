@@ -1,5 +1,7 @@
 'use client'
 
+import React from 'react';
+
 import style from "../Styles/HomeStyle/Exhibition.module.scss";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
