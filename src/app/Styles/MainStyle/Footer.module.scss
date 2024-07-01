@@ -82,6 +82,13 @@
     max-width: 300px;
 }
 
+.footerLinksstyle{
+    a{
+        text-decoration: none;
+        color: unset;
+    }
+}
+
 
 @media (max-width :980px) {
     .responsiveRow{
