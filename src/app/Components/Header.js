@@ -15,7 +15,10 @@ import Fade from "@mui/material/Fade";
 const renderSubItems = (subItems, depth = 1) => {
   return subItems.map((subItem) => {
       if (subItem.subItems && subItem.subItems.length > 0) {
+        
         return (
+
+          
           
             <div className="me-2 mb-2" style={{lineHeight:'28px'}} key={subItem.id}>
               <NavDropdown.Item className={style.colornav} key={subItem.id} title={subItem.title}>
@@ -147,6 +150,22 @@ const handleClose = (key) => {
              {
                link: "#sss",
                title: "لیبل پلمپ با تخریب اختصاصی" ,
+               subItems: [],
+             },                   
+          ],
+         },
+         { 
+          link: "#2",
+          title: "اسکرچ" ,
+          subItems: [    
+            {
+              link: "#sss",
+              title: "انواع اسکرچ زبرا" ,
+              subItems: [],
+             },
+             {
+               link: "#sss",
+               title: "هولو اسکرچ" ,
                subItems: [],
              },                   
           ],

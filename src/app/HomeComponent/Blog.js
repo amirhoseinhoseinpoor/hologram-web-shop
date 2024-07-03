@@ -4,7 +4,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
 import React from 'react';
 
+
+// import redux part 
+import { useSelector, useDispatch } from 'react-redux';
+
 export default function  Magazine() {
+   
+
     return(
         <section className="mb-5 mt-4 container">
             <div className="d-flex flex-row justify-content-between">

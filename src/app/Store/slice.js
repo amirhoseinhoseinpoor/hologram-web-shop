@@ -1,5 +1,6 @@
 import { createSlice} from '@reduxjs/toolkit';
 import {login , logout , updateBannerContent} from './thunks'
+import { data } from 'jquery';
 
 const authinitialState = {
   token: null,
@@ -50,24 +51,37 @@ export const loading = (state) => state.auth.loading;
 export const error = (state) => state.auth.error;
 
 
-const AdminInitialState = {
-    banner: null,
+const contentInitialState = {
+  loading: false,
+   data: [],
+   error: '',
 };
   
 
-const adminSlice = createSlice({
-    name: 'admin',
-    initialState :AdminInitialState,
+const contentSlice = createSlice({
+    name: 'content',
+    initialState :contentInitialState,
     reducers: {},
     extraReducers: (builder) => {
       builder
+      .addCase(updateBannerContent.pending, (state) => {
+        state.loading = true;
+        state.error = null; // Update banner data on success
+      })
        
         .addCase(updateBannerContent.fulfilled, (state, action) => {
-          state.banner = action.payload; // Update banner data on success
+          state.loading = false;
+          state.data = action.payload; // Update banner data on success
         })
+        .addCase(updateBannerContent.rejected, (state , action) => {
+          state.loading = false;
+          state.error = action.payload || 'Something went wrong';
+        });
       
     },
   });
-  
-  export const adminsliceV = adminSlice.reducer;
-  export const banner = (state) => state.admin.banner;
+  export const contentSliceV = contentSlice.reducer;
+  export const UrlsContent = (state) => state.content.data;
+  export const loadingContent = (state) => state.content.loading;
+
+  export const errorcontent = (state) => state.content.error;
