@@ -1,15 +1,14 @@
-
-
 import localFont from 'next/font/local';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Styles/reset.css";
 import "./Styles/globals.scss";
-import  StoreProvider from './Store/storeProvider';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
+import StoreProvider from './Store/storeProvider';
 
-const myFont = localFont({ src: './Fonts/IRANSansXV.ttf'  })
 
+
+const myFont = localFont({ src: './Fonts/IRANSansXV.ttf' });
 
 export const metadata = {
   title: "Create Next App",
@@ -17,26 +16,19 @@ export const metadata = {
   metadata: 'name="viewport" content="initial-scale=1, width=device-width"',
 };
 
+export default function RootLayout({ children, pageProps }) {
+  const initialReduxState = pageProps?.initialReduxState || {};
 
-export default function RootLayout({children ,showHeader ,showFooter}) {
- 
-  
   return (
     <html lang="en" dir="rtl">
       <body className={`${myFont.className} h-auto`}>
-        
-        
-        <StoreProvider>
+        <StoreProvider initialReduxState={initialReduxState}>
           <>
-          
-           <Header />  
-             {children}  
-           <Footer />
-           
+            <Header />  
+            {children}  
+            <Footer />
           </>
-       
         </StoreProvider>
-        
       </body>
     </html>
   );

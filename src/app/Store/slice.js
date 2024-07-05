@@ -1,6 +1,5 @@
 import { createSlice} from '@reduxjs/toolkit';
-import {login , logout , updateBannerContent} from './thunks'
-import { data } from 'jquery';
+import {login , logout , updateBannerContent ,updateBlogcontent} from './thunks'
 
 const authinitialState = {
   token: null,
@@ -76,7 +75,19 @@ const contentSlice = createSlice({
         .addCase(updateBannerContent.rejected, (state , action) => {
           state.loading = false;
           state.error = action.payload || 'Something went wrong';
-        });
+        })
+        .addCase(updateBlogcontent.pending, (state, action) => {
+          state.loading = true;
+          state.error = null; // Update banner data on success
+        })
+        .addCase(updateBlogcontent.fulfilled, (state, action) => {
+          state.loading = false;
+          state.data = action.payload; // Update banner data on success
+        })
+        .addCase(updateBlogcontent.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload || 'Something went wrong';
+        })
       
     },
   });

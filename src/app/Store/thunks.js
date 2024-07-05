@@ -47,3 +47,17 @@ export const updateBannerContent = createAsyncThunk(
     }
   }
 );
+
+
+export const updateBlogcontent = createAsyncThunk(
+  'content/updateBlogcontent',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('/json/Blog.json');
+
+      return response.data;
+    } catch (error) {
+      return  rejectWithValue(error.response.data);
+    }
+  }
+);

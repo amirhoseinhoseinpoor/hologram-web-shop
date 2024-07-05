@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import style from "../Styles/HomeStyle/FAQ.module.scss";
+import style from "../Styles/MainStyle/FAQ.module.scss";
 import { useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";

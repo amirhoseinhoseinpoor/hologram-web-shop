@@ -4,12 +4,23 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
 import React from 'react';
 
+import axios from 'axios'; // Import axios for API calls
 
-// import redux part 
-import { useSelector, useDispatch } from 'react-redux';
+// const getData = async () => {
+ 
+    
+//       const response = await axios.get('/json/Blog.json');
+//       console.log(response.data);
 
-export default function  Magazine() {
+//       return response.data;
    
+ 
+// }
+
+
+export default async function Magazine() {
+ 
+  // const data = await getData()
 
     return(
         <section className="mb-5 mt-4 container">

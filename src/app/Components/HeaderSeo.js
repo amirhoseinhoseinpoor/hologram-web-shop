@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../Styles/AboutUsStyle/AboutUs.module.scss";
+import style from "../Styles/MainStyle/HeaderSeo.module.scss";
 export default function testUp1() {
     return(
         <section className="mt-2 mb-3">
