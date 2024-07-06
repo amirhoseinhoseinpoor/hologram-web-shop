@@ -27,7 +27,7 @@ export default function Form() {
 
   return (
     <section className={`${style.MainBackground} container pt-3 pb-3`}>
-      <div>
+      <div className={style.toggleBackground}>
         <div>
           <p className="title">ارتباط با ما</p>
         </div>
