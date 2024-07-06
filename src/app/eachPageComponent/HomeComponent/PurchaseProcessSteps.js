@@ -1,6 +1,6 @@
 import React from 'react';
 
-import style from '../Styles/HomeStyle/PurchaseProcessSteps.module.scss'
+import style from '../../Styles/HomeStyle/PurchaseProcessSteps.module.scss'
 import Box from '@mui/material/Box';
 
 

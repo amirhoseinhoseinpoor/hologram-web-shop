@@ -1,4 +1,4 @@
-import style from "../Styles/AboutUsStyle/ImageText.module.scss";
+import style from "../../Styles/AboutUsStyle/About.module.scss";
 export default function ImageText() {
   return (
     <section className="container mb-4">

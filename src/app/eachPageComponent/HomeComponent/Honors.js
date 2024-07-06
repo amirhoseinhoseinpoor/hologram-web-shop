@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import style from "../Styles/HomeStyle/Honors.module.scss"
+import style from "../../Styles/HomeStyle/Honors.module.scss"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from '@mui/material/Box';

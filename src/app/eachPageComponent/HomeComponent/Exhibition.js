@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 
-import style from "../Styles/HomeStyle/Exhibition.module.scss";
+import style from "../../Styles/HomeStyle/Exhibition.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Box from "@mui/material/Box";
@@ -19,7 +19,7 @@ import "swiper/css/autoplay";
 // data part
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateBannerContent } from "../Store/thunks";
+import { updateBannerContent } from "../../Store/thunks";
 
 export default function Exhibition() {
   const dispatch = useDispatch();

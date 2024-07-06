@@ -1,13 +1,13 @@
 import React from 'react';
-import Banner from './HomeComponent/Banner'
-import PurchaseProcessSteps from './HomeComponent/PurchaseProcessSteps'
-import Blog from './HomeComponent/Blog';
-import Exhibition from './HomeComponent/Exhibition';
+import Banner from './eachPageComponent/HomeComponent/Banner'
+import PurchaseProcessSteps from './eachPageComponent/HomeComponent/PurchaseProcessSteps'
+import Blog from './eachPageComponent/HomeComponent/Blog';
+import Exhibition from './eachPageComponent/HomeComponent/Exhibition';
 import Advantages from './Components/Advantages';
-import IntroSecure from './HomeComponent/Intro-Secure';
-import IntroHologram from './HomeComponent/Intro-Hologram';
-import Video from './HomeComponent/Video'
-import Honors from './HomeComponent/Honors';
+import IntroSecure from './eachPageComponent/HomeComponent/Intro-Secure';
+import IntroHologram from './eachPageComponent/HomeComponent/Intro-Hologram';
+import Video from './eachPageComponent/HomeComponent/Video'
+import Honors from './eachPageComponent/HomeComponent/Honors';
 import FAQ from './Components/FAQ'
 
 import { ThemeProvider } from '@mui/material/styles';

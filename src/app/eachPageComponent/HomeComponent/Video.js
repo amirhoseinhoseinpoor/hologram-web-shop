@@ -1,6 +1,6 @@
 'use client'
 import React, { useRef, useEffect, useState } from 'react';
-import style from '../Styles/HomeStyle/Video.module.scss'
+import style from '../../Styles/HomeStyle/Video.module.scss'
 import { Card, CardContent, CardMedia } from '@mui/material';
 import Box from '@mui/material/Box';
 

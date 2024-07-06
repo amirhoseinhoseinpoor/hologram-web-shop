@@ -1,5 +1,5 @@
 import Link from "next/link";
-import style from "../Styles/HomeStyle/Blog.module.scss";
+import style from "../../Styles/HomeStyle/Blog.module.scss";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
 import React from 'react';

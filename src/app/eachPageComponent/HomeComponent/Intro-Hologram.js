@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
-import style from '../Styles/HomeStyle/Intro-Hologram.module.scss';
+import style from '../../Styles/HomeStyle/Intro-Hologram.module.scss';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SecurityIcon from '@mui/icons-material/Security';
 export default function IntroHologram() {

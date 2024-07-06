@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 
-import style from '../Styles/HomeStyle/Banner.module.scss'
+import style from '../../Styles/HomeStyle/Banner.module.scss'
 import Box from '@mui/material/Box';
 
 // Import Swiper React components

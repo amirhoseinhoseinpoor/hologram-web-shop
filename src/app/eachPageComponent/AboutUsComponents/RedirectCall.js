@@ -1,4 +1,4 @@
-import style from "../Styles/AboutUsStyle/RedirectCall.module.scss"
+import style from "../../Styles/AboutUsStyle/RedirectCall.module.scss"
 
 export default function RedirectCall() {
     return(
