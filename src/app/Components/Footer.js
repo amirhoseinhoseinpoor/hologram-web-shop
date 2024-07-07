@@ -121,10 +121,10 @@ export default function Footer() {
                 <Link href="/">
                   <p className="mb-2">معرفی هولگرام‌ها</p>
                 </Link>
-                <Link href="/">
+                <Link href="/AboutUs">
                   <p className="mb-2">درباره‌ی ما</p>
                 </Link>
-                <Link href="/">
+                <Link href="/ContactUs">
                   <p className="mb-2">تماس با ما</p>
                 </Link>
                 <Link href="/">

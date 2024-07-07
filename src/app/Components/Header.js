@@ -8,7 +8,6 @@ import { Navbar, Nav, NavDropdown, Container, Offcanvas } from 'react-bootstrap'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import CallIcon from "@mui/icons-material/Call";
-import CloseIcon from "@mui/icons-material/Close";
 import Fade from "@mui/material/Fade";
 
 
@@ -17,25 +16,18 @@ const renderSubItems = (subItems, depth = 1) => {
       if (subItem.subItems && subItem.subItems.length > 0) {
         
         return (
-
-          
-          
             <div className="me-2 mb-2" style={{lineHeight:'28px'}} key={subItem.id}>
               <NavDropdown.Item className={style.colornav} key={subItem.id} title={subItem.title}>
                 {subItem.title}
               </NavDropdown.Item>
              {renderSubItems(subItem.subItems, depth + 1)}
             </div>
-           
         );
       } else {
         return (
-          
             <Nav.Link key={subItem.id} href={subItem.link}>
               {subItem.title}
             </Nav.Link>
-          
-          
         );
       }
 
@@ -71,7 +63,7 @@ const handleClose = (key) => {
 
 
   const mainItems = [
-    { link: "#home", title: "خانه", subItems: [] },
+    { link: "/", title: "خانه", subItems: [] },
     {
       link: "#test2",
       title: "محصولات",
@@ -175,8 +167,8 @@ const handleClose = (key) => {
     { link: "#test3", title: "معرفی هولگرام‌ها", subItems: [] },
     { link: "#test4", title: "ثبت سفارش", subItems: [] },
     { link: "#test5", title: "مقالات", subItems: [] },
-    { link: "#test6", title: "ارتباط با ما", subItems: [] },
-    { link: "#test7", title: "درباره‌ی ما", subItems: [] },
+    { link: "/ContactUs", title: "ارتباط با ما", subItems: [] },
+    { link: "/AboutUs", title: "درباره‌ی ما", subItems: [] },
   ];
 
   const addKeys = (items) => {
@@ -354,7 +346,7 @@ const handleClose = (key) => {
                       </React.Fragment>
                     ) : (
                       <React.Fragment key={item.id}>
-                        <Nav.Link key={item.id} href="#home">
+                        <Nav.Link key={item.id} href={item.link}>
                           {item.title}
                         </Nav.Link>
                       </React.Fragment>
