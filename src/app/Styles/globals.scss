@@ -30,9 +30,13 @@ body {
   font-weight: 500;
   font-size: 17px;
 }
+.subitem{
+  font-size: 18px;
+  font-weight: 500;
+}
 .discription {
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
 }
 .anavigation {
   font-size: 14px;
@@ -161,6 +165,9 @@ button{
 @media (max-width: 768px) {
   // global sizing
   .purchesSize{
+    font-size: 15px;
+  }
+  .subitem{
     font-size: 15px;
   }
   p {

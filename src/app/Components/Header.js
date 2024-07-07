@@ -166,7 +166,7 @@ const handleClose = (key) => {
     },
     { link: "#test3", title: "معرفی هولگرام‌ها", subItems: [] },
     { link: "#test4", title: "ثبت سفارش", subItems: [] },
-    { link: "#test5", title: "مقالات", subItems: [] },
+    { link: "/Blog", title: "مقالات", subItems: [] },
     { link: "/ContactUs", title: "ارتباط با ما", subItems: [] },
     { link: "/AboutUs", title: "درباره‌ی ما", subItems: [] },
   ];
@@ -352,13 +352,7 @@ const handleClose = (key) => {
                       </React.Fragment>
                     )}
 
-                    
-                      
-                    
-                    
-                    
-
-                    
+              
                   </React.Fragment>
                 ))}
                 {/* phone number */}
