@@ -130,7 +130,7 @@ export default function Footer() {
                 <Link href="/">
                   <p className="mb-2">افتخارات</p>
                 </Link>
-                <Link href="/">
+                <Link href="/Blog">
                   <p className="mb-2">مقالات</p>
                 </Link>
                 <Link href="/">

@@ -1,38 +1,108 @@
 [
+  
     {
-        "id": "1",
-        "priority": false,
-        "morpriority": true,
-        "imageSrc": "../../../HomeImages/text.png",
-        "time" : "زمان مطالعه: 6 دقیقه",
-        "date" :"5 اردیبهشت 1403",
-        "title": "Blog Title 1"
+        
+        "type" : "هولوگرام",
+        "card" : [
+            {
+                "id": "1",
+                "priority": false,
+                "morpriority": true,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "Blog Title 1"
+            },
+            {
+                "id": "2",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "test"
+            },
+            {
+                "id": "3",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority"
+            },
+            {
+                "id": "4",
+                "priority": true,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority2"
+            },
+            {
+                "id": "5",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority3"
+            }
+        ]
     },
     {
-        "id": "2",
-        "priority": false,
-        "morpriority": true,
-        "imageSrc": "../../../HomeImages/text.png",
-        "time" : "زمان مطالعه: 6 دقیقه",
-        "date" :"5 اردیبهشت 1403",
-        "title": "test"
-    },
-    {
-        "id": "2",
-        "priority": true,
-        "morpriority": false,
-        "imageSrc": "../../../HomeImages/text.png",
-        "time" : "زمان مطالعه: 6 دقیقه",
-        "date" :"5 اردیبهشت 1403",
-        "title": "testpriority"
-    },
-    {
-        "id": "2",
-        "priority": true,
-        "morpriority": false,
-        "imageSrc": "../../../HomeImages/text.png",
-        "time" : "زمان مطالعه: 6 دقیقه",
-        "date" :"5 اردیبهشت 1403",
-        "title": "testpriority2"
+       
+        "type" : "لیبل هولوگرام",
+        "card" : [
+            {
+                "id": "1",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "lorem title for test"
+            },
+            {
+                "id": "2",
+                "priority": false,
+                "morpriority": true,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "test"
+            },
+            {
+                "id": "3",
+                "priority": true,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority"
+            },
+            {
+                "id": "4",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority2"
+            },
+            {
+                "id": "5",
+                "priority": true,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority3"
+            }
+        ]
     }
+
+
+   
 ]
