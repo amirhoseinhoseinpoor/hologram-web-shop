@@ -56,7 +56,7 @@
         "type" : "لیبل هولوگرام",
         "card" : [
             {
-                "id": "1",
+                "id": "6",
                 "priority": false,
                 "morpriority": false,
                 "imageSrc": "../../../HomeImages/text.png",
@@ -65,7 +65,7 @@
                 "title": "lorem title for test"
             },
             {
-                "id": "2",
+                "id": "7",
                 "priority": false,
                 "morpriority": true,
                 "imageSrc": "../../../HomeImages/text.png",
@@ -74,7 +74,7 @@
                 "title": "test"
             },
             {
-                "id": "3",
+                "id": "8",
                 "priority": true,
                 "morpriority": false,
                 "imageSrc": "../../../HomeImages/text.png",
@@ -83,7 +83,7 @@
                 "title": "testpriority"
             },
             {
-                "id": "4",
+                "id": "9",
                 "priority": false,
                 "morpriority": false,
                 "imageSrc": "../../../HomeImages/text.png",
@@ -92,7 +92,7 @@
                 "title": "testpriority2"
             },
             {
-                "id": "5",
+                "id": "10",
                 "priority": true,
                 "morpriority": false,
                 "imageSrc": "../../../HomeImages/text.png",

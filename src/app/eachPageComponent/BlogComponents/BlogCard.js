@@ -11,8 +11,7 @@ function BlogCard() {
     <>
       <div className={`${style.MainDiv} container gap-2`}>
         {blogs.map((blog) => (
-          <>
-            
+          <> 
               {blog.card.map((cards) => (
                 <>
                   {/* render more priority blog */}
@@ -55,7 +54,6 @@ function BlogCard() {
                   )}
                 </>
               ))}
-            
             </>
           ))}
           </div>
