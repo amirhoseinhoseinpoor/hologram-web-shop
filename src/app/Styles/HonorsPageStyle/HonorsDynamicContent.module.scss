@@ -1,0 +1,31 @@
+@use "../variable" as var;
+
+.discriptionColor{
+    color: var.$tabbed;
+}
+.customContainer{
+    padding: 0 20%;
+}
+.boldContentStyle{
+    border-right: 2px solid var.$footer-top-person;
+    p{
+        margin-right: 10px;
+    }
+}
+.socialMediaIcon a{
+    color: var.$social-media-color;
+    padding: 4px;
+}
+.firstIcontStyle{
+    font-size: 28px;
+}
+// tags part
+.tagsStyle{
+    li{
+      padding: 5px 14px;
+      border: 1.5px solid lightgray;
+      border-radius: 4px;
+      color: var.$tabbed;
+    }
+  }
+  

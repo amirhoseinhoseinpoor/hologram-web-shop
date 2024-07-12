@@ -127,7 +127,7 @@ export default function Footer() {
                 <Link href="/ContactUs">
                   <p className="mb-2">تماس با ما</p>
                 </Link>
-                <Link href="/">
+                <Link href="/Honors">
                   <p className="mb-2">افتخارات</p>
                 </Link>
                 <Link href="/Blog">

@@ -9,6 +9,8 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import Tooltip from "@mui/material/Tooltip";
+import CopyLinkButton  from "../../Components/CopyLinkButton"
+
 
 function getBlogPostById(id) {
   // const filePath = path.join(process.cwd(), 'public', 'json', 'BlogPage.json');
@@ -166,11 +168,7 @@ export default function BlogPostPage({ params }) {
           <div
             className={`${style.socialMediaIcon} d-flex flex-row mt-3 gap-3`}
           >
-            <a href="#">
-              <Tooltip title="کپی پیوند">
-                <LinkIcon className={style.firstIcontStyle} />
-              </Tooltip>
-            </a>
+            <CopyLinkButton/>
             <a href="#">
               <WhatsAppIcon />
             </a>
@@ -183,12 +181,8 @@ export default function BlogPostPage({ params }) {
           </div>
           <div className="mt-3">
             <ul className={`${style.tagsStyle} d-flex flex-row gap-3`}>
-              <li>#تگ</li>
-              <li>#تگ</li>
-              <li>#تگ</li>
-              <li>#تگ</li>
+             {blogPost.tags.split(',').map((tag) => (<><li>{tag.trim()}</li></>))}
             </ul>
-
           </div>
           <section className="mb-5 mt-4 container">
             <div className="d-flex flex-row justify-content-between">

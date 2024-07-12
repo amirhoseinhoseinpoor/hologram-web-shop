@@ -30,7 +30,7 @@ export default async function Magazine() {
                     <span className={`${style.slidernexttext} pe-1  title`}>برای مطالعه بیشتر...</span>
                 </div>
                 <div className={style.arrowbacklink}>
-                    <Link href="#">مطالعه بیشتر <ArrowBackIcon></ArrowBackIcon></Link>
+                    <Link href="/Blog">مطالعه بیشتر <ArrowBackIcon></ArrowBackIcon></Link>
                 </div>
             </div>
             <div className={`${style.responsiveFirstBox} d-flex flex-row gap-3 mt-4 justify-content-center`}>
