@@ -4,63 +4,67 @@ import style from "../Styles/MainStyle/Header.module.scss";
 import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Navbar, Nav, NavDropdown, Container, Offcanvas } from 'react-bootstrap';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Container,
+  Offcanvas,
+} from "react-bootstrap";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import CallIcon from "@mui/icons-material/Call";
 import Fade from "@mui/material/Fade";
 
-
 const renderSubItems = (subItems, depth = 1) => {
   return subItems.map((subItem) => {
-      if (subItem.subItems && subItem.subItems.length > 0) {
-        
-        return (
-            <div className="me-2 mb-2" style={{lineHeight:'28px'}} key={subItem.id}>
-              <NavDropdown.Item className={style.colornav} key={subItem.id} title={subItem.title}>
-                {subItem.title}
-              </NavDropdown.Item>
-             {renderSubItems(subItem.subItems, depth + 1)}
-            </div>
-        );
-      } else {
-        return (
-            <Nav.Link key={subItem.id} href={subItem.link}>
-              {subItem.title}
-            </Nav.Link>
-        );
-      }
-
+    if (subItem.subItems && subItem.subItems.length > 0) {
+      return (
+        <div
+          className="me-2 mb-2"
+          style={{ lineHeight: "28px" }}
+          key={subItem.id}
+        >
+          <NavDropdown.Item
+            className={style.colornav}
+            key={subItem.id}
+            title={subItem.title}
+          >
+            {subItem.title}
+          </NavDropdown.Item>
+          {renderSubItems(subItem.subItems, depth + 1)}
+        </div>
+      );
+    } else {
+      return (
+        <Nav.Link key={subItem.id} href={subItem.link}>
+          {subItem.title}
+        </Nav.Link>
+      );
+    }
   });
 };
-
-
-
-
 
 export default function Header() {
   const [activeLink, setActiveLink] = useState("خانه");
   const [isVisible, setIsVisible] = useState(true);
   const handleLinkClick = (linkTitle) => {
     setActiveLink(linkTitle);
-    setIsVisible(false);
-    setTimeout(() => setIsVisible(true), 250);
+    setIsVisible(true);
   };
 
-  
-// State to manage visibility of all off-canvas elements dynamically
-const [visibility, setVisibility] = useState({});
+  // State to manage visibility of all off-canvas elements dynamically
+  const [visibility, setVisibility] = useState({});
 
-// Function to toggle visibility
-const toggleShow = (key) => {
-  setVisibility(prev => ({ ...prev, [key]: !prev[key] }));
-};
+  // Function to toggle visibility
+  const toggleShow = (key) => {
+    setVisibility((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
-// Function to close a specific off-canvas
-const handleClose = (key) => {
-  setVisibility(prev => ({ ...prev, [key]: false }));
-};
-
+  // Function to close a specific off-canvas
+  const handleClose = (key) => {
+    setVisibility((prev) => ({ ...prev, [key]: false }));
+  };
 
   const mainItems = [
     { link: "/", title: "خانه", subItems: [] },
@@ -68,100 +72,100 @@ const handleClose = (key) => {
       link: "#test2",
       title: "محصولات",
       subItems: [
-        { 
+        {
           link: "#awdwa",
-           title: "هولوگرام" , 
-           subItems: [
+          title: "هولوگرام",
+          subItems: [
             {
               link: "#1324",
-              title: "هولوگرام‌های تخریب شونده" ,
+              title: "هولوگرام‌های تخریب شونده",
               subItems: [],
             },
             {
               link: "#ggg",
-              title: "هولوگرام‌های شفاف" ,
+              title: "هولوگرام‌های شفاف",
               subItems: [],
             },
             {
               link: "#sss",
-              title: "هولوگرام کارت‌های پی وی سی" ,
+              title: "هولوگرام کارت‌های پی وی سی",
               subItems: [],
             },
             {
               link: "#sss",
-              title: "بارکد هولوگرام" ,
+              title: "بارکد هولوگرام",
               subItems: [],
             },
             {
               link: "#sss",
-              title: "هولوگرام‌های رنگی" ,
+              title: "هولوگرام‌های رنگی",
               subItems: [],
             },
             {
               link: "#sss",
-              title: "هولوگرام با تخریب اختصاصی" ,
+              title: "هولوگرام با تخریب اختصاصی",
               subItems: [],
             },
             {
               link: "#sss",
-              title: "نوار هولوگرام" ,
+              title: "نوار هولوگرام",
               subItems: [],
             },
           ],
         },
-        { 
-         link: "#2",
-         title: "لیبل‌های امنیتی" ,
-         subItems: [    
-           {
-             link: "#sss",
-             title: "لیبل با نوار هولوگرام" ,
-             subItems: [],
-            },
+        {
+          link: "#2",
+          title: "لیبل‌های امنیتی",
+          subItems: [
             {
               link: "#sss",
-              title: "لیبل با چاپ امنیتی و نوار هولوگرام" ,
+              title: "لیبل با نوار هولوگرام",
               subItems: [],
             },
             {
               link: "#sss",
-              title: "لیبل‌های هولوگرافیک" ,
+              title: "لیبل با چاپ امنیتی و نوار هولوگرام",
               subItems: [],
-            },                    
-         ],
+            },
+            {
+              link: "#sss",
+              title: "لیبل‌های هولوگرافیک",
+              subItems: [],
+            },
+          ],
         },
-        { 
+        {
           link: "#2",
-          title: "برچسب‌های پلمپ" ,
-          subItems: [    
+          title: "برچسب‌های پلمپ",
+          subItems: [
             {
               link: "#sss",
-              title: "لیبل پلمپ با تخریب عمومی" ,
+              title: "لیبل پلمپ با تخریب عمومی",
               subItems: [],
-             },
-             {
-               link: "#sss",
-               title: "لیبل پلمپ با تخریب اختصاصی" ,
-               subItems: [],
-             },                   
-          ],
-         },
-         { 
-          link: "#2",
-          title: "اسکرچ" ,
-          subItems: [    
+            },
             {
               link: "#sss",
-              title: "انواع اسکرچ زبرا" ,
+              title: "لیبل پلمپ با تخریب اختصاصی",
               subItems: [],
-             },
-             {
-               link: "#sss",
-               title: "هولو اسکرچ" ,
-               subItems: [],
-             },                   
+            },
           ],
-         },
+        },
+        {
+          link: "#2",
+          title: "اسکرچ",
+          subItems: [
+            {
+              link: "#sss",
+              title: "انواع اسکرچ زبرا",
+              subItems: [],
+            },
+            {
+              link: "#sss",
+              title: "هولو اسکرچ",
+              subItems: [],
+            },
+          ],
+        },
       ],
     },
     { link: "#test3", title: "معرفی هولگرام‌ها", subItems: [] },
@@ -209,11 +213,12 @@ const handleClose = (key) => {
               <Nav className="align-items-center ">
                 {mainItemObject.map((item) => (
                   <React.Fragment key={item.id}>
-
-                     {item.subItems.length > 0 ? (
-                        <NavDropdown
+                    {item.subItems.length > 0 ? (
+                      <NavDropdown
                         className={`${
-                          activeLink === item.title ? style.active : style.noneactive
+                          activeLink === item.title
+                            ? style.active
+                            : style.noneactive
                         } ${style.navDropDown}`}
                         key={item.id}
                         title={
@@ -227,7 +232,6 @@ const handleClose = (key) => {
                         <div className={style.fixcolumn}>
                           {renderSubItems(item.subItems)}
                         </div>
-                       
                       </NavDropdown>
                     ) : (
                       <Fade key={item.title} in={isVisible} timeout={250}>
@@ -245,21 +249,16 @@ const handleClose = (key) => {
                         </Nav.Link>
                       </Fade>
                     )}
-
-
-                
-                   
                   </React.Fragment>
                 ))}
               </Nav>
             </div>
           </div>
 
-          
           <div className="d-flex flex-row justify-content-between d-block d-lg-none">
             <div className="d-lg-none">
               <Navbar.Toggle
-                onClick={() => toggleShow('main')}
+                onClick={() => toggleShow("main")}
                 className="basic-navbar-nav"
                 aria-controls="basic-navbar-nav"
               />
@@ -291,41 +290,35 @@ const handleClose = (key) => {
             <Navbar.Offcanvas
               placement="end"
               className={`me-5 ${style.navbaritemheader}`}
-              show={visibility['main']}
-              onHide={() => handleClose('main')}
+              show={visibility["main"]}
+              onHide={() => handleClose("main")}
               id="basic-navbar-nav"
             >
-              
-              <Offcanvas.Header className={`${style.offcanvasheader} ${style.nextoffcanvas}`} closeButton>
+              <Offcanvas.Header
+                className={`${style.offcanvasheader} ${style.nextoffcanvas}`}
+                closeButton
+              >
                 <Offcanvas.Title>لوگو</Offcanvas.Title>
               </Offcanvas.Header>
-                
-              
 
               <Nav className="align-items-center me-2">
                 {mainItemObject.map((item) => (
                   <React.Fragment key={item.id}>
-
                     {item.subItems.length > 0 ? (
                       <React.Fragment key={item.id}>
-
                         <Navbar.Toggle
-                          className="text-end" 
+                          className="text-end"
                           aria-controls={`offcanvas-${item.id}`}
                           onClick={() => toggleShow(item.id)}
                         >
-                           <React.Fragment  key={item.id}>
-                              {item.title}
-                              <KeyboardArrowDownIcon
-                                key={item.id}
-                              ></KeyboardArrowDownIcon>
-                            </React.Fragment>
+                          <React.Fragment key={item.id}>
+                            {item.title}
+                            <KeyboardArrowDownIcon
+                              key={item.id}
+                            ></KeyboardArrowDownIcon>
+                          </React.Fragment>
                         </Navbar.Toggle>
-                         
-                          
-                          
-                          
-                        
+
                         <Navbar.Offcanvas
                           placement="end"
                           key={item.id}
@@ -334,14 +327,15 @@ const handleClose = (key) => {
                           id={`offcanvas-${item.id}`}
                         >
                           <Offcanvas.Header className={style.offcanvasheader}>
-                           <button className={style.innnerstyle} onClick={() => handleClose(item.id)}>
-                              <ArrowForwardIcon/>
-                              <Offcanvas.Title>{item.title}</Offcanvas.Title> 
-                           </button>
-                                  
+                            <button
+                              className={style.innnerstyle}
+                              onClick={() => handleClose(item.id)}
+                            >
+                              <ArrowForwardIcon />
+                              <Offcanvas.Title>{item.title}</Offcanvas.Title>
+                            </button>
                           </Offcanvas.Header>
                           {renderSubItems(item.subItems)}
-                          
                         </Navbar.Offcanvas>
                       </React.Fragment>
                     ) : (
@@ -351,8 +345,6 @@ const handleClose = (key) => {
                         </Nav.Link>
                       </React.Fragment>
                     )}
-
-              
                   </React.Fragment>
                 ))}
                 {/* phone number */}
@@ -369,11 +361,6 @@ const handleClose = (key) => {
               </Nav>
             </Navbar.Offcanvas>
           </div>
-
-
-
-          
-
 
           <div className="d-lg-block d-none">
             <NavDropdown
@@ -397,7 +384,6 @@ const handleClose = (key) => {
           </div>
         </Container>
       </Navbar>
-
     </section>
   );
 }

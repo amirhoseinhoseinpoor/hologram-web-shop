@@ -55,6 +55,8 @@
   }
   .MainDiv{
     grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+
   }
   .mainCardStyle{
     margin-top: 0;
