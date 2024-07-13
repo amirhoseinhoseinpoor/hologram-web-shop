@@ -15,6 +15,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import CallIcon from "@mui/icons-material/Call";
 import Fade from "@mui/material/Fade";
+import { usePathname } from 'next/navigation';
 
 const renderSubItems = (subItems, depth = 1) => {
   return subItems.map((subItem) => {
@@ -46,12 +47,19 @@ const renderSubItems = (subItems, depth = 1) => {
 };
 
 export default function Header() {
-  const [activeLink, setActiveLink] = useState("خانه");
-  const [isVisible, setIsVisible] = useState(true);
-  const handleLinkClick = (linkTitle) => {
-    setActiveLink(linkTitle);
-    setIsVisible(true);
+
+    const pathname = usePathname()
+
+
+  
+   const getBasePath = (path) => {
+    // This will capture the first segment of the path after the initial '/'
+    const match = path.match(/^\/([^\/]*)/);
+    return match ? `/${match[1]}` : '/';
   };
+   
+
+
 
   // State to manage visibility of all off-canvas elements dynamically
   const [visibility, setVisibility] = useState({});
@@ -216,7 +224,7 @@ export default function Header() {
                     {item.subItems.length > 0 ? (
                       <NavDropdown
                         className={`${
-                          activeLink === item.title
+                          getBasePath(pathname) === item.link
                             ? style.active
                             : style.noneactive
                         } ${style.navDropDown}`}
@@ -234,20 +242,20 @@ export default function Header() {
                         </div>
                       </NavDropdown>
                     ) : (
-                      <Fade key={item.title} in={isVisible} timeout={250}>
+                      
                         <Nav.Link
                           className={`${
-                            activeLink === item.title
+                            getBasePath(pathname) === item.link
                               ? style.active
                               : style.noneactive
                           }`}
                           key={item.id}
                           href={item.link}
-                          onClick={() => handleLinkClick(item.title)}
+                          
                         >
                           {item.title}
                         </Nav.Link>
-                      </Fade>
+                      
                     )}
                   </React.Fragment>
                 ))}

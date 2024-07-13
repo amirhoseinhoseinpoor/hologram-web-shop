@@ -46,18 +46,17 @@
     .morpriority{
         width: 100%;
     }
-   
+    .MainDiv{
+        grid-gap: 10px;
+        grid-template-columns: 1fr 1fr;
+      }
 }
 
 @media (max-width: 768px) {
   .adjustpriority{
     width: 100%;
   }
-  .MainDiv{
-    grid-gap: 10px;
-    grid-template-columns: 1fr 1fr;
-
-  }
+  
   .mainCardStyle{
     margin-top: 0;
   }

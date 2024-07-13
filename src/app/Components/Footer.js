@@ -133,7 +133,7 @@ export default function Footer() {
                 <Link href="/Blog">
                   <p className="mb-2">مقالات</p>
                 </Link>
-                <Link href="/">
+                <Link href="/Exhibition">
                   <p className="mb-2">نمیشگاه‌ها</p>
                 </Link>
               </div>

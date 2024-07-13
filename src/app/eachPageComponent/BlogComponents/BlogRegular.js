@@ -13,6 +13,15 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
 export default function BlogRegular() {
+  function fixTitleSize(text) {
+    var shortTitle;
+    if(text.length > 60) {
+      shortTitle = text.slice(0 , 60) + "...";
+      return shortTitle;
+    }else{
+      return text
+    }
+  }
   return (
     <section className="container">
       <div className={style.inputStyle}>
@@ -65,7 +74,7 @@ export default function BlogRegular() {
                           variant="p"
                           component="div"
                         >
-                          {cards.title}
+                          {fixTitleSize(cards.title)}
                         </Typography>
                       </CardContent>
                     </Link>

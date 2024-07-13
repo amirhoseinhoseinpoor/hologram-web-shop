@@ -39,7 +39,7 @@ export const updateBannerContent = createAsyncThunk(
   'content/updateBannerContent',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/json/data.json');
+      const response = await axios.get('/json/ExhibitionPage.json');
 
       return response.data;
     } catch (error) {

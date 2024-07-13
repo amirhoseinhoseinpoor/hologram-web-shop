@@ -11,6 +11,15 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
 export default function Honors() {
+  function fixTitleSize(text) {
+    var shortTitle;
+    if(text.length > 60) {
+      shortTitle = text.slice(0 , 60) + "...";
+      return shortTitle;
+    }else{
+      return text
+    }
+  }
   return (
     <>
       <HeaderSeo />
@@ -48,7 +57,7 @@ export default function Honors() {
                       variant="p"
                       component="div"
                     >
-                      {honor.title}
+                      {fixTitleSize(honor.title)}
                     </Typography>
                   </CardContent>
                 </Link>

@@ -7,6 +7,15 @@ import Typography from "@mui/material/Typography";
 import blogs from "/public/json/BlogPage.json";
 
 function BlogCard() {
+  function fixTitleSize(text) {
+    var shortTitle;
+    if(text.length > 60) {
+      shortTitle = text.slice(0 , 60) + "...";
+      return shortTitle;
+    }else{
+      return text
+    }
+  }
   return (
     <>
       <div className={`${style.MainDiv} container gap-2`}>
@@ -46,7 +55,7 @@ function BlogCard() {
                             variant="p"
                             component="div"
                           >
-                            {cards.title}
+                            {fixTitleSize(cards.title)}
                           </Typography>
                         </CardContent>
                       </Link>

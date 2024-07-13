@@ -166,6 +166,9 @@ button{
   .subtitle {
     font-weight: unset;
   }
+  .subitem{
+    font-size: 15px;
+  }
 }
 @media (max-width: 768px) {
   // global sizing
@@ -176,7 +179,7 @@ button{
     font-size: 15px;
   }
   .subitem{
-    font-size: 15px;
+    font-size: 14px;
   }
   p {
     font-size: 16.5px;
