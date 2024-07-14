@@ -6,6 +6,8 @@ import style from "../../Styles/HomeStyle/Honors.module.scss"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from '@mui/material/Box';
+import Link from "next/link";
+
 
 
 // Import Swiper React components

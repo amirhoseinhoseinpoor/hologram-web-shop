@@ -6,6 +6,7 @@ import style from "../../Styles/HomeStyle/Exhibition.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Box from "@mui/material/Box";
+import Link from "next/link";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -41,6 +42,15 @@ export default function Exhibition() {
   const mainItemObject = addKeys(data);
 
   SwiperCore.use([Autoplay]);
+  function fixTitleSize(text) {
+    var shortTitle;
+    if (text.length > 60) {
+      shortTitle = text.slice(0, 60) + "...";
+      return shortTitle;
+    } else {
+      return text;
+    }
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -99,22 +109,29 @@ export default function Exhibition() {
                 <React.Fragment key={mainItem.id}>
                   {mainItem.slides.map((item, index) => (
                     <SwiperSlide key={index}>
-                      <div className={style.resetexhibition}>
-                        <Box
-                          className={`${style.adjustaspectratioinner} h-100`}
-                          component="img"
-                          sx={{
-                            width: "100%",
-                            maxHeight: "100%",
-                            objectFit: "cover",
-                            aspectRatio: 2.4,
-                            borderRadius: 3,
-                          }}
-                          alt="slieds"
-                          src={item.url}
-                        />
-                        <p>{item.text}</p>
-                      </div>
+                      <Link
+                        className="text-decoration-none"
+                        href={`/Exhibition/${item.id}`}
+                        style={{color: "black"}}
+                        passHref
+                      >
+                        <div className={style.resetexhibition}>
+                          <Box
+                            className={`${style.adjustaspectratioinner} h-100`}
+                            component="img"
+                            sx={{
+                              width: "100%",
+                              maxHeight: "100%",
+                              objectFit: "cover",
+                              aspectRatio: 2.4,
+                              borderRadius: 3,
+                            }}
+                            alt="slieds"
+                            src={item.url}
+                          />
+                          <p>{fixTitleSize(item.text)}</p>
+                        </div>
+                      </Link>
                     </SwiperSlide>
                   ))}
                 </React.Fragment>
