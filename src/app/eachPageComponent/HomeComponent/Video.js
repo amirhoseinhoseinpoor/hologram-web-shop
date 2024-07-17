@@ -9,8 +9,8 @@ export default function Video() {
   const videoRef = useRef()
   useEffect(() => {
     const video = videoRef.current;
-      video.onplay = () => {
-        setVideoEnded(!videoEnded)
+      video.onplaying = () => {
+        setVideoEnded(true)
       }
   }, [])
   
@@ -31,8 +31,8 @@ export default function Video() {
                <CardMedia
                 id='video'
                 component="video"
-                image="HomeVideo/SampleVideo_1280x720_1mb.mp4" 
-                poster='HomeImages/Video image.png'
+                image="/HomeVideo/SampleVideo_1280x720_1mb.mp4" 
+                poster='/HomeImages/Video image.png'
                 controls
                 ref={videoRef}
               />

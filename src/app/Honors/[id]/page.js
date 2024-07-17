@@ -6,8 +6,8 @@ import Box from "@mui/material/Box";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-
-import CopyLinkButton  from "../../Components/CopyLinkButton"
+import CopyLinkButton  from "../../Components/CopyLinkButton";
+import ShowRoute from "@/app/Components/ShowRoute";
 
 function findSpeceficIteminjson(id) {
   const filepath = path.join(
@@ -33,7 +33,7 @@ export default function innerHonors({ params }) {
 
   return (
     <section className={style.customContainer}>
-     
+        <ShowRoute/>
         <div>
           <h3 className="title mt-3 mb-1">{honors.title}</h3>
         </div>

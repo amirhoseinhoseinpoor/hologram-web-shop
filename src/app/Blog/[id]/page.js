@@ -4,13 +4,13 @@ import path from "path";
 import style from "../../Styles/BlogStyle/BlogDynamicContent.module.scss";
 import Box from "@mui/material/Box";
 import SearchIcon from "@mui/icons-material/Search";
-import LinkIcon from "@mui/icons-material/Link";
+
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import Tooltip from "@mui/material/Tooltip";
 import CopyLinkButton  from "../../Components/CopyLinkButton"
 
+import ShowRoute from "@/app/Components/ShowRoute";
 
 function getBlogPostById(id) {
   // const filePath = path.join(process.cwd(), 'public', 'json', 'BlogPage.json');
@@ -54,6 +54,7 @@ export default function BlogPostPage({ params }) {
 
   return (
     <section className="container">
+      <ShowRoute/>
       <div className={`${style.MainDiv} d-flex flex-row`}>
         <div className={`${style.textContent} d-flex flex-column`}>
           <h3 className="title mt-3 mb-1">{blogPost.title}</h3>
