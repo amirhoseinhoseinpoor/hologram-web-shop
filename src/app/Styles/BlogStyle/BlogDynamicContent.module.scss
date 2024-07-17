@@ -12,41 +12,23 @@
     margin-top: 70px;
 }
 .discriptionColor{
-    color: var.$tabbed;
+    a{
+        color: var.$tabbed;
+        text-decoration: none;
+    }
+    a:hover{
+      text-decoration: underline !important;
+    }
+    
 }
 .seasonMaindiv{
     border: 1px solid lightgray;
     padding: 10px;
     border-radius: 4px;
 }
-.inputStyle{
-    width: 100%;
-    position: relative;
-    input{
-        width: 100%;
-        border: 1px solid lightgray;
-        border-radius: 4px;
-        padding: 9px;
-        font-size: 14px;
-        margin-top: 25px;
-        
-    }
-    input:focus-visible{
-        outline: 1px solid var.$social-media-color;
-    }
-}
-.searchIconposition{
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    top: 70%;
-    transform: translate(50% , -50%);
-    color: var.$social-media-color;
-}
 
-.borderbuttom{
-    border-bottom: 1px solid lightgray;
-}
+
+
 .boldContentStyle{
     border-right: 2px solid var.$footer-top-person;
     p{
