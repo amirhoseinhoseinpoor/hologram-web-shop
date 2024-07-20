@@ -20,8 +20,6 @@ export default function Banner() {
         {url : '/HomeImages/Banner-image.png' },
         {url : '/HomeImages/Banner-image.png' },
         {url : '/HomeImages/Banner-image.png' },
-        
-        
       ];
   
       const UrlsObject = Urls.map((url , i)=>({

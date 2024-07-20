@@ -4,7 +4,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
 import React from 'react';
 
-import axios from 'axios'; // Import axios for API calls
+
 
 // const getData = async () => {
  
@@ -24,6 +24,7 @@ export default async function Magazine() {
 
     return(
         <section className="mb-5 mt-4 container">
+          
             <div className="d-flex flex-row justify-content-between">
                 <div>
                     <span className="title">مجله آذر هولگرام </span>

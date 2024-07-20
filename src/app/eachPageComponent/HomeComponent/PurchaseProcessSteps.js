@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 
 export default function PurchaseProcessSteps() {
     return(
-     <section className={`${style.mainBackground} mt-3`}>
+     <section className={`${style.mainBackground} mt-5`}>
         <div className="container d-flex flex-column">
          <div className={`${style.responsiveDiv} d-flex flex-row`}>
             <div className={`${style.widthResizing} d-flex flex-column position-relative mt-3 justify-content-enenly`}> 

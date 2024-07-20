@@ -79,7 +79,12 @@
 .socialMediaIcon a{
     color: var.$social-media-color;
     padding: 4px;
+        
 }
+.socialMediaIcon{
+    align-items: center;
+}
+
 
 .firstIcontStyle{
     font-size: 28px;

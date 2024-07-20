@@ -12,11 +12,11 @@
     background-color: unset !important;
     color: var.$tabbed ;
     border: 1px solid var.$tabbed !important;
-
+    padding : 6px 12px;
     font-size: 15px;
     font-weight: 600;
     border-radius: 32px !important;
-
+    
 }
 .buttonsTabbed li{
     padding: 8px;
@@ -53,13 +53,13 @@
 @media (max-width :768px) {
     .accordionItem :global{
         .accordion-header button{
-            padding: 8px;
+            padding: 17px 7px;
             font-size: 15px;
             text-align: right;
         }
     }
     .buttonsTabbed li button{
-        padding: 7px;
+        padding: 5px 12px;
         font-size: 15px;
     }
     .accordionStyle div h2 button{

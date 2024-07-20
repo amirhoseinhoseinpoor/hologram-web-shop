@@ -10,7 +10,7 @@ export default function IntroHologram() {
         <div className={`${style.mainDivResponsive} d-flex flex-row`}>
           <div className={`${style.responsiveMarginText} ${style.textStyle} d-flex flex-column container justify-content-evenly`}>
               <div className="title mb-1">
-                <span>انواع افکت‌های <span className={style.titleColor}>امنیتی</span></span>
+                <span>انواع افکت‌های <span className={style.titleColor}>هولوگرامی</span></span>
               </div>
               <div>
                   <p className="subtitle">در دنیای پر آشوب جعل و تقلب، هولوگرام‌ها به مثابه گارد‌های نامرئی عمل می‌کنند و با ظرافت و دقت، اصالت و کیفیت را تضمین می‌کنند. هولوگرام‌ها قابل شخصی‌سازی هستند با درج لوگو، تصاویر یا کدهای منحصر به فرد، هولوگرام‌ها به مهر تأیید اصالت محصول تبدیل می‌شوند.</p>
@@ -40,27 +40,16 @@ export default function IntroHologram() {
         </div>
         <div className={`${style.rowBackground} d-flex flex-row`}>
           <div className={`${style.rowBox} d-flex flex-column`}>
-              <div>
-                <SecurityIcon/>
-              </div>
               <h4>سطح 100 امنیت</h4>
               <p className="discription">معمای امنیتی با ظرافت‌های غیرقابل تکرار</p>
           </div>
           <div className={`${style.rowBox} d-flex flex-column`}>
-              <div>
-                  <SecurityIcon/>
-              </div>
               <h4>نفوذپذیری صفر</h4>
               <p className="discription">نفوذناپذیر در برابر روش‌های معمول جعل</p>
-  
           </div>
           <div className={`${style.rowBox} d-flex flex-column`}>
-              <div>
-                <SecurityIcon/>
-              </div>
               <h4>نفوذپذیری صفر</h4>
               <p className="discription">نفوذناپذیر در برابر روش‌های معمول جعل</p>
-  
           </div>
         </div>
       </section>

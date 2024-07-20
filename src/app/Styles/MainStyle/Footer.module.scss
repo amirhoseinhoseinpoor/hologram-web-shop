@@ -3,17 +3,13 @@
 
 
 
-.footerUpwardArrow {
-    color: white;
-}
 .upwardArrowInner{
     background-color: var.$arrow-background;
     display: inline-block;
-    padding: 12px;
+    padding: 11px 13px;
     border-radius: 50%;
     position: absolute;
     top: 0;
-
     z-index: 2;
     transform: translate(50% , -50%);
 }
@@ -69,7 +65,7 @@
     top: 84%;
     
     div{
-        padding: 10px;
+        padding: 6px;
         background-color: white;
         border-radius: 50%;
     }
