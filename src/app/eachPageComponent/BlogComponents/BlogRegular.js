@@ -10,7 +10,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import blogs from "/public/json/BlogPage.json";
-import SearchIcon from "@mui/icons-material/Search";
+
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { Box } from "@mui/material";
@@ -156,8 +156,8 @@ export default function BlogRegular() {
                 <div className="d-flex flex-column mt-5 justify-content-center">
                   <p>نوشته‌ایی پیدا نشد</p>
                   <p className="text-center mt-3">
-                    متاسفانه، نوشته‌ای مرتبط با عبارت{" "}
-                    {"{یه متنی که توی هیچ بلاگی نیست}"} پیدا نشد. لطفا عبارت خود
+                    متاسفانه، نوشته‌ای مرتبط با عبارت
+                     {searchTerm} پیدا نشد. لطفا عبارت خود
                     را تغیر داده و مجددا تلاش نمایید.
                   </p>
                 </div>
