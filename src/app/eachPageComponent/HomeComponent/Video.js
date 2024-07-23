@@ -32,7 +32,8 @@ export default function Video() {
                 id='video'
                 component="video"
                 image="/HomeVideo/SampleVideo_1280x720_1mb.mp4" 
-                poster='/HomeImages/Video image.png'
+                poster='/HomeImages/Video image.jpg'
+                sx={{borderRadius:"4px"}}
                 controls
                 ref={videoRef}
               />
