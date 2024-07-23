@@ -3,8 +3,7 @@
 import React from "react";
 
 import style from "../../Styles/HomeStyle/Honors.module.scss";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
 import Box from "@mui/material/Box";
 import Link from "next/link";
 import honor from "/public/json/HonorsPage.json";
@@ -23,15 +22,48 @@ export default function Honors() {
 
   return (
     <section className={`${style.mainbackgroundhonor} mt-5 mb-5`}>
-      <div className="d-flex flex-row container h-100">
-        <div
-          className={`${style.rigthtextslide} d-flex flex-column justify-content-center`}
-        >
-          <div className="title">
-            <p>افتخاراتی که به آن‌ها</p>
+      <div
+        className={`${style.rigthtextslide} d-flex flex-column justify-content-center container`}
+      >
+        <div className="d-flex flex-row justify-content-between mt-3 mb-2">
+          <div className={`${style.adjustROWSintitle} title mb-2`}>
+            <p className="ms-1">افتخاراتی که به آن‌ها</p>
             <p className={`${style.slidernexttext} mt-1`}>افتخار می‌کنیم...</p>
           </div>
-          <div className="mt-4 d-flex gap-3">
+          <div>
+            <Link href={"/Honors"} passHref>
+              <button className={style.buttonStyleForAll}>
+                همه افتخارات{" "}
+                <svg
+                  width="20"
+                  height="21"
+                  viewBox="0 0 24 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.57 6.42969L3.5 12.4997L9.57 18.5697"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M20.4999 12.5H3.66992"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </Link>
+          </div>
+        </div>
+
+        {/* <div className="mt-4 d-flex gap-3">
             <button
               className={`${style.arrowforward} review-swiper-button-prev2`}
             >
@@ -42,52 +74,48 @@ export default function Honors() {
             >
               <ArrowBackIcon></ArrowBackIcon>
             </button>
-          </div>
-        </div>
-        <div className={style.leftslidewidth}>
-          <Swiper
-            loop={true}
-            autoplay={{ delay: 4000 }}
-            spaceBetween={2}
-            slidesPerView={1}
-            breakpoints={{
-              770: {
-                slidesPerView: 2,
-              },
-              990: {
-                slidesPerView: 3,
-              },
-            }}
-            navigation={{
-              nextEl: ".review-swiper-button-next2",
-              prevEl: ".review-swiper-button-prev2",
-            }}
-            modules={[Navigation]}
-            className="mySwiper"
-          >
-            {honor.map((item) => (
-              <SwiperSlide className={style.swiperslideHonors} key={item.id}>
-                <Link 
-                  passHref
-                  href={`/Honors/${item.id}`}
-                >
-                  <Box
-                    key={item.id}
-                    className="h-100"
-                    component="img"
-                    sx={{
-                      width: "100%",
-                      maxHeight: "80%",
-                      borderRadius: 3,
-                    }}
-                    alt={item.title}
-                    src={item.src}
-                  />
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+          </div> */}
+      </div>
+      <div className={`${style.leftslidewidth} container`}>
+        <Swiper
+          loop={true}
+          autoplay={{ delay: 4000 }}
+          spaceBetween={2}
+          slidesPerView={1}
+          breakpoints={{
+            770: {
+              slidesPerView: 2,
+            },
+            990: {
+              slidesPerView: 4,
+            },
+          }}
+          navigation={{
+            nextEl: ".review-swiper-button-next2",
+            prevEl: ".review-swiper-button-prev2",
+          }}
+          modules={[Navigation]}
+          className="mySwiper"
+        >
+          {honor.map((item) => (
+            <SwiperSlide className={style.swiperslideHonors} key={item.id}>
+              <Link passHref href={`/Honors/${item.id}`}>
+                <Box
+                  key={item.id}
+                  className="h-100"
+                  component="img"
+                  sx={{
+                    width: "100%",
+                    maxHeight: "50%",
+                    borderRadius: 3,
+                  }}
+                  alt={item.title}
+                  src={item.src}
+                />
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );

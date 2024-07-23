@@ -15,6 +15,7 @@ export default function IntroSecure() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              aspectRatio: 1.7,
             }}
             alt="image."
             src="/HomeImages/Intro-image.png"
