@@ -35,8 +35,8 @@ export default function Honors() {
               <button className={style.buttonStyleForAll}>
                 همه افتخارات{" "}
                 <svg
-                  width="20"
-                  height="21"
+                  width={20}
+                  height={21}
                   viewBox="0 0 24 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -44,18 +44,18 @@ export default function Honors() {
                   <path
                     d="M9.57 6.42969L3.5 12.4997L9.57 18.5697"
                     stroke="white"
-                    stroke-width="2"
-                    stroke-miterlimit="10"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth={2}
+                    strokeMiterlimit={10}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     d="M20.4999 12.5H3.66992"
                     stroke="white"
-                    stroke-width="2"
-                    stroke-miterlimit="10"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth={2}
+                    strokeMiterlimit={10}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </button>
@@ -81,10 +81,10 @@ export default function Honors() {
           loop={true}
           autoplay={{ delay: 4000 }}
           spaceBetween={2}
-          slidesPerView={1}
+          slidesPerView={2}
           breakpoints={{
             770: {
-              slidesPerView: 2,
+              slidesPerView: 3,
             },
             990: {
               slidesPerView: 4,

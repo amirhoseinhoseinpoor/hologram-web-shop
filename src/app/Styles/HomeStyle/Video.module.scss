@@ -1,62 +1,131 @@
 @use "../variable" as var;
-.responsiveSection{
-    // max-width: 900px;
-    display: flex;
-    justify-content: center;
+.responsiveSection {
+  // max-width: 900px;
+  // display: flex;
+  // justify-content: center;
 }
-.adjustWidth{
-    div{
+.adjustWidth {
+  div {
+    border: none;
+    box-shadow: none;
+  }
+}
+.titleStyle {
+  font-weight: 500;
+}
+.titleColor {
+  color: var.$arrow-background;
+}
+
+.posterIcon {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  aspect-ratio: 1.48;
+  position: absolute;
+  top: 55%;
+  right: 50%;
+  transform: translate(50%, -20%);
+  z-index: 2;
+}
+.posterIconArrow {
+  width: 70px;
+  height: 30px;
+  object-fit: cover;
+  aspect-ratio: 1.48;
+  position: absolute;
+  top: 67%;
+  right: 45%;
+  transform: translate(50%, -20%);
+  z-index: 2;
+}
+
+.belowImage {
+  margin: 0 7px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+
+}
+//   .thumbnails {
+//     display: flex;
+//     justify-content: center;
+//     margin-top: 20px;
+//   }
+
+.MainBOXCardStyle {
+//   margin-top: 20px;
+}
+.swiperWrapergap :global {
+  .swiper-wrapper {
+    gap: 15px;
+  }
+}
+.resetPaddingMui {
+  padding: 0 !important;
+  margin-top: 10px;
+  p {
+    margin: 0;
+  }
+}
+
+.resetAlignSelf {
+  align-self: unset !important;
+}
+.buttonNextStyle{
+    position: absolute;
+    right: 1%;
+    top: 50%;
+    transform: translate(50% , -50%);
+    z-index: 2;
+    height: 100%;
+    
+    button{
         border: none;
-        box-shadow: none;
+        background-color: rgba(247, 248, 252 , 0.8);
+        height: 100%;
+        padding: 1px;
     }
 }
-.titleStyle{
-    font-weight: 500;
-}
-.titleColor{
-    color: var.$arrow-background;
-}
-
-.posterIcon{
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    aspect-ratio: 1.48;
+.buttonPrevStyle{
     position: absolute;
-    top: 55%;
+    left: 1%;
+    top: 50%;
+    transform: translate(-50% , -50%);
+    z-index: 2;
+    height: 100%;
+    
+    button{
+        border: none;
+        background-color: rgba(247, 248, 252 , 0.8);
+        height: 100%;
+        padding: 1px;
+    }
+}
+.BelowContentFixIcon{
+    position: absolute;
+    top: 50%;
     right: 50%;
-    transform: translate(50% , -20%);
-    z-index: 2;
-}
-.posterIconArrow{
-    width: 70px;
-    height: 30px;
-    object-fit: cover;
-    aspect-ratio: 1.48;
-    position: absolute;
-    top: 67%;
-    right: 45%;
-    transform: translate(50% , -20%);
-    z-index: 2;
+    transform: translate(50% , -50%);
 }
 
-@media (max-width :980px) {
-    .posterIcon{
-        width: 50px;
-        height: 50px;
-    }
-    .posterIconArrow{
-        width: 63px;
-        height: 26px;
-    }
+@media (max-width: 980px) {
+  .posterIcon {
+    width: 50px;
+    height: 50px;
+  }
+  .posterIconArrow {
+    width: 63px;
+    height: 26px;
+  }
 }
-@media (max-width :768px) {
-    .posterIcon{
-      width: 40px;
-      height: 40px;
-    }
-    .posterIconArrow{
-      width: 50px;
-      height: 20px;
-    }
+@media (max-width: 768px) {
+  .posterIcon {
+    width: 40px;
+    height: 40px;
+  }
+  .posterIconArrow {
+    width: 50px;
+    height: 20px;
+  }
 }
