@@ -9,6 +9,9 @@ import IntroHologram from './eachPageComponent/HomeComponent/Intro-Hologram';
 import Video from './eachPageComponent/HomeComponent/Video'
 import Honors from './eachPageComponent/HomeComponent/Honors';
 import FAQ from './Components/FAQ'
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'; 
@@ -18,6 +21,7 @@ export default function Home() {
     <main>
       <React.StrictMode>
        <ThemeProvider theme={theme}>
+        <Header/>
          <Banner/>
          <PurchaseProcessSteps/>
          <IntroSecure/>
@@ -28,6 +32,7 @@ export default function Home() {
          <Advantages/>
          <FAQ/>
          <Blog/>
+         <Footer/>
        </ThemeProvider>
       </React.StrictMode>
     </main>

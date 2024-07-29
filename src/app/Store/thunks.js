@@ -8,7 +8,7 @@ export const login = createAsyncThunk(
   async (credentials, thunkAPI) => {
     const { username, password } = credentials;
       try {
-          const response = await axios.post('https://reqres.in/api/login', {
+          const response = await axios.post('http://217.60.251.31:7000/auth/login', {
             username,
             password,
           });

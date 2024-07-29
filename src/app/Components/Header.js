@@ -12,10 +12,12 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
 import CallIcon from "@mui/icons-material/Call";
-import Fade from "@mui/material/Fade";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
+
+// import redux
+import { useSelector } from "react-redux";
+import Link from "next/link";
 
 const renderSubItems = (subItems, depth = 1) => {
   return subItems.map((subItem) => {
@@ -47,19 +49,15 @@ const renderSubItems = (subItems, depth = 1) => {
 };
 
 export default function Header() {
+  const pathname = usePathname();
+  const token = useSelector((state) => state.auth.token);
+  console.log(token);
 
-    const pathname = usePathname()
-
-
-  
-   const getBasePath = (path) => {
+  const getBasePath = (path) => {
     // This will capture the first segment of the path after the initial '/'
     const match = path.match(/^\/([^\/]*)/);
-    return match ? `/${match[1]}` : '/';
+    return match ? `/${match[1]}` : "/";
   };
-   
-
-
 
   // State to manage visibility of all off-canvas elements dynamically
   const [visibility, setVisibility] = useState({});
@@ -197,7 +195,11 @@ export default function Header() {
     <section
       className={`${style.headermainbackground}  ${style.sectionheaderfix}`}
     >
-      <Navbar expand="lg" collapseOnSelect className="bg-body-tertiary">
+      <Navbar
+        expand="lg"
+        collapseOnSelect
+        className={`${style.adjustNavPadding} bg-body-tertiary`}
+      >
         <Container className={style.headerresponsivemain}>
           <div className="d-flex flex-row justify-content-between">
             <Navbar.Brand href="#">
@@ -242,20 +244,17 @@ export default function Header() {
                         </div>
                       </NavDropdown>
                     ) : (
-                      
-                        <Nav.Link
-                          className={`${
-                            getBasePath(pathname) === item.link
-                              ? style.active
-                              : style.noneactive
-                          }`}
-                          key={item.id}
-                          href={item.link}
-                          
-                        >
-                          {item.title}
-                        </Nav.Link>
-                      
+                      <Nav.Link
+                        className={`${
+                          getBasePath(pathname) === item.link
+                            ? style.active
+                            : style.noneactive
+                        }`}
+                        key={item.id}
+                        href={item.link}
+                      >
+                        {item.title}
+                      </Nav.Link>
                     )}
                   </React.Fragment>
                 ))}
@@ -271,25 +270,62 @@ export default function Header() {
                 aria-controls="basic-navbar-nav"
               />
             </div>
+
             <div className="d-lg-none">
-              <NavDropdown
-                title={
-                  <>
-                    <Box
-                      component="img"
-                      sx={{
-                        maxHeight: 16,
-                        objectFit: "cover",
-                        aspectRatio: 1.7,
-                      }}
-                      alt="iran"
-                      src="/HomeImages/iran-logo.png"
-                    />
-                    <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
-                  </>
-                }
-                id="basic-nav-dropdown"
-              ></NavDropdown>
+              {token ? (
+                <NavDropdown
+                  title={
+                    <>
+                      <Box
+                        component="img"
+                        sx={{
+                          maxHeight: 16,
+                          objectFit: "cover",
+                          aspectRatio: 1.7,
+                        }}
+                        alt="iran"
+                        src="/HomeImages/iran-logo.png"
+                      />
+                      <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
+                    </>
+                  }
+                  id="basic-nav-dropdown"
+                ></NavDropdown>
+              ) : (
+                <Link className="text-decoration-none" href="/Login" passHref>
+                  <div
+                    className={`${style.headerIconPersonDiv} d-flex flex-row`}
+                  >
+                    <div>
+                      <svg
+                        width={20}
+                        height={20}
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10 10.0003C12.3012 10.0003 14.1667 8.13485 14.1667 5.83366C14.1667 3.53247 12.3012 1.66699 10 1.66699C7.69885 1.66699 5.83337 3.53247 5.83337 5.83366C5.83337 8.13485 7.69885 10.0003 10 10.0003Z"
+                          stroke="#333333"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M17.1583 18.3333C17.1583 15.1083 13.95 12.5 10 12.5C6.05001 12.5 2.84167 15.1083 2.84167 18.3333"
+                          stroke="#333333"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="me-1">
+                      <p>حساب کاربری</p>
+                    </div>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -371,24 +407,58 @@ export default function Header() {
           </div>
 
           <div className="d-lg-block d-none">
-            <NavDropdown
-              title={
-                <>
-                  <Box
-                    component="img"
-                    sx={{
-                      maxHeight: 16,
-                      objectFit: "cover",
-                      aspectRatio: 1.7,
-                    }}
-                    alt="iran"
-                    src="/HomeImages/iran-logo.png"
-                  />
-                  <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
-                </>
-              }
-              id="basic-nav-dropdown"
-            ></NavDropdown>
+            {token ? (
+              <NavDropdown
+                title={
+                  <>
+                    <Box
+                      component="img"
+                      sx={{
+                        maxHeight: 16,
+                        objectFit: "cover",
+                        aspectRatio: 1.7,
+                      }}
+                      alt="iran"
+                      src="/HomeImages/iran-logo.png"
+                    />
+                    <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
+                  </>
+                }
+                id="basic-nav-dropdown"
+              ></NavDropdown>
+            ) : (
+              <Link className="text-decoration-none" href="/Login" passHref>
+                <div className={`${style.headerIconPersonDiv} d-flex flex-row`}>
+                  <div>
+                    <svg
+                      width={20}
+                      height={20}
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 10.0003C12.3012 10.0003 14.1667 8.13485 14.1667 5.83366C14.1667 3.53247 12.3012 1.66699 10 1.66699C7.69885 1.66699 5.83337 3.53247 5.83337 5.83366C5.83337 8.13485 7.69885 10.0003 10 10.0003Z"
+                        stroke="#333333"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M17.1583 18.3333C17.1583 15.1083 13.95 12.5 10 12.5C6.05001 12.5 2.84167 15.1083 2.84167 18.3333"
+                        stroke="#333333"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div className="me-1">
+                    <p>حساب کاربری</p>
+                  </div>
+                </div>
+              </Link>
+            )}
           </div>
         </Container>
       </Navbar>
