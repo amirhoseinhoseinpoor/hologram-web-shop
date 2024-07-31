@@ -20,6 +20,7 @@ function getBlogPostById(id) {
 
   // const blogs = JSON.parse(jsonData);
   const blogs2 = JSON.parse(jsonData2);
+  
   const found = blogs2.find((card) => card.id === id);
   if (found) {
     return found;
