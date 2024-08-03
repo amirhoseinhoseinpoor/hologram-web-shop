@@ -10,7 +10,7 @@
         "subItems": [
           {
             "link": "#1324",
-            "title": "هولوگرام‌ های تخریب شونده",
+            "title": "هولوگرام های تخریب شونده",
             "src" : "/ProductPageImages/PRODUCTHologram.png",
             "subItems": []
           },
@@ -53,54 +53,61 @@
         ]
       },
       {
-        "link": "/SecureLabel",
+        "link": "/لیبل‌های امنیتی",
         "title": "لیبل‌های امنیتی",
         "subItems": [
           {
             "link": "#sss",
             "title": "لیبل با نوار هولوگرام",
+            "src" : "/ProductPageImages/PRODUCTHologram.png",
             "subItems": []
           },
           {
             "link": "#sss",
             "title": "لیبل با چاپ امنیتی و نوار هولوگرام",
+            "src" : "/ProductPageImages/PRODUCTHologram.png",
             "subItems": []
           },
           {
             "link": "#sss",
             "title": "لیبل‌های هولوگرافیک",
+            "src" : "/ProductPageImages/PRODUCTHologram.png",
             "subItems": []
           }
         ]
       },
       {
-        "link": "#2",
+        "link": "/برچسب‌های پلمپ",
         "title": "برچسب‌های پلمپ",
         "subItems": [
           {
             "link": "#sss",
             "title": "لیبل پلمپ با تخریب عمومی",
+            "src" : "/ProductPageImages/PRODUCTHologram.png",
             "subItems": []
           },
           {
             "link": "#sss",
             "title": "لیبل پلمپ با تخریب اختصاصی",
+            "src" : "/ProductPageImages/PRODUCTHologram.png",
             "subItems": []
           }
         ]
       },
       {
-        "link": "#2",
+        "link": "/اسکرچ",
         "title": "اسکرچ",
         "subItems": [
           {
             "link": "#sss",
             "title": "انواع اسکرچ زبرا",
+            "src" : "/ProductPageImages/PRODUCTHologram.png",
             "subItems": []
           },
           {
             "link": "#sss",
             "title": "هولو اسکرچ",
+            "src" : "/ProductPageImages/PRODUCTHologram.png",
             "subItems": []
           }
         ]

@@ -191,7 +191,7 @@ export default function PurchaseProcessSteps() {
       </div>
       <div className={`${style.mainSizez} mt-4`}>
         <Card className={`${style.fixCardStyle}`}>
-          <Link className="text-decoration-none" href={`/Blog/`} passHref>
+          <Link className="text-decoration-none" href={`/هولوگرام`} passHref>
             <CardMedia
               className={`${style.fixRaiduisImage} p-3 gap-3`}
               component="img"
@@ -212,7 +212,7 @@ export default function PurchaseProcessSteps() {
           </Link>
         </Card>
         <Card className={`${style.fixCardStyle}`}>
-          <Link className="text-decoration-none" href={`/Blog/`} passHref>
+          <Link className="text-decoration-none" href={`/لیبل‌های امنیتی`} passHref>
             <CardMedia
               className={`${style.fixRaiduisImage} p-3 gap-3`}
               component="img"
@@ -233,7 +233,7 @@ export default function PurchaseProcessSteps() {
           </Link>
         </Card>
         <Card className={`${style.fixCardStyle}`}>
-          <Link className="text-decoration-none" href={`/Blog/`} passHref>
+          <Link className="text-decoration-none" href={`/برچسب‌های پلمپ`} passHref>
             <CardMedia
               className={`${style.fixRaiduisImage} p-3 gap-3`}
               component="img"
@@ -254,7 +254,7 @@ export default function PurchaseProcessSteps() {
           </Link>
         </Card>
         <Card className={`${style.fixCardStyle}`}>
-          <Link className="text-decoration-none" href={`/Blog/`} passHref>
+          <Link className="text-decoration-none" href={`/اسکرچ`} passHref>
             <CardMedia
               className={`${style.fixRaiduisImage} p-3`}
               component="img"

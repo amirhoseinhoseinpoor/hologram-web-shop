@@ -85,7 +85,7 @@ export default function ProductPage({ params }) {
           {itemsClick.map((item, index) => (
             <React.Fragment key={index}>
               <Card className={`${style.mainCardStyle} `}>
-                <Link className="text-decoration-none" href={`/Blog`} passHref>
+                <Link className="text-decoration-none" href={`/${matchedTitle}/shouldBeFix`} passHref>
                   <CardMedia
                     className={`${style.fixBoxSize} gap-3`}
                     component="img"
@@ -112,7 +112,7 @@ export default function ProductPage({ params }) {
 
         <HoleProductAndSearch
           itemsClick={itemsClick}
-         
+          matchedTitle={matchedTitle}
         />
        
       </section>

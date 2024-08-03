@@ -10,9 +10,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
-export default function HoleProductAndSearch({ itemsClick }) {
+export default function HoleProductAndSearch({ itemsClick , matchedTitle }) {
+  
   const [searchTerm, setSearchTerm] = useState("");
-
+  
+  // console.log(searchTerm);
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -122,7 +124,7 @@ export default function HoleProductAndSearch({ itemsClick }) {
         {filteredBlogs.map((item, index) => (
           <React.Fragment key={index}>
             <Card className={`${style.mainCardStyle}`}>
-              <Link className="text-decoration-none" href={`/Blog`} passHref>
+              <Link className="text-decoration-none" href={`/${matchedTitle}/ShouldBeFix`} passHref>
                 <CardMedia
                   className={`${style.fixBoxSize} gap-3`}
                   component="img"

@@ -31,7 +31,7 @@ const renderSubItems = (subItems, depth = 1) => {
           style={{ lineHeight: "28px" }}
           key={subItem.id}
         >
-          <Link href={subItem.link}>
+          <Link href={subItem.link} style={{textDecoration : "none"}}>
             <div
               className={style.colornav}
               key={subItem.id}
