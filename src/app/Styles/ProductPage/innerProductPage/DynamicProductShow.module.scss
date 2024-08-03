@@ -8,61 +8,59 @@
   width: 40%;
 }
 .swiperWrapergap :global {
-    
   .swiper-wrapper {
     gap: 0px;
     margin-top: 15px;
   }
-  
 }
 
 .posterIcon {
-    background-color: rgba(255, 255, 255 , 0.5);
-    border-radius: 50%;
-    padding: 7px;
-    object-fit: cover;
-    position: absolute;
-    top: 47%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    z-index: 2;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  padding: 7px;
+  object-fit: cover;
+  position: absolute;
+  top: 47%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  z-index: 2;
+}
+
+.buttonNextStyle {
+  position: absolute;
+  right: 8%;
+  top: 60%;
+  transform: translate(50%, -50%);
+  z-index: 2;
+  height: 100%;
+
+  button {
+    border: none;
+    background-color: unset;
+    height: 100%;
+    padding: 1px;
   }
+}
+.buttonPrevStyle {
+  position: absolute;
+  left: 8%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  height: 100%;
 
-.buttonNextStyle{
-    position: absolute;
-    right: 8%;
-    top: 60%;
-    transform: translate(50% , -50%);
-    z-index: 2;
+  button {
+    border: none;
+    background-color: unset;
     height: 100%;
-    
-    button{
-        border: none;
-        background-color: unset;
-        height: 100%;
-        padding: 1px;
-    }
+    padding: 1px;
+  }
 }
-.buttonPrevStyle{
-    position: absolute;
-    left: 8%;
-    top: 60%;
-    transform: translate(-50% , -50%);
-    z-index: 2;
-    height: 100%;
-    
-    button{
-        border: none;
-        background-color: unset;
-        height: 100%;
-        padding: 1px;
-    }
-}
-.innerStyleDivForMain{
-    width: 80%;
+.innerStyleDivForMain {
+  width: 80%;
 }
 
-.coloredBoxStyle{
+.coloredBoxStyle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -71,22 +69,21 @@
   align-items: center;
   cursor: pointer;
   position: relative;
-
 }
 
-.SizezInput{
+.SizezInput {
   padding: 3px 20px;
 }
-.addProductPage{
+.addProductPage {
   padding: 10px 22px;
-  background-color: #5695F6;
+  background-color: #5695f6;
   cursor: pointer;
   border-radius: 4px;
   color: white;
   border: none;
 }
 
-.buttonCanceler{
+.buttonCanceler {
   border: 1.5px solid #333333;
   background-color: unset;
   border-radius: 4px;

@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import { Card, CardContent, CardMedia } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState } from "react";
-
+import FAQ from "@/app/Components/FAQ";
 import ProductShow from "@/app/eachPageComponent/ProductInnerPageComponents/ProductShow";
 
 export default function Product() {
@@ -63,6 +63,10 @@ export default function Product() {
       </div>
 
       <ProductShow data={data} />
+      <div className="mt-5">
+        <FAQ/>
+      </div>
+      
 
       <Footer />
     </section>
