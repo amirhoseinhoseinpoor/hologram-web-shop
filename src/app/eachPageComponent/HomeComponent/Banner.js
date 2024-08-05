@@ -15,9 +15,9 @@ import "swiper/css/autoplay";
 
 export default function Banner() {
   const Urls = [
-    { url: "/HomeImages/Banner-image.png" },
-    { url: "/HomeImages/Banner-image.png" },
-    { url: "/HomeImages/Banner-image.png" },
+    { url: "/HomeImages/newbanner.png" },
+    { url: "/HomeImages/newbanner.png" },
+    { url: "/HomeImages/newbanner.png" },
   ];
 
   const UrlsObject = Urls.map((url, i) => ({

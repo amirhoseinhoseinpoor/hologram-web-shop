@@ -8,6 +8,9 @@
 body {
   // overflow-x: hidden;
   background-color: white;
+  -moz-font-feature-settings: "ss02";
+  -webkit-font-feature-settings: "ss02";
+  font-feature-settings: "ss02";
 }
 html {
   position: relative;

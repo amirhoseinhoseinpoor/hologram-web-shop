@@ -7,7 +7,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import StoreProvider from './Store/storeProvider';
 
-const myFont = localFont({ src: './Fonts/IRANSansXV.ttf' });
+const myFont = localFont({ src: './Fonts/IRANSansXVF.ttf' });
 
 export const metadata = {
   title: 'Create Next App',
@@ -18,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" dir="rtl">
-      <body className={`${myFont.className} h-auto`}>
+      <body className={`${myFont.className}  h-auto`}  >
         <StoreProvider>       
           <main>{children}</main>
         </StoreProvider>
