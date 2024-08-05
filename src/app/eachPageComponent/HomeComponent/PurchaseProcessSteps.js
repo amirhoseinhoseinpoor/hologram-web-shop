@@ -227,7 +227,7 @@ export default function PurchaseProcessSteps() {
                 variant="span"
                 component="div"
               >
-                هولوگرام
+                لیبل
               </Typography>
             </CardContent>
           </Link>
@@ -248,7 +248,7 @@ export default function PurchaseProcessSteps() {
                 variant="span"
                 component="div"
               >
-                هولوگرام
+                لیبل هولوگرام
               </Typography>
             </CardContent>
           </Link>
@@ -269,7 +269,7 @@ export default function PurchaseProcessSteps() {
                 variant="span"
                 component="div"
               >
-                هولوگرام
+                اسکرچ
               </Typography>
             </CardContent>
           </Link>

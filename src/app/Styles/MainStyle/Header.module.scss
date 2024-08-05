@@ -61,7 +61,7 @@
     right: 0;
     text-align: right;
     background-color: var.$headerSubBackground;
-    
+    height: 100vh;
   }
 }
 .navDropItem{
@@ -82,7 +82,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  height: 100vh;
+  height: 90vh;
 }
 
 

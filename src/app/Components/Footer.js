@@ -142,11 +142,20 @@ export default function Footer() {
               className={`d-flex flex-row justify-content-around w-50 ${style.responsivetext} ${style.productmobilers} `}
             >
               <div>
+                
                 <p className="mb-2">محصولات</p>
-                <p className="mb-2">هولوگرام</p>
-                <p className="mb-2">لیبل‌های امنیتی</p>
-                <p className="mb-2">برچسب‌های پلمپ</p>
-                <p className="mb-2">اسکرچ</p>
+                <Link href="/هولوگرام" passHref style={{textDecoration:"none" , color:"#333333"}}>
+                  <p className="mb-2">هولوگرام</p>
+                </Link>
+                <Link href="/لیبل‌های امنیتی" passHref style={{textDecoration:"none" , color:"#333333"}}>  
+                 <p className="mb-2">لیبل‌های امنیتی</p>
+                </Link>
+                <Link href="/برچسب‌های پلمپ" passHref style={{textDecoration:"none" , color:"#333333"}}>
+                  <p className="mb-2">برچسب‌های پلمپ</p>
+                </Link>
+                <Link href="/اسکرچ" passHref style={{textDecoration:"none" , color:"#333333"}}>
+                  <p className="mb-2">اسکرچ</p>
+                </Link>
               </div>
               <div className={style.footerLinksstyle}>
                 <p className="mb-2">لینک‌های مفید</p>

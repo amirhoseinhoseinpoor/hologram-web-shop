@@ -11,6 +11,7 @@ import honor from "/public/json/HonorsPage.json";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import { Autoplay } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css";
@@ -76,12 +77,18 @@ export default function Honors() {
             </button>
           </div> */}
       </div>
-      <div className={`${style.leftslidewidth} container`}>
+      <div className={`${style.honorsFixPagination} container`}>
         <Swiper
           loop={true}
           autoplay={{ delay: 4000 }}
           spaceBetween={2}
           slidesPerView={2}
+          pagination={{
+            bulletClass: `swiper-pagination-bullet ${style["feature-pagination"]}`,
+            dynamicBullets: true,
+            clickable: true,
+            
+          }}
           breakpoints={{
             770: {
               slidesPerView: 3,
@@ -94,8 +101,8 @@ export default function Honors() {
             nextEl: ".review-swiper-button-next2",
             prevEl: ".review-swiper-button-prev2",
           }}
-          modules={[Navigation]}
-          className="mySwiper"
+          modules={[Navigation , Pagination]}
+          className={`${style.fixSwiper} mySwiper`}
         >
           {honor.map((item) => (
             <SwiperSlide className={style.swiperslideHonors} key={item.id}>

@@ -18,7 +18,7 @@ export default function IntroHologram() {
               <div>
                   <button className={`${style.buttonPclass} d-flex flex-row align-items-center mt-2`}>
                       <div>
-                          معرفی محصولات
+                        معرفی محصولات
                       </div>
                      <ArrowBackIcon className="me-2"/>    
                   </button>

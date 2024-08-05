@@ -31,7 +31,7 @@ const renderSubItems = (subItems, depth = 1) => {
           style={{ lineHeight: "28px" }}
           key={subItem.id}
         >
-          <Link href={subItem.link} style={{textDecoration : "none"}}>
+          <Link href={subItem.link} style={{ textDecoration: "none" }}>
             <div
               className={style.colornav}
               key={subItem.id}
@@ -244,8 +244,14 @@ export default function Header() {
                         }
                         id={`basic-nav-dropdown-${item.id}`}
                       >
-                        <div className={style.fixcolumn}>
-                          {renderSubItems(item.subItems)}
+                        <div>
+
+                        
+                          <div className={style.fixcolumn}>
+                           
+                            {renderSubItems(item.subItems)}
+                           
+                          </div>
                         </div>
                       </NavDropdown>
                     ) : (

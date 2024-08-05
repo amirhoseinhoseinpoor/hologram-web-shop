@@ -51,6 +51,10 @@
     .responsiveMarginText{
         margin-bottom: 25px;
     }
+    .rowBackground{
+        align-items: unset !important;
+    }
+ 
 }
 
 @media (max-width :768px) {
@@ -77,6 +81,7 @@
     .rowBackground{
         flex-direction: column !important;
         border-radius: 4px;
+        align-items: unset !important;
     }
     .rowBox{
         margin: 5px 0;

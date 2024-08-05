@@ -4,8 +4,8 @@ import Header from "@/app/Components/Header";
 import Footer from "@/app/Components/Footer";
 import ShowRoute from "@/app/Components/ShowRoute";
 import { notFound } from "next/navigation";
-import { Card, CardContent, CardMedia } from "@mui/material";
-import Box from "@mui/material/Box";
+
+import EachProductVideo from "@/app/eachPageComponent/ProductInnerPageComponents/EachProductVideo";
 import React, { useRef, useEffect, useState } from "react";
 import FAQ from "@/app/Components/FAQ";
 import ProductShow from "@/app/eachPageComponent/ProductInnerPageComponents/ProductShow";
@@ -62,7 +62,11 @@ export default function Product() {
         <ShowRoute />
       </div>
 
+      
+
       <ProductShow data={data} />
+
+      <EachProductVideo/>
       <div className="mt-5">
         <FAQ/>
       </div>

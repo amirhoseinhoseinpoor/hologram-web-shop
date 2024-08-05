@@ -99,7 +99,7 @@ export default function ProductShow({ data }) {
                   {data[0].imgData.map((media, index) => (
                     <SwiperSlide
                       key={index}
-                      className={`${style.resetAlignSelf} d-flex flex-column`}
+                      className={`d-flex flex-column`}
                     >
                       <div
                         onClick={() => handleThumbnailClick(index)}
@@ -110,12 +110,13 @@ export default function ProductShow({ data }) {
                         {media.type === "video" ? (
                           <div className="position-relative">
                             <Box
+                              className={style.fixStyleSizeImgRe}
                               component="img"
-                              sx={{
-                                width: "100px",
-                                height: "80px",
-                                borderRadius: "5px",
-                              }}
+                              // sx={{
+                              //   width: "100px",
+                              //   height: "80px",
+                              //   borderRadius: "5px",
+                              // }}
                               src={media.poster}
                             />
 
@@ -139,14 +140,11 @@ export default function ProductShow({ data }) {
                             </div>
                           </div>
                         ) : (
-                          <img
-                            src={media.src}
-                            style={{
-                              width: "100px",
-                              height: "80px",
-                              borderRadius: "5px",
-                            }}
-                            alt={`Thumbnail ${index}`}
+                          <Box
+                          className={style.fixStyleSizeImgRe}
+                          component="img"
+                          src={media.src}
+                          alt={`Thumbnail ${index}`}
                           />
                         )}
                       </div>
@@ -326,8 +324,8 @@ export default function ProductShow({ data }) {
                 </div>
               ))}
             </div>
-            <div className="mt-4 d-flex flex-row justify-content-around">
-              <div>
+            <div className={`${style.resetJustifyInresponsiveFix} mt-4 d-flex flex-row justify-content-around`}>
+              <div className={style.justAddMarginRespon}>
                 <button
                   className={style.addProductPage}
                   onClick={() =>
