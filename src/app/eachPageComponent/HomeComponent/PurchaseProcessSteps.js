@@ -201,7 +201,7 @@ export default function PurchaseProcessSteps() {
 
             <CardContent className={`${style.adjustContent} text-center`}>
               <Typography
-                className={`subtitlen`}
+                className={`QASize`}
                 gutterBottom
                 variant="span"
                 component="div"
@@ -222,7 +222,7 @@ export default function PurchaseProcessSteps() {
 
             <CardContent className={`${style.adjustContent} text-center`}>
               <Typography
-                className={`subtitlen`}
+                className={`QASize`}
                 gutterBottom
                 variant="span"
                 component="div"
@@ -243,7 +243,7 @@ export default function PurchaseProcessSteps() {
 
             <CardContent className={`${style.adjustContent} text-center`}>
               <Typography
-                className={`subtitlen`}
+                className={`QASize`}
                 gutterBottom
                 variant="span"
                 component="div"
@@ -264,7 +264,7 @@ export default function PurchaseProcessSteps() {
 
             <CardContent className={`${style.adjustContent} text-center`}>
               <Typography
-                className={`subtitlen`}
+                className={`QASize`}
                 gutterBottom
                 variant="span"
                 component="div"

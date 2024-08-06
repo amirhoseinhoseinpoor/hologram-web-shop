@@ -32,11 +32,12 @@
 // banner text style
 .BannerTextDiv{
     position: absolute;
-    bottom: 10%;
-    right: 10%;
+    bottom: 6%;
+    right: 5%;
 }
+
 .BannerTextDiv > div{
-    color: white;
+    color: var.$social-media-color;
    line-height: normal;
 }
 

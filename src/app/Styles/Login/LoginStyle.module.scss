@@ -1,0 +1,50 @@
+@use '../variable' as var;
+
+.LoginMainDiv{
+    border: 1.5px solid #DDE0E4;
+    border-radius: 6px;
+    padding: 60px;
+}
+
+.closeIconImg{
+    position: absolute;
+    left: 8%;
+    top: 8%;
+    transform: translate(50 , -50);
+}
+.submitButton{
+    border-radius: 4px;
+    background-color: #5695F6;
+    color: white;
+    border: none;
+    padding: 8px 0;
+}
+
+.formInputNumber:focus{
+  box-shadow: unset !important;
+  border: 1px solid #FF4F3F;
+}
+.formInputNumber{
+    border-radius: 4px !important;
+}
+.formInputNumber::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    margin: 0;
+}
+.outerLoginPage{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+.SignUpLink{
+    text-decoration: none;
+    color: var.$social-media-color;
+    display: inline-block;
+}
+.SignUpLink :hover{
+    text-decoration: underline;
+}
+.decoreRole{
+    border-bottom: 1.3px solid lightgray;
+}

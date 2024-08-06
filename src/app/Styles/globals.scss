@@ -27,7 +27,11 @@ body {
   font-weight: 600;
 }
 .title {
-  font-size: 20px;
+  font-size: 22px;
+  font-weight: 600;
+}
+.QASize{
+  font-size: 16px;
   font-weight: 600;
 }
 .purchesSize{
@@ -36,7 +40,7 @@ body {
 }
 .subtitle {
   font-weight: 500;
-  font-size: 17px;
+  font-size: 18px;
 }
 .subitem{
   font-size: 17px;
@@ -52,7 +56,7 @@ body {
 }
 .Banner-title {
   font-weight: 500;
-  font-size: 35px;
+  font-size: 30px;
 }
 h1,
 h2,
@@ -147,6 +151,9 @@ button{
 }
 
 @media (max-width: 980px) {
+  .QASize{
+    font-size: 15px;
+  }
   .purchesSize{
     font-size: 16px;
   }
@@ -160,8 +167,8 @@ button{
     font-size: 18px;
   }
   .title {
-    font-size: 17.5px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 600;
   }
   .Banner-title {
     font-size: 27px;
@@ -175,6 +182,7 @@ button{
 }
 @media (max-width: 768px) {
   // global sizing
+  
   .sometext{
     font-size: 18px;
   }
@@ -191,8 +199,8 @@ button{
     font-size: 16.5px;
   }
   .title {
-    font-size: 17px !important;
-    font-weight: 500 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
   }
   .discription {
     font-size: 12px !important;

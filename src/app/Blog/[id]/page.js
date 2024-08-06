@@ -91,19 +91,19 @@ export default function BlogPostPage({ params }) {
               <div className={`${style.positiveMaindiv} d-flex flex-column`}>
                 <p className={style.posetivestyle}>نقاط مثبت</p>
                 <ul>
-                  <li>نقطه 1</li>
-                  <li>نقطه 1</li>
-                  <li>نقطه 1</li>
-                  <li>نقطه 1</li>
+                  <li>قیمت مناسب</li>
+                  <li>کیفیت عالی</li>
+                  <li>زمان کم تولید</li>
+                  <li>زیبایی</li>
                 </ul>
               </div>
               <div className={`${style.positiveMaindiv} d-flex flex-column`}>
                 <p className={style.negetive}>نقاط منفی</p>
                 <ul>
-                  <li>نقطه 1</li>
-                  <li>نقطه 1</li>
-                  <li>نقطه 1</li>
-                  <li>نقطه 1</li>
+                  <li>قیمت بالا</li>
+                  <li>دسترسی برای همه ممکن نیست</li>
+                  <li>دوام پایین</li>
+                  <li>کم یابی در بازار</li>
                 </ul>
               </div>
             </div>
