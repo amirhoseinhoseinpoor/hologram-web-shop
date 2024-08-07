@@ -181,12 +181,16 @@ export default function Login() {
                   </svg>
                 </div>
               </button>
+              <div className="mt-3">
+                <span className={`discription`}>ورود شما به معنای پذیرش</span><span className={`${style.decoreRole}  discription`}>{" "}شرایط آذر هولوگرام و قوانین حریم‌خصوصی</span><span>{" "}است.</span>
+              </div>
             </form>
           ) : (
             <OTPInput
               phoneNumber={phoneNumber}
               onVerifyOtp={handleVerifyOtp}
               resendOtp={handleResendOtp}
+              setIsOtpSent={setIsOtpSent}
             />
           )}
 
