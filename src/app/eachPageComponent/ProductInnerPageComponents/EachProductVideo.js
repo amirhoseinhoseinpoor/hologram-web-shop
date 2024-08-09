@@ -117,7 +117,7 @@ export default function EachProductVideo() {
             </div>
           </CardContent>
           <div className={`${style.resetStyleInResponsive} d-flex flex-row gap-4`}>
-            <div className={`${style.videorightSide} position-relative`}>
+            <div className={`${style.videorightSide} position-relative h-100`}>
               <CardMedia
                 id="video"
                 component="video"
@@ -164,7 +164,7 @@ export default function EachProductVideo() {
                         component="img"
                         src={video.poster} // Use the poster for each video
                         alt={video.title}
-                        sx={{ borderRadius: "4px" }}
+                        sx={{ borderRadius: "4px" , height: "100%" }}
                       />
                       <div className={style.BelowContentFixIcon}>
                         <svg

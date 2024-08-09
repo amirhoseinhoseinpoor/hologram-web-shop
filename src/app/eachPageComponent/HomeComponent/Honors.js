@@ -81,7 +81,7 @@ export default function Honors() {
         <Swiper
           loop={true}
           autoplay={{ delay: 4000 }}
-          spaceBetween={2}
+          spaceBetween={8}
           slidesPerView={2}
           pagination={{
             bulletClass: `swiper-pagination-bullet ${style["feature-pagination"]}`,

@@ -8,7 +8,6 @@ import IntroSecure from './eachPageComponent/HomeComponent/Intro-Secure';
 import IntroHologram from './eachPageComponent/HomeComponent/Intro-Hologram';
 import Video from './eachPageComponent/HomeComponent/Video'
 import Honors from './eachPageComponent/HomeComponent/Honors';
-import Gallery1 from './eachPageComponent/HomeComponent/Gallery1';
 import FAQ from './Components/FAQ'
 import Header from './Components/Header';
 import Footer from './Components/Footer';
@@ -28,7 +27,6 @@ export default function Home() {
          <IntroSecure/>
          <IntroHologram/>
          <Honors/>
-         <Gallery1/>
          <Video/>
          <Exhibition/>
          <Advantages/>
