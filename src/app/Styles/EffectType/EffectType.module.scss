@@ -17,6 +17,31 @@
   color: var.$social-media-color;
 }
 
+.inputStyle{
+  width: 50%;
+  position: relative;
+  input{
+      width: 100%;
+      border: 1px solid lightgray;
+      border-radius: 4px;
+      padding: 9px;
+      font-size: 14px;
+      margin-top: 25px;
+      
+  }
+  input:focus-visible{
+      outline: 1px solid var.$social-media-color;
+  }
+}
+
+.searchIconposition{
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 70%;
+  transform: translate(50% , -50%);
+  color: var.$social-media-color;
+}
 
 .adjustWidth {
   div {
@@ -67,6 +92,7 @@
 //   }
 
 .MainBOXCardStyle {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   background-color: #f7f8fc;
@@ -138,10 +164,24 @@
 
 .fixLeftSideVideo {
   
-
   display: grid;
   grid-template-columns: repeat(5 ,1fr);
   grid-gap: 20px;
+}
+
+.modalImgStyle{
+  width: 100%;
+}
+.modalBodyResetStyle{
+  padding: 0;
+}
+.ModalHeadStyle{
+  padding: 2px;
+  justify-content: space-between;
+  button{
+    margin: 0 !important;
+
+  }
 }
 
 

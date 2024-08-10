@@ -1,10 +1,24 @@
+"use client"
+
+
 import React from "react";
 
 import style from "../../Styles/HomeStyle/Intro-Secure.module.scss";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SecurityIcon from "@mui/icons-material/Security";
+import { useRouter } from "next/navigation";
+
+
 export default function IntroSecure() {
+
+
+  const router = useRouter();
+
+  const handleCategoryClick = (blogType) => {
+    router.push(`/EffectType?type=${encodeURIComponent(blogType)}`);
+  };
+
   return (
     <section className="container mt-5 mb-5">
       <div className={`${style.mainDivResponsive} d-flex flex-row`}>
@@ -40,6 +54,7 @@ export default function IntroSecure() {
           <div>
             <button
               className={`${style.buttonPclass} d-flex flex-row align-items-center mt-2`}
+              onClick={() => handleCategoryClick('افکت‌های امنیتی')}
             >
               <div>معرفی محصولات</div>
               <ArrowBackIcon className="me-2" />
