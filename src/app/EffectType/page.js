@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, Suspense } from "react";
 import style from "../Styles/EffectType/EffectType.module.scss";
 import videoData from "/public/json/EffectType.json";
 import { useSearchParams } from "next/navigation";
@@ -7,11 +7,19 @@ import { Card, CardContent, CardMedia } from "@mui/material";
 import Box from "@mui/material/Box";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import Modal from "react-bootstrap/Modal";  // Import the Modal component
+import Modal from "react-bootstrap/Modal";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 
-export default function EffectType() {
+export default function EffectTypeWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EffectType />
+    </Suspense>
+  );
+}
+
+function EffectType() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
 
