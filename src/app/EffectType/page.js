@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState, Suspense } from "react";
+import React, { useRef, useEffect, useState, Suspense, useMemo } from "react";
 import style from "../Styles/EffectType/EffectType.module.scss";
 import videoData from "/public/json/EffectType.json";
 import { useSearchParams } from "next/navigation";
@@ -37,13 +37,15 @@ function EffectType() {
 
   const normalizeString = (str) => str.replace(/\s+/g, "").toLowerCase();
 
-  const filteredContent = (activeTab
-    ? videoData.find((item) => item.fillter === activeTab)?.content || []
-    : videoData.flatMap((item) => item.content)
-  ).filter(
-    (item) =>
-      normalizeString(item.title || "").includes(normalizeString(searchTerm))
-  );
+  const filteredContent = useMemo(() => {
+    return (activeTab
+      ? videoData.find((item) => item.fillter === activeTab)?.content || []
+      : videoData.flatMap((item) => item.content)
+    ).filter(
+      (item) =>
+        normalizeString(item.title || "").includes(normalizeString(searchTerm))
+    );
+  }, [activeTab, searchTerm]);
 
   useEffect(() => {
     if (type) {
@@ -60,7 +62,7 @@ function EffectType() {
         setCurrentVideoIndex(firstVideoIndex);
       }
     }
-  }, [filteredContent]);
+  }, [filteredContent, currentVideoIndex]);
 
   const handleThumbnailClick = (index) => {
     setCurrentVideoIndex(index);
@@ -108,7 +110,7 @@ function EffectType() {
     if (video && userInteracted) {
       video.play();
     }
-  }, [currentVideoIndex]);
+  }, [currentVideoIndex, userInteracted]);
 
   useEffect(() => {
     const preloadVideoDurations = () => {
@@ -130,7 +132,7 @@ function EffectType() {
     };
 
     preloadVideoDurations();
-  }, []);
+  }, [filteredContent]);
 
   const formatDuration = (duration) => {
     if (!duration) return "0:00";
@@ -165,7 +167,9 @@ function EffectType() {
                 eventKey={item.fillter}
                 title={
                   <div className="d-flex flex-column">
-                    <p className={`${style.TabTitleText} text-end mb-2 VodeoDisSizing`}>
+                    <p
+                      className={`${style.TabTitleText} text-end mb-2 VodeoDisSizing`}
+                    >
                       {item.fillter}
                     </p>
                     <Box
@@ -281,7 +285,6 @@ function EffectType() {
                       component="video"
                       src={currentVideo.src}
                       poster={currentVideo.poster}
-
                       sx={{ borderRadius: "4px", maxHeight: "500px" }}
                       controls
                       ref={videoRef}
@@ -386,17 +389,23 @@ function EffectType() {
           </div>
         </div>
       </section>
-      
+
       {/* Bootstrap Modal for displaying image */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton className={style.ModalHeadStyle}>
           <Modal.Title>Image Preview</Modal.Title>
         </Modal.Header>
         <Modal.Body className={style.modalBodyResetStyle}>
-          <img src={selectedImage} alt="Selected" className={style.modalImgStyle} />
+          <Box
+            className={`${style.modalImgStyle} `}
+            component="img"
+            alt="image."
+            src={selectedImage}
+          />
+         
         </Modal.Body>
       </Modal>
-      
+
       <Footer />
     </>
   );

@@ -56,7 +56,7 @@ const renderSubItems = (subItems, depth = 1) => {
 export default function Header() {
   const pathname = usePathname();
   const token = useSelector((state) => state.auth.token);
-
+  console.log(token);
 
   const getBasePath = (path) => {
     // This will capture the first segment of the path after the initial '/'
