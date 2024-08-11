@@ -1,0 +1,110 @@
+@use "../variable" as var;
+
+.adminPanel {
+  height: 100vh;
+  background-color: var.$footer-background ;
+}
+
+.flexSideBarContent{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.userinfoInSidebar{
+    display: flex;
+    flex-direction: row;
+   justify-content: space-between;
+   padding-bottom: 10px;
+   border-bottom: 1.4px solid #E1E5EA;
+}
+.EditBtnSvg{
+    cursor: pointer;
+}
+
+.sidebar {
+  width: 25%;
+  background-color: white;
+  color: var.$social-media-color;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarMain {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-bottom: none;
+  text-align: end !important;
+}
+.sidebarMain :global {
+  .nav-link {
+    color: var.$social-media-color;
+    width: 100%;
+    margin: 7px 0;
+    padding: 0;
+    text-align: start;
+    border-radius: 0;
+    border: none !important;
+  }
+  .nav-link:hover{
+    border: none !important;
+  }
+  .nav-link.active {
+    color: #5695F6;
+    border: none !important;
+    border-right: 1.5px solid #5695F6 !important;
+    padding-right: 10px;
+  }
+}
+
+.sidebarMain .nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+// .tabContent {
+//   padding: 20px;
+// }
+
+// .tabContent h2 {
+//   margin-bottom: 20px;
+// }
+
+// .tabContent form {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .tabContent label {
+//   margin-bottom: 5px;
+// }
+
+// .tabContent input,
+// .tabContent textarea {
+//   margin-bottom: 10px;
+//   padding: 7px;
+//   border: 1px solid #ccc;
+//   border-radius: 4px;
+// }
+
+// .tabContent button {
+//   padding: 7px;
+//   background-color: #28a745;
+//   color: #fff;
+//   border: none;
+//   border-radius: 4px;
+//   cursor: pointer;
+// }
+
+// .tabContent button:hover {
+//   background-color: #218838;
+// }

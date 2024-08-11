@@ -1,0 +1,60 @@
+@use "../variable" as var;
+
+.processTracker {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1.5px solid #c0c0c0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.label {
+  margin-top: 10px;
+  text-align: center;
+}
+
+  .line {
+    width: 28px;
+    height: 1px;
+    background-color: #5695F6;
+    // border-bottom: 1px dashed #5695F6;
+    position: absolute;
+    top: 15px;
+    left: 75%;
+    justify-content: space-between;
+    transform: translate(50% , -50%);
+  }
+
+  .activeLine {
+    background-image: none;
+    background-color: red;
+  }
+
+  
+.active .circle {
+  background-color: #e1f1ff;
+  color: var.$social-media-color;
+  border: none;
+}
+
+.completed .circle {
+  background-color: #e1f1ff;
+  color: var.$social-media-color;
+  border: none;
+}
