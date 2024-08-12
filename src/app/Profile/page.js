@@ -28,7 +28,7 @@ const Profile = () => {
       <Header />
       <section className={` ${style.adminPanel}`}>
         <div className={`${style.flexSideBarContent} container`}>
-          <aside className={style.sidebar}>
+          <aside className={`${style.sidebar} h-100`}>
             <div className={style.userinfoInSidebar}>
               <div className="d-flex flex-column">
                 <p>بهار رستمی نیا</p>

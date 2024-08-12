@@ -5,6 +5,7 @@
 }
 
 
+
 body {
   // overflow-x: hidden;
   background-color: white;
@@ -56,6 +57,10 @@ body {
 }
 .anavigation {
   font-size: 14px;
+  font-weight: 500;
+}
+.NormalTextSizing{
+  font-size: 15px;
   font-weight: 500;
 }
 .Banner-title {
@@ -158,6 +163,9 @@ button{
   .QASize{
     font-size: 15px;
   }
+  .NormalTextSizing{
+    font-size: 14px;
+  }
   .VodeoDisSizing{
     font-size: 15px;
   }
@@ -189,7 +197,9 @@ button{
 }
 @media (max-width: 768px) {
   // global sizing
-  
+  .NormalTextSizing{
+    font-size: 13px;
+  }
   .sometext{
     font-size: 18px;
   }

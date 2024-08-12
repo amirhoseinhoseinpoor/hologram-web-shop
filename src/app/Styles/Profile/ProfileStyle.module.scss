@@ -1,8 +1,9 @@
 @use "../variable" as var;
 
 .adminPanel {
-  height: 100vh;
-  background-color: var.$footer-background ;
+  background-color: var.$footer-background;
+  height: fit-content;
+  min-height: 100%;
 }
 
 .flexSideBarContent{
@@ -29,6 +30,8 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
+  border-radius: 4px;
+
 }
 
 .sidebarMain {

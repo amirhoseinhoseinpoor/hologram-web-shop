@@ -1,2 +1,207 @@
 @use "../variable" as var;
 
+.stepContent {
+  background-color: white;
+  height: 100%;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.numberColorForcall {
+  color: #f3802c;
+}
+
+.effectMainDivStyle {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+}
+
+.MainBOXCardStyle {
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f8fc;
+  margin: 6px 0;
+  border: none;
+  box-shadow: none;
+}
+
+.resetPaddingMui {
+  padding: 0 !important;
+  margin-top: 10px;
+  p {
+    margin: 0;
+  }
+}
+
+.resetPaddingMuiBelowContent {
+  padding: 4px 12px !important;
+  p {
+    margin: 0;
+  }
+}
+
+.continueButton {
+  border: none;
+  color: white;
+  background-color: #5695f6;
+  border-radius: 4px;
+  padding: 7px 29px;
+}
+
+// check box styling
+
+.widthFitForTheInput {
+  width: fit-content;
+}
+
+.control {
+  font-family: arial;
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  padding-top: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.controlindicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 22px;
+  width: 22px;
+  background: #ffffff;
+  border: 1px solid #5695f6;
+  border-radius: 4px;
+}
+.control:hover input ~ .controlindicator,
+.control input:focus ~ .controlindicator {
+  background: #cccccc;
+}
+
+.control input:checked ~ .controlindicator {
+  background: #5695f6;
+}
+.control:hover input:not([disabled]):checked ~ .controlindicator,
+.control input:checked:focus ~ .controlindicator {
+  background: #5695f6;
+}
+.control input:disabled ~ .controlindicator {
+  background: #e6e6e6;
+  opacity: 9;
+  pointer-events: none;
+}
+.controlindicator:after {
+  box-sizing: unset;
+  content: "";
+  position: absolute;
+  display: none;
+}
+.control input:checked ~ .controlindicator:after {
+  display: block;
+}
+.controlCheckbox .controlindicator:after {
+  left: 8px;
+  top: 4px;
+  width: 3px;
+  height: 8px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.controlCheckbox input:disabled ~ .controlindicator:after {
+  border-color: #7b7b7b;
+}
+.controlCheckbox .controlindicator::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-left: -1.3rem;
+  margin-top: -1.3rem;
+  background: #2aa1c0;
+  border-radius: 3rem;
+  opacity: 0.6;
+  z-index: 99999;
+  transform: scale(0);
+}
+@keyframes s-ripple {
+  0% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+@keyframes s-ripple-dup {
+  0% {
+    transform: scale(0);
+  }
+  30% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+.controlCheckbox input + .controlindicator::before {
+  animation: s-ripple 250ms ease-out;
+}
+.controlCheckbox input:checked + .controlindicator::before {
+  animation-name: s-ripple-dup;
+}
+
+.StarFixReq {
+  color: #ff4f3f;
+}
+
+.displayNoneTheInput {
+  display: none;
+}
+
+.labelInsteadOfInput {
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 10px;
+}
+.colorTheInputFile {
+  color: #404040;
+}
+
+.inputTextCompanyName {
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 7px 15px;
+}
+
+.inputTextCompanyName:focus-visible {
+  outline: none;
+}
+.resetfontLabel {
+  font-family: unset;
+  color: var.$social-media-color;
+  span {
+    font-family: unset;
+  }
+}
+.FormGroupForRaidio {
+  flex-direction: row;
+}
