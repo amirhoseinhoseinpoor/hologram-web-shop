@@ -9,7 +9,7 @@ import Hoc from "../Components/HOCcomponent";
 import dynamic from "next/dynamic"; // Import dynamic from Next.js
 
 // Lazy load the MakeOrder component
-const MakeOrder = dynamic(() => import("../eachPageComponent/Profile/MakeOrder"), {
+const MakeOrder = dynamic(() => import("../eachPageComponent/Profile/MakeOrderComponents/MakeOrder"), {
   ssr: false, // Disable SSR if it's a client-side component
   loading: () => <p>Loading...</p>, // Fallback content while loading
 });

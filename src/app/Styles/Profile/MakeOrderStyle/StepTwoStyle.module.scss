@@ -1,0 +1,45 @@
+@use "../../variable" as var;
+
+.StarFixReq {
+  color: #ff4f3f;
+}
+
+.labelInsteadOfInput {
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.colorTheInputFile {
+  color: #404040;
+}
+.displayNoneTheInput {
+  display: none;
+}
+.inputTextCompanyName {
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 7px 15px;
+}
+
+.inputTextCompanyName:focus-visible {
+  outline: none;
+}
+.resetfontLabel {
+  font-family: unset;
+  color: var.$social-media-color;
+  span {
+    font-family: unset;
+  }
+}
+.continueButton {
+  border: none;
+  color: white;
+  background-color: #5695f6;
+  border-radius: 4px;
+  padding: 7px 29px;
+}
+
+.FormGroupForRaidio {
+  flex-direction: row;
+}
