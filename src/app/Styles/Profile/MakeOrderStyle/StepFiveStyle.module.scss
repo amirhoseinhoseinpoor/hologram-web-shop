@@ -69,3 +69,35 @@
 .SetMaxHeightToTextArea{
   max-height: 200px;
 }
+
+.reStyleCardContent{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  gap: 10px;
+  cursor: pointer;
+  padding-bottom: 0 !important;
+  
+
+}
+.MainBOXCardStyle{
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  background-color: #F7F8FC;
+  border-radius: 4px;
+  height: 100%;
+  cursor: pointer;
+
+}
+.paddingLastChidMui{
+  padding-top: 5px;
+}
+
+.MakeProperForFlex{
+  display: grid;
+  grid-template-columns: repeat(2 , 1fr);
+  grid-gap: 20px;
+  
+
+}

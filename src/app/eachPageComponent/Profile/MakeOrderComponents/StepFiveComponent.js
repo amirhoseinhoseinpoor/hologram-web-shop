@@ -6,13 +6,33 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Modal from "react-bootstrap/Modal";
+import { Card, CardContent } from "@mui/material";
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepFiveStyle.module.scss";
 
 export default function StepFiveComponent({ handleNextStep }) {
   const [value, setValue] = React.useState("تحویل حضوری از مرکز آذر هولوگرام");
 
-  const [PostAdress, setPostAdress] = useState(null);
+  const [formState, setFormState] = useState({
+    name: "",
+    lastName: "",
+    number: "09308415264",
+    companyName: "",
+    postCode: "",
+    city: "",
+    town: "",
+    addressText: "",
+  });
+
+  const [PostAdress, setPostAdress] = useState([]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const [showModal, setShowModal] = useState(false);
 
@@ -30,11 +50,20 @@ export default function StepFiveComponent({ handleNextStep }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setPostAdress("test");
-    // For demonstration, logging the form data
-    // console.log('Form data submitted:', formData);
+    // setPostAdress("test");
+    setPostAdress((prevCards) => [...prevCards, formState]); // Store submitted data to display later
+    setFormState({
+      name: "",
+      lastName: "",
+      number: "",
+      companyName: "",
+      postCode: "",
+      city: "",
+      town: "",
+      addressText: "",
+    });
 
-    // You can add further actions here (e.g., API requests)
+    setShowModal(false);
   };
   return (
     <>
@@ -94,7 +123,8 @@ export default function StepFiveComponent({ handleNextStep }) {
                 control={<Radio />}
                 label="ارسال با پست"
               />
-              {PostAdress && (
+              
+              {PostAdress.length > 0 && (
                 <div>
                   <button
                     onClick={handleModalClick}
@@ -132,7 +162,15 @@ export default function StepFiveComponent({ handleNextStep }) {
               )}
             </div>
 
-            {PostAdress === null ? (
+            {value === "ارسال با پست" && (
+                <div>
+                  <p className="discription me-4 mt-1 mb-2">
+                  پس از آماده شدن و تحویل به پست نهایت تا 48 ساعت بعد کد رهگیری براتون پیامک میشود.
+                  </p>
+                </div>
+              )}
+
+            {PostAdress.length === 0 ? (
               <div className="d-flex flex-column justify-content-center text-center">
                 <div>
                   <svg
@@ -210,7 +248,120 @@ export default function StepFiveComponent({ handleNextStep }) {
               </div>
             ) : (
               <>
-                <p>nocontent</p>
+                <div
+                  className={`${style.MakeProperForFlex}  mt-3`}
+                >
+                  {PostAdress.map((item, index) => (
+                    <Card
+                      key={index}
+                      className={style.MainBOXCardStyle}
+                      // onClick={() => handleImageClick(item.src)}
+                    >
+                      <CardContent className={`${style.reStyleCardContent}`}>
+                        <div>
+                          <svg
+                            width={19}
+                            height={18}
+                            viewBox="0 0 19 18"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M10.4445 2.70041L4.28702 9.21791C4.05452 9.46541 3.82952 9.95291 3.78452 10.2904L3.50702 12.7204C3.40952 13.5979 4.03952 14.1979 4.90952 14.0479L7.32452 13.6354C7.66202 13.5754 8.13452 13.3279 8.36702 13.0729L14.5245 6.55541C15.5895 5.43041 16.0695 4.14791 14.412 2.58041C12.762 1.02791 11.5095 1.57541 10.4445 2.70041Z"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeMiterlimit={10}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M9.41797 3.78906C9.74047 5.85906 11.4205 7.44156 13.5055 7.65156"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeMiterlimit={10}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M2.75 16.5H16.25"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeMiterlimit={10}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                        <div>
+                          <svg
+                            width={19}
+                            height={18}
+                            viewBox="0 0 19 18"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16.25 4.48438C13.7525 4.23687 11.24 4.10938 8.735 4.10938C7.25 4.10938 5.765 4.18438 4.28 4.33438L2.75 4.48438"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M6.875 3.7275L7.04 2.745C7.16 2.0325 7.25 1.5 8.5175 1.5H10.4825C11.75 1.5 11.8475 2.0625 11.96 2.7525L12.125 3.7275"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M14.6373 6.85547L14.1498 14.408C14.0673 15.5855 13.9998 16.5005 11.9073 16.5005H7.0923C4.9998 16.5005 4.9323 15.5855 4.8498 14.408L4.3623 6.85547"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M8.24707 12.375H10.7446"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M7.625 9.375H11.375"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </CardContent>
+                      <CardContent className={style.paddingLastChidMui}>
+                        <div>
+                          <span className="discription">آدرس گیرنده :</span>
+                          <span className="discription">{item.name}</span>
+                          <div>
+                            <p className="discription mt-2">
+                              {item.addressText}
+                            </p>
+                          </div>
+                          <div className="d-flex flex-row justify-content-between mt-2 discription">
+                            <div>
+                              <span>کد پستی: </span>
+                              <span>{item.postCode}</span>
+                            </div>
+                            <div>
+                              <span>شماره همراه:</span>
+                              <span>{item.number}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </>
             )}
 
@@ -221,7 +372,7 @@ export default function StepFiveComponent({ handleNextStep }) {
               label="ارسال با باربری"
             />
 
-            {PostAdress === null ? (
+            {PostAdress.length === 0 ? (
               <div className="d-flex flex-column justify-content-center text-center">
                 <div>
                   <svg
@@ -296,7 +447,120 @@ export default function StepFiveComponent({ handleNextStep }) {
               </div>
             ) : (
               <>
-                <p>nocontent</p>
+                <div
+                  className={`${style.MakeProperForFlex}  mt-3`}
+                >
+                  {PostAdress.map((item, index) => (
+                    <Card
+                      key={index}
+                      className={style.MainBOXCardStyle}
+                      // onClick={() => handleImageClick(item.src)}
+                    >
+                      <CardContent className={`${style.reStyleCardContent}`}>
+                        <div>
+                          <svg
+                            width={19}
+                            height={18}
+                            viewBox="0 0 19 18"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M10.4445 2.70041L4.28702 9.21791C4.05452 9.46541 3.82952 9.95291 3.78452 10.2904L3.50702 12.7204C3.40952 13.5979 4.03952 14.1979 4.90952 14.0479L7.32452 13.6354C7.66202 13.5754 8.13452 13.3279 8.36702 13.0729L14.5245 6.55541C15.5895 5.43041 16.0695 4.14791 14.412 2.58041C12.762 1.02791 11.5095 1.57541 10.4445 2.70041Z"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeMiterlimit={10}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M9.41797 3.78906C9.74047 5.85906 11.4205 7.44156 13.5055 7.65156"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeMiterlimit={10}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M2.75 16.5H16.25"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeMiterlimit={10}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                        <div>
+                          <svg
+                            width={19}
+                            height={18}
+                            viewBox="0 0 19 18"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16.25 4.48438C13.7525 4.23687 11.24 4.10938 8.735 4.10938C7.25 4.10938 5.765 4.18438 4.28 4.33438L2.75 4.48438"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M6.875 3.7275L7.04 2.745C7.16 2.0325 7.25 1.5 8.5175 1.5H10.4825C11.75 1.5 11.8475 2.0625 11.96 2.7525L12.125 3.7275"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M14.6373 6.85547L14.1498 14.408C14.0673 15.5855 13.9998 16.5005 11.9073 16.5005H7.0923C4.9998 16.5005 4.9323 15.5855 4.8498 14.408L4.3623 6.85547"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M8.24707 12.375H10.7446"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M7.625 9.375H11.375"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </CardContent>
+                      <CardContent className={style.paddingLastChidMui}>
+                        <div>
+                          <span className="discription">آدرس گیرنده :</span>
+                          <span className="discription">{item.name}</span>
+                          <div>
+                            <p className="discription mt-2">
+                              {item.addressText}
+                            </p>
+                          </div>
+                          <div className="d-flex flex-row justify-content-between mt-2 discription">
+                            <div>
+                              <span>کد پستی: </span>
+                              <span>{item.postCode}</span>
+                            </div>
+                            <div>
+                              <span>شماره همراه:</span>
+                              <span>{item.number}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </>
             )}
           </RadioGroup>
@@ -330,6 +594,8 @@ export default function StepFiveComponent({ handleNextStep }) {
                   id="name"
                   name="name"
                   className={`${style.inputTextCompanyName} discription`}
+                  value={formState.name}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -343,6 +609,8 @@ export default function StepFiveComponent({ handleNextStep }) {
                   id="lastName"
                   name="lastName"
                   className={`${style.inputTextCompanyName} discription`}
+                  value={formState.lastName}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -358,6 +626,7 @@ export default function StepFiveComponent({ handleNextStep }) {
                   name="number"
                   value="09308314235"
                   className={`${style.inputTextCompanyName} discription`}
+                  onChange={handleInputChange}
                   required
                   disabled
                 />
@@ -375,6 +644,8 @@ export default function StepFiveComponent({ handleNextStep }) {
                   id="companyName"
                   name="companyName"
                   className={`${style.inputTextCompanyName} discription`}
+                  value={formState.companyName}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="w-50">
@@ -388,6 +659,8 @@ export default function StepFiveComponent({ handleNextStep }) {
                   id="postCode"
                   name="postCode"
                   className={`${style.inputTextCompanyName} discription`}
+                  value={formState.postCode}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -401,6 +674,8 @@ export default function StepFiveComponent({ handleNextStep }) {
                   id="city"
                   name="city"
                   className={`${style.inputTextCompanyName} discription`}
+                  value={formState.city}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -414,6 +689,8 @@ export default function StepFiveComponent({ handleNextStep }) {
                   id="town"
                   name="town"
                   className={`${style.inputTextCompanyName} discription`}
+                  value={formState.town}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -426,6 +703,8 @@ export default function StepFiveComponent({ handleNextStep }) {
                   id="addressText"
                   name="addressText"
                   className={`${style.inputTextCompanyName} ${style.SetMaxHeightToTextArea} discription`}
+                  value={formState.addressText}
+                  onChange={handleInputChange}
                   placeholder="اسم خیابان، اسم کوچه، اسم بن بست"
                   rows="4" // Number of visible text lines
                   cols="50" // Number of visible character columns

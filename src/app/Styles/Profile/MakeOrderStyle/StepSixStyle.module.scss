@@ -1,0 +1,28 @@
+@use "../../variable" as var;
+
+.resetfontLabel {
+  font-family: unset;
+  color: var.$social-media-color;
+  margin: 0;
+  span {
+    font-family: unset;
+  }
+}
+.continueButton{
+    border: none;
+    background-color: #5695F6;
+    color: white;
+    padding: 9px 45px; 
+    border-radius: 4px;
+
+}
+.SectionStyle{
+    background-color: white;
+    height: 100%;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.changingopacityZ{
+    opacity: 0.8;
+}
