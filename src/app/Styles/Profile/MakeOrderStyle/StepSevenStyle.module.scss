@@ -1,0 +1,38 @@
+@use "../../variable" as var;
+
+.stepContent {
+  height: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.InnerDiv {
+  background-color: white;
+  width: 60%;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+.changeTheColor{
+  color: #5F5F5F;
+}
+
+.CopyTextRahgir{
+  color: #5695F6;
+}
+
+.CopySvgButton{
+  cursor: pointer;
+}
+
+.buttonNavigatePeigiri{
+  border: none;
+  padding: 8px 18px;
+  border-radius: 4px;
+  background-color: #5695F6;
+  color: white;
+  margin-top: 25px;
+  margin-bottom: 30px;
+  text-align: center;
+}

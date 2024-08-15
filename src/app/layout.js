@@ -18,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" dir="rtl">
-      <body className={`${myFont.className}`}  >
+      <body style={{paddingTop : "67px"}} className={`${myFont.className}`}  >
         <StoreProvider>       
           {children}
         </StoreProvider>

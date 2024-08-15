@@ -21,6 +21,8 @@ const StepSixComponent = dynamic(() => import("./StepSixComponent") , {
   loading : () => <p>Loading...</p>,
 })
 
+const StepSeven = dynamic(() => import("./StepSevenComponent"));
+
 export default function MakeOrder() {
   const [step, setStep] = useState(1);
   
@@ -130,17 +132,11 @@ export default function MakeOrder() {
         );
       case 6:
         return (
-            <StepSixComponent handleNextStep={handleNextStep}/>
+          <StepSixComponent handleNextStep={handleNextStep}/>
         );
       case 7:
         return (
-          <div className={style.stepContent}>
-            <h2>Step 4: Confirm and Pay</h2>
-            {/* Your payment form or confirmation screen goes here */}
-            <button onClick={handlePreviousStep} className={style.backButton}>
-              Back
-            </button>
-          </div>
+          <StepSeven handleNextStep={handleNextStep}/>
         );
 
       default:

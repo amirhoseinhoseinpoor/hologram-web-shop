@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { childValue } from "../Store/slice";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -9,11 +11,13 @@ import Hoc from "../Components/HOCcomponent";
 import dynamic from "next/dynamic"; // Import dynamic from Next.js
 
 // Lazy load the MakeOrder component
-const MakeOrder = dynamic(() => import("../eachPageComponent/Profile/MakeOrderComponents/MakeOrder"), {
-  ssr: false, // Disable SSR if it's a client-side component
-  loading: () => <p>Loading...</p>, // Fallback content while loading
-});
-
+const MakeOrder = dynamic(
+  () => import("../eachPageComponent/Profile/MakeOrderComponents/MakeOrder"),
+  {
+    ssr: false, // Disable SSR if it's a client-side component
+    loading: () => <p>Loading...</p>, // Fallback content while loading
+  }
+);
 
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -22,6 +26,15 @@ import style from "../Styles/Profile/ProfileStyle.module.scss";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("makeOrder");
+
+  const childValue2 = useSelector(childValue);
+  console.log(childValue2);
+
+  useEffect(() => {
+    if (childValue2 !== null) {
+      setActiveTab(childValue2);
+    }
+  }, [childValue2]);
 
   return (
     <>
@@ -34,7 +47,10 @@ const Profile = () => {
                 <p>بهار رستمی نیا</p>
                 <p>091286568542</p>
               </div>
-              <div onClick={() =>setActiveTab('userInfo')} className={style.EditBtnSvg}>
+              <div
+                onClick={() => setActiveTab("userInfo")}
+                className={style.EditBtnSvg}
+              >
                 <svg
                   width={20}
                   height={21}
@@ -83,9 +99,7 @@ const Profile = () => {
             </Tabs>
           </aside>
           <div className={style.content}>
-            {activeTab === "makeOrder" && (
-              <MakeOrder/>
-            )}
+            {activeTab === "makeOrder" && <MakeOrder />}
             {activeTab === "seeOrder" && (
               <div className={style.tabContent}>
                 {/* <Suspense fallback={<div>loading...</div>}>

@@ -48,3 +48,18 @@
 .decoreRole{
     border-bottom: 1.3px solid lightgray;
 }
+
+.formInputCapcha{
+    border-radius: 4px !important;
+    width: 50%;
+}
+.formInputCapcha:focus{
+    box-shadow: unset !important;
+    border: 1px solid #FF4F3F;
+  }
+
+.formInputCapcha::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    margin: 0;
+}

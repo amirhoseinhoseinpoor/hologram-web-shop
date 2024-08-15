@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import LinkIcon from "@mui/icons-material/Link";
 import Tooltip from "@mui/material/Tooltip";
 import { Box } from "@mui/material";
 

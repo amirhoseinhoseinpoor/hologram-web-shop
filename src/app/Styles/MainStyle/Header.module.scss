@@ -1,59 +1,58 @@
 @use "../variable" as var;
 
-.headermainbackground{
-    background-color: var.$footer-background;
+.headermainbackground {
+  background-color: var.$footer-background;
 }
-.adjustNavPadding{
+.adjustNavPadding {
   padding: 10px 0;
 }
-.sectionheaderfix{
-    position:sticky;
-    width: 100%;
-    z-index: 4;
-    top: 0;
+.sectionheaderfix {
+  position: fixed;
+  width: 100%;
+  z-index: 4;
+  top: 0;
 }
-.noneactive{
-  color: #333333 ;
-}
-.noneactive a{
+.noneactive {
   color: #333333;
 }
-.navbar-nav .nav-link.active, .navbar-nav .nav-link.show{
+.noneactive a {
+  color: #333333;
+}
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
   color: var.$arrow-link !important;
 }
-.active{
+.active {
   position: relative;
   color: var.$arrow-link !important;
-
 }
-.active::before{
-  content:'';
+.active::before {
+  content: "";
   position: absolute;
   display: block;
   border-bottom: 1.5px solid var.$arrow-link;
   width: 50%;
   bottom: 0;
-  
 }
-.navDropDown :global{
+.navDropDown :global {
   position: unset !important;
-  .dropdown-toggle.show{
+  .dropdown-toggle.show {
     position: relative;
     color: var.$arrow-link !important;
-    svg{
+    svg {
       transition: 0.2s ease-in-out;
       transform: rotate(180deg);
     }
   }
-  .dropdown-toggle.show::before{
-    content:'';
+  .dropdown-toggle.show::before {
+    content: "";
     position: absolute;
     display: block;
     border-bottom: 1.5px solid var.$arrow-link;
     width: 50%;
     bottom: 0;
   }
-  .dropdown-menu{
+  .dropdown-menu {
     border: none;
     border-radius: 2px;
     margin-top: -2px;
@@ -64,80 +63,78 @@
     height: 100vh;
   }
 }
-.navDropItem{
+.navDropItem {
   position: unset !important;
 }
-.navDropItem:global{
+.navDropItem:global {
   position: unset !important;
-  
 }
 
-.colornav{
+.colornav {
   color: var.$arrow-link !important;
   margin-top: 5px;
   margin-bottom: 5px;
   font-weight: 500;
 }
-.fixcolumn{
+.fixcolumn {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   height: 90vh;
 }
 
-
-.offcanvasheader :global{
-  button{
+.offcanvasheader :global {
+  button {
     margin: 0 !important;
   }
 }
-.nextoffcanvas{
+.nextoffcanvas {
   justify-content: space-between;
 }
-.innnerstyle{
+.innnerstyle {
   display: flex;
   align-items: center;
   flex-direction: row;
   border: none;
   background-color: unset;
-  svg{
+  svg {
     padding-left: 5px;
   }
 }
 
-.headerIconPersonDiv{
+.headerIconPersonDiv {
   background-color: white;
   border-radius: 4px;
   padding: 7px;
 }
 
-.headerIconPersonDiv:last-child{
-   p{
-     color: var.$social-media-color;
-   }
+.headerIconPersonDiv:last-child {
+  p {
+    color: var.$social-media-color;
+  }
 }
 
-@media (max-width :980px) {
-   .headerresponsivemain{
-     display: block !important;
-   }
-   .headerresponsivemain >div{
+@media (max-width: 980px) {
+  .headerresponsivemain {
+    display: block !important;
+  }
+  .headerresponsivemain > div {
     margin-bottom: 15px;
-   }
-   .phonenumbercall{
+  }
+  .phonenumbercall {
     display: flex !important;
-   }
-   .phonecallheadericon{
-        svg{
-            stroke: black;
-            fill: none ;
-        }
-   }
-   
-   .navbaritemheader{
-     margin: 0 !important;
-   }
-   .navbaritemheader > div{
-     align-items: unset !important;
-   }
+  }
+  .phonecallheadericon {
+    svg {
+      stroke: black;
+      fill: none;
+    }
+  }
+
+  .navbaritemheader {
+    margin: 0 !important;
+  }
+  .navbaritemheader > div {
+    align-items: unset !important;
+  }
 }

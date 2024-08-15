@@ -77,114 +77,7 @@ export default function Header() {
     setVisibility((prev) => ({ ...prev, [key]: false }));
   };
 
-  // const mainItems = [
-  //   { link: "/", title: "خانه", subItems: [] },
-  //   {
-  //     link: "#test2",
-  //     title: "محصولات",
-  //     subItems: [
-  //       {
-  //         link: "#awdwa",
-  //         title: "هولوگرام",
-  //         subItems: [
-  //           {
-  //             link: "#1324",
-  //             title: "هولوگرام‌های تخریب شونده",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#ggg",
-  //             title: "هولوگرام‌های شفاف",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "هولوگرام کارت‌های پی وی سی",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "بارکد هولوگرام",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "هولوگرام‌های رنگی",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "هولوگرام با تخریب اختصاصی",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "نوار هولوگرام",
-  //             subItems: [],
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         link: "#2",
-  //         title: "لیبل‌های امنیتی",
-  //         subItems: [
-  //           {
-  //             link: "#sss",
-  //             title: "لیبل با نوار هولوگرام",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "لیبل با چاپ امنیتی و نوار هولوگرام",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "لیبل‌های هولوگرافیک",
-  //             subItems: [],
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         link: "#2",
-  //         title: "برچسب‌های پلمپ",
-  //         subItems: [
-  //           {
-  //             link: "#sss",
-  //             title: "لیبل پلمپ با تخریب عمومی",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "لیبل پلمپ با تخریب اختصاصی",
-  //             subItems: [],
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         link: "#2",
-  //         title: "اسکرچ",
-  //         subItems: [
-  //           {
-  //             link: "#sss",
-  //             title: "انواع اسکرچ زبرا",
-  //             subItems: [],
-  //           },
-  //           {
-  //             link: "#sss",
-  //             title: "هولو اسکرچ",
-  //             subItems: [],
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  //   { link: "#test3", title: "معرفی هولگرام‌ها", subItems: [] },
-  //   { link: "#test4", title: "ثبت سفارش", subItems: [] },
-  //   { link: "/Blog", title: "مقالات", subItems: [] },
-  //   { link: "/ContactUs", title: "ارتباط با ما", subItems: [] },
-  //   { link: "/AboutUs", title: "درباره‌ی ما", subItems: [] },
-  // ];
+
 
   const addKeys = (items) => {
     return items.map((item, index) => ({
@@ -195,6 +88,13 @@ export default function Header() {
   };
 
   const mainItemObject = addKeys(mainItems);
+
+
+  // store the url
+  const storeLastVisitedPage = () => {
+    const lastPage = window.location.pathname;
+    sessionStorage.setItem("lastPage", lastPage);
+  };
 
   return (
     <section
@@ -332,7 +232,7 @@ export default function Header() {
                       </svg>
                     </div>
                     <div className="me-1">
-                      <p>حساب کاربری</p>
+                      <p className="NormalTextSizing">ورود | ثبت نام</p>
                     </div>
                   </div>
                 </Link>
@@ -438,8 +338,8 @@ export default function Header() {
                 id="basic-nav-dropdown"
               ></NavDropdown>
             ) : (
-              <Link className="text-decoration-none" href="/Login" passHref>
-                <div className={`${style.headerIconPersonDiv} d-flex flex-row`}>
+               <Link onClick={storeLastVisitedPage} className="text-decoration-none" href="/Login" passHref>
+                <div  className={`${style.headerIconPersonDiv} d-flex flex-row`}>
                   <div>
                     <svg
                       width={20}
@@ -465,7 +365,7 @@ export default function Header() {
                     </svg>
                   </div>
                   <div className="me-1">
-                    <p>حساب کاربری</p>
+                    <p className="NormalTextSizing">ورود | ثبت نام</p>
                   </div>
                 </div>
               </Link>
