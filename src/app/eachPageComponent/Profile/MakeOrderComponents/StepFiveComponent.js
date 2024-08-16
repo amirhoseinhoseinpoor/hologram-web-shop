@@ -155,7 +155,7 @@ export default function StepFiveComponent({ handleNextStep }) {
                           />
                         </svg>
                       </div>
-                      <p>افزودن آدرس جدید </p>
+                      <p className="NormalTextSizing">افزودن آدرس جدید </p>
                     </div>
                   </button>
                 </div>
@@ -174,8 +174,7 @@ export default function StepFiveComponent({ handleNextStep }) {
               <div className="d-flex flex-column justify-content-center text-center">
                 <div>
                   <svg
-                    width={65}
-                    height={64}
+                    className={style.svgWidthHeightRe}
                     viewBox="0 0 65 64"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -241,7 +240,7 @@ export default function StepFiveComponent({ handleNextStep }) {
                           />
                         </svg>
                       </div>
-                      <p>افزودن آدرس جدید </p>
+                      <p className="NormalTextSizing">افزودن آدرس جدید </p>
                     </div>
                   </button>
                 </div>
@@ -340,21 +339,21 @@ export default function StepFiveComponent({ handleNextStep }) {
                       </CardContent>
                       <CardContent className={style.paddingLastChidMui}>
                         <div>
-                          <span className="discription">آدرس گیرنده :</span>
-                          <span className="discription">{item.name}</span>
+                          <span className="NormalTextSizing">آدرس گیرنده :</span>
+                          <span className="NormalTextSizing">{item.name}</span>
                           <div>
-                            <p className="discription mt-2">
+                            <p className="NormalTextSizing mt-2">
                               {item.addressText}
                             </p>
                           </div>
-                          <div className="d-flex flex-row justify-content-between mt-2 discription">
+                          <div className="d-flex flex-row justify-content-between mt-2 NormalTextSizing">
                             <div>
-                              <span>کد پستی: </span>
-                              <span>{item.postCode}</span>
+                              <span className="NormalTextSizing">کد پستی: </span>
+                              <span className="NormalTextSizing">{item.postCode}</span>
                             </div>
                             <div>
-                              <span>شماره همراه:</span>
-                              <span>{item.number}</span>
+                              <span className="NormalTextSizing">شماره همراه:</span>
+                              <span className="NormalTextSizing">{item.number}</span>
                             </div>
                           </div>
                         </div>
@@ -376,8 +375,7 @@ export default function StepFiveComponent({ handleNextStep }) {
               <div className="d-flex flex-column justify-content-center text-center">
                 <div>
                   <svg
-                    width={65}
-                    height={64}
+                    className={style.svgWidthHeightRe}
                     viewBox="0 0 65 64"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -440,7 +438,7 @@ export default function StepFiveComponent({ handleNextStep }) {
                           />
                         </svg>
                       </div>
-                      <p>افزودن آدرس جدید </p>
+                      <p className="NormalTextSizing">افزودن آدرس جدید </p>
                     </div>
                   </button>
                 </div>
@@ -539,21 +537,21 @@ export default function StepFiveComponent({ handleNextStep }) {
                       </CardContent>
                       <CardContent className={style.paddingLastChidMui}>
                         <div>
-                          <span className="discription">آدرس گیرنده :</span>
-                          <span className="discription">{item.name}</span>
+                          <span className="NormalTextSizing">آدرس گیرنده :</span>
+                          <span className="NormalTextSizing">{item.name}</span>
                           <div>
-                            <p className="discription mt-2">
+                            <p className="NormalTextSizing mt-2">
                               {item.addressText}
                             </p>
                           </div>
-                          <div className="d-flex flex-row justify-content-between mt-2 discription">
+                          <div className="d-flex flex-row justify-content-between mt-2 NormalTextSizing">
                             <div>
-                              <span>کد پستی: </span>
-                              <span>{item.postCode}</span>
+                              <span className="NormalTextSizing">کد پستی: </span>
+                              <span className="NormalTextSizing">{item.postCode}</span>
                             </div>
                             <div>
-                              <span>شماره همراه:</span>
-                              <span>{item.number}</span>
+                              <span className="NormalTextSizing">شماره همراه:</span>
+                              <span className="NormalTextSizing">{item.number}</span>
                             </div>
                           </div>
                         </div>

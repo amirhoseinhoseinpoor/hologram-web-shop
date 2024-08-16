@@ -14,25 +14,31 @@
   border-radius: 6px;
 }
 
-.changeTheColor{
-  color: #5F5F5F;
+.changeTheColor {
+  color: #5f5f5f;
 }
 
-.CopyTextRahgir{
-  color: #5695F6;
+.CopyTextRahgir {
+  color: #5695f6;
 }
 
-.CopySvgButton{
+.CopySvgButton {
   cursor: pointer;
 }
 
-.buttonNavigatePeigiri{
+.buttonNavigatePeigiri {
   border: none;
   padding: 8px 18px;
   border-radius: 4px;
-  background-color: #5695F6;
+  background-color: #5695f6;
   color: white;
   margin-top: 25px;
   margin-bottom: 30px;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .InnerDiv {
+    width: 100%;
+  }
 }

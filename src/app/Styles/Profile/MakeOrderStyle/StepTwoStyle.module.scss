@@ -17,6 +17,7 @@
   display: none;
 }
 .inputTextCompanyName {
+  width: 100%;
   border: 1px solid #c0c0c0;
   border-radius: 4px;
   padding: 7px 15px;
@@ -42,4 +43,10 @@
 
 .FormGroupForRaidio {
   flex-direction: row;
+}
+@media (max-width: 980px) {
+  .makeTheFormResponsive {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
 }

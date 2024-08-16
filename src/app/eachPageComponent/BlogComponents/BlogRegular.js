@@ -19,6 +19,7 @@ export default function BlogRegular() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
   
+  
 
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState(type || "هولوگرام");

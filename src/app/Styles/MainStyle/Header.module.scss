@@ -34,8 +34,16 @@
   width: 50%;
   bottom: 0;
 }
+
+.ofcanvasInnerCreateScrool{
+  overflow: auto;
+  scrollbar-width: thin;
+}
 .navDropDown :global {
   position: unset !important;
+  .dropdown-toggle{
+    padding: 0 !important;
+  }
   .dropdown-toggle.show {
     position: relative;
     color: var.$arrow-link !important;
@@ -112,6 +120,31 @@
   p {
     color: var.$social-media-color;
   }
+}
+
+.userinfoInSidebar{
+  display: flex;
+  flex-direction: row;
+ justify-content: space-between;
+ padding-bottom: 10px;
+ border-bottom: 1.4px solid #E1E5EA;
+}
+
+.DropDownForUserInfo :global{
+  .dropdown-menu {
+    border: none;
+    width: 200%;
+    padding: 12px;
+    margin-top: 3px;
+    border-radius: 4px;
+  }
+
+}
+
+.LinkOfprofile{
+  text-decoration: none;
+  color: var.$social-media-color;
+  text-align: start;
 }
 
 @media (max-width: 980px) {

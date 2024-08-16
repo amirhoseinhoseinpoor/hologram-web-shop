@@ -56,5 +56,17 @@
     border: 1px solid #C0C0C0;
     padding: 20px;
     border-radius: 6px;
+}
 
+@media (max-width: 980px) {
+
+    .makeTheResponsivePerfect{
+        flex-direction: column !important;
+    }
+    .adjustTheLeftWidht{
+        width: 100%;
+    }
+    .adjustTheRightWidht{
+      width: 100%;
+    }
 }

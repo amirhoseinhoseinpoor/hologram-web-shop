@@ -41,7 +41,7 @@ export default function Login() {
     } else if (comeToken === null && isOtpSent) {
       setErrorMessage("Failed to send OTP. Please try again.");
     }
-  }, [comeToken]);
+  }, [comeToken , isOtpSent]);
 
   // const handleSendOtp = async (event) => {
   //   event.preventDefault();
@@ -121,7 +121,7 @@ export default function Login() {
   }
 
   return (
-    <section className="h-100 d-flex">
+    <section className="h-100 d-flex w-100">
       <div className={style.outerLoginPage}>
         <div className={`${style.LoginMainDiv} position-relative`}>
           <div onClick={NavigateLastPage} className={style.closeIconImg}>

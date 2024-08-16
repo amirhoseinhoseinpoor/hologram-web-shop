@@ -7,6 +7,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import StoreProvider from './Store/storeProvider';
 
+
 const myFont = localFont({ src: './Fonts/IRANSansXVF.ttf' });
 
 export const metadata = {
@@ -18,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" dir="rtl">
-      <body style={{paddingTop : "67px"}} className={`${myFont.className}`}  >
+      <body  className={`${myFont.className}`}  >
         <StoreProvider>       
           {children}
         </StoreProvider>

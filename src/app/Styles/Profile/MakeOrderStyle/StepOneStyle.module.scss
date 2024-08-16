@@ -167,3 +167,9 @@
   border-radius: 4px;
   padding: 7px 29px;
 }
+
+@media (max-width: 980px) {
+  .effectMainDivStyle {
+    grid-template-columns: repeat(2 , 1fr);
+  }
+}

@@ -54,7 +54,7 @@ export default function StepSixComponent({ handleNextStep }) {
 
   return (
     <section>
-      <div className="d-flex flex-row gap-3">
+      <div className={`${style.makeTheResponsivePerfect} d-flex flex-row gap-3`}>
         <div
           className={`${style.SectionStyle} ${style.adjustTheRightWidht} mb-3 mt-2 `}
         >
@@ -97,7 +97,7 @@ export default function StepSixComponent({ handleNextStep }) {
                     >
                       <div className="d-flex flex-row justify-content-between NormalTextSizing">
                         <div>
-                          <p className={style.ShabaColorNumber}>شماره شبا:</p>
+                          <p className={`${style.ShabaColorNumber} NormalTextSizing`}>شماره شبا:</p>
                         </div>
                         <div className="d-flex flex-row align-items-center gap-2">
                           <Tooltip title="کپی شبا">
@@ -123,12 +123,12 @@ export default function StepSixComponent({ handleNextStep }) {
                               </svg>
                             </span>
                           </Tooltip>
-                          <span>IR 700170000000350872070007</span>
+                          <span className="NormalTextSizing">IR 700170000000350872070007</span>
                         </div>
                       </div>
                       <div className="d-flex flex-row justify-content-between NormalTextSizing mt-3">
                         <div>
-                          <p className={style.ShabaColorNumber}>شماره کارت:</p>
+                          <p className={`${style.ShabaColorNumber} NormalTextSizing`}>شماره کارت:</p>
                         </div>
                         <div className="d-flex flex-row align-items-center gap-2">
                           <Tooltip title="کپی شماره حساب">
@@ -154,7 +154,7 @@ export default function StepSixComponent({ handleNextStep }) {
                               </svg>
                             </span>
                           </Tooltip>
-                          <span>6037997539713371</span>
+                          <span className="NormalTextSizing">6037997539713371</span>
                         </div>
                       </div>
                     </div>
@@ -185,7 +185,7 @@ export default function StepSixComponent({ handleNextStep }) {
                                 />
                               </svg>
                             </span>
-                            <span className="me-2">بارگذاری فایل .png یا .pdf</span>
+                            <span style={{color : "#404040"}} className="me-2">بارگذاری فایل .png یا .pdf</span>
                             <p className="discription mt-1">حداکثر  تا 5 مگابایت</p>
                           </div>
                         </label>

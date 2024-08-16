@@ -21,6 +21,8 @@ import { usePathname } from "next/navigation";
 // import redux
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import Profile from "../Profile/page";
+import { token } from "../Store/slice";
 
 const renderSubItems = (subItems, depth = 1) => {
   return subItems.map((subItem) => {
@@ -31,7 +33,10 @@ const renderSubItems = (subItems, depth = 1) => {
           style={{ lineHeight: "28px" }}
           key={subItem.id}
         >
-          <Link href={subItem.link} style={{ textDecoration: "none" }}>
+          <Link
+            href={subItem.link}
+            style={{ textDecoration: "none", color: "#333333" }}
+          >
             <div
               className={style.colornav}
               key={subItem.id}
@@ -40,14 +45,20 @@ const renderSubItems = (subItems, depth = 1) => {
               {subItem.title}
             </div>
           </Link>
-          {renderSubItems(subItem.subItems, depth + 1)}
+          <div className="d-flex flex-column gap-3">
+            {renderSubItems(subItem.subItems, depth + 1)}
+          </div>
         </div>
       );
     } else {
       return (
-        <Nav.Link key={subItem.id} href={subItem.link}>
+        <Link
+          style={{ textDecoration: "none", color: "#333333" }}
+          key={subItem.id}
+          href={subItem.link}
+        >
           {subItem.title}
-        </Nav.Link>
+        </Link>
       );
     }
   });
@@ -55,8 +66,8 @@ const renderSubItems = (subItems, depth = 1) => {
 
 export default function Header() {
   const pathname = usePathname();
-  const token = useSelector((state) => state.auth.token);
-  console.log(token);
+  const token2 = useSelector(token);
+  console.log(token2);
 
   const getBasePath = (path) => {
     // This will capture the first segment of the path after the initial '/'
@@ -77,8 +88,6 @@ export default function Header() {
     setVisibility((prev) => ({ ...prev, [key]: false }));
   };
 
-
-
   const addKeys = (items) => {
     return items.map((item, index) => ({
       ...item,
@@ -88,7 +97,6 @@ export default function Header() {
   };
 
   const mainItemObject = addKeys(mainItems);
-
 
   // store the url
   const storeLastVisitedPage = () => {
@@ -123,9 +131,9 @@ export default function Header() {
             </div>
             {/* navbar descktop */}
             <div
-              className={`d-lg-block d-none justify-content-between ${style.navbaritemheader}`}
+              className={`d-lg-block d-none justify-content-between m-auto ${style.navbaritemheader}`}
             >
-              <Nav className="align-items-center ">
+              <Nav className="align-items-center gap-3">
                 {mainItemObject.map((item) => (
                   <React.Fragment key={item.id}>
                     {item.subItems.length > 0 ? (
@@ -145,17 +153,14 @@ export default function Header() {
                         id={`basic-nav-dropdown-${item.id}`}
                       >
                         <div>
-
-                        
                           <div className={style.fixcolumn}>
-                           
                             {renderSubItems(item.subItems)}
-                           
                           </div>
                         </div>
                       </NavDropdown>
                     ) : (
-                      <Nav.Link
+                      <Link
+                        style={{ textDecoration: "none" }}
                         className={`${
                           getBasePath(pathname) === item.link
                             ? style.active
@@ -165,7 +170,7 @@ export default function Header() {
                         href={item.link}
                       >
                         {item.title}
-                      </Nav.Link>
+                      </Link>
                     )}
                   </React.Fragment>
                 ))}
@@ -183,27 +188,130 @@ export default function Header() {
             </div>
 
             <div className="d-lg-none">
-              {token ? (
+              {token2 ? (
                 <NavDropdown
+                 className={style.DropDownForUserInfo}
                   title={
                     <>
-                      <Box
-                        component="img"
-                        sx={{
-                          maxHeight: 16,
-                          objectFit: "cover",
-                          aspectRatio: 1.7,
-                        }}
-                        alt="iran"
-                        src="/HomeImages/iran-logo.png"
-                      />
-                      <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
+                      <div
+                        className={`${style.headerIconPersonDiv} d-flex flex-row`}
+                      >
+                        <div>
+                          <svg
+                            width={20}
+                            height={20}
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M10 10.0003C12.3012 10.0003 14.1667 8.13485 14.1667 5.83366C14.1667 3.53247 12.3012 1.66699 10 1.66699C7.69885 1.66699 5.83337 3.53247 5.83337 5.83366C5.83337 8.13485 7.69885 10.0003 10 10.0003Z"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M17.1583 18.3333C17.1583 15.1083 13.95 12.5 10 12.5C6.05001 12.5 2.84167 15.1083 2.84167 18.3333"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                        <div className="me-1 d-flex flex-row align-items-center">
+                          <p className="NormalTextSizing align-items-center">اسم کاربر اینجا</p>
+                          <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
+                        </div>
+                      </div>
                     </>
                   }
                   id="basic-nav-dropdown"
-                ></NavDropdown>
+                >
+                  <div className={style.userinfoInSidebar}>
+                    <div className="d-flex flex-column">
+                      <p className="VodeoDisSizing mb-1">بهار رستمی نیا</p>
+                      <p className="discription">091286568542</p>
+                    </div>
+                    <div
+                      // onClick={() => setActiveTab("userInfo")}
+                      className={style.EditBtnSvg}
+                    >
+                      <svg
+                        width={20}
+                        height={21}
+                        viewBox="0 0 18 19"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.9455 3.19992L3.788 9.71742C3.5555 9.96492 3.3305 10.4524 3.2855 10.7899L3.008 13.2199C2.9105 14.0974 3.5405 14.6974 4.4105 14.5474L6.8255 14.1349C7.163 14.0749 7.6355 13.8274 7.868 13.5724L14.0255 7.05492C15.0905 5.92992 15.5705 4.64742 13.913 3.07992C12.263 1.52742 11.0105 2.07492 9.9455 3.19992Z"
+                          stroke="#F3802C"
+                          strokeWidth="1.5"
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M8.91797 4.2876C9.24047 6.3576 10.9205 7.9401 13.0055 8.1501"
+                          stroke="#F3802C"
+                          strokeWidth="1.5"
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M2.25 17H15.75"
+                          stroke="#F3802C"
+                          strokeWidth="1.5"
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="mt-2 me-1 mb-3 d-flex flex-column gap-2">
+                    <Link
+                      className={style.LinkOfprofile}
+                      href={`/Profile?type=${encodeURIComponent("makeOrder")}`}
+                    >
+                      <p className="VodeoDisSizing">ثبت سفارش</p>
+                    </Link>
+                    <Link
+                      className={style.LinkOfprofile}
+                      href={`/Profile?type=${encodeURIComponent("seeOrder")}`}
+                    >
+                      <p className="VodeoDisSizing">پیگیری سفارش</p>
+                    </Link>
+                    <Link
+                      className={style.LinkOfprofile}
+                      href={`/Profile?type=${encodeURIComponent("userInfo")}`}
+                    >
+                      <p className="VodeoDisSizing">اطلاعات کاربری</p>
+                    </Link>
+                    <Link
+                      className={style.LinkOfprofile}
+                      href={`/Profile?type=${encodeURIComponent("message")}`}
+                    >
+                      <p className="VodeoDisSizing">پیغام ها</p>
+                    </Link>
+                    <Link
+                      className={`${style.LinkOfprofile}`}
+                      href={`/Profile?type=${encodeURIComponent("favorite")}`}
+                    >
+                      <p className="VodeoDisSizing">لیست‌های مورد علاقه</p>
+                    </Link>
+                  </div>
+                </NavDropdown>
               ) : (
-                <Link className="text-decoration-none" href="/Login" passHref>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  className="text-decoration-none"
+                  href="/Login"
+                  passHref
+                >
                   <div
                     className={`${style.headerIconPersonDiv} d-flex flex-row`}
                   >
@@ -256,13 +364,13 @@ export default function Header() {
                 <Offcanvas.Title>لوگو</Offcanvas.Title>
               </Offcanvas.Header>
 
-              <Nav className="align-items-center me-2">
+              <Nav className="align-items-center me-2 gap-3">
                 {mainItemObject.map((item) => (
                   <React.Fragment key={item.id}>
                     {item.subItems.length > 0 ? (
                       <React.Fragment key={item.id}>
                         <Navbar.Toggle
-                          className="text-end"
+                          className="text-end m-0"
                           aria-controls={`offcanvas-${item.id}`}
                           onClick={() => toggleShow(item.id)}
                         >
@@ -275,6 +383,7 @@ export default function Header() {
                         </Navbar.Toggle>
 
                         <Navbar.Offcanvas
+                          className={style.ofcanvasInnerCreateScrool}
                           placement="end"
                           key={item.id}
                           show={visibility[item.id]}
@@ -295,9 +404,13 @@ export default function Header() {
                       </React.Fragment>
                     ) : (
                       <React.Fragment key={item.id}>
-                        <Nav.Link key={item.id} href={item.link}>
+                        <Link
+                          style={{ textDecoration: "none", color: "#333333" }}
+                          key={item.id}
+                          href={item.link}
+                        >
                           {item.title}
-                        </Nav.Link>
+                        </Link>
                       </React.Fragment>
                     )}
                   </React.Fragment>
@@ -318,28 +431,131 @@ export default function Header() {
           </div>
 
           <div className="d-lg-block d-none">
-            {token ? (
+            {token2 ? (
               <NavDropdown
+                className={style.DropDownForUserInfo}
                 title={
                   <>
-                    <Box
-                      component="img"
-                      sx={{
-                        maxHeight: 16,
-                        objectFit: "cover",
-                        aspectRatio: 1.7,
-                      }}
-                      alt="iran"
-                      src="/HomeImages/iran-logo.png"
-                    />
-                    <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
+                    <div
+                      className={`${style.headerIconPersonDiv} d-flex flex-row`}
+                    >
+                      <div>
+                        <svg
+                          width={20}
+                          height={20}
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M10 10.0003C12.3012 10.0003 14.1667 8.13485 14.1667 5.83366C14.1667 3.53247 12.3012 1.66699 10 1.66699C7.69885 1.66699 5.83337 3.53247 5.83337 5.83366C5.83337 8.13485 7.69885 10.0003 10 10.0003Z"
+                            stroke="#333333"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M17.1583 18.3333C17.1583 15.1083 13.95 12.5 10 12.5C6.05001 12.5 2.84167 15.1083 2.84167 18.3333"
+                            stroke="#333333"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <div className="me-1 d-flex flex-row ">
+                        <p className="NormalTextSizing">اسم کاربر اینجا</p>
+                        <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
+                      </div>
+                    </div>
                   </>
                 }
                 id="basic-nav-dropdown"
-              ></NavDropdown>
+              >
+                <div className={style.userinfoInSidebar}>
+                  <div className="d-flex flex-column">
+                    <p className="VodeoDisSizing mb-1">بهار رستمی نیا</p>
+                    <p className="discription">091286568542</p>
+                  </div>
+                  <div
+                    // onClick={() => setActiveTab("userInfo")}
+                    className={style.EditBtnSvg}
+                  >
+                    <svg
+                      width={20}
+                      height={21}
+                      viewBox="0 0 18 19"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.9455 3.19992L3.788 9.71742C3.5555 9.96492 3.3305 10.4524 3.2855 10.7899L3.008 13.2199C2.9105 14.0974 3.5405 14.6974 4.4105 14.5474L6.8255 14.1349C7.163 14.0749 7.6355 13.8274 7.868 13.5724L14.0255 7.05492C15.0905 5.92992 15.5705 4.64742 13.913 3.07992C12.263 1.52742 11.0105 2.07492 9.9455 3.19992Z"
+                        stroke="#F3802C"
+                        strokeWidth="1.5"
+                        strokeMiterlimit={10}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M8.91797 4.2876C9.24047 6.3576 10.9205 7.9401 13.0055 8.1501"
+                        stroke="#F3802C"
+                        strokeWidth="1.5"
+                        strokeMiterlimit={10}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M2.25 17H15.75"
+                        stroke="#F3802C"
+                        strokeWidth="1.5"
+                        strokeMiterlimit={10}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="mt-2 me-1 mb-3 d-flex flex-column gap-2">
+                  <Link
+                    className={style.LinkOfprofile}
+                    href={`/Profile?type=${encodeURIComponent("makeOrder")}`}
+                  >
+                    <p className="VodeoDisSizing">ثبت سفارش</p>
+                  </Link>
+                  <Link
+                    className={style.LinkOfprofile}
+                    href={`/Profile?type=${encodeURIComponent("seeOrder")}`}
+                  >
+                    <p className="VodeoDisSizing">پیگیری سفارش</p>
+                  </Link>
+                  <Link
+                    className={style.LinkOfprofile}
+                    href={`/Profile?type=${encodeURIComponent("userInfo")}`}
+                  >
+                    <p className="VodeoDisSizing">اطلاعات کاربری</p>
+                  </Link>
+                  <Link
+                    className={style.LinkOfprofile}
+                    href={`/Profile?type=${encodeURIComponent("message")}`}
+                  >
+                    <p className="VodeoDisSizing">پیغام ها</p>
+                  </Link>
+                  <Link
+                    className={`${style.LinkOfprofile}`}
+                    href={`/Profile?type=${encodeURIComponent("favorite")}`}
+                  >
+                    <p className="VodeoDisSizing">لیست‌های مورد علاقه</p>
+                  </Link>
+                </div>
+              </NavDropdown>
             ) : (
-               <Link onClick={storeLastVisitedPage} className="text-decoration-none" href="/Login" passHref>
-                <div  className={`${style.headerIconPersonDiv} d-flex flex-row`}>
+              <Link
+                onClick={storeLastVisitedPage}
+                className="text-decoration-none"
+                href="/Login"
+                passHref
+              >
+                <div className={`${style.headerIconPersonDiv} d-flex flex-row`}>
                   <div>
                     <svg
                       width={20}

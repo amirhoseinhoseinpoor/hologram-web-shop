@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { childValue } from "../Store/slice";
+import { useSearchParams } from "next/navigation";
 
 import Header from "../Components/Header";
-import Footer from "../Components/Footer";
 import Hoc from "../Components/HOCcomponent";
 
-import dynamic from "next/dynamic"; // Import dynamic from Next.js
+import dynamic from "next/dynamic";
 
 // Lazy load the MakeOrder component
 const MakeOrder = dynamic(
@@ -24,6 +24,31 @@ import Tabs from "react-bootstrap/Tabs";
 
 import style from "../Styles/Profile/ProfileStyle.module.scss";
 
+// Component that uses useSearchParams
+const ProfileTabs = ({ setActiveTab, activeTab }) => {
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type");
+
+  useEffect(() => {
+    setActiveTab(type)
+  }, [type]);
+
+  return (
+    <Tabs
+      activeKey={activeTab}
+      onSelect={(k) => setActiveTab(k)}
+      id="Profile-tabs"
+      className={style.sidebarMain}
+    >
+      <Tab eventKey="makeOrder" title="ثبت سفارش"></Tab>
+      <Tab eventKey="seeOrder" title="پیگیری سفارش"></Tab>
+      <Tab eventKey="userInfo" title="اطلاعات کاربری"></Tab>
+      <Tab eventKey="message" title="پیغام ها"></Tab>
+      <Tab eventKey="favorite" title="لیست‌های مورد علاقه"></Tab>
+    </Tabs>
+  );
+};
+
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("makeOrder");
 
@@ -35,6 +60,8 @@ const Profile = () => {
       setActiveTab(childValue2);
     }
   }, [childValue2]);
+
+
 
   return (
     <>
@@ -85,34 +112,17 @@ const Profile = () => {
                 </svg>
               </div>
             </div>
-            <Tabs
-              activeKey={activeTab}
-              onSelect={(k) => setActiveTab(k)}
-              id="Profile-tabs"
-              className={style.sidebarMain}
-            >
-              <Tab eventKey="makeOrder" title="ثبت سفارش"></Tab>
-              <Tab eventKey="seeOrder" title="پیگیری سفارش"></Tab>
-              <Tab eventKey="userInfo" title="اطلاعات کاربری"></Tab>
-              <Tab eventKey="message" title="پیغام ها"></Tab>
-              <Tab eventKey="favorite" title="لیست‌های مورد علاقه"></Tab>
-            </Tabs>
+            <Suspense fallback={<div>Loading...</div>}>
+              <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+            </Suspense>
           </aside>
           <div className={style.content}>
             {activeTab === "makeOrder" && <MakeOrder />}
             {activeTab === "seeOrder" && (
-              <div className={style.tabContent}>
-                {/* <Suspense fallback={<div>loading...</div>}>
-                  <HonorsMainComponent />
-                </Suspense> */}
-              </div>
+              <div className={style.tabContent}>Under Develop</div>
             )}
             {activeTab === "userInfo" && (
-              <div className={style.tabContent}>
-                {/* <Suspense fallback={<div>Loading...</div>}>
-                  <DefineUser />
-                </Suspense> */}
-              </div>
+              <div className={style.tabContent}>Under Develop</div>
             )}
             {activeTab === "message" && (
               <div className={style.tabContent}>Under Develop</div>

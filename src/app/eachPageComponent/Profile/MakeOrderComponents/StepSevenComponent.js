@@ -60,7 +60,7 @@ export default function StepSevenComponent() {
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
               <div>
-                <p className={style.changeTheColor}>نام کالا:</p>
+                <p className={`${style.changeTheColor} purchesSize`}>نام کالا:</p>
               </div>
               <div>
                 <p className="NormalTextSizing">اسم محصول پایه</p>
@@ -68,7 +68,7 @@ export default function StepSevenComponent() {
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
               <div>
-                <p className={style.changeTheColor}>تاریخ:</p>
+                <p className={`${style.changeTheColor} purchesSize`}>تاریخ:</p>
               </div>
               <div>
                 <p className="NormalTextSizing">23 اردیبهشت</p>
@@ -76,7 +76,7 @@ export default function StepSevenComponent() {
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
               <div>
-                <p className={style.changeTheColor}>ساعت:</p>
+                <p className={`${style.changeTheColor} purchesSize`}>ساعت:</p>
               </div>
               <div>
                 <p className="NormalTextSizing">20:15</p>
@@ -84,7 +84,7 @@ export default function StepSevenComponent() {
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
               <div>
-                <p className={style.changeTheColor}>کد رهگیری:</p>
+                <p className={`${style.changeTheColor} purchesSize`}>کد رهگیری:</p>
               </div>
               <div className="d-flex flex-row align-items-center gap-2">
                 <Tooltip title="کپی کد رهگیری">
@@ -113,7 +113,7 @@ export default function StepSevenComponent() {
                   </span>
                 </Tooltip>
 
-                <span className={style.CopyTextRahgir}>
+                <span className={`${style.CopyTextRahgir} purchesSize`}>
                   15385025181722497417038
                 </span>
               </div>
@@ -121,7 +121,7 @@ export default function StepSevenComponent() {
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
               <div>
-                <p className={style.changeTheColor}>نوع تحویل:</p>
+                <p className={`${style.changeTheColor} purchesSize`}>نوع تحویل:</p>
               </div>
               <div>
                 <p className="NormalTextSizing">تحویل به پست</p>

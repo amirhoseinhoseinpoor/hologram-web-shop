@@ -1,11 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import style from "../../../Styles/Profile/MakeOrderStyle/MakeOrder.module.scss";
 import ProcessTracker from "../ProcessTracker";
 import data from "/public/json/ProfileFirstStepEffect.json";
-
+import Link from "next/link";
 
 import PusherChat from "./Talkjs";
 
@@ -15,17 +15,20 @@ const StepTwoComponent = dynamic(() => import("./StepTwoComponent"), {
   loading: () => <p>Loading...</p>,
 });
 
-const StepFiveComponent = dynamic(() => import("./StepFiveComponent.js"))
-const StepSixComponent = dynamic(() => import("./StepSixComponent") , {
-  ssr : false,
-  loading : () => <p>Loading...</p>,
-})
+const StepFiveComponent = dynamic(() => import("./StepFiveComponent.js"));
+const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
+  ssr: false,
+  loading: () => <p>Loading...</p>,
+});
 
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
 
 export default function MakeOrder() {
-  const [step, setStep] = useState(1);
+  const lastPage = sessionStorage.getItem("lastPage") || "/";
+
   
+
+  const [step, setStep] = useState(1);
 
   // Function to go to the next step
   const handleNextStep = () => {
@@ -49,13 +52,13 @@ export default function MakeOrder() {
       case 2:
         return (
           <div className={style.stepContent}>
-            <StepTwoComponent handleNextStep={handleNextStep}/>
+            <StepTwoComponent handleNextStep={handleNextStep} />
           </div>
         );
       case 3:
         return (
           <div className={style.stepContent}>
-            <div className="text-center mb-2 mb-1">
+            <div className="text-center mb-3 mb-1">
               <svg
                 width={101}
                 height={100}
@@ -91,12 +94,12 @@ export default function MakeOrder() {
                 </defs>
               </svg>
             </div>
-            <p className="text-center">
+            <p className="text-center NormalTextSizing">
               مدارک شما به دست ما رسید و تا حداکثر 48 ساعت کاری نتیجه مدارک را
               در همین صفحه میتوانید مشاهده کنید. نتیجه مدارک تاییدی برای شما
               پیامک میشود.
             </p>
-            <p className="text-center mt-1">
+            <p className="text-center mt-1 NormalTextSizing">
               تایید مدارک برای آذر هولوگرام به دلایل این و اون و این مهم است.
               ممنون برای شکیبایی شما
             </p>
@@ -127,17 +130,13 @@ export default function MakeOrder() {
       case 5:
         return (
           <div className={style.stepContent}>
-            <StepFiveComponent handleNextStep={handleNextStep}/>
+            <StepFiveComponent handleNextStep={handleNextStep} />
           </div>
         );
       case 6:
-        return (
-          <StepSixComponent handleNextStep={handleNextStep}/>
-        );
+        return <StepSixComponent handleNextStep={handleNextStep} />;
       case 7:
-        return (
-          <StepSeven handleNextStep={handleNextStep}/>
-        );
+        return <StepSeven handleNextStep={handleNextStep} />;
 
       default:
         return null;
@@ -145,6 +144,39 @@ export default function MakeOrder() {
   };
   return (
     <section>
+      <div className="d-lg-none d-block mt-2 mb-3 me-3">
+        <Link href={lastPage} className={style.linkFortheNavigateBack}>
+          <div className="d-flex flex-row align-items-center gap-2">
+            <div>
+              <svg
+                width={20}
+                height={21}
+                viewBox="0 0 20 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.0254 5.44141L17.0837 10.4997L12.0254 15.5581"
+                  stroke="#333333"
+                  strokeWidth="1.5"
+                  strokeMiterlimit={10}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M2.91699 10.5H16.942"
+                  stroke="#333333"
+                  strokeWidth="1.5"
+                  strokeMiterlimit={10}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <p className="QASize">باگشت به پروفایل</p>
+          </div>
+        </Link>
+      </div>
       <ProcessTracker currentStep={step} />
       {renderStepContent()}
     </section>

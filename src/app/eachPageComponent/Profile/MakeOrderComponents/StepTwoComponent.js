@@ -23,7 +23,7 @@ export default function StepTwoComponent({ handleNextStep }) {
         یک سری توضیحات تکمیلی که در اینجا قرار میگیره
       </p>
 
-      <div className="d-flex flex-row gap-5 mt-3">
+      <div className={`${style.makeTheFormResponsive} d-flex flex-row gap-5 mt-3`}>
         <div className="d-flex flex-column">
           <div className="d-flex flex-row gap-2 align-items-center">
             <span className="NormalTextSizing">لوگو شرکت</span>

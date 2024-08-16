@@ -21,6 +21,7 @@ body {
   position: relative;
   height: 100%;
   line-height: normal;
+  padding-top: 68px;
 }
 //global sizing
 .sometext{
@@ -161,6 +162,9 @@ button{
 }
 
 @media (max-width: 980px) {
+  body {
+    padding-top: 120px;
+  }
   .QASize{
     font-size: 15px;
   }
