@@ -8,8 +8,8 @@ import Box from "@mui/material/Box";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Modal from "react-bootstrap/Modal";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+
+import MainLayout from "../layouts/MainLayout";
 
 export default function EffectTypeWrapper() {
   return (
@@ -153,7 +153,8 @@ function EffectType() {
 
   return (
     <>
-      <Header />
+      <MainLayout>
+      
       <section className={`mt-5 mb-5 container ${style.responsiveSection}`}>
         <div>
           <Tabs
@@ -405,8 +406,7 @@ function EffectType() {
          
         </Modal.Body>
       </Modal>
-
-      <Footer />
+      </MainLayout>
     </>
   );
 }

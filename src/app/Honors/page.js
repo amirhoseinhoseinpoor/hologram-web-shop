@@ -9,9 +9,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
-
+import MainLayout from "../layouts/MainLayout";
 
 export default function Honors() {
   function fixTitleSize(text) {
@@ -25,7 +23,7 @@ export default function Honors() {
   }
   return (
     <>
-     <Header/>
+    <MainLayout>
       <HeaderSeo />
       <section>
         <div className={`${style.MainDiv} container`}>
@@ -70,7 +68,7 @@ export default function Honors() {
           ))}
         </div>
       </section>
-      <Footer/>
+      </MainLayout>
     </>
   );
 }

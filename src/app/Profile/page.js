@@ -7,8 +7,8 @@ import { useSearchParams } from "next/navigation";
 
 import Header from "../Components/Header";
 import Hoc from "../Components/HOCcomponent";
-
 import dynamic from "next/dynamic";
+
 
 // Lazy load the MakeOrder component
 const MakeOrder = dynamic(

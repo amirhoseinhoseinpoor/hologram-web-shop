@@ -7,7 +7,7 @@ import { login } from "../Store/thunks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import OTPInput from "../eachPageComponent/Login/OTPComponent";
-
+import AuthLayout from "../layouts/AuthLayout";
 import style from "../Styles/Login/LoginStyle.module.scss";
 
 export default function Login() {
@@ -121,8 +121,9 @@ export default function Login() {
   }
 
   return (
+    <AuthLayout>
     <section className="h-100 d-flex w-100">
-      <div className={style.outerLoginPage}>
+      <div className={`${style.outerLoginPage} container pt-3 pb-3`}>
         <div className={`${style.LoginMainDiv} position-relative`}>
           <div onClick={NavigateLastPage} className={style.closeIconImg}>
             <svg
@@ -167,7 +168,7 @@ export default function Login() {
                 </div>
               </div>
               <Link href="/SignUp" className={style.SignUpLink}>
-                <p className="mb-3 me-2 mt-3 discription">ورود | ثبت نام</p>
+                <p className="mb-3 me-2 mt-3 discription">ثبت نام</p>
               </Link>
 
               <div className="d-flex flex-column  mb-3">
@@ -206,9 +207,9 @@ export default function Login() {
                   <input
                     type="number"
                     id="capcha"
-                    className={`${style.formInputCapcha} form-control`}
+                    className={`${style.formInputCapcha} form-control w-50`}
                   />
-                  <div>
+                  <div className="d-flex flex-row align-items-center w-50">
                     <svg
                       width={122}
                       height={37}
@@ -330,5 +331,6 @@ export default function Login() {
         </div>
       </div>
     </section>
+    </AuthLayout>
   );
 }

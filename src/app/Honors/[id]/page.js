@@ -7,6 +7,7 @@ import CopyLinkButton from "../../Components/CopyLinkButton";
 import ShowRoute from "@/app/Components/ShowRoute";
 import Header from "@/app/Components/Header";
 import Footer from "@/app/Components/Footer";
+import MainLayout from "@/app/layouts/MainLayout";
 
 function findSpeceficIteminjson(id) {
   const filepath = path.join(
@@ -30,7 +31,7 @@ export default function innerHonors({ params }) {
 
   return (
     <>
-      <Header/>
+    <MainLayout>
       <section className={style.customContainer}>
         <ShowRoute />
         <div>
@@ -153,7 +154,7 @@ export default function innerHonors({ params }) {
           </ul>
         </div>
       </section>
-      <Footer/>
+      </MainLayout>
     </>
   );
 }

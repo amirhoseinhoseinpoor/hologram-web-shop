@@ -1,10 +1,11 @@
+
+
 // app/layout.js
 import localFont from 'next/font/local';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Styles/reset.css';
 import './Styles/globals.scss';
-import Header from './Components/Header';
-import Footer from './Components/Footer';
+
 import StoreProvider from './Store/storeProvider';
 
 

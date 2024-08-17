@@ -1,12 +1,9 @@
-
-
 import React from "react";
 import fs from "fs";
 import path from "path";
 
 
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import MainLayout from "../layouts/MainLayout";
 import HoleProductAndSearch from "../eachPageComponent/ProductPageComponent/HoleProductAndSearch";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -68,8 +65,6 @@ function fixTitleSize(text) {
   }
 }
 
-
-
 export default function ProductPage({ params }) {
   const { ProductPage: id } = params;
 
@@ -81,45 +76,47 @@ export default function ProductPage({ params }) {
 
   return (
     <>
-      <Header />
-      <section className="container">
-        <ShowRoute />
-        <div className={style.fixContentSizePlace}>
-          {itemsClick.map((item, index) => (
-            <React.Fragment key={index}>
-              <Card className={`${style.mainCardStyle} `}>
-                <Link className="text-decoration-none" href={`/${matchedTitle}/shouldBeFix`} passHref>
-                  <CardMedia
-                    className={`${style.fixBoxSize} gap-3`}
-                    component="img"
-                    image={item.src}
-                    alt={item.title}
-                  />
+      <MainLayout>
+        <section className="container">
+          <ShowRoute />
+          <div className={style.fixContentSizePlace}>
+            {itemsClick.map((item, index) => (
+              <React.Fragment key={index}>
+                <Card className={`${style.mainCardStyle} `}>
+                  <Link
+                    className="text-decoration-none"
+                    href={`/${matchedTitle}/shouldBeFix`}
+                    passHref
+                  >
+                    <CardMedia
+                      className={`${style.fixBoxSize} gap-3`}
+                      component="img"
+                      image={item.src}
+                      alt={item.title}
+                    />
 
-                  <CardContent className={style.adjustContent}>
-                
-                    <Typography
-                      className="discription"
-                      gutterBottom
-                      variant="p"
-                      component="div"
-                    >
-                      {fixTitleSize(item.title)}
-                    </Typography>
-                  </CardContent>
-                </Link>
-              </Card>
-            </React.Fragment>
-          ))}
-        </div>
+                    <CardContent className={style.adjustContent}>
+                      <Typography
+                        className="discription"
+                        gutterBottom
+                        variant="p"
+                        component="div"
+                      >
+                        {fixTitleSize(item.title)}
+                      </Typography>
+                    </CardContent>
+                  </Link>
+                </Card>
+              </React.Fragment>
+            ))}
+          </div>
 
-        <HoleProductAndSearch
-          itemsClick={itemsClick}
-          matchedTitle={matchedTitle}
-        />
-       
-      </section>
-      <Footer />
+          <HoleProductAndSearch
+            itemsClick={itemsClick}
+            matchedTitle={matchedTitle}
+          />
+        </section>
+      </MainLayout>
     </>
   );
 }

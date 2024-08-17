@@ -4,11 +4,10 @@ import path from "path";
 import style from "../../Styles/ExhibitionPageStyle/ExhibitionDynamicContent.module.scss";
 import HeaderSeo from "../../Components/HeaderSeo";
 import Box from "@mui/material/Box";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
 import CopyLinkButton from "../../Components/CopyLinkButton";
 import ShowRoute from "../../Components/ShowRoute";
+import MainLayout from "@/app/layouts/MainLayout";
 
 function findSpeceficIteminjson(id) {
   const filepath = path.join(
@@ -65,7 +64,9 @@ export default function innerExhibition({ params }) {
           <p>{honors.boldContent}</p>
         </div>
 
-        <div className={`${style.socialMediaIcon} d-flex align-items-center flex-row mt-3 gap-3`}>
+        <div
+          className={`${style.socialMediaIcon} d-flex align-items-center flex-row mt-3 gap-3`}
+        >
           <CopyLinkButton />
           <a href="#">
             <Box

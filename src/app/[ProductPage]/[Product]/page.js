@@ -1,7 +1,8 @@
 "use client";
 
-import Header from "@/app/Components/Header";
-import Footer from "@/app/Components/Footer";
+
+import MainLayout from "@/app/layouts/MainLayout";
+
 import ShowRoute from "@/app/Components/ShowRoute";
 import { notFound } from "next/navigation";
 
@@ -57,22 +58,21 @@ export default function Product() {
 
   return (
     <section>
-      <Header />
-      <div className="container">
-        <ShowRoute />
-      </div>
+      <MainLayout>
+        
+        <div className="container">
+          <ShowRoute />
+        </div>
 
-      
+        <ProductShow data={data} />
 
-      <ProductShow data={data} />
+        <EachProductVideo />
+        <div className="mt-5">
+          <FAQ />
+        </div>
 
-      <EachProductVideo/>
-      <div className="mt-5">
-        <FAQ/>
-      </div>
-      
-
-      <Footer />
+       
+      </MainLayout>
     </section>
   );
 }

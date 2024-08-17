@@ -1,17 +1,16 @@
 import HeaderSeo from "../Components/HeaderSeo.js";
 import Form from "../eachPageComponent/ContactUsComponent/Form.js";
 import Address from "../eachPageComponent/ContactUsComponent/Address.js";
-import Header from "../Components/Header.js";
-import Footer from "../Components/Footer.js";
+import MainLayout from "../layouts/MainLayout.js";
 
 export default function ContactUs() {
   return (
     <>
-      <Header />
+     <MainLayout>
       <HeaderSeo />
       <Form />
-      <Address />
-      <Footer />
+      <Address />     
+      </MainLayout>
     </>
   );
 }
