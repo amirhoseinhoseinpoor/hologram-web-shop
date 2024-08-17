@@ -64,11 +64,12 @@
     border: none;
     border-radius: 2px;
     margin-top: -2px;
-    width: 50% !important;
+    width: fit-content !important;
     right: 0;
     text-align: right;
     background-color: var.$headerSubBackground;
     height: 100vh;
+    padding: 5px 50px;
   }
 }
 .navDropItem {

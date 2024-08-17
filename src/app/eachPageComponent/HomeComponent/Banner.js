@@ -3,6 +3,7 @@ import React from "react";
 
 import style from "../../Styles/HomeStyle/Banner.module.scss";
 import Box from "@mui/material/Box";
+import Link from "next/link";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -60,9 +61,12 @@ export default function Banner() {
                   <h3>نقش هولوگرام امنیتی در </h3>
                   <h3>کاهش تخلفات</h3>
                 </div>
-                <div className={style.buttonBanner}>
-                  <button>ثبت سفارش</button>
-                </div>
+                <Link href={`/Profile?type=makeOrder`} passHref>
+                  <div className={style.buttonBanner}>
+                   <button>ثبت سفارش</button>
+                 </div>
+                </Link>
+               
               </div>
             </SwiperSlide>
           ))}

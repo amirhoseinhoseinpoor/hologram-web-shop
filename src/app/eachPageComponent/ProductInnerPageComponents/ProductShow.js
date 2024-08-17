@@ -2,13 +2,13 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import style from "../../Styles/ProductPage/innerProductPage/DynamicProductShow.module.scss";
-import { Card, CardContent, CardMedia, Box } from "@mui/material";
+import { Card, CardMedia, Box } from "@mui/material";
+import Link from "next/link";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { Autoplay } from "swiper/modules";
-import SwiperCore from "swiper";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
@@ -326,11 +326,10 @@ export default function ProductShow({ data }) {
             </div>
             <div className={`${style.resetJustifyInresponsiveFix} mt-4 d-flex flex-row justify-content-around`}>
               <div className={style.justAddMarginRespon}>
+                <Link href={`/Profile?type=makeOrder`} passHref>
                 <button
                   className={style.addProductPage}
-                  onClick={() =>
-                    alert(`Color: ${selectedColor}, Size: ${selectedSize}`)
-                  }
+                  type="button"
                 >
                   <div className="d-flex flex-row justify-content-center align-items-center gap-2">
                     <div>خرید محصول</div>
@@ -360,6 +359,7 @@ export default function ProductShow({ data }) {
                     </svg>
                   </div>
                 </button>
+                </Link>
               </div>
               <div>
                 <button className={style.buttonCanceler}>
