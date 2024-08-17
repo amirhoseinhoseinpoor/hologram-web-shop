@@ -114,8 +114,11 @@
       }
     ]
   },
+  {
+    "link": "/EffectType", "title": "معرفی افکت‌ها", "subItems": []
+  },
   
   { "link": "/Blog", "title": "مقالات", "subItems": [] },
-  { "link": "/ContactUs", "title": "ارتباط با ما", "subItems": [] },
+  { "link": "/ContactUs", "title": "تماس با ما", "subItems": [] },
   { "link": "/AboutUs", "title": "درباره‌ی ما", "subItems": [] }
 ]
