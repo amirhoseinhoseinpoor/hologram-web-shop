@@ -69,12 +69,11 @@ export default function IntroSecure() {
           <div>
             <Box
               sx={{
-                width: 43,
-                height: 43,
+                width: 26,
+                height: 26,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                padding: 1,
               }}
             >
               <svg
@@ -134,12 +133,12 @@ export default function IntroSecure() {
           <div>
             <Box
               sx={{
-                width: 43,
-                height: 43,
+                width: 26,
+                height: 26,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                padding: 1,
+                
               }}
             >
               <svg

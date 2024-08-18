@@ -35,17 +35,18 @@ const renderSubItems = (subItems, depth = 1) => {
         >
           <Link
             href={subItem.link}
+            className="NormalTextSizing"
             style={{ textDecoration: "none", color: "#333333" }}
           >
             <div
-              className={style.colornav}
+              className={`${style.colornav} NormalTextSizing`}
               key={subItem.id}
               title={subItem.title}
             >
               {subItem.title}
             </div>
           </Link>
-          <div className="d-flex flex-column gap-3">
+          <div className="d-flex flex-column gap-3 NormalTextSizing">
             {renderSubItems(subItem.subItems, depth + 1)}
           </div>
         </div>
@@ -56,6 +57,7 @@ const renderSubItems = (subItems, depth = 1) => {
           style={{ textDecoration: "none", color: "#333333" }}
           key={subItem.id}
           href={subItem.link}
+          className="NormalTextSizing"
         >
           {subItem.title}
         </Link>
@@ -142,7 +144,7 @@ export default function Header() {
                           getBasePath(pathname) === item.link
                             ? style.active
                             : style.noneactive
-                        } ${style.navDropDown}`}
+                        } ${style.navDropDown} NormalTextSizing`}
                         key={item.id}
                         title={
                           <React.Fragment key={item.id}>
@@ -153,7 +155,7 @@ export default function Header() {
                         id={`basic-nav-dropdown-${item.id}`}
                       >
                         <div>
-                          <div className={style.fixcolumn}>
+                          <div className={`${style.fixcolumn} `}>
                             {renderSubItems(item.subItems)}
                           </div>
                         </div>
@@ -165,7 +167,7 @@ export default function Header() {
                           getBasePath(pathname) === item.link
                             ? style.active
                             : style.noneactive
-                        }`}
+                        } NormalTextSizing`}
                         key={item.id}
                         href={item.link}
                       >
@@ -190,7 +192,7 @@ export default function Header() {
             <div className="d-lg-none">
               {token2 ? (
                 <NavDropdown
-                 className={style.DropDownForUserInfo}
+                  className={style.DropDownForUserInfo}
                   title={
                     <>
                       <div
@@ -221,7 +223,9 @@ export default function Header() {
                           </svg>
                         </div>
                         <div className="me-1 d-flex flex-row align-items-center">
-                          <p className="NormalTextSizing align-items-center">اسم کاربر اینجا</p>
+                          <p className="NormalTextSizing align-items-center">
+                            اسم کاربر اینجا
+                          </p>
                           <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
                         </div>
                       </div>
@@ -238,38 +242,45 @@ export default function Header() {
                       // onClick={() => setActiveTab("userInfo")}
                       className={style.EditBtnSvg}
                     >
-                      <svg
-                        width={20}
-                        height={21}
-                        viewBox="0 0 18 19"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <Link
+                        href={`/Profile?type=${encodeURIComponent(
+                          "userInfo"
+                        )}`}
+                        passHref
                       >
-                        <path
-                          d="M9.9455 3.19992L3.788 9.71742C3.5555 9.96492 3.3305 10.4524 3.2855 10.7899L3.008 13.2199C2.9105 14.0974 3.5405 14.6974 4.4105 14.5474L6.8255 14.1349C7.163 14.0749 7.6355 13.8274 7.868 13.5724L14.0255 7.05492C15.0905 5.92992 15.5705 4.64742 13.913 3.07992C12.263 1.52742 11.0105 2.07492 9.9455 3.19992Z"
-                          stroke="#F3802C"
-                          strokeWidth="1.5"
-                          strokeMiterlimit={10}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M8.91797 4.2876C9.24047 6.3576 10.9205 7.9401 13.0055 8.1501"
-                          stroke="#F3802C"
-                          strokeWidth="1.5"
-                          strokeMiterlimit={10}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M2.25 17H15.75"
-                          stroke="#F3802C"
-                          strokeWidth="1.5"
-                          strokeMiterlimit={10}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                        <svg
+                          width={20}
+                          height={21}
+                          viewBox="0 0 18 19"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9.9455 3.19992L3.788 9.71742C3.5555 9.96492 3.3305 10.4524 3.2855 10.7899L3.008 13.2199C2.9105 14.0974 3.5405 14.6974 4.4105 14.5474L6.8255 14.1349C7.163 14.0749 7.6355 13.8274 7.868 13.5724L14.0255 7.05492C15.0905 5.92992 15.5705 4.64742 13.913 3.07992C12.263 1.52742 11.0105 2.07492 9.9455 3.19992Z"
+                            stroke="#F3802C"
+                            strokeWidth="1.5"
+                            strokeMiterlimit={10}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M8.91797 4.2876C9.24047 6.3576 10.9205 7.9401 13.0055 8.1501"
+                            stroke="#F3802C"
+                            strokeWidth="1.5"
+                            strokeMiterlimit={10}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M2.25 17H15.75"
+                            stroke="#F3802C"
+                            strokeWidth="1.5"
+                            strokeMiterlimit={10}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </Link>
                     </div>
                   </div>
                   <div className="mt-2 me-1 mb-3 d-flex flex-column gap-2">
@@ -481,38 +492,43 @@ export default function Header() {
                     // onClick={() => setActiveTab("userInfo")}
                     className={style.EditBtnSvg}
                   >
-                    <svg
-                      width={20}
-                      height={21}
-                      viewBox="0 0 18 19"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <Link
+                      href={`/Profile?type=${encodeURIComponent("userInfo")}`}
+                      passHref
                     >
-                      <path
-                        d="M9.9455 3.19992L3.788 9.71742C3.5555 9.96492 3.3305 10.4524 3.2855 10.7899L3.008 13.2199C2.9105 14.0974 3.5405 14.6974 4.4105 14.5474L6.8255 14.1349C7.163 14.0749 7.6355 13.8274 7.868 13.5724L14.0255 7.05492C15.0905 5.92992 15.5705 4.64742 13.913 3.07992C12.263 1.52742 11.0105 2.07492 9.9455 3.19992Z"
-                        stroke="#F3802C"
-                        strokeWidth="1.5"
-                        strokeMiterlimit={10}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M8.91797 4.2876C9.24047 6.3576 10.9205 7.9401 13.0055 8.1501"
-                        stroke="#F3802C"
-                        strokeWidth="1.5"
-                        strokeMiterlimit={10}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M2.25 17H15.75"
-                        stroke="#F3802C"
-                        strokeWidth="1.5"
-                        strokeMiterlimit={10}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                      <svg
+                        width={20}
+                        height={21}
+                        viewBox="0 0 18 19"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.9455 3.19992L3.788 9.71742C3.5555 9.96492 3.3305 10.4524 3.2855 10.7899L3.008 13.2199C2.9105 14.0974 3.5405 14.6974 4.4105 14.5474L6.8255 14.1349C7.163 14.0749 7.6355 13.8274 7.868 13.5724L14.0255 7.05492C15.0905 5.92992 15.5705 4.64742 13.913 3.07992C12.263 1.52742 11.0105 2.07492 9.9455 3.19992Z"
+                          stroke="#F3802C"
+                          strokeWidth="1.5"
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M8.91797 4.2876C9.24047 6.3576 10.9205 7.9401 13.0055 8.1501"
+                          stroke="#F3802C"
+                          strokeWidth="1.5"
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M2.25 17H15.75"
+                          stroke="#F3802C"
+                          strokeWidth="1.5"
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </Link>
                   </div>
                 </div>
                 <div className="mt-2 me-1 mb-3 d-flex flex-column gap-2">

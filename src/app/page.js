@@ -10,7 +10,6 @@ import Video from "./eachPageComponent/HomeComponent/Video";
 import Honors from "./eachPageComponent/HomeComponent/Honors";
 import FAQ from "./Components/FAQ";
 
-
 import MainLayout from "./layouts/MainLayout";
 
 import { ThemeProvider } from "@mui/material/styles";

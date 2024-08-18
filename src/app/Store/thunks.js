@@ -5,8 +5,6 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
     const { username, password } = credentials;
-
-
     try {
       const response = await axios.post(
         "http://217.60.251.31:7000/auth/login",
@@ -18,6 +16,30 @@ export const login = createAsyncThunk(
       const token = response.data.token; // Assuming successful login returns a token
       console.log(token);
       return token;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const signUp = createAsyncThunk(
+  "auth/signUp",
+  async (credentials, thunkAPI) => {
+    const { firstName, lastName , username, password  } = credentials;
+    try {
+      const response = await axios.post(
+        "http://217.60.251.31:7000/auth/register",
+        {
+          firstName,
+          lastName,
+          username,
+          password,
+          roleIds: [1],
+        }
+      );
+      const signUpSattus = response.data.message; 
+      console.log(signUpSattus);
+      return signUpSattus;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

@@ -1,11 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useDispatch , useSelector } from "react-redux";
-import { token } from "../Store/slice";
-import { login } from "../Store/thunks";
+import { signUpSattus } from "../Store/slice";
+import { signUp } from "../Store/thunks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AuthLayout from "../layouts/AuthLayout";
+import OTPInput from "../eachPageComponent/Login/OTPComponent";
 import style from "../Styles/SignUp/SignUpStyle.module.scss"
 
 export default function SignUp() {
@@ -67,10 +68,15 @@ export default function SignUp() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const comeToken = useSelector(token);
-
+  const comesignUpSattus = useSelector(signUpSattus);
+ 
+  // use effect for register
+  const [firstName , setPersonName] = useState("");
+  const [lastName , setPersonLastName] = useState("");
   const [username, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  // end rgister
+  
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -80,21 +86,21 @@ export default function SignUp() {
     event.preventDefault();
     setErrorMessage(null);
     try {
-      const credentials = { username, password };
-      await dispatch(login(credentials));
+      const credentials = {  firstName, lastName , username, password };
+      await dispatch(signUp(credentials));
             
     } catch (error) {
-      console.error("Login/page.js", error);
+      console.error("signUp/page.js", error);
     }
   };
 
   useEffect(() => {
-    if (comeToken) {
-      setIsOtpSent(true); // Set OTP sent flag when token is available
-    } else if (comeToken === null && isOtpSent) {
+    if (comesignUpSattus == "Success") {
+      setIsOtpSent(true); // Set OTP sent flag when comesignUpSattus is available
+    } else if (comesignUpSattus === null && isOtpSent) {
       setErrorMessage("Failed to send OTP. Please try again.");
     }
-  }, [comeToken , isOtpSent]);
+  }, [comesignUpSattus , isOtpSent]);
 
   // const handleSendOtp = async (event) => {
   //   event.preventDefault();
@@ -124,8 +130,8 @@ export default function SignUp() {
     setErrorMessage(null);
     try {
       alert("your OTP   " + otp);
-      const lastPage = sessionStorage.getItem("lastPage") || "/";
-      router.push(lastPage);
+      // const lastPage = sessionStorage.getItem("lastPage") || "/";
+      router.push("/Login");
 
       // const response = await fetch("/api/verify-otp", {
       //   method: "POST",
@@ -293,9 +299,43 @@ export default function SignUp() {
                     <p className="Banner-title">Logo</p>
                   </div>
                 </div>
-                <Link href="/SignUp" className={style.SignUpLink}>
+                <Link href="/Login" className={style.SignUpLink}>
                   <p className="mb-3 me-2 mt-3 discription">ورود</p>
                 </Link>
+
+                <div className="d-flex flex-column  mb-3">
+                  <label
+                    htmlFor="firstName"
+                    className="mb-2 me-2 discription"
+                  >
+                    نام
+                  </label>
+                  <input
+                    type="text"
+                    className={`${style.formInputNumber} form-control`}
+                    id="firstName"
+                    value={firstName}
+                    onChange={(e) => setPersonName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="d-flex flex-column  mb-3">
+                  <label
+                    htmlFor="lastName"
+                    className="mb-2 me-2 discription"
+                  >
+                    نام خانوادگی
+                  </label>
+                  <input
+                    type="text"
+                    className={`${style.formInputNumber} form-control`}
+                    id="lastName"
+                    value={lastName}
+                    onChange={(e) => setPersonLastName(e.target.value)}
+                    required
+                  />
+                </div>
 
                 <div className="d-flex flex-column  mb-3">
                   <label

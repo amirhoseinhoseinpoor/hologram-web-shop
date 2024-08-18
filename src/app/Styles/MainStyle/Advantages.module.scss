@@ -3,13 +3,34 @@
 
 .mainBackground{
     background-color: var.$footer-top-person;
-    padding: 20px;
+    padding: 30px 0;
 }
 .textColor{
     color: white;
 }
+.divText{
+    width: 20%;
+    margin: auto;
+    color: white;
+}
+.DivLeftSideText{
+    width: 80%;
+}
 @media (max-width :768px) {
     .mainBackground{
-        padding: 20px 5px;
+        padding: 20px 0px;
+    }
+    .MakeResponsiveMainDiv{
+        flex-direction: column !important;
+    }
+    .divText{
+        margin-bottom: 20px !important;
+        margin-right: 10px !important;
+    }
+    .divText{
+        width: 100%;
+    }
+    .DivLeftSideText{
+        width: 100%;
     }
 }

@@ -63,13 +63,13 @@ export default function Exhibition() {
         <div
           className={`${style.rigthtextslide} ${style.rprighttext} d-flex flex-column justify-content-center`}
         >
-          <div className="title">
+          <div className="sometext">
             {mainItemObject.map((item) => (
               <React.Fragment key={item.id}>
-                <p>{item.Title}</p>
-                <p className={`${style.slidernexttext} mt-1`}>
+                <span>{item.Title}{" "}</span>
+                <span className={`${style.slidernexttext} mt-1`}>
                   {item.coloredTitle}
-                </p>
+                </span>
               </React.Fragment>
             ))}
           </div>

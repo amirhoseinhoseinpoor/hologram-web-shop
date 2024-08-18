@@ -1,110 +1,111 @@
 @use "../variable" as var;
 
-.mainbackground{
-    background-image: url('/HomeImages/background-earth.png') !important;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 10px 20px; 
-    width: 100%;
-    background-position: center;
-    margin-top: 20px;
-    aspect-ratio: 1.9;
+.mainbackground {
+  background-image: url("/HomeImages/background-earth.png") !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 10px 20px;
+  width: 100%;
+  background-position: center;
+  margin-top: 20px;
+  aspect-ratio: 1.9;
 }
-.arrowforward{
+.arrowforward {
+  padding: 5px;
+  background-color: var.$arrow-link;
+  border-radius: 4px;
+  color: white;
+  border: none;
+  svg {
+    font-size: 30px;
     padding: 5px;
-    background-color: var.$arrow-link;
-    border-radius: 4px;
-    color: white;
-    border: none;
-    svg{
-      font-size: 30px;
-      padding: 5px;
-    }
-
+  }
 }
-.arrowbackward{
-    color: var.$arrow-link;
-    border: none;
-    background-color: transparent;
-    svg{
-      padding: 5px;
-      font-size: 30px;
-    }
+.arrowbackward {
+  color: var.$arrow-link;
+  border: none;
+  background-color: transparent;
+  svg {
+    padding: 5px;
+    font-size: 30px;
+  }
 }
-.slidernexttext{
+.slidernexttext {
   color: var.$arrow-background;
 }
 
-.rigthtextslide{
-  width: 30%;
+.rigthtextslide {
+  width: 35%;
 }
-.leftslidewidth{
-  width: 70%;
+.leftslidewidth {
+  width: 65%;
 }
 
-.resetexhibition{
+.resetexhibition {
   height: 100%;
 }
-.swiperCustom :global{
-   .swiper-wrapper{
+.swiperCustom :global {
+  .swiper-wrapper {
     height: 55%;
     top: 21%;
-   }
+  }
 }
-@media (max-width :991px) {
-  .rigthtextslide{
+@media (max-width: 991px) {
+  .rigthtextslide {
     width: 40%;
   }
-  .leftslidewidth{
+  .leftslidewidth {
     width: 60%;
   }
-  .swiperCustom :global{
-    .swiper-wrapper{
-     height: 100%;
-     top: -9%;
+  .swiperCustom :global {
+    .swiper-wrapper {
+      height: 100%;
+      top: -9%;
     }
- }
+  }
 }
 
-  @media (max-width :768px) {
-     .exhibitionresponsivemaindiv{
-       flex-direction: column !important;
-       div{
-         width: 100%;
-       }
-     }
-     .rprighttext{
-      display: grid !important;
-      grid-auto-flow: column;
-      margin-bottom: 12px ;
-     }
-     .rpexhibitionarrow{
-      justify-content: flex-end;
-      align-self: center;
-     }
-     .swiperCustom :global{
-      .swiper-wrapper{
-       .swiper-slide{
-         height: 100% !important;
-       }
+@media (max-width: 768px) {
+  .rigthtextslide {
+    gap: 8px;
+  }
+  .exhibitionresponsivemaindiv {
+    flex-direction: column !important;
+    gap: 10px;
+    div {
+      width: 100%;
+      align-items: center;
+    }
+  }
+  .rprighttext {
+    display: grid !important;
+    grid-auto-flow: column;
+    margin-bottom: 12px;
+  }
+  .rpexhibitionarrow {
+    justify-content: flex-end;
+    align-self: center;
+  }
+  .swiperCustom :global {
+    .swiper-wrapper {
+      .swiper-slide {
+        height: 100% !important;
       }
-   }
-     
-    .resetexhibition{
-      display: flex;
-      flex-direction: column;
-      height: 100%;
     }
-    .mainbackground{
-      aspect-ratio: unset;
-    }
-    .adjustaspectratioinner{
-      aspect-ratio: 1.5 !important;
-    }
-    .mainbackground{
-      margin-bottom: 20px;
-    }
-  
   }
 
-  
+  .resetexhibition {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .mainbackground {
+    aspect-ratio: unset;
+  }
+  .adjustaspectratioinner {
+    aspect-ratio: 1.5 !important;
+  }
+  .mainbackground {
+    margin-bottom: 20px;
+  }
+}

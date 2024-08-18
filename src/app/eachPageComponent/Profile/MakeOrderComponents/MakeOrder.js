@@ -24,7 +24,7 @@ const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
 
 export default function MakeOrder() {
-  const lastPage = sessionStorage.getItem("lastPage") || "/";
+ 
 
   
 
@@ -144,39 +144,6 @@ export default function MakeOrder() {
   };
   return (
     <section>
-      <div className="d-lg-none d-block mt-2 mb-3 me-3">
-        <Link href={lastPage} className={style.linkFortheNavigateBack}>
-          <div className="d-flex flex-row align-items-center gap-2">
-            <div>
-              <svg
-                width={20}
-                height={21}
-                viewBox="0 0 20 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.0254 5.44141L17.0837 10.4997L12.0254 15.5581"
-                  stroke="#333333"
-                  strokeWidth="1.5"
-                  strokeMiterlimit={10}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2.91699 10.5H16.942"
-                  stroke="#333333"
-                  strokeWidth="1.5"
-                  strokeMiterlimit={10}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-            <p className="QASize">باگشت به پروفایل</p>
-          </div>
-        </Link>
-      </div>
       <ProcessTracker currentStep={step} />
       {renderStepContent()}
     </section>

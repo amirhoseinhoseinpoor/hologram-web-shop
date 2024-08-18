@@ -85,7 +85,13 @@
         color: unset;
     }
 }
-
+.footerIconSize{
+    font-size: 24px;
+}
+.footerLinkedinIcon{
+    width: 37px;
+    height: 37px;
+}
 
 @media (max-width :980px) {
     .responsiveRow{
@@ -141,6 +147,13 @@
             margin-left: 10px;
         }
     }
+    .footerIconSize{
+        font-size: 22px;
+    }
+    .footerLinkedinIcon{
+        width: 35px;
+        height: 35px;
+    }
     
 }
 
@@ -155,8 +168,7 @@
     }
     .alignUpwardArrow{
         text-align: unset !important;
-        margin-right: 50px ;
-        
+        margin-right: 50px;
     }
    
     .imagefooterrsb{
@@ -169,6 +181,15 @@
     .productmobilers{
         justify-content: space-around  !important;
         width: 83% !important;
+    }
+    .footerIconSize{
+        font-size: 20px;
+    }
+    .responsiveTrustlogo{
+        width: 75% !important;
+        img{
+            width: 75px !important;
+        }
     }
 }
 @media (max-width :580px) {

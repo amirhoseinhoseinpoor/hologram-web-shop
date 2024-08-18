@@ -4,6 +4,7 @@
   background-color: var.$footer-background;
   height: fit-content;
   min-height: 100%;
+  padding-top: 68px;
 }
 
 .flexSideBarContent {
@@ -72,8 +73,17 @@
   overflow-y: auto;
 }
 
+.linkFortheNavigateBack{
+  text-decoration: none;
+  color: #333333;
+}
+
+
 @media (max-width: 980px) {
   .sidebar {
     display: none;
+  }
+  .adminPanel {
+    padding-top: 140px;
   }
 }

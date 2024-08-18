@@ -80,7 +80,7 @@ export default function Footer() {
                 <a href="#">
                   <div className={style.phonecallfooterdiv}>
                     <div>
-                      {/* <CallIcon></CallIcon> */}
+                      
                       <Box>
                         <svg
                           width={22}
@@ -125,10 +125,10 @@ export default function Footer() {
             <div
               className={`bg-light mb-3 w-50 ${style.responsivetext} ${style.footerlogo}`}
             >
-              <p>لوگو</p>
+              <p className="NormalTextSizing">لوگو</p>
             </div>
             <div className={`p-1 mb-2 w-50  ${style.responsivetext}`}>
-              <p>
+              <p className="NormalTextSizing">
                 شرکت خانه چاپ چکاوک با نام تجاری آذرهولوگرام ، به دلیل دارا بودن
                 خط کامل تولید هولوگرام در داخل کشور با بالاترین سطح امنیتى موجود
                 زمان چاپ هولوگرام و فروش هولوگرام به کم ترین زمان کاهش پیدا کرده
@@ -143,82 +143,81 @@ export default function Footer() {
             >
               <div>
                 
-                <p className="mb-2">محصولات</p>
+                <p className="mb-2 QASize">محصولات</p>
                 <Link href="/هولوگرام" passHref style={{textDecoration:"none" , color:"#333333"}}>
-                  <p className="mb-2">هولوگرام</p>
+                  <p className="mb-2 NormalTextSizing">هولوگرام</p>
                 </Link>
                 <Link href="/لیبل‌های امنیتی" passHref style={{textDecoration:"none" , color:"#333333"}}>  
-                 <p className="mb-2">لیبل‌های امنیتی</p>
+                 <p className="mb-2 NormalTextSizing">لیبل‌های امنیتی</p>
                 </Link>
                 <Link href="/برچسب‌های پلمپ" passHref style={{textDecoration:"none" , color:"#333333"}}>
-                  <p className="mb-2">برچسب‌های پلمپ</p>
+                  <p className="mb-2 NormalTextSizing">برچسب‌های پلمپ</p>
                 </Link>
                 <Link href="/اسکرچ" passHref style={{textDecoration:"none" , color:"#333333"}}>
-                  <p className="mb-2">اسکرچ</p>
+                  <p className="mb-2 NormalTextSizing">اسکرچ</p>
                 </Link>
               </div>
               <div className={style.footerLinksstyle}>
-                <p className="mb-2">لینک‌های مفید</p>
+                <p className="mb-2 QASize">لینک‌های مفید</p>
 
                 <Link href="/">
-                  <p className="mb-2">معرفی هولگرام‌ها</p>
+                  <p className="mb-2 NormalTextSizing">معرفی هولگرام‌ها</p>
                 </Link>
                 <Link href="/AboutUs">
-                  <p className="mb-2">درباره‌ی ما</p>
+                  <p className="mb-2 NormalTextSizing">درباره‌ی ما</p>
                 </Link>
                 <Link href="/ContactUs">
-                  <p className="mb-2">تماس با ما</p>
+                  <p className="mb-2 NormalTextSizing">تماس با ما</p>
                 </Link>
                 <Link href="/Honors">
-                  <p className="mb-2">افتخارات</p>
+                  <p className="mb-2 NormalTextSizing">افتخارات</p>
                 </Link>
                 <Link href="/Blog">
-                  <p className="mb-2">مقالات</p>
+                  <p className="mb-2 NormalTextSizing">مقالات</p>
                 </Link>
                 <Link href="/Exhibition">
-                  <p className="mb-2">نمیشگاه‌ها</p>
+                  <p className="mb-2 NormalTextSizing">نمیشگاه‌ها</p>
                 </Link>
               </div>
             </div>
             {/* social media */}
             <div className={`w-50 ${style.responsivetext}`}>
-              <div className="p-1 mb-2">
-                <h3>راه‌های ارتباطی</h3>
+              <div className="p-1 mb-1">
+                <h3 className="QASize">راه‌های ارتباطی</h3>
               </div>
-              <div className="p-1 mb-2">
-                <span>آدرس : </span>
-                <span>
+              <div className="p-1 mb-1">
+                <span className="NormalTextSizing">آدرس : </span>
+                <span className="normalTextLowWeight">
                   تهران، میدان فلسطین، خیابان فلسطین جنوبی،خیابان بزرگمهر غربی،
                   نبش کوچه حکمت، پلاک یک، طبقه ششم
                 </span>
               </div>
-              <div className="p-1 mb-2">
-                <span>ایمیل : </span>
-                <span>info@azarhologram.co</span>
+              <div className="p-1 mb-1">
+                <span className="NormalTextSizing">ایمیل : </span>
+                <span className="normalTextLowWeight">info@azarhologram.co</span>
               </div>
-              <div className="p-1 mb-2">
-                <span>فکس : </span>
-                <span>۶۶۹۷۱۴۰۵</span>
+              <div className="p-1">
+                <span className="NormalTextSizing">فکس : </span>
+                <span className="normalTextLowWeight">۶۶۹۷۱۴۰۵</span>
               </div>
               <div className="d-flex align-items-center flex-row p-1 mb-2">
-                <span>شبکه‌های اجتماعی:</span>
+                <span className="NormalTextSizing">شبکه‌های اجتماعی:</span>
                 <span
                   className={`${style.test} d-flex align-items-center flrx-row`}
                 >
                   <a href="#">
-                    <WhatsAppIcon></WhatsAppIcon>
+                    <WhatsAppIcon className={style.footerIconSize}></WhatsAppIcon>
                   </a>
                   <a href="#">
-                    <TelegramIcon></TelegramIcon>
+                    <TelegramIcon className={style.footerIconSize}></TelegramIcon>
                   </a>
                   <a href="#">
-                    <InstagramIcon></InstagramIcon>
+                    <InstagramIcon className={style.footerIconSize}></InstagramIcon>
                   </a>
                   <a href="#">
                     <Box
+                      className={style.footerLinkedinIcon}
                       sx={{
-                        width: 37,
-                        height: 37,
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
@@ -242,7 +241,7 @@ export default function Footer() {
             </div>
           </div>
           {/* trust-logo */}
-          <div className="d-flex flex-row justify-content-around w-50 mt-2 mb-2">
+          <div className={`${style.responsiveTrustlogo} d-flex flex-row justify-content-around w-50 mt-2 mb-2`}>
             <Box
               component="img"
               sx={{
@@ -273,7 +272,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="text-center mt-4">
+        <p className="text-center NormalTextSizing mt-4 mb-2">
           تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است.
         </p>
       </div>
