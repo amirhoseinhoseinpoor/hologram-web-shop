@@ -1,0 +1,44 @@
+@use "../../variable" as var;
+
+.EachDivStyle {
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.MainBOXCardStyle {
+    position: relative;
+  background-color: white;
+  border: none;
+  box-shadow: unset;
+  margin: 6px 0;
+}
+
+.coloredTitle{
+    color: #5F5F5F;
+}
+
+.trackCode{
+    color: #5695F6;
+}
+
+.situationSatus{
+    position: absolute;
+    top: 5%;
+    left: 1%;
+    transform: translate(50 , -50);
+}
+
+.dotText{
+    fill: #5695F6;
+    color: #5695F6;
+}
+
+.situationMainDiv{
+    background-color: #E1F1FF ;
+    border-radius: 20px;
+    padding: 5px 12px;
+    border: 1.4px solid #5695F6;
+    color: #5695F6;
+}

@@ -80,6 +80,9 @@ export default function SignUp() {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const hasError = Boolean(errorMessage);
+
+
   // Send OTP to the user's phone
 
   const handleLogin = async (event) => {
@@ -87,7 +90,11 @@ export default function SignUp() {
     setErrorMessage(null);
     try {
       const credentials = {  firstName, lastName , username, password };
-      await dispatch(signUp(credentials));
+      const resultAction = await dispatch(signUp(credentials));
+
+      if (signUp.rejected.match(resultAction)) {
+        setErrorMessage(resultAction.payload);
+      }
             
     } catch (error) {
       console.error("signUp/page.js", error);
@@ -254,7 +261,7 @@ export default function SignUp() {
           )}
         </form>
       </section> */}
-      <section className="h-100 d-flex w-100">
+      <section className={`${style.sectionSignUpStyle} h-100 d-flex w-100`}>
         <div className={`${style.outerLoginPage} container pt-3 pb-3`}>
           <div className={`${style.LoginMainDiv} position-relative`}>
             <div onClick={NavigateLastPage} className={style.closeIconImg}>
@@ -303,6 +310,10 @@ export default function SignUp() {
                   <p className="mb-3 me-2 mt-3 discription">ورود</p>
                 </Link>
 
+                {errorMessage && (
+                  <div className={style.handelLoginError}>{errorMessage}</div>
+                )}
+
                 <div className="d-flex flex-column  mb-3">
                   <label
                     htmlFor="firstName"
@@ -313,6 +324,7 @@ export default function SignUp() {
                   <input
                     type="text"
                     className={`${style.formInputNumber} form-control`}
+                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
                     id="firstName"
                     value={firstName}
                     onChange={(e) => setPersonName(e.target.value)}
@@ -330,6 +342,7 @@ export default function SignUp() {
                   <input
                     type="text"
                     className={`${style.formInputNumber} form-control`}
+                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
                     id="lastName"
                     value={lastName}
                     onChange={(e) => setPersonLastName(e.target.value)}
@@ -347,6 +360,7 @@ export default function SignUp() {
                   <input
                     type="number"
                     className={`${style.formInputNumber} form-control`}
+                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
                     id="phoneNumber"
                     value={username}
                     onChange={(e) => setPhoneNumber(e.target.value)}
@@ -361,6 +375,7 @@ export default function SignUp() {
                   <input
                     type="text"
                     className={`${style.formInputNumber} form-control`}
+                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -377,6 +392,7 @@ export default function SignUp() {
                       type="number"
                       id="capcha"
                       className={`${style.formInputCapcha} form-control w-50`}
+                      style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
                     />
                     <div className="d-flex flex-row align-items-center w-50">
                       <svg
@@ -494,9 +510,7 @@ export default function SignUp() {
               />
             )}
 
-            {errorMessage && (
-              <div className="alert alert-danger mt-3">{errorMessage}</div>
-            )}
+           
           </div>
         </div>
       </section>

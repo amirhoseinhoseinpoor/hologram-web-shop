@@ -13,11 +13,16 @@ export const login = createAsyncThunk(
           password,
         }
       );
-      const token = response.data.token; // Assuming successful login returns a token
+      const token = response.data.token;
       console.log(token);
       return token;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("شماره همراه یا پسورد اشتباه است")
+      }
+      else {
+       return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+      }
     }
   }
 );
@@ -25,7 +30,7 @@ export const login = createAsyncThunk(
 export const signUp = createAsyncThunk(
   "auth/signUp",
   async (credentials, thunkAPI) => {
-    const { firstName, lastName , username, password  } = credentials;
+    const { firstName, lastName, username, password } = credentials;
     try {
       const response = await axios.post(
         "http://217.60.251.31:7000/auth/register",
@@ -37,11 +42,16 @@ export const signUp = createAsyncThunk(
           roleIds: [1],
         }
       );
-      const signUpSattus = response.data.message; 
+      const signUpSattus = response.data.message;
       console.log(signUpSattus);
       return signUpSattus;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("شما قبلا ثبت نام کرده اید")
+      }
+      else {
+       return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+      }
     }
   }
 );

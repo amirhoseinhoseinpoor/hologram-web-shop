@@ -19,6 +19,10 @@ const MakeOrder = dynamic(
   }
 );
 
+const SeeOrder = dynamic(
+  () => import("../eachPageComponent/Profile/seeOrderComponents/seeOrder")
+)
+
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
@@ -154,9 +158,9 @@ const Profile = () => {
               </Link>
             </div>
             {activeTab === "makeOrder" && <MakeOrder />}
-            {activeTab === "seeOrder" && (
-              <div className={style.tabContent}>Under Develop</div>
-            )}
+            {activeTab === "seeOrder" && <SeeOrder/>}
+              
+           
             {activeTab === "userInfo" && (
               <div className={style.tabContent}>Under Develop</div>
             )}

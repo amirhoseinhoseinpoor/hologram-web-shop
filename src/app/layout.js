@@ -20,7 +20,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" dir="rtl">
-      <body  className={`${myFont.className}`}  >
+      <body  className={`${myFont.className} h-100`}  >
         <StoreProvider>       
           {children}
         </StoreProvider>
