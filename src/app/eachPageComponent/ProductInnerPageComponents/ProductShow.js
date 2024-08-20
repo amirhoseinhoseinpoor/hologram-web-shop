@@ -55,6 +55,7 @@ export default function ProductShow({ data }) {
                   component="img"
                   src={data[0].imgData[currentMediaIndex].src}
                   sx={{ borderRadius: "4px" }}
+                  style={{maxHeight : "395px"}}
                 />
               )}
 

@@ -125,7 +125,7 @@
 
 .fixLeftSideVideo {
   width: 30%;
-  height: 500px;
+  max-height: 370px;
   overflow-y: scroll;
   direction: rtl;
   scrollbar-width: thin;

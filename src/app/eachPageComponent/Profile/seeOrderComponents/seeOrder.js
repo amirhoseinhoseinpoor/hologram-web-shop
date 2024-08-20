@@ -25,7 +25,7 @@ export default function seeOrder() {
               className={style.MainBOXCardStyle}
               //   onClick={() => handleImageClick(item.src)}
             >
-              <div className="d-flex flex-row">
+              <div className={`${style.MakeTheContentResponsive} d-flex flex-row`}>
                 <div>
                   <CardMedia
                     component="img"
