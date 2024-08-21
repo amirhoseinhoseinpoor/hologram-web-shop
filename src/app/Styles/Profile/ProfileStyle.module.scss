@@ -39,6 +39,11 @@
   width: 100%;
   border-bottom: none;
   text-align: end !important;
+  li{
+    button:focus-visible{
+      box-shadow: none !important;
+    }
+  }
 }
 .sidebarMain :global {
   .nav-link {
@@ -85,5 +90,11 @@
   }
   .adminPanel {
     padding-top: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 0px;
   }
 }

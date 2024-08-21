@@ -35,6 +35,22 @@ const UserInfo = dynamic(
   }
 );
 
+const Message = dynamic(
+  () => import("../eachPageComponent/Profile/messageComponents/message"),
+  {
+    ssr: false, // Disable SSR if it's a client-side component
+    loading: () => <p>Loading...</p>, // Fallback content while loading
+  }
+);
+
+const Favorite = dynamic(
+  () => import("../eachPageComponent/Profile/FavoriteComponents/favorite"),
+  {
+    ssr: false, // Disable SSR if it's a client-side component
+    loading: () => <p>Loading...</p>, // Fallback content while loading
+  }
+);
+
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
@@ -169,13 +185,8 @@ const Profile = () => {
             {activeTab === "makeOrder" && <MakeOrder />}
             {activeTab === "seeOrder" && <SeeOrder />}
             {activeTab === "userInfo" && <UserInfo />}
-
-            {activeTab === "message" && (
-              <div className={style.tabContent}>Under Develop</div>
-            )}
-            {activeTab === "favorite" && (
-              <div className={style.tabContent}>Under Develop</div>
-            )}
+            {activeTab === "message" && <Message />}
+            {activeTab === "favorite" && <Favorite />}
           </div>
         </div>
       </section>
