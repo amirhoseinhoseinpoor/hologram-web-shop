@@ -13,6 +13,8 @@
 
 .sectionLoginStyle{
     background-color: #F7F8FC;
+    height: fit-content;
+    min-height: 100%;
 }
 
 .closeIconImg{
@@ -80,4 +82,8 @@
     color: white;
     text-align: center;
     margin-bottom: 15px;
+}
+.forgotPasswordStyle{
+    text-decoration: none;
+    color: var.$arrow-background;
 }

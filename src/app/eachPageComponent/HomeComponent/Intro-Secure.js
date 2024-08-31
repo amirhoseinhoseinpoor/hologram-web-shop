@@ -22,12 +22,12 @@ export default function IntroSecure() {
   return (
     <section className="container mt-5 mb-5">
       <div className={`${style.mainDivResponsive} d-flex flex-row`}>
-        <div className={style.imageStyle}>
+        <div className={`${style.imageStyle} d-flex`}>
           <Box
             component="img"
             sx={{
               width: "100%",
-              height: "100%",
+              // height: "100%",
               objectFit: "cover",
               aspectRatio: 1.7,
             }}

@@ -103,7 +103,10 @@ export default function Header() {
   // store the url
   const storeLastVisitedPage = () => {
     const lastPage = window.location.pathname;
-    sessionStorage.setItem("lastPage", lastPage);
+    if (lastPage !== "/Profile") {
+      sessionStorage.setItem("lastPage", lastPage);
+    }
+    
   };
 
   return (
@@ -243,6 +246,7 @@ export default function Header() {
                       className={style.EditBtnSvg}
                     >
                       <Link
+                       onClick={storeLastVisitedPage}
                         href={`/Profile?type=${encodeURIComponent(
                           "userInfo"
                         )}`}
@@ -285,30 +289,35 @@ export default function Header() {
                   </div>
                   <div className="mt-2 me-1 mb-3 d-flex flex-column gap-2">
                     <Link
+                      onClick={storeLastVisitedPage}
                       className={style.LinkOfprofile}
                       href={`/Profile?type=${encodeURIComponent("makeOrder")}`}
                     >
                       <p className="VodeoDisSizing">ثبت سفارش</p>
                     </Link>
                     <Link
+                      onClick={storeLastVisitedPage}
                       className={style.LinkOfprofile}
                       href={`/Profile?type=${encodeURIComponent("seeOrder")}`}
                     >
                       <p className="VodeoDisSizing">پیگیری سفارش</p>
                     </Link>
                     <Link
+                       onClick={storeLastVisitedPage}
                       className={style.LinkOfprofile}
                       href={`/Profile?type=${encodeURIComponent("userInfo")}`}
                     >
                       <p className="VodeoDisSizing">اطلاعات کاربری</p>
                     </Link>
                     <Link
+                     onClick={storeLastVisitedPage}
                       className={style.LinkOfprofile}
                       href={`/Profile?type=${encodeURIComponent("message")}`}
                     >
                       <p className="VodeoDisSizing">پیغام ها</p>
                     </Link>
                     <Link
+                     onClick={storeLastVisitedPage}
                       className={`${style.LinkOfprofile}`}
                       href={`/Profile?type=${encodeURIComponent("favorite")}`}
                     >
@@ -476,7 +485,7 @@ export default function Header() {
                       </div>
                       <div className="me-1 d-flex flex-row ">
                         <p className="NormalTextSizing">اسم کاربر اینجا</p>
-                        <KeyboardArrowDownIcon className="mb-2"></KeyboardArrowDownIcon>
+                        <KeyboardArrowDownIcon ></KeyboardArrowDownIcon>
                       </div>
                     </div>
                   </>
@@ -533,30 +542,35 @@ export default function Header() {
                 </div>
                 <div className="mt-2 me-1 mb-3 d-flex flex-column gap-2">
                   <Link
+                   onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
                     href={`/Profile?type=${encodeURIComponent("makeOrder")}`}
                   >
                     <p className="VodeoDisSizing">ثبت سفارش</p>
                   </Link>
                   <Link
+                   onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
                     href={`/Profile?type=${encodeURIComponent("seeOrder")}`}
                   >
                     <p className="VodeoDisSizing">پیگیری سفارش</p>
                   </Link>
                   <Link
+                   onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
                     href={`/Profile?type=${encodeURIComponent("userInfo")}`}
                   >
                     <p className="VodeoDisSizing">اطلاعات کاربری</p>
                   </Link>
                   <Link
+                   onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
                     href={`/Profile?type=${encodeURIComponent("message")}`}
                   >
                     <p className="VodeoDisSizing">پیغام ها</p>
                   </Link>
                   <Link
+                   onClick={storeLastVisitedPage}
                     className={`${style.LinkOfprofile}`}
                     href={`/Profile?type=${encodeURIComponent("favorite")}`}
                   >

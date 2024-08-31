@@ -261,7 +261,7 @@ export default function SignUp() {
           )}
         </form>
       </section> */}
-      <section className={`${style.sectionSignUpStyle} h-100 d-flex w-100`}>
+      <section className={`${style.sectionSignUpStyle} d-flex w-100`}>
         <div className={`${style.outerLoginPage} container pt-3 pb-3`}>
           <div className={`${style.LoginMainDiv} position-relative`}>
             <div onClick={NavigateLastPage} className={style.closeIconImg}>

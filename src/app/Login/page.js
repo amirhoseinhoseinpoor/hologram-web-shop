@@ -127,7 +127,7 @@ export default function Login() {
 
   return (
     <AuthLayout>
-      <section className={`${style.sectionLoginStyle} h-100 d-flex w-100`}>
+      <section className={`${style.sectionLoginStyle}  d-flex w-100`}>
         <div className={`${style.outerLoginPage} container pt-3 pb-3`}>
           <div className={`${style.LoginMainDiv} position-relative`}>
             <div onClick={NavigateLastPage} className={style.closeIconImg}>
@@ -190,7 +190,7 @@ export default function Login() {
                   <input
                     type="number"
                     className={`${style.formInputNumber} form-control`}
-                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
+                    style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="phoneNumber"
                     value={username}
                     onChange={(e) => setPhoneNumber(e.target.value)}
@@ -205,12 +205,38 @@ export default function Login() {
                   <input
                     type="text"
                     className={`${style.formInputNumber} form-control`}
-                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
+                    style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                  <div className="mt-2">
+                    <Link
+                      className={`${style.forgotPasswordStyle}`}
+                      href="/ForgetPassword"
+                      passHref
+                    >
+                      <div className="d-flex flex-row gap-2 align-items-center">
+                        <p className={`discription`}>فراموشی رمز عبور</p>
+                        <svg
+                          width={17}
+                          height={18}
+                          viewBox="0 0 14 15"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8.74958 12.5955L4.94625 8.79214C4.49708 8.34297 4.49708 7.60797 4.94625 7.1588L8.74958 3.35547"
+                            stroke="#F3802C"
+                            strokeMiterlimit={10}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="mb-4">
@@ -222,7 +248,7 @@ export default function Login() {
                       type="number"
                       id="capcha"
                       className={`${style.formInputCapcha} form-control w-50`}
-                      style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
+                      style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     />
                     <div className="d-flex flex-row align-items-center w-50">
                       <svg
