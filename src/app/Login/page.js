@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { token } from "../Store/slice";
@@ -13,6 +13,7 @@ import style from "../Styles/Login/LoginStyle.module.scss";
 export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const phoneNumberRegex = /((0?9)|(\+?989))\d{2}\W?\d{3}\W?\d{4}/g;
 
   const comeToken = useSelector(token);
 
@@ -20,8 +21,33 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const hasError = Boolean(errorMessage);
+
+  // focuse the number filed
+  const numberRef = useRef(null);
+
+  // // input ref for moving to the next
+
+  const passwordRef = useRef(null);
+
+  useEffect(() => {
+    if (numberRef.current) {
+      numberRef.current.focus();
+    }
+    if (numberRef && username.length == 11) {
+      passwordRef.current.focus();
+    }
+  }, [username]);
+
+  useEffect(() => {
+    if (username.length == 11 && password.length >= 4) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [username, password]);
 
   // Send OTP to the user's phone
 
@@ -30,10 +56,14 @@ export default function Login() {
     setErrorMessage(null);
     try {
       const credentials = { username, password };
-      const resultAction = await dispatch(login(credentials));
 
-      if (login.rejected.match(resultAction)) {
-        setErrorMessage(resultAction.payload);
+      if (!phoneNumberRegex.test(username)) {
+        setErrorMessage("فرمت شماره همراه اشتباه است");
+      } else {
+        const resultAction = await dispatch(login(credentials));
+        if (login.rejected.match(resultAction)) {
+          setErrorMessage(resultAction.payload);
+        }
       }
     } catch (error) {
       console.error("Login/page.js", error);
@@ -193,6 +223,7 @@ export default function Login() {
                     style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="phoneNumber"
                     value={username}
+                    ref={numberRef}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     required
                   />
@@ -208,6 +239,7 @@ export default function Login() {
                     style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="password"
                     value={password}
+                    ref={passwordRef}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
@@ -318,9 +350,15 @@ export default function Login() {
 
                 <button
                   type="submit"
-                  className={`${style.submitButton} w-100 mt-1`}
+                  className={`${style.submitButton} ${
+                    isButtonDisabled
+                      ? style.disabledButton
+                      : style.activeButton
+                  } w-100 mt-1`}
+                 
+                  disabled={isButtonDisabled}
                 >
-                  <div className="d-flex flex-row align-items-center justify-content-center">
+                  <div className={`${style.justPaddingButton} d-flex flex-row align-items-center justify-content-center`}>
                     <p className="ms-2 subitem">دریافت کد تایید</p>
                     <svg
                       width={21}

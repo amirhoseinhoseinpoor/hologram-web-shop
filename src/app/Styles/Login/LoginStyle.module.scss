@@ -25,12 +25,25 @@
 }
 .submitButton{
     border-radius: 4px;
-    background-color: #5695F6;
     color: white;
     border: none;
+    padding: 0;
+}
+.justPaddingButton{
     padding: 8px 0;
 }
-
+.disabledButton {
+  background-color:  #868686;
+  cursor: not-allowed;
+}
+.activeButton {
+    background-color: #5695F6;
+    cursor: pointer;
+}
+.activeButton :hover {
+    background-color: #3E73D3;
+    border-radius: 4px;
+}
 .formInputNumber:focus{
   box-shadow: unset !important;
   border: 1.3px solid #5695F6;
