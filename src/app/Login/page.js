@@ -234,7 +234,7 @@ export default function Login() {
                     رمز عبور
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     className={`${style.formInputNumber} form-control`}
                     style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="password"

@@ -101,14 +101,14 @@
 .fixCardStyle {
   box-shadow: none;
   background-color: var.$footer-background;
+  padding: 15px;
 }
 .fixRaiduisImage {
-  border-radius: 22px;
+  border-radius: 4px;
   aspect-ratio: 1.5;
 }
 .adjustContent {
   padding: 0 !important;
-  margin-bottom: 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -125,4 +125,7 @@
   }
 }
 @media (max-width: 768px) {
+  .fixCardStyle{
+    padding: 8px;
+  }
 }

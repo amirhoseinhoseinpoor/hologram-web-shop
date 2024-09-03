@@ -191,9 +191,9 @@ export default function PurchaseProcessSteps() {
       </div>
       <div className={`${style.mainSizez} mt-4`}>
         <Card className={`${style.fixCardStyle}`}>
-          <Link className="text-decoration-none" href={`/هولوگرام`} passHref>
+          <Link className="text-decoration-none d-flex flex-column gap-2" href={`/هولوگرام`} passHref>
             <CardMedia
-              className={`${style.fixRaiduisImage} p-3 gap-3`}
+              className={`${style.fixRaiduisImage}  gap-3`}
               component="img"
               image={`/HomeImages/typeazar1.jpg`}
               alt={`dsaw`}
@@ -201,7 +201,7 @@ export default function PurchaseProcessSteps() {
 
             <CardContent className={`${style.adjustContent} text-center`}>
               <Typography
-                className={`QASize`}
+                className={`QASize m-0`}
                 gutterBottom
                 variant="span"
                 component="div"
@@ -212,9 +212,9 @@ export default function PurchaseProcessSteps() {
           </Link>
         </Card>
         <Card className={`${style.fixCardStyle}`}>
-          <Link className="text-decoration-none" href={`/لیبل‌های امنیتی`} passHref>
+          <Link className="text-decoration-none d-flex flex-column gap-2" href={`/لیبل‌های امنیتی`} passHref>
             <CardMedia
-              className={`${style.fixRaiduisImage} p-3 gap-3`}
+              className={`${style.fixRaiduisImage}  gap-3`}
               component="img"
               image={`/HomeImages/typeazar2.png`}
               alt={`dsaw`}
@@ -222,7 +222,7 @@ export default function PurchaseProcessSteps() {
 
             <CardContent className={`${style.adjustContent} text-center`}>
               <Typography
-                className={`QASize`}
+                className={`QASize m-0`}
                 gutterBottom
                 variant="span"
                 component="div"
@@ -233,9 +233,9 @@ export default function PurchaseProcessSteps() {
           </Link>
         </Card>
         <Card className={`${style.fixCardStyle}`}>
-          <Link className="text-decoration-none" href={`/برچسب‌های پلمپ`} passHref>
+          <Link className="text-decoration-none d-flex flex-column gap-2" href={`/برچسب‌های پلمپ`} passHref>
             <CardMedia
-              className={`${style.fixRaiduisImage} p-3 gap-3`}
+              className={`${style.fixRaiduisImage}  gap-3`}
               component="img"
               image={`/HomeImages/typeazar3.png`}
               alt={`dsaw`}
@@ -243,7 +243,7 @@ export default function PurchaseProcessSteps() {
 
             <CardContent className={`${style.adjustContent} text-center`}>
               <Typography
-                className={`QASize`}
+                className={`QASize m-0`}
                 gutterBottom
                 variant="span"
                 component="div"
@@ -254,9 +254,9 @@ export default function PurchaseProcessSteps() {
           </Link>
         </Card>
         <Card className={`${style.fixCardStyle}`}>
-          <Link className="text-decoration-none" href={`/اسکرچ`} passHref>
+          <Link className="text-decoration-none d-flex flex-column gap-2" href={`/اسکرچ`} passHref>
             <CardMedia
-              className={`${style.fixRaiduisImage} p-3`}
+              className={`${style.fixRaiduisImage} `}
               component="img"
               image={`/HomeImages/typeazar4.png`}
               alt={`dsaw`}
@@ -264,7 +264,7 @@ export default function PurchaseProcessSteps() {
 
             <CardContent className={`${style.adjustContent} text-center`}>
               <Typography
-                className={`QASize`}
+                className={`QASize m-0`}
                 gutterBottom
                 variant="span"
                 component="div"

@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useDispatch , useSelector } from "react-redux";
+import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { signUpSattus } from "../Store/slice";
 import { signUp } from "../Store/thunks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AuthLayout from "../layouts/AuthLayout";
 import OTPInput from "../eachPageComponent/Login/OTPComponent";
-import style from "../Styles/SignUp/SignUpStyle.module.scss"
+import style from "../Styles/SignUp/SignUpStyle.module.scss";
 
 export default function SignUp() {
   // const dispatch = useDispatch();
@@ -60,28 +60,51 @@ export default function SignUp() {
   //     // }
   // };
 
-
-
   ////      after
-
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const phoneNumberRegex = /((0?9)|(\+?989))\d{2}\W?\d{3}\W?\d{4}/g;
 
   const comesignUpSattus = useSelector(signUpSattus);
- 
+
   // use effect for register
-  const [firstName , setPersonName] = useState("");
-  const [lastName , setPersonLastName] = useState("");
+  const [firstName, setPersonName] = useState("");
+  const [lastName, setPersonLastName] = useState("");
   const [username, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
   // end rgister
-  
+
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const hasError = Boolean(errorMessage);
 
+  const nameInputRef = useRef(null);
+
+  const passwordRef = useRef(null);
+
+  useEffect(() => {
+    if (nameInputRef.current) {
+      nameInputRef.current.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (username.length == 11) {
+      passwordRef.current.focus();
+    }
+  }, [username]);
+
+  useEffect(() => {
+    if (username.length == 11 && password.length >= 4) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [username, password]);
 
   // Send OTP to the user's phone
 
@@ -89,13 +112,16 @@ export default function SignUp() {
     event.preventDefault();
     setErrorMessage(null);
     try {
-      const credentials = {  firstName, lastName , username, password };
-      const resultAction = await dispatch(signUp(credentials));
+      const credentials = { firstName, lastName, username, password };
 
-      if (signUp.rejected.match(resultAction)) {
-        setErrorMessage(resultAction.payload);
+      if (!phoneNumberRegex.test(username)) {
+        setErrorMessage("فرمت شماره همراه اشتباه است");
+      } else {
+        const resultAction = await dispatch(signUp(credentials));
+        if (signUp.rejected.match(resultAction)) {
+          setErrorMessage(resultAction.payload);
+        }
       }
-            
     } catch (error) {
       console.error("signUp/page.js", error);
     }
@@ -107,7 +133,7 @@ export default function SignUp() {
     } else if (comesignUpSattus === null && isOtpSent) {
       setErrorMessage("Failed to send OTP. Please try again.");
     }
-  }, [comesignUpSattus , isOtpSent]);
+  }, [comesignUpSattus, isOtpSent]);
 
   // const handleSendOtp = async (event) => {
   //   event.preventDefault();
@@ -315,34 +341,29 @@ export default function SignUp() {
                 )}
 
                 <div className="d-flex flex-column  mb-3">
-                  <label
-                    htmlFor="firstName"
-                    className="mb-2 me-2 discription"
-                  >
+                  <label htmlFor="firstName" className="mb-2 me-2 discription">
                     نام
                   </label>
                   <input
                     type="text"
                     className={`${style.formInputNumber} form-control`}
-                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
+                    style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="firstName"
                     value={firstName}
+                    ref={nameInputRef}
                     onChange={(e) => setPersonName(e.target.value)}
                     required
                   />
                 </div>
 
                 <div className="d-flex flex-column  mb-3">
-                  <label
-                    htmlFor="lastName"
-                    className="mb-2 me-2 discription"
-                  >
+                  <label htmlFor="lastName" className="mb-2 me-2 discription">
                     نام خانوادگی
                   </label>
                   <input
                     type="text"
                     className={`${style.formInputNumber} form-control`}
-                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
+                    style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="lastName"
                     value={lastName}
                     onChange={(e) => setPersonLastName(e.target.value)}
@@ -360,7 +381,7 @@ export default function SignUp() {
                   <input
                     type="number"
                     className={`${style.formInputNumber} form-control`}
-                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
+                    style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="phoneNumber"
                     value={username}
                     onChange={(e) => setPhoneNumber(e.target.value)}
@@ -373,11 +394,12 @@ export default function SignUp() {
                     رمز عبور
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     className={`${style.formInputNumber} form-control`}
-                    style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
+                    style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="password"
                     value={password}
+                    ref={passwordRef}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
@@ -392,7 +414,7 @@ export default function SignUp() {
                       type="number"
                       id="capcha"
                       className={`${style.formInputCapcha} form-control w-50`}
-                      style={{border : hasError ? "1.2px solid #FF4F3F" : ""}}
+                      style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     />
                     <div className="d-flex flex-row align-items-center w-50">
                       <svg
@@ -462,9 +484,15 @@ export default function SignUp() {
 
                 <button
                   type="submit"
-                  className={`${style.submitButton} w-100 mt-1`}
+                  className={`${style.submitButton} ${
+                    isButtonDisabled
+                      ? style.disabledButton
+                      : style.activeButton
+                  } w-100 mt-1`}
+
+                  disabled={isButtonDisabled}
                 >
-                  <div className="d-flex flex-row align-items-center justify-content-center">
+                  <div className={`${style.justPaddingButton} d-flex flex-row align-items-center justify-content-center`}>
                     <p className="ms-2 subitem">دریافت کد تایید</p>
                     <svg
                       width={21}
@@ -509,8 +537,6 @@ export default function SignUp() {
                 setIsOtpSent={setIsOtpSent}
               />
             )}
-
-           
           </div>
         </div>
       </section>

@@ -243,7 +243,7 @@ function EffectType() {
                     className={style.MainBOXCardStyle}
                     onClick={() => handleImageClick(item.src)}
                   >
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 p-2">
                       <div className="position-relative">
                         <CardMedia
                           component="img"
@@ -334,7 +334,7 @@ function EffectType() {
                     className={style.MainBOXCardStyle}
                     onClick={() => handleThumbnailClick(index)}
                   >
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 p-2">
                       <div className="position-relative">
                         <CardMedia
                           component="img"

@@ -272,7 +272,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="text-center NormalTextSizing mt-4 mb-2">
+        <p className="text-center NormalTextSizing mt-2 mb-2">
           تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است.
         </p>
       </div>
