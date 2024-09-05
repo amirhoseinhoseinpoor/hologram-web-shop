@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSelector } from "react-redux";
@@ -83,9 +83,9 @@ const ProfileTabs = ({ setActiveTab, activeTab }) => {
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("makeOrder");
+  const [lastPage, setLastPage] = useState("/");
 
   const childValue2 = useSelector(childValue);
-  console.log(childValue2);
 
   useEffect(() => {
     if (childValue2 !== null) {
@@ -93,7 +93,13 @@ const Profile = () => {
     }
   }, [childValue2]);
 
-  const lastPage = sessionStorage.getItem("lastPage") || "/";
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const lastPage = sessionStorage.getItem("lastPage") || "/";
+      setLastPage(lastPage);
+    }
+  }, []);
 
   return (
     <>
