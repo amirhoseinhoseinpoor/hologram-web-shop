@@ -3,13 +3,15 @@ import style from "../../Styles/Profile/ProcessTracker.module.scss";
 
 const ProcessTracker = ({ currentStep }) => {
   const steps = [
-    { id: 1, label: "انتخاب افکت", key: "makeOrder", percentage: "15" },
-    { id: 2, label: "بارگذاری مدارک", key: "billing", percentage: "30" },
-    { id: 3, label: "تایید مدارک", key: "designOrder", percentage: "44" },
-    { id: 4, label: "طراحی سفارش", key: "confirmOrder", percentage: "58" },
-    { id: 5, label: "انتخاب تحویل سفارش", key: "delivery", percentage: "72" },
-    { id: 6, label: "تسویه حساب", key: "reviewDocuments", percentage: "89" },
-    { id: 7, label: "ثبت سفارش", key: "selectEffect", percentage: "100" },
+    { id: 1, label: "استعلام قیمت", key: "makeOrder", percentage: "15" },
+    { id: 2, label: "برسی کارشناسان", key: "confirmingOrder", percentage: "27" },
+    { id: 3, label: "بارگذاری مدارک", key: "billing", percentage: "37" },
+    
+    { id: 4, label: "تایید مدارک", key: "designOrder", percentage: "49" },
+    { id: 5, label: "طراحی سفارش", key: "confirmOrder", percentage: "60" },
+    { id: 6, label: "انتخاب تحویل سفارش", key: "delivery", percentage: "72" },
+    { id: 7, label: "تسویه حساب", key: "reviewDocuments", percentage: "89" },
+    { id: 8, label: "ثبت سفارش", key: "selectEffect", percentage: "100" },
   ];
   return (
     <>
@@ -55,10 +57,10 @@ const ProcessTracker = ({ currentStep }) => {
             </div>
             <div className={`${style.label} discription`}>{step.label}</div>
             {/* {index > steps.length - 7  && <div className={style.line}></div>} */}
-            {index > steps.length - 7 && (
+            {index > steps.length -8 && (
               <div
                 className={`${style.line} ${
-                  index + 1 < currentStep ? style.activeLine : ""
+                  index  < currentStep ? style.activeLine : ""
                 }`}
               ></div>
             )}
@@ -67,12 +69,12 @@ const ProcessTracker = ({ currentStep }) => {
       </div>
       <div className="d-block d-lg-none me-2 mb-3 mt-2">
         <div className="d-flex flex-row justify-content-between mb-2">
-          <p className="VodeoDisSizing">انتخاب افکت</p>
+          <p className="VodeoDisSizing">{steps[currentStep-1].label}</p>
           <div>
             <span className={`${style.stageColor} ms-1 NormalTextSizing`}>
               مرحله بعد:
             </span>
-            <span className={`${style.stageColor} ms-1 NormalTextSizing`}>{steps[currentStep-1].label}</span>
+            <span className={`${style.stageColor} ms-1 NormalTextSizing`}>{steps[currentStep].label}</span>
           </div>
         </div>
         <div

@@ -66,6 +66,36 @@
   border: 1px solid #5695f6;
   border-radius: 4px;
 }
+
+.formInputNumber:focus {
+  box-shadow: unset !important;
+  border: 1.3px solid #5695f6;
+}
+.formInputNumber {
+  border-radius: 4px !important;
+}
+.formInputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  margin: 0;
+}
+.SizezInput{
+  padding: 4px 16px;
+}
+.SizezInputFirst {
+  padding: 4px 9px;
+}
+.SizezInputSecond{
+  padding: 6px 7px;
+  border-radius: 50% !important;
+}
+.SizezInputThird{
+  padding: 3px 20px;
+}
+.SizezInputForth{
+  padding: 6px 12px;
+  border-radius: 50% !important;
+}
 .control:hover input ~ .controlindicator,
 .control input:focus ~ .controlindicator {
   background: #cccccc;
@@ -170,6 +200,40 @@
 
 @media (max-width: 980px) {
   .effectMainDivStyle {
-    grid-template-columns: repeat(2 , 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+.adjustWidthRight{
+  width: 40%;
+}
+.adjustWithLeft{
+  width: 40%;
+}
+
+.discriptionStyle{
+  color: var.$arrow-background;
+}
+
+@media (max-width: 980px) {
+  .adjustWidthRight{
+    width: 50%;
+  }
+  .adjustWithLeft{
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .adjustWidthRight{
+    width: 100%;
+  }
+  .adjustWithLeft{
+    width: 100%;
+  }
+  .adjustPhoneSize{
+    flex-direction: column !important;
+    gap: 5px !important;
   }
 }
