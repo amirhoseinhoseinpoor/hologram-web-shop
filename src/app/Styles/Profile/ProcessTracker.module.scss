@@ -29,24 +29,23 @@
   text-align: center;
 }
 
-  .line {
-    width: 28px;
-    height: 1px;
-    background-color: #5695F6;
-    // border-bottom: 1px dashed #5695F6;
-    position: absolute;
-    top: 15px;
-    left: 75%;
-    justify-content: space-between;
-    transform: translate(50% , -50%);
-  }
+.line {
+  width: 80px;
+  height: 1px;
+  background-color: #5695f6;
+  // border-bottom: 1px dashed #5695F6;
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  justify-content: space-between;
+  transform: translate(50%, -50%);
+}
 
-  .activeLine {
-    background-image: none;
-    background-color: #F3802C;
-  }
+.activeLine {
+  background-image: none;
+  background-color: #f3802c;
+}
 
-  
 .active .circle {
   background-color: #e1f1ff;
   color: var.$social-media-color;
@@ -59,18 +58,31 @@
   border: none;
 }
 
+@media (max-width: 1400px) {
+  .line {
+    width: 65px;
+    left: 56%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .line {
+    width: 50px;
+    left: 54%;
+  }
+}
+
 @media (max-width: 980px) {
-  .processTracker{
+  .processTracker {
     display: none !important;
   }
-  .stageColor{
+  .stageColor {
     color: var.$social-media-color;
     opacity: 0.8;
   }
-  .theProcesFlowTips{
+  .theProcesFlowTips {
     background-color: white;
     width: 100%;
     height: 4px;
   }
-
 }

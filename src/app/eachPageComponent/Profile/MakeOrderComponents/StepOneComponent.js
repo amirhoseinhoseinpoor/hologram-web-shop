@@ -287,9 +287,18 @@ export default function SteponeComponent({ data, handleNextStep }) {
                   className={`${style.formInputNumber} form-control discription`}
                   id="useCase"
                 />
-               
               </div>
             )}
+          </div>
+          <div className="d-flex flex-column">
+            <label htmlFor="information" className=" mb-1 discription">
+              توضیحات 
+            </label>
+            <textarea
+              className={`${style.formInputNumber} form-control discription`}
+              id="information"
+              style={{maxHeight : "200px"}}
+            />
           </div>
         </div>
       </div>

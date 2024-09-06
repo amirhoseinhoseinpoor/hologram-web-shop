@@ -3,15 +3,14 @@ import style from "../../Styles/Profile/ProcessTracker.module.scss";
 
 const ProcessTracker = ({ currentStep }) => {
   const steps = [
-    { id: 1, label: "استعلام قیمت", key: "makeOrder", percentage: "15" },
-    { id: 2, label: "برسی کارشناسان", key: "confirmingOrder", percentage: "27" },
-    { id: 3, label: "بارگذاری مدارک", key: "billing", percentage: "37" },
-    
-    { id: 4, label: "تایید مدارک", key: "designOrder", percentage: "49" },
-    { id: 5, label: "طراحی سفارش", key: "confirmOrder", percentage: "60" },
-    { id: 6, label: "انتخاب تحویل سفارش", key: "delivery", percentage: "72" },
-    { id: 7, label: "تسویه حساب", key: "reviewDocuments", percentage: "89" },
-    { id: 8, label: "ثبت سفارش", key: "selectEffect", percentage: "100" },
+    { id: 1, label: "استعلام قیمت", key: "makeOrder", percentage: "28" },
+    // { id: 2, label: "برسی کارشناسان", key: "confirmingOrder", perentage: "27" },
+    { id: 2, label: "بارگذاری مدارک", key: "billing", percentage: "39" },
+    // { id: 4, label: "تایید مدارک", key: "designOrder", percentage: "49" },
+    { id: 3, label: "طراحی سفارش", key: "confirmOrder", percentage: "50" },
+    { id: 4, label: "انتخاب تحویل سفارش", key: "delivery", percentage: "67" },
+    { id: 5, label: "تسویه حساب", key: "reviewDocuments", percentage: "82" },
+    { id: 6, label: "رسید نهایی", key: "selectEffect", percentage: "100" },
   ];
   return (
     <>
@@ -57,7 +56,7 @@ const ProcessTracker = ({ currentStep }) => {
             </div>
             <div className={`${style.label} discription`}>{step.label}</div>
             {/* {index > steps.length - 7  && <div className={style.line}></div>} */}
-            {index > steps.length -8 && (
+            {index > steps.length -6 && (
               <div
                 className={`${style.line} ${
                   index  < currentStep ? style.activeLine : ""
@@ -74,7 +73,7 @@ const ProcessTracker = ({ currentStep }) => {
             <span className={`${style.stageColor} ms-1 NormalTextSizing`}>
               مرحله بعد:
             </span>
-            <span className={`${style.stageColor} ms-1 NormalTextSizing`}>{steps[currentStep].label}</span>
+            <span className={`${style.stageColor} ms-1 NormalTextSizing`}>{steps[currentStep-1].label}</span>
           </div>
         </div>
         <div

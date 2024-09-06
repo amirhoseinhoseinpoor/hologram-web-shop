@@ -333,7 +333,7 @@ export default function ProductShow({ data }) {
                   type="button"
                 >
                   <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                    <div>خرید محصول</div>
+                    <div>استعلام قیمت</div>
                     <svg
                       width={20}
                       height={20}
