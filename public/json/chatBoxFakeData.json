@@ -1,0 +1,15 @@
+[
+  {
+    "isAdmin" : true,
+    "text": "سلام وقت بخیر چطور میتونم کمکتون کنم"
+  },
+  {
+    "isAdmin" : false,
+    "text": "سلام وقت بخیر"
+  },
+  {
+    "isAdmin" : true,
+    "imageUrl" : "HomeImages/coin.png"
+  }
+  
+]

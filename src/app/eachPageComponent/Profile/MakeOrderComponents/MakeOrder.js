@@ -63,7 +63,7 @@ export default function MakeOrder() {
       
       case 3:
         return (
-          <div className={style.stepContent}>
+          <div>
             <PusherChat />
             {/* <button onClick={handlePreviousStep} className={style.backButton}>
               Back
