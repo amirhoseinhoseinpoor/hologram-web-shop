@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import jsPDF from 'jspdf';
 
 import Tooltip from "@mui/material/Tooltip";
 import Radio from "@mui/material/Radio";
@@ -18,6 +19,17 @@ export default function StepTwoComponent({ handleNextStep }) {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [logo, setLogo] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [data, setData] = useState({
+    title: 'PDF Title',
+    content: 'This is the content of the PDF.'
+  });
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.text(data.title, 10, 10);
+    doc.text(data.content, 10, 20);
+    doc.save('generated.pdf');
+  };
 
   useEffect(() => {
     setIsButtonDisabled(paying === "" || paying === "آپلود فیش");
@@ -662,6 +674,7 @@ export default function StepTwoComponent({ handleNextStep }) {
                 <button
                   type="button"
                   className={`${style.downloadFactor} d-flex flex-row gap-2`}
+                  onClick={generatePDF}
                 >
                   
                   <svg
