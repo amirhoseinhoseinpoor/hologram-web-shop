@@ -4,6 +4,8 @@ import React, { useRef, useEffect, useState } from "react";
 import style from "../../Styles/ProductPage/innerProductPage/DynamicProductShow.module.scss";
 import { Card, CardMedia, Box } from "@mui/material";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { token } from "@/app/Store/slice";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,6 +18,7 @@ import "swiper/css/autoplay";
 export default function ProductShow({ data }) {
   // State to track the currently selected media (image or video)
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const comeToken = useSelector(token);
 
   //color and size part
   const [colors, setColors] = useState([]);
@@ -33,6 +36,12 @@ export default function ProductShow({ data }) {
   // Function to handle the click event on thumbnails
   const handleThumbnailClick = (index) => {
     setCurrentMediaIndex(index);
+  };
+
+  // store the url
+  const storeLastVisitedPage = () => {
+    const lastPage = window.location.pathname;
+    sessionStorage.setItem("lastPage", lastPage);
   };
 
   return (
@@ -55,7 +64,7 @@ export default function ProductShow({ data }) {
                   component="img"
                   src={data[0].imgData[currentMediaIndex].src}
                   sx={{ borderRadius: "4px" }}
-                  style={{maxHeight : "395px"}}
+                  style={{ maxHeight: "395px" }}
                 />
               )}
 
@@ -98,10 +107,7 @@ export default function ProductShow({ data }) {
               >
                 <div className="d-flex mt-2">
                   {data[0].imgData.map((media, index) => (
-                    <SwiperSlide
-                      key={index}
-                      className={`d-flex flex-column`}
-                    >
+                    <SwiperSlide key={index} className={`d-flex flex-column`}>
                       <div
                         onClick={() => handleThumbnailClick(index)}
                         style={{
@@ -142,10 +148,10 @@ export default function ProductShow({ data }) {
                           </div>
                         ) : (
                           <Box
-                          className={style.fixStyleSizeImgRe}
-                          component="img"
-                          src={media.src}
-                          alt={`Thumbnail ${index}`}
+                            className={style.fixStyleSizeImgRe}
+                            component="img"
+                            src={media.src}
+                            alt={`Thumbnail ${index}`}
                           />
                         )}
                       </div>
@@ -325,41 +331,44 @@ export default function ProductShow({ data }) {
                 </div>
               ))}
             </div>
-            <div className={`${style.resetJustifyInresponsiveFix} mt-4 d-flex flex-row justify-content-around`}>
+            <div
+              className={`${style.resetJustifyInresponsiveFix} mt-4 d-flex flex-row justify-content-around`}
+            >
               <div className={style.justAddMarginRespon}>
-                <Link href={`/Profile?type=makeOrder`} passHref>
-                <button
-                  className={style.addProductPage}
-                  type="button"
+                <Link
+                  onClick={storeLastVisitedPage}
+                  href={comeToken ? `/Profile?type=makeOrder` : `/Login`}
+                  passHref
                 >
-                  <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                    <div>استعلام قیمت</div>
-                    <svg
-                      width={20}
-                      height={20}
-                      viewBox="0 0 25 25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M10.07 6.42969L4 12.4997L10.07 18.5697"
-                        stroke="white"
-                        strokeWidth={2}
-                        strokeMiterlimit={10}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M20.9999 12.5H4.16992"
-                        stroke="white"
-                        strokeWidth={2}
-                        strokeMiterlimit={10}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </button>
+                  <button className={style.addProductPage} type="button">
+                    <div className="d-flex flex-row justify-content-center align-items-center gap-2">
+                      <div>استعلام قیمت</div>
+                      <svg
+                        width={20}
+                        height={20}
+                        viewBox="0 0 25 25"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10.07 6.42969L4 12.4997L10.07 18.5697"
+                          stroke="white"
+                          strokeWidth={2}
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M20.9999 12.5H4.16992"
+                          stroke="white"
+                          strokeWidth={2}
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </button>
                 </Link>
               </div>
               <div>

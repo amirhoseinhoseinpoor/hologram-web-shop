@@ -101,7 +101,7 @@ export default function EachProductVideo() {
     <section className={`mt-5 mb-5 container ${style.responsiveSection}`}>
       <div className={`${style.adjustWidth}`}>
         <Card className="position-relative">
-          <CardContent>
+          <CardContent className="p-2">
             <div className="d-flex flex-column">
               <div className={`${style.titleStyle} title`}>
                 <span>{videoData[currentVideoIndex].title}</span>
@@ -110,16 +110,15 @@ export default function EachProductVideo() {
                   {videoData[currentVideoIndex].coloredTitle}
                 </span>
               </div>
-              <p className="subtitle">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-                استفاده از طراحان گرافیک است.
-              </p>
             </div>
           </CardContent>
-          <div className={`${style.resetStyleInResponsive} d-flex flex-row gap-4`}>
+          <div
+            className={`${style.resetStyleInResponsive} d-flex flex-row gap-4`}
+          >
             <div className={`${style.videorightSide} position-relative h-100`}>
               <CardMedia
                 id="video"
+                style={{ aspectRatio: "2/1" }}
                 component="video"
                 src={videoData[currentVideoIndex].src}
                 poster={videoData[currentVideoIndex].poster}
@@ -127,6 +126,15 @@ export default function EachProductVideo() {
                 controls
                 ref={videoRef}
               />
+              <p className="purchesSize mt-2">
+                طرحهای گیلوچه: امنیت و زیبایی در هنر خطاطی
+              </p>
+              <p className="NormalTextSizing mt-2">
+                در دنیای امروزی پر از فناوری و ابتکار، تصویر مخفی هولوگرام یکی
+                از مفاهیم پیشرفته‌ترین است که به تازگی مورد توجه قرار گرفته است.
+                در این مقاله، با دقت به این تصویر مخفی هولوگرام و رازهای پشت
+                پرده آن خواهیم پرداخت.
+              </p>
               {!videoEnded && (
                 <>
                   <Box
@@ -164,7 +172,7 @@ export default function EachProductVideo() {
                         component="img"
                         src={video.poster} // Use the poster for each video
                         alt={video.title}
-                        sx={{ borderRadius: "4px" , height: "100%" }}
+                        sx={{ borderRadius: "4px", height: "100%" }}
                       />
                       <div className={style.BelowContentFixIcon}>
                         <svg

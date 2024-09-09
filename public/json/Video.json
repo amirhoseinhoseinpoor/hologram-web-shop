@@ -1,7 +1,8 @@
 [
     {
+      "id" : "2",
      
-      "title": "نوان ویدئ",
+      "title": "عنوان ویدیو",
       "coloredTitle" :"اینجاست",
       "src": "/HomeVideo/SampleVideo_1280x720_1mb.mp4",
       "poster": "/HomeImages/Video image.png"

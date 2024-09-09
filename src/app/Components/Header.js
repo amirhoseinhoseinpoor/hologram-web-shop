@@ -106,7 +106,6 @@ export default function Header() {
     if (lastPage !== "/Profile") {
       sessionStorage.setItem("lastPage", lastPage);
     }
-    
   };
 
   return (
