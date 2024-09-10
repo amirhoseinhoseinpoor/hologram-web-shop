@@ -19,10 +19,10 @@ import CallIcon from "@mui/icons-material/Call";
 import { usePathname } from "next/navigation";
 
 // import redux
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch } from "react-redux";
 import Link from "next/link";
-import Profile from "../Profile/page";
 import { token } from "../Store/slice";
+import { resetToken } from "../Store/slice"
 
 const renderSubItems = (subItems, depth = 1) => {
   return subItems.map((subItem) => {
@@ -68,6 +68,11 @@ const renderSubItems = (subItems, depth = 1) => {
 
 export default function Header() {
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const handleResetToken = () => {
+    dispatch(resetToken());
+  };
+
   const token2 = useSelector(token);
   console.log(token2);
 
@@ -245,10 +250,8 @@ export default function Header() {
                       className={style.EditBtnSvg}
                     >
                       <Link
-                       onClick={storeLastVisitedPage}
-                        href={`/Profile?type=${encodeURIComponent(
-                          "userInfo"
-                        )}`}
+                        onClick={storeLastVisitedPage}
+                        href={`/Profile?type=${encodeURIComponent("userInfo")}`}
                         passHref
                       >
                         <svg
@@ -302,26 +305,31 @@ export default function Header() {
                       <p className="VodeoDisSizing">پیگیری سفارش</p>
                     </Link>
                     <Link
-                       onClick={storeLastVisitedPage}
+                      onClick={storeLastVisitedPage}
                       className={style.LinkOfprofile}
                       href={`/Profile?type=${encodeURIComponent("userInfo")}`}
                     >
                       <p className="VodeoDisSizing">اطلاعات کاربری</p>
                     </Link>
                     <Link
-                     onClick={storeLastVisitedPage}
+                      onClick={storeLastVisitedPage}
                       className={style.LinkOfprofile}
                       href={`/Profile?type=${encodeURIComponent("message")}`}
                     >
                       <p className="VodeoDisSizing">پیغام ها</p>
                     </Link>
                     <Link
-                     onClick={storeLastVisitedPage}
+                      onClick={storeLastVisitedPage}
                       className={`${style.LinkOfprofile}`}
                       href={`/Profile?type=${encodeURIComponent("favorite")}`}
                     >
                       <p className="VodeoDisSizing">لیست‌های مورد علاقه</p>
                     </Link>
+                    <div className="d-flex justify-content-end">
+                      <button onClick={handleResetToken} type="button" className={style.cnaleLoginButton}>
+                        خروج
+                      </button>
+                    </div>
                   </div>
                 </NavDropdown>
               ) : (
@@ -484,7 +492,7 @@ export default function Header() {
                       </div>
                       <div className="me-1 d-flex flex-row ">
                         <p className="NormalTextSizing">اسم کاربر اینجا</p>
-                        <KeyboardArrowDownIcon ></KeyboardArrowDownIcon>
+                        <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
                       </div>
                     </div>
                   </>
@@ -541,40 +549,45 @@ export default function Header() {
                 </div>
                 <div className="mt-2 me-1 mb-3 d-flex flex-column gap-2">
                   <Link
-                   onClick={storeLastVisitedPage}
+                    onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
                     href={`/Profile?type=${encodeURIComponent("makeOrder")}`}
                   >
                     <p className="VodeoDisSizing">ثبت سفارش</p>
                   </Link>
                   <Link
-                   onClick={storeLastVisitedPage}
+                    onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
                     href={`/Profile?type=${encodeURIComponent("seeOrder")}`}
                   >
                     <p className="VodeoDisSizing">پیگیری سفارش</p>
                   </Link>
                   <Link
-                   onClick={storeLastVisitedPage}
+                    onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
                     href={`/Profile?type=${encodeURIComponent("userInfo")}`}
                   >
                     <p className="VodeoDisSizing">اطلاعات کاربری</p>
                   </Link>
                   <Link
-                   onClick={storeLastVisitedPage}
+                    onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
                     href={`/Profile?type=${encodeURIComponent("message")}`}
                   >
                     <p className="VodeoDisSizing">پیغام ها</p>
                   </Link>
                   <Link
-                   onClick={storeLastVisitedPage}
+                    onClick={storeLastVisitedPage}
                     className={`${style.LinkOfprofile}`}
                     href={`/Profile?type=${encodeURIComponent("favorite")}`}
                   >
                     <p className="VodeoDisSizing">لیست‌های مورد علاقه</p>
                   </Link>
+                  <div className="d-flex justify-content-end">
+                    <button onClick={handleResetToken} type="button" className={style.cnaleLoginButton}>
+                      خروج
+                    </button>
+                  </div>
                 </div>
               </NavDropdown>
             ) : (

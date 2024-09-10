@@ -88,7 +88,15 @@
   color: white;
   background-color: #5695f6;
   border-radius: 4px;
-  padding: 7px 29px;
+  padding: 7px 25px;
+}
+
+.cancelOrder{
+  border: none;
+  color: white;
+  background-color: red;
+  border-radius: 4px;
+  padding: 5px 18px;
 }
 
 .FormGroupForRaidio {
@@ -150,6 +158,12 @@
 .newWebResizing {
   width: 40%;
 }
+
+.modalStyleclass{
+  width: 600px;
+  border-radius: 3px;
+}
+
 @media (max-width: 1200px) {
   .gridOfDocument {
     grid-gap: 10px;
@@ -164,6 +178,9 @@
   .makeTheFormResponsive {
     flex-direction: column !important;
     gap: 10px !important;
+  }
+  .modalStyleclass{
+    width: 500px;
   }
 }
 
@@ -194,5 +211,8 @@
   }
   .onlyFitContentWidth{
     width: fit-content;
+  }
+  .modalStyleclass{
+    width: 350px;
   }
 }

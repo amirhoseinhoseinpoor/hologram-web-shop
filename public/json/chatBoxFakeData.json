@@ -1,15 +1,19 @@
 [
   {
     "isAdmin" : true,
-    "text": "سلام وقت بخیر چطور میتونم کمکتون کنم"
+    "text": "سلام وقت بخیر چطور میتونم کمکتون کنم",
+    "date" : "23:25"
   },
   {
     "isAdmin" : false,
-    "text": "سلام وقت بخیر"
+    "text": "سلام وقت بخیر",
+    "date" : "08:00"
   },
   {
     "isAdmin" : true,
-    "imageUrl" : "HomeImages/coin.png"
+    "imageUrl" : "HomeImages/coin.png",
+    "date" : "12:25"
+
   }
   
 ]

@@ -10,6 +10,18 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Box } from "@mui/material";
+import Modal from "@mui/material/Modal";
+
+const ModalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "1.5px solid #000",
+  boxShadow: 24,
+  p: 0,
+};
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepTwoStyle.module.scss";
 
@@ -23,6 +35,11 @@ export default function StepTwoComponent({ handleNextStep }) {
     title: "PDF Title",
     content: "This is the content of the PDF.",
   });
+
+  // modal part state and function
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -51,18 +68,18 @@ export default function StepTwoComponent({ handleNextStep }) {
 
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
-    const validImageTypes = ['image/png', 'image/jpeg'];
+    const validImageTypes = ["image/png", "image/jpeg"];
 
     const newFiles = files
-    .filter(file => validImageTypes.includes(file.type)) // Only accept PNG and JPG
-    .map((file) => ({
-      imageUrl: URL.createObjectURL(file),
-      file: file,
-      title: "", // initialize empty title
-    }));
+      .filter((file) => validImageTypes.includes(file.type)) // Only accept PNG and JPG
+      .map((file) => ({
+        imageUrl: URL.createObjectURL(file),
+        file: file,
+        title: "", // initialize empty title
+      }));
 
-  setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
-};
+    setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+  };
 
   const handleLogoChange = (event) => {
     const file = event.target.files[0]; // Only get the first file
@@ -126,7 +143,9 @@ export default function StepTwoComponent({ handleNextStep }) {
                 </div>
                 <div className="mt-2">
                   {logo ? (
-                    <div className={`${style.onlyFitContentWidth} position-relative`}>
+                    <div
+                      className={`${style.onlyFitContentWidth} position-relative`}
+                    >
                       <Box
                         component="img"
                         src={logo.imageUrl}
@@ -340,6 +359,7 @@ export default function StepTwoComponent({ handleNextStep }) {
                   >
                     <div className="position-relative">
                       <Box
+                        onClick={handleOpen}
                         component="img"
                         src={fileObj.imageUrl}
                         alt={`uploaded ${index}`}
@@ -389,6 +409,22 @@ export default function StepTwoComponent({ handleNextStep }) {
                         </svg>
                       </button>
                     </div>
+                    {/* modal */}
+
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box
+                        component="img"
+                        src={fileObj.imageUrl}
+                        alt={`uploaded ${index}`}
+                        className={style.modalStyleclass}
+                        sx={ModalStyle}
+                      ></Box>
+                    </Modal>
 
                     <input
                       type="text"
@@ -402,14 +438,20 @@ export default function StepTwoComponent({ handleNextStep }) {
               </div>
             </div>
 
-            <div className="d-flex flex-wrap gap-2 mt-5"></div>
-
-            <button
-              onClick={handleNextStep}
-              className={`${style.continueButton} mt-3`}
-            >
-              ارسال مدارک
-            </button>
+            <div className="d-flex flex-row justify-content-between">
+              <button
+                onClick={handleNextStep}
+                className={`${style.continueButton} mt-3`}
+              >
+                ارسال مدارک
+              </button>
+              <button
+                type="button"
+                className={`${style.cancelOrder} mt-3`}
+              >
+               لغو سفارش
+              </button>
+            </div>
           </div>
           <div
             className={`${style.stepContent}  ${style.resizingWebInResponsive} mt-3`}
@@ -793,8 +835,6 @@ export default function StepTwoComponent({ handleNextStep }) {
           </div>
         </div>
       </div>
-
-      {/* <div className={`${style.FactorReDesign} d-flex flex-row gap-4`}></div> */}
     </>
   );
 }
