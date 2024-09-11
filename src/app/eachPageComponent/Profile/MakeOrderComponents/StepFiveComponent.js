@@ -10,7 +10,12 @@ import { Card, CardContent } from "@mui/material";
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepFiveStyle.module.scss";
 
-export default function StepFiveComponent({ handleNextStep }) {
+export default function StepFiveComponent({
+  handleNextStep,
+  handlePreviousStep,
+  disabelInputStep4,
+  setDisabelInputStep4,
+}) {
   const [value, setValue] = React.useState("تحویل حضوری از مرکز آذر هولوگرام");
 
   const [formState, setFormState] = useState({
@@ -65,13 +70,19 @@ export default function StepFiveComponent({ handleNextStep }) {
 
     setShowModal(false);
   };
+
+  const handleDisabelInput = () => {
+    setDisabelInputStep4(true);
+    handleNextStep();
+  };
+
   return (
     <>
       <div>
         <p className="NormalTextSizing mb-3">
           بعد از آماده سازی و تولید، دوست دارید بسته خود را چگونه تحویل بگیرید.{" "}
         </p>
-        <FormControl className="w-100">
+        <FormControl disabled={disabelInputStep4} className="w-100">
           <FormLabel
             className={style.resetfontLabel}
             id="demo-controlled-radio-buttons-group"
@@ -123,7 +134,7 @@ export default function StepFiveComponent({ handleNextStep }) {
                 control={<Radio />}
                 label="ارسال با پست"
               />
-              
+
               {PostAdress.length > 0 && (
                 <div>
                   <button
@@ -163,12 +174,13 @@ export default function StepFiveComponent({ handleNextStep }) {
             </div>
 
             {value === "ارسال با پست" && (
-                <div>
-                  <p className="discription me-4 mt-1 mb-2">
-                  پس از آماده شدن و تحویل به پست نهایت تا 48 ساعت بعد کد رهگیری براتون پیامک میشود.
-                  </p>
-                </div>
-              )}
+              <div>
+                <p className="discription me-4 mt-1 mb-2">
+                  پس از آماده شدن و تحویل به پست نهایت تا 48 ساعت بعد کد رهگیری
+                  براتون پیامک میشود.
+                </p>
+              </div>
+            )}
 
             {PostAdress.length === 0 ? (
               <div className="d-flex flex-column justify-content-center text-center">
@@ -247,9 +259,7 @@ export default function StepFiveComponent({ handleNextStep }) {
               </div>
             ) : (
               <>
-                <div
-                  className={`${style.MakeProperForFlex}  mt-3`}
-                >
+                <div className={`${style.MakeProperForFlex}  mt-3`}>
                   {PostAdress.map((item, index) => (
                     <Card
                       key={index}
@@ -339,7 +349,9 @@ export default function StepFiveComponent({ handleNextStep }) {
                       </CardContent>
                       <CardContent className={style.paddingLastChidMui}>
                         <div>
-                          <span className="NormalTextSizing">آدرس گیرنده :</span>
+                          <span className="NormalTextSizing">
+                            آدرس گیرنده :
+                          </span>
                           <span className="NormalTextSizing">{item.name}</span>
                           <div>
                             <p className="NormalTextSizing mt-2">
@@ -348,12 +360,20 @@ export default function StepFiveComponent({ handleNextStep }) {
                           </div>
                           <div className="d-flex flex-row justify-content-between mt-2 NormalTextSizing">
                             <div>
-                              <span className="NormalTextSizing">کد پستی: </span>
-                              <span className="NormalTextSizing">{item.postCode}</span>
+                              <span className="NormalTextSizing">
+                                کد پستی:{" "}
+                              </span>
+                              <span className="NormalTextSizing">
+                                {item.postCode}
+                              </span>
                             </div>
                             <div>
-                              <span className="NormalTextSizing">شماره همراه:</span>
-                              <span className="NormalTextSizing">{item.number}</span>
+                              <span className="NormalTextSizing">
+                                شماره همراه:
+                              </span>
+                              <span className="NormalTextSizing">
+                                {item.number}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -445,9 +465,7 @@ export default function StepFiveComponent({ handleNextStep }) {
               </div>
             ) : (
               <>
-                <div
-                  className={`${style.MakeProperForFlex}  mt-3`}
-                >
+                <div className={`${style.MakeProperForFlex}  mt-3`}>
                   {PostAdress.map((item, index) => (
                     <Card
                       key={index}
@@ -537,7 +555,9 @@ export default function StepFiveComponent({ handleNextStep }) {
                       </CardContent>
                       <CardContent className={style.paddingLastChidMui}>
                         <div>
-                          <span className="NormalTextSizing">آدرس گیرنده :</span>
+                          <span className="NormalTextSizing">
+                            آدرس گیرنده :
+                          </span>
                           <span className="NormalTextSizing">{item.name}</span>
                           <div>
                             <p className="NormalTextSizing mt-2">
@@ -546,12 +566,20 @@ export default function StepFiveComponent({ handleNextStep }) {
                           </div>
                           <div className="d-flex flex-row justify-content-between mt-2 NormalTextSizing">
                             <div>
-                              <span className="NormalTextSizing">کد پستی: </span>
-                              <span className="NormalTextSizing">{item.postCode}</span>
+                              <span className="NormalTextSizing">
+                                کد پستی:{" "}
+                              </span>
+                              <span className="NormalTextSizing">
+                                {item.postCode}
+                              </span>
                             </div>
                             <div>
-                              <span className="NormalTextSizing">شماره همراه:</span>
-                              <span className="NormalTextSizing">{item.number}</span>
+                              <span className="NormalTextSizing">
+                                شماره همراه:
+                              </span>
+                              <span className="NormalTextSizing">
+                                {item.number}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -564,12 +592,20 @@ export default function StepFiveComponent({ handleNextStep }) {
           </RadioGroup>
         </FormControl>
       </div>
-      <button
-        onClick={handleNextStep}
-        className={`${style.continueButton} mt-3`}
-      >
-        تایید
-      </button>
+      <div className="d-flex flex-row gap-2 mt-3">
+        <button
+          onClick={handleDisabelInput}
+          className={`${style.continueButton}`}
+        >
+          تایید
+        </button>
+        <button
+          className={style.SeeLastStepButton}
+          onClick={handlePreviousStep}
+        >
+          مشاهده مراحل قبلی
+        </button>
+      </div>
 
       {/* Bootstrap Modal for displaying image */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
@@ -710,7 +746,6 @@ export default function StepFiveComponent({ handleNextStep }) {
                 />
               </div>
             </div>
-
             <button className={style.SubmitModalAdress} type="submit">
               تایید
             </button>

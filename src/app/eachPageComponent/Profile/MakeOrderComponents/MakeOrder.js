@@ -6,7 +6,6 @@ import style from "../../../Styles/Profile/MakeOrderStyle/MakeOrder.module.scss"
 import ProcessTracker from "../ProcessTracker";
 import data from "/public/json/ProfileFirstStepEffect.json";
 
-
 import PusherChat from "./Talkjs";
 
 const SteponeComponent = dynamic(() => import("./StepOneComponent"));
@@ -29,6 +28,10 @@ const StepSeven = dynamic(() => import("./StepSevenComponent"));
 export default function MakeOrder() {
   const [step, setStep] = useState(1);
 
+  const [disabelInput, setDisabelInput] = useState(false);
+  const [disabelInputStep2, setDisabelInputStep2] = useState(false);
+  const [disabelInputStep4, setDisabelInputStep4] = useState(false);
+
   // Function to go to the next step
   const handleNextStep = () => {
     setStep((prevStep) => prevStep + 1);
@@ -45,7 +48,12 @@ export default function MakeOrder() {
       case 1:
         return (
           <div className={style.stepContent}>
-            <SteponeComponent data={data} handleNextStep={handleNextStep} />
+            <SteponeComponent
+              data={data}
+              handleNextStep={handleNextStep}
+              setDisabelInput={setDisabelInput}
+              disabelInput={disabelInput}
+            />
           </div>
         );
       // case 2:
@@ -56,31 +64,33 @@ export default function MakeOrder() {
       //   );
       case 2:
         return (
-          
-            <StepTwoComponent handleNextStep={handleNextStep} />
-          
+          <StepTwoComponent
+            handleNextStep={handleNextStep}
+            handlePreviousStep={handlePreviousStep}
+            setDisabelInputStep2={setDisabelInputStep2}
+            disabelInputStep2={disabelInputStep2}
+          />
         );
-      
       case 3:
         return (
-          <div>
-            <PusherChat />
-            {/* <button onClick={handlePreviousStep} className={style.backButton}>
-              Back
-            </button> */}
-            <button onClick={handleNextStep} className={style.continueButton}>
-              Continue
-            </button>
-          </div>
+          <PusherChat
+            handleNextStep={handleNextStep}
+            handlePreviousStep={handlePreviousStep}
+          />
         );
       case 4:
         return (
           <div className={style.stepContent}>
-            <StepFiveComponent handleNextStep={handleNextStep} />
+            <StepFiveComponent
+              handleNextStep={handleNextStep}
+              handlePreviousStep={handlePreviousStep}
+              setDisabelInputStep4={setDisabelInputStep4}
+              disabelInputStep4={disabelInputStep4}
+            />
           </div>
         );
       case 5:
-        return <StepSixComponent handleNextStep={handleNextStep} />;
+        return <StepSixComponent handleNextStep={handleNextStep} handlePreviousStep={handlePreviousStep} />;
       case 6:
         return <StepSeven handleNextStep={handleNextStep} />;
       default:

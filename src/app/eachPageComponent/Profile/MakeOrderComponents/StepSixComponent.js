@@ -9,10 +9,12 @@ import Tooltip from "@mui/material/Tooltip";
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepSixStyle.module.scss";
 
-export default function StepSixComponent({ handleNextStep }) {
+export default function StepSixComponent({
+  handleNextStep,
+  handlePreviousStep,
+}) {
   const [value, setValue] = React.useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -21,17 +23,14 @@ export default function StepSixComponent({ handleNextStep }) {
   };
 
   useEffect(() => {
-    
     setIsButtonDisabled(value === "" || value === "آپلود فیش");
-    
   }, [value]);
 
   useEffect(() => {
     if (value === "آپلود فیش" && selectedFile !== null) {
       setIsButtonDisabled(false);
     }
-   
-  }, [selectedFile , value]);
+  }, [selectedFile, value]);
 
   const copyUrlToClipboard = async (number) => {
     try {
@@ -48,13 +47,11 @@ export default function StepSixComponent({ handleNextStep }) {
     setSelectedFile(file);
   };
 
-
-
-
-
   return (
     <section>
-      <div className={`${style.makeTheResponsivePerfect} d-flex flex-row gap-3`}>
+      <div
+        className={`${style.makeTheResponsivePerfect} d-flex flex-row gap-3`}
+      >
         <div
           className={`${style.SectionStyle} ${style.adjustTheRightWidht} mb-3 mt-2 `}
         >
@@ -97,12 +94,18 @@ export default function StepSixComponent({ handleNextStep }) {
                     >
                       <div className="d-flex flex-row justify-content-between NormalTextSizing">
                         <div>
-                          <p className={`${style.ShabaColorNumber} NormalTextSizing`}>شماره شبا:</p>
+                          <p
+                            className={`${style.ShabaColorNumber} NormalTextSizing`}
+                          >
+                            شماره شبا:
+                          </p>
                         </div>
                         <div className="d-flex flex-row align-items-center gap-2">
                           <Tooltip title="کپی شبا">
                             <span
-                              onClick={() => copyUrlToClipboard("IR700170000000350872070007")}
+                              onClick={() =>
+                                copyUrlToClipboard("IR700170000000350872070007")
+                              }
                               className={`${style.CopySvgButton} d-flex`}
                             >
                               <svg
@@ -123,17 +126,25 @@ export default function StepSixComponent({ handleNextStep }) {
                               </svg>
                             </span>
                           </Tooltip>
-                          <span className="NormalTextSizing">IR 700170000000350872070007</span>
+                          <span className="NormalTextSizing">
+                            IR 700170000000350872070007
+                          </span>
                         </div>
                       </div>
                       <div className="d-flex flex-row justify-content-between NormalTextSizing mt-3">
                         <div>
-                          <p className={`${style.ShabaColorNumber} NormalTextSizing`}>شماره کارت:</p>
+                          <p
+                            className={`${style.ShabaColorNumber} NormalTextSizing`}
+                          >
+                            شماره کارت:
+                          </p>
                         </div>
                         <div className="d-flex flex-row align-items-center gap-2">
                           <Tooltip title="کپی شماره حساب">
                             <span
-                              onClick={() => copyUrlToClipboard("6037997539713371")}
+                              onClick={() =>
+                                copyUrlToClipboard("6037997539713371")
+                              }
                               className={`${style.CopySvgButton} d-flex`}
                             >
                               <svg
@@ -154,14 +165,19 @@ export default function StepSixComponent({ handleNextStep }) {
                               </svg>
                             </span>
                           </Tooltip>
-                          <span className="NormalTextSizing">6037997539713371</span>
+                          <span className="NormalTextSizing">
+                            6037997539713371
+                          </span>
                         </div>
                       </div>
                     </div>
                     <div className="NormalTextSizing mt-2">
                       <p>بارگذاری فیش</p>
                       <div className="mt-3 mb-2">
-                        <label htmlFor="residopload" className={`${style.LabelinputFile} NormalTextSizing w-100 text-center`}>
+                        <label
+                          htmlFor="residopload"
+                          className={`${style.LabelinputFile} NormalTextSizing w-100 text-center`}
+                        >
                           <div>
                             <span>
                               <svg
@@ -185,8 +201,12 @@ export default function StepSixComponent({ handleNextStep }) {
                                 />
                               </svg>
                             </span>
-                            <span style={{color : "#404040"}} className="me-2">بارگذاری فایل .png یا .pdf</span>
-                            <p className="discription mt-1">حداکثر  تا 5 مگابایت</p>
+                            <span style={{ color: "#404040" }} className="me-2">
+                              بارگذاری فایل .png یا .pdf
+                            </span>
+                            <p className="discription mt-1">
+                              حداکثر تا 5 مگابایت
+                            </p>
                           </div>
                         </label>
                         <input
@@ -209,21 +229,31 @@ export default function StepSixComponent({ handleNextStep }) {
               </RadioGroup>
             </FormControl>
           </div>
-          <div className="d-flex flex-row mt-3 gap-4 align-items-center">
-            <button
-              onClick={handleNextStep}
-              className={style.continueButton}
-              disabled={isButtonDisabled}
-              style={{
-                backgroundColor: isButtonDisabled ? "#868686" : "#007bff",
-                cursor: isButtonDisabled ? "not-allowed" : "pointer",
-              }}
-            >
-              پرداخت
-            </button>
-            <div className="d-flex flex-row">
-              <span className="NormalTextSizing">40.000.000</span>
-              <span className="NormalTextSizing"> ریال </span>
+          <div className="d-flex flex-row justify-content-between mt-3 align-items-center">
+            <div className="d-flex flex-row  gap-4 align-items-center">
+              <button
+                onClick={handleNextStep}
+                className={style.continueButton}
+                disabled={isButtonDisabled}
+                style={{
+                  backgroundColor: isButtonDisabled ? "#868686" : "#007bff",
+                  cursor: isButtonDisabled ? "not-allowed" : "pointer",
+                }}
+              >
+                پرداخت
+              </button>
+              <div className="d-flex flex-row">
+                <span className="NormalTextSizing">40.000.000</span>
+                <span className="NormalTextSizing"> ریال </span>
+              </div>
+            </div>
+            <div>
+              <button
+                className={style.SeeLastStepButton}
+                onClick={handlePreviousStep}
+              >
+                مشاهده مراحل قبلی
+              </button>
             </div>
           </div>
         </div>

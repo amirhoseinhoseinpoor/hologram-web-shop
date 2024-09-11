@@ -25,7 +25,12 @@ const ModalStyle = {
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepTwoStyle.module.scss";
 
-export default function StepTwoComponent({ handleNextStep }) {
+export default function StepTwoComponent({
+  handleNextStep,
+  handlePreviousStep,
+  setDisabelInputStep2,
+  disabelInputStep2,
+}) {
   const [value, setValue] = useState("خصوصی");
   const [paying, setPaying] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -105,6 +110,11 @@ export default function StepTwoComponent({ handleNextStep }) {
       updatedFiles[index].title = newTitle;
       return updatedFiles;
     });
+  };
+
+  const handleDisabelInput = () => {
+    setDisabelInputStep2(true);
+    handleNextStep();
   };
 
   const handleSubmit = () => {
@@ -242,6 +252,7 @@ export default function StepTwoComponent({ handleNextStep }) {
                         id="logoUpload"
                         type="file"
                         onChange={handleLogoChange}
+                        disabled={disabelInputStep2}
                       />
                     </>
                   )}
@@ -264,10 +275,11 @@ export default function StepTwoComponent({ handleNextStep }) {
                     id="CompanyName"
                     placeholder="اسم شرکت را بنویسید"
                     className={`${style.inputTextCompanyName} discription`}
+                    disabled={disabelInputStep2}
                   />
                 </div>
 
-                <FormControl>
+                <FormControl disabled={disabelInputStep2}>
                   <FormLabel
                     className={style.resetfontLabel}
                     id="demo-controlled-radio-buttons-group"
@@ -350,6 +362,7 @@ export default function StepTwoComponent({ handleNextStep }) {
                     type="file"
                     multiple
                     onChange={handleFileUpload}
+                    disabled={disabelInputStep2}
                   />
                 </div>
                 {uploadedFiles.map((fileObj, index) => (
@@ -432,6 +445,7 @@ export default function StepTwoComponent({ handleNextStep }) {
                       value={fileObj.title}
                       onChange={(e) => handleTitleChange(index, e)}
                       className={`${style.imageTitleInputForDocument} discription`}
+                      disabled={disabelInputStep2}
                     />
                   </div>
                 ))}
@@ -439,17 +453,20 @@ export default function StepTwoComponent({ handleNextStep }) {
             </div>
 
             <div className="d-flex flex-row justify-content-between">
-              <button
-                onClick={handleNextStep}
-                className={`${style.continueButton} mt-3`}
-              >
-                ارسال مدارک
-              </button>
-              <button
-                type="button"
-                className={`${style.cancelOrder} mt-3`}
-              >
-               لغو سفارش
+              <div className="d-flex flex-row gap-1  mt-3">
+                <button
+                  onClick={handleDisabelInput}
+                  className={`${style.continueButton}`}
+                >
+                  ارسال مدارک
+                </button>
+                <button className={style.SeeLastStepButton} onClick={handlePreviousStep}>
+                  مشاهده مراحل قبلی
+                </button>
+              </div>
+
+              <button type="button" className={`${style.cancelOrder} mt-3`}>
+                لغو سفارش
               </button>
             </div>
           </div>
@@ -484,7 +501,7 @@ export default function StepTwoComponent({ handleNextStep }) {
             <div className="mt-2 mb-2">
               <p className="NormalTextSizing">روش پرداخت</p>
             </div>
-            <FormControl>
+            <FormControl disabled={disabelInputStep2}>
               <FormLabel
                 className={`${style.resetfontLabel}`}
                 id="demo-controlled-radio-buttons-group"

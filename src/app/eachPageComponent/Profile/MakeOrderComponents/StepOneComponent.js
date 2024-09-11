@@ -3,10 +3,17 @@ import React, { useState } from "react";
 import style from "../../../Styles/Profile/MakeOrderStyle/StepOneStyle.module.scss";
 import { Card, CardMedia, CardContent } from "@mui/material";
 
-export default function SteponeComponent({ data, handleNextStep }) {
+export default function SteponeComponent({ data, handleNextStep , setDisabelInput , disabelInput }) {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedShape, setSelectedShape] = useState("");
   const [serialtype, setSerialtype] = useState("");
+
+  const handleDisabelInput = () => {
+    setDisabelInput(true);
+    handleNextStep();
+  };
+
+
 
   const handleSizeChange = (size) => {
     setSelectedSize(size);
@@ -98,6 +105,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                 // value={password}
                 // ref={passwordRef}
                 // onChange={(e) => setPassword(e.target.value)}
+                disabled={disabelInput}
                 required
               />
             </div>
@@ -110,7 +118,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                   borderRadius: "5px",
                   cursor: "pointer",
                 }}
-                onClick={() => handleSizeChange("2:4")}
+                onClick={disabelInput ? undefined : () => handleSizeChange("2:4")}
               >
                 2:4
               </div>
@@ -121,7 +129,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                   borderRadius: "5px",
                   cursor: "pointer",
                 }}
-                onClick={() => handleSizeChange("2:5")}
+                onClick={disabelInput ? undefined : () => handleSizeChange("2:5")}
               >
                 2:5
               </div>
@@ -132,7 +140,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                   borderRadius: "5px",
                   cursor: "pointer",
                 }}
-                onClick={() => handleSizeChange("3:5")}
+                onClick={disabelInput ? undefined : () => handleSizeChange("3:5")}
               >
                 3:5
               </div>
@@ -143,7 +151,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                   borderRadius: "5px",
                   cursor: "pointer",
                 }}
-                onClick={() => handleSizeChange("3:11")}
+                onClick={disabelInput ? undefined : () => handleSizeChange("3:11")}
               >
                 3:11
               </div>
@@ -156,6 +164,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                 type="text"
                 className={`${style.formInputNumber} form-control discription`}
                 id="color"
+                disabled={disabelInput}
                 required
               />
             </div>
@@ -167,6 +176,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                 type="text"
                 className={`${style.formInputNumber} form-control discription`}
                 id="stick"
+                disabled={disabelInput}
               />
             </div>
             <div className="d-flex flex-column">
@@ -177,6 +187,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                 type="text"
                 className={`${style.formInputNumber} form-control discription`}
                 id="howItWork"
+                disabled={disabelInput}
               />
             </div>
           </div>
@@ -190,6 +201,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
               type="text"
               className={`${style.formInputNumber} form-control discription`}
               id="choseinEffect"
+              disabled={disabelInput}
             />
           </div>
 
@@ -202,7 +214,8 @@ export default function SteponeComponent({ data, handleNextStep }) {
                 borderRadius: "5px",
                 cursor: "pointer",
               }}
-              onClick={() => setSelectedShape("مربع")}
+              onClick={disabelInput ? undefined : () => setSelectedShape("مربع")}
+              // onClick={() => setSelectedShape("مربع")}
             >
               مربع
             </div>
@@ -213,7 +226,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                 borderRadius: "5px",
                 cursor: "pointer",
               }}
-              onClick={() => setSelectedShape("دایره")}
+              onClick={disabelInput ? undefined : () => setSelectedShape("دایره")}
             >
               دایره
             </div>
@@ -224,7 +237,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                 borderRadius: "5px",
                 cursor: "pointer",
               }}
-              onClick={() => setSelectedShape("مستطیل")}
+              onClick={disabelInput ? undefined : () => setSelectedShape("مستطیل")}
             >
               مستطیل
             </div>
@@ -235,7 +248,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
                 borderRadius: "5px",
                 cursor: "pointer",
               }}
-              onClick={() => setSelectedShape("بیضی")}
+              onClick={disabelInput ? undefined : () => setSelectedShape("بیضی")}
             >
               بیضی
             </div>
@@ -249,6 +262,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
               type="text"
               className={`${style.formInputNumber} form-control discription`}
               id="useCase"
+              disabled={disabelInput}
             />
             <p className={`${style.discriptionStyle} discription`}>
               سطحی که قرار است روی ان چسبیده شود (پلاستیک . کاغذ)
@@ -262,6 +276,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
               onChange={handleRadioChange}
               value="false"
               checked={serialtype === false}
+              disabled={disabelInput}
             />
             <label htmlFor="withOutSerial" className="ms-2">
               بدون سریال
@@ -273,6 +288,7 @@ export default function SteponeComponent({ data, handleNextStep }) {
               onChange={handleRadioChange}
               value="true"
               checked={serialtype === true}
+              disabled={disabelInput}
             />
             <label htmlFor="withSerial">باسریال</label>
           </div>
@@ -286,18 +302,20 @@ export default function SteponeComponent({ data, handleNextStep }) {
                   type="text"
                   className={`${style.formInputNumber} form-control discription`}
                   id="useCase"
+                  disabled={disabelInput}
                 />
               </div>
             )}
           </div>
           <div className="d-flex flex-column">
             <label htmlFor="information" className=" mb-1 discription">
-              توضیحات 
+              توضیحات
             </label>
             <textarea
               className={`${style.formInputNumber} form-control discription`}
               id="information"
-              style={{maxHeight : "200px"}}
+              style={{ maxHeight: "200px" }}
+              disabled={disabelInput}
             />
           </div>
         </div>
@@ -328,7 +346,8 @@ export default function SteponeComponent({ data, handleNextStep }) {
         </span>
       </div>
       <button
-        onClick={handleNextStep}
+        onClick={handleDisabelInput}
+        
         className={`${style.continueButton} mt-3 mb-2`}
       >
         استعلام

@@ -18,7 +18,7 @@ const ModalStyle = {
   p: 0,
 };
 
-const ChatBox = () => {
+const ChatBox = ({ handlePreviousStep, handleNextStep }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [image, setImage] = useState(null);
@@ -218,7 +218,6 @@ const ChatBox = () => {
           ))}
         </div>
       </div>
-
       <div className="position-relative mt-3">
         <textarea
           type="text"
@@ -270,6 +269,18 @@ const ChatBox = () => {
           className={`${style.sendMessageChatBox} discription`}
         >
           ارسال
+        </button>
+      </div>
+
+      <div className="d-flex flex-row gap-2">
+        <button onClick={handleNextStep} className={style.continueButton}>
+          Continue
+        </button>
+        <button
+          className={style.SeeLastStepButton}
+          onClick={handlePreviousStep}
+        >
+          مشاهده مراحل قبلی
         </button>
       </div>
     </div>

@@ -87,6 +87,23 @@
   outline: none;
 }
 
+.SeeLastStepButton{
+  border: none;
+  color: white;
+  background-color: #868686;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.continueButton {
+  border: none;
+  color: white;
+  background-color: #5695f6;
+  border-radius: 4px;
+  padding: 7px 29px;
+}
+
+
 /* New styles for making the chat scrollable */
 .chatContainer {
   max-height: 400px; /* Set height for the scrollable chat */
