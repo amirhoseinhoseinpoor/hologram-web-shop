@@ -64,8 +64,8 @@
 }
 .SignUpLink{
     text-decoration: none;
-    color: var.$social-media-color;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
 }
 .SignUpLink :hover{
     text-decoration: underline;
@@ -76,7 +76,7 @@
 
 .formInputCapcha{
     border-radius: 4px !important;
-    width: 50%;
+    width: 100%;
 }
 .formInputCapcha:focus{
     box-shadow: unset !important;
@@ -99,4 +99,8 @@
 .forgotPasswordStyle{
     text-decoration: none;
     color: var.$arrow-background;
+}
+
+.colorForSignUpButton{
+    color: #5695F6;
 }

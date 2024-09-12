@@ -202,9 +202,7 @@ export default function Login() {
                     <p className="Banner-title">Logo</p>
                   </div>
                 </div>
-                <Link href="/SignUp" className={style.SignUpLink}>
-                  <p className="mb-3 me-2 mt-3 discription">ثبت نام</p>
-                </Link>
+                <p className="mb-3 me-2 mt-3 discription">ورود</p>
 
                 {errorMessage && (
                   <div className={style.handelLoginError}>{errorMessage}</div>
@@ -275,14 +273,19 @@ export default function Login() {
                   <label htmlFor="capcha" className="mb-2 me-2 discription">
                     متن تصویر
                   </label>
-                  <div className="d-flex flex-row gap-3">
-                    <input
-                      type="number"
-                      id="capcha"
-                      className={`${style.formInputCapcha} form-control w-50`}
-                      style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
-                    />
-                    <div className="d-flex flex-row align-items-center w-50">
+                  <div className="d-flex flex-row justify-content-between">
+                    <div>
+                      <input
+                        type="number"
+                        id="capcha"
+                        className={`${style.formInputCapcha} form-control`}
+                        style={{
+                          border: hasError ? "1.2px solid #FF4F3F" : "",
+                        }}
+                      />
+                    </div>
+
+                    <div className="d-flex flex-row align-items-center ">
                       <svg
                         width={122}
                         height={37}
@@ -351,15 +354,14 @@ export default function Login() {
                 <button
                   type="submit"
                   className={`${style.submitButton} ${
-                    isButtonDisabled
-                      ? style.disabledButton
-                      : style.activeButton
+                    isButtonDisabled ? style.disabledButton : style.activeButton
                   } w-100 mt-1`}
-                 
                   disabled={isButtonDisabled}
                 >
-                  <div className={`${style.justPaddingButton} d-flex flex-row align-items-center justify-content-center`}>
-                    <p className="ms-2 subitem">دریافت کد تایید</p>
+                  <div
+                    className={`${style.justPaddingButton} d-flex flex-row align-items-center justify-content-center`}
+                  >
+                    <p className="ms-2 VodeoDisSizing">دریافت کد تایید</p>
                     <svg
                       width={21}
                       height={21}
@@ -386,6 +388,14 @@ export default function Login() {
                     </svg>
                   </div>
                 </button>
+                <Link href="/SignUp" className={style.SignUpLink}>
+                  <p
+                    className={`${style.colorForSignUpButton} mb-1  mt-3 VodeoDisSizing`}
+                  >
+                    حساب کاربری ندارید؟ ثبت نام کنید
+                  </p>
+                </Link>
+
                 <div className="mt-3">
                   <span className={`discription`}>ورود شما به معنای پذیرش</span>
                   <span className={`${style.decoreRole}  discription`}>
