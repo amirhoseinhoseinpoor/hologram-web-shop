@@ -23,15 +23,15 @@ export default function ProductShow({ data }) {
   //color and size part
   const [colors, setColors] = useState([]);
   const [selectedColor, setSelectedColor] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
+  // const [selectedSize, setSelectedSize] = useState("");
 
   const handleColorChange = (color) => {
     setSelectedColor(color);
   };
 
-  const handleSizeChange = (size) => {
-    setSelectedSize(size);
-  };
+  // const handleSizeChange = (size) => {
+  //   setSelectedSize(size);
+  // };
 
   // Function to handle the click event on thumbnails
   const handleThumbnailClick = (index) => {
@@ -302,14 +302,14 @@ export default function ProductShow({ data }) {
                     style={{
                       backgroundColor: item.value,
                       border:
-                        selectedColor === item.value ? "3px solid #404756" : "",
+                        selectedColor === item.name ? "3px solid #404756" : "",
 
                       boxShadow:
-                        selectedColor === item.value
+                        selectedColor === item.name
                           ? "0 0 5px rgba(0, 0, 0, 0.2)"
                           : "none",
                     }}
-                    onClick={() => handleColorChange(item.value)}
+                    onClick={() => handleColorChange(item.name)}
                   ></div>
                 </React.Fragment>
               ))}
@@ -321,18 +321,19 @@ export default function ProductShow({ data }) {
                   className={style.SizezInput}
                   key={index}
                   style={{
-                    border: selectedSize === size ? "1.5px solid #404756" : "",
+                    // border: selectedSize === size ? "1.5px solid #404756" : "",
+                    border : "1.5px solid #404756",
                     borderRadius: "5px",
                     cursor: "pointer",
                   }}
-                  onClick={() => handleSizeChange(size)}
+                  // onClick={() => handleSizeChange(size)}
                 >
                   {size}
                 </div>
               ))}
             </div>
             <div
-              className={`${style.resetJustifyInresponsiveFix} mt-4 d-flex flex-row justify-content-around`}
+              className={`${style.resetJustifyInresponsiveFix} mt-4 d-flex flex-row gap-4`}
             >
               <div className={style.justAddMarginRespon}>
                 <Link

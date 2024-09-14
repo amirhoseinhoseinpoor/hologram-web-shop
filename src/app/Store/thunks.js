@@ -14,14 +14,32 @@ export const login = createAsyncThunk(
         }
       );
       const token = response.data.token;
-      console.log(token);
-      return token;
+      const response2 = await axios.get(
+        `http://localhost:7000/users/info/${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response2.data.firstName);
+      console.log(response2.data);
+
+      
+      return {
+        token,
+        firstName: response2.data.firstName, 
+        lastName: response2.data.lastName,
+        phoneNumber : response2.data.username,
+        code : response2.data.code,
+      };
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        return thunkAPI.rejectWithValue("شماره همراه یا پسورد اشتباه است")
-      }
-      else {
-       return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+        return thunkAPI.rejectWithValue("شماره همراه یا پسورد اشتباه است");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
       }
     }
   }
@@ -47,10 +65,11 @@ export const signUp = createAsyncThunk(
       return signUpSattus;
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        return thunkAPI.rejectWithValue("شما قبلا ثبت نام کرده اید")
-      }
-      else {
-       return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+        return thunkAPI.rejectWithValue("شما قبلا ثبت نام کرده اید");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
       }
     }
   }
@@ -76,10 +95,11 @@ export const forgetPassword = createAsyncThunk(
       return signUpSattus;
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        return thunkAPI.rejectWithValue("شما قبلا ثبت نام کرده اید")
-      }
-      else {
-       return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+        return thunkAPI.rejectWithValue("شما قبلا ثبت نام کرده اید");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
       }
     }
   }

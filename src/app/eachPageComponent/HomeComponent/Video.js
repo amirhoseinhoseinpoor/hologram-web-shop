@@ -54,7 +54,7 @@ export default function Video() {
   }, [currentVideoIndex]);
 
   return (
-    <section className={`mt-5 mb-5 container ${style.responsiveSection}`}>
+    <section style={{marginTop : "100px"}} className={` mb-5 container ${style.responsiveSection}`}>
       <div className={`${style.adjustWidth}`}>
         <Card className="position-relative">
           <CardContent>

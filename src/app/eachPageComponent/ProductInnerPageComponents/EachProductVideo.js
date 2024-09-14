@@ -137,24 +137,34 @@ export default function EachProductVideo() {
               </p>
               {!videoEnded && (
                 <>
-                  <Box
-                    className={`${style.posterIcon} d-none d-lg-block d-xl-block`}
-                    component="img"
-                    alt="image."
-                    src="/HomeImages/Video icon.png"
-                  />
-                  <Box
-                    className={`${style.posterIconArrow} d-none d-lg-block d-xl-block`}
-                    component="img"
-                    sx={{
-                      width: "60px",
-                      height: "25px",
-                      objectFit: "cover",
-                      aspectRatio: 1.48,
-                    }}
-                    alt="image."
-                    src="/HomeImages/Video icon arrow.png"
-                  />
+                  <div className={style.BelowContentFixIcon}>
+                    <svg
+                      width={55}
+                      height={54}
+                      viewBox="0 0 84 84"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        opacity="0.6"
+                        d="M42 77C61.33 77 77 61.33 77 42C77 22.67 61.33 7 42 7C22.67 7 7 22.67 7 42C7 61.33 22.67 77 42 77Z"
+                        fill="white"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M31.8496 42.0002V36.8202C31.8496 30.1352 36.5746 27.4402 42.3496 30.7652L46.8296 33.3552L51.3096 35.9452C57.0846 39.2702 57.0846 44.7302 51.3096 48.0552L46.8296 50.6452L42.3496 53.2352C36.5746 56.5602 31.8496 53.8302 31.8496 47.1802V42.0002Z"
+                        fill="#333333"
+                        stroke="#333333"
+                        strokeWidth="1.5"
+                        strokeMiterlimit={10}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
                 </>
               )}
             </div>
@@ -175,29 +185,34 @@ export default function EachProductVideo() {
                         sx={{ borderRadius: "4px", height: "100%" }}
                       />
                       <div className={style.BelowContentFixIcon}>
-                        <svg
-                          width={43}
-                          height={42}
-                          viewBox="0 0 43 42"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16.25 38.5H26.75C35.5 38.5 39 35 39 26.25V15.75C39 7 35.5 3.5 26.75 3.5H16.25C7.5 3.5 4 7 4 15.75V26.25C4 35 7.5 38.5 16.25 38.5Z"
-                            stroke="#333333"
-                            strokeWidth={3}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M16.4248 20.9991V18.4091C16.4248 15.0666 18.7873 13.7191 21.6748 15.3816L23.9148 16.6766L26.1548 17.9716C29.0423 19.6341 29.0423 22.3641 26.1548 24.0266L23.9148 25.3216L21.6748 26.6166C18.7873 28.2791 16.4248 26.9141 16.4248 23.5891V20.9991Z"
-                            stroke="#333333"
-                            strokeWidth={3}
-                            strokeMiterlimit={10}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                        <div className={style.BelowContentFixIcon}>
+                          <svg
+                            width={43}
+                            height={42}
+                            viewBox="0 0 84 84"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              opacity="0.6"
+                              d="M42 77C61.33 77 77 61.33 77 42C77 22.67 61.33 7 42 7C22.67 7 7 22.67 7 42C7 61.33 22.67 77 42 77Z"
+                              fill="white"
+                              stroke="white"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M31.8496 42.0002V36.8202C31.8496 30.1352 36.5746 27.4402 42.3496 30.7652L46.8296 33.3552L51.3096 35.9452C57.0846 39.2702 57.0846 44.7302 51.3096 48.0552L46.8296 50.6452L42.3496 53.2352C36.5746 56.5602 31.8496 53.8302 31.8496 47.1802V42.0002Z"
+                              fill="#333333"
+                              stroke="#333333"
+                              strokeWidth="1.5"
+                              strokeMiterlimit={10}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
                       </div>
                       {/* Display video duration */}
                       <div className={style.duration}>

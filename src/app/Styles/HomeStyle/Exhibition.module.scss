@@ -8,7 +8,7 @@
   width: 100%;
   background-position: center;
   margin-top: 20px;
-  aspect-ratio: 1.9;
+  aspect-ratio: 3;
 }
 .arrowforward {
   padding: 5px;
@@ -46,8 +46,7 @@
 }
 .swiperCustom :global {
   .swiper-wrapper {
-    height: 55%;
-    top: 21%;
+    height: 85%;
   }
 }
 @media (max-width: 991px) {
@@ -62,6 +61,9 @@
       height: 100%;
       top: -9%;
     }
+  }
+  .mainbackground {
+    aspect-ratio: 2;
   }
 }
 

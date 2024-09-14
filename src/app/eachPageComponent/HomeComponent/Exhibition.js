@@ -56,7 +56,7 @@ export default function Exhibition() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <section className={style.mainbackground}>
+    <section style={{marginTop : "100px"}} className={style.mainbackground}>
       <div
         className={`d-flex flex-row container-lg h-100 ${style.exhibitionresponsivemaindiv}`}
       >

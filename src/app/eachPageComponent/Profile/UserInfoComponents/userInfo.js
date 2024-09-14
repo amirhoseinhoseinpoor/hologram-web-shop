@@ -1,6 +1,14 @@
+import { useDispatch, useSelector } from "react-redux";
+import { firstName, lastName, code, phoneNumber } from "@/app/Store/slice";
+
 import style from "/src/app/Styles/Profile/UserInfoStyle/userInfo.module.scss";
 
 export default function userInfo() {
+  const firstNameU = useSelector(firstName);
+  const lastNameU = useSelector(lastName);
+  const codeU = useSelector(code);
+  const phoneNumberU = useSelector(phoneNumber);
+
   return (
     <section className={style.mainSection}>
       <form>
@@ -33,50 +41,89 @@ export default function userInfo() {
               <p className={`${style.colorForTheInput} NormalTextSizing mt-2`}>
                 بارگذاری فایل .png یا .jpg
               </p>
-              <p className={`${style.colorForTheInput} discription mt-1`}>حداکثر تا 5 مگابایت</p>
+              <p className={`${style.colorForTheInput} discription mt-1`}>
+                حداکثر تا 5 مگابایت
+              </p>
             </div>
           </label>
           <input type="file" className="d-none" id="LogoComapnyInput" />
         </div>
-        <div className={`${style.mainDivMakeResponsive} d-flex flex-row mt-3 gap-5`}>
-            <div className={`${style.forManagingSize} d-flex flex-column`}>
-                <div className="d-flex flex-column mb-3">
-                    <label htmlFor="CompanyName" className={`mb-1 me-1`}>
-                        <span className="discription">نام شرکت</span><span className={`${style.redStar} discription`}>{" "}*</span>
-                    </label>
-                    <input type="text" id="CompanyName" className={`${style.inputStyleMain} discription`} placeholder="اسم شرکت را وارد کنید" required/>
-                </div>
-                <div className="d-flex flex-column mb-3">
-                    <label htmlFor="CompanyNumber" className={`mb-1 me-1`}>
-                        <span className="discription">شماره ثابت شرکت</span>
-                    </label>
-                    <input dir="ltr" type="number" id="CompanyNumber" className={`${style.inputStyleMain} ${style.inputNimberSpecific} discription`} placeholder="021234567"/>
-                </div>
-                <div className="d-flex flex-column mb-3">
-                    <label htmlFor="password" className={`mb-1 me-1`}>
-                        <span className="discription">رمز</span><span className={`${style.redStar} discription`}>{" "}*</span>
-                    </label>
-                    <input type="password" id="password" className={`${style.inputStyleMain} discription`} placeholder="********" required/>
-                </div>
+        <div
+          className={`${style.mainDivMakeResponsive} d-flex flex-row mt-3 gap-5`}
+        >
+          <div className={`${style.forManagingSize} d-flex flex-column`}>
+            <div className="d-flex flex-column mb-3">
+              <label htmlFor="CompanyName" className={`mb-1 me-1`}>
+                <span className="discription">نام شرکت</span>
+                <span className={`${style.redStar} discription`}> *</span>
+              </label>
+              <input
+                type="text"
+                id="CompanyName"
+                className={`${style.inputStyleMain} discription`}
+                placeholder="اسم شرکت را وارد کنید"
+                required
+              />
             </div>
-            <div className={`${style.forManagingSize} d-flex flex-column`}>
-                <div className="d-flex flex-column mb-3">
-                    <label htmlFor="PhoneNumber" className={`mb-1 me-1`}>
-                        <span className="discription">شماره همراه</span>
-                    </label>
-                    <input dir="ltr" type="number" id="PhoneNumber" className={`${style.inputStyleMain} ${style.inputNimberSpecific} discription`} placeholder="021234567" required disabled/>
-                </div>
-                <div className="d-flex flex-column mb-3">
-                    <label htmlFor="userNameAndFamily" className={`mb-1 me-1`}>
-                        <span className="discription">نام و نام خانوادگی</span>
-                    </label>
-                    <input type="text" id="userNameAndFamily" className={`${style.inputStyleMain}  discription`} placeholder="اسم کاربر" disabled/>
-                </div>
-                
+            <div className="d-flex flex-column mb-3">
+              <label htmlFor="CompanyNumber" className={`mb-1 me-1`}>
+                <span className="discription">شماره ثابت شرکت</span>
+              </label>
+              <input
+                dir="ltr"
+                type="number"
+                id="CompanyNumber"
+                className={`${style.inputStyleMain} ${style.inputNimberSpecific} discription`}
+                placeholder="021234567"
+              />
             </div>
+            <div className="d-flex flex-column mb-3">
+              <label htmlFor="password" className={`mb-1 me-1`}>
+                <span className="discription">رمز</span>
+                <span className={`${style.redStar} discription`}> *</span>
+              </label>
+              <input
+                type="password"
+                id="password"
+                className={`${style.inputStyleMain} discription`}
+                placeholder="********"
+                required
+              />
+            </div>
+          </div>
+          <div className={`${style.forManagingSize} d-flex flex-column`}>
+            <div className="d-flex flex-column mb-3">
+              <label htmlFor="PhoneNumber" className={`mb-1 me-1`}>
+                <span className="discription">شماره همراه</span>
+              </label>
+              <input
+                dir="ltr"
+                type="number"
+                id="PhoneNumber"
+                className={`${style.inputStyleMain} ${style.inputNimberSpecific} discription`}
+                placeholder={phoneNumberU}
+                required
+                disabled
+              />
+            </div>
+            <div className="d-flex flex-column mb-3">
+              <label htmlFor="userNameAndFamily" className={`mb-1 me-1`}>
+                <span className="discription">نام و نام خانوادگی</span>
+              </label>
+              <input
+                type="text"
+                id="userNameAndFamily"
+                className={`${style.inputStyleMain}  discription`}
+                placeholder={`${firstNameU} ${" "} ${lastNameU}`}
+                disabled
+              />
+            </div>
+          </div>
         </div>
         <div>
-            <button className={style.submitButtonStyle} type="submit">ثبت تغییرات</button>
+          <button className={style.submitButtonStyle} type="submit">
+            ثبت تغییرات
+          </button>
         </div>
       </form>
     </section>

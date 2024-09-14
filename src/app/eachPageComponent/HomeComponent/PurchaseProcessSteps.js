@@ -183,7 +183,7 @@ export default function PurchaseProcessSteps() {
     //   </div>
     // </section>
 
-    <section className="mt-5 mb-5 container">
+    <section style={{marginTop : "95px"}} className=" mb-5 container">
       <div>
         <h2 className={`${style.titleColor} title mb-2`}>
           محصولات متنوع <span>آذرهولوگرام</span>

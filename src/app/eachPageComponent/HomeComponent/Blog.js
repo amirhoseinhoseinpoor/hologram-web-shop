@@ -17,7 +17,7 @@ export default async function Magazine() {
   // const data = await getData()
 
   return (
-    <section className="mb-5 mt-4 container">
+    <section style={{marginTop : "90px" , marginBottom : "90px"}} className=" container">
       <div className="d-flex flex-row justify-content-between">
         <div>
           <span className="title">مجله آذر هولگرام </span>

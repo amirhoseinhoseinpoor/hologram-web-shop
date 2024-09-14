@@ -4,7 +4,6 @@
 import mainItems from "/public/json/Header.json";
 
 import style from "../Styles/MainStyle/Header.module.scss";
-import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
@@ -21,7 +20,7 @@ import { usePathname } from "next/navigation";
 // import redux
 import { useSelector , useDispatch } from "react-redux";
 import Link from "next/link";
-import { token } from "../Store/slice";
+import { token , firstName, lastName , phoneNumber } from "../Store/slice";
 import { resetToken } from "../Store/slice"
 
 const renderSubItems = (subItems, depth = 1) => {
@@ -74,6 +73,11 @@ export default function Header() {
   };
 
   const token2 = useSelector(token);
+  const firstNameU = useSelector(firstName);
+  const lastNameU = useSelector(lastName);
+  const phoneNumberU = useSelector(phoneNumber);
+
+
   console.log(token2);
 
   const getBasePath = (path) => {
@@ -491,7 +495,7 @@ export default function Header() {
                         </svg>
                       </div>
                       <div className="me-1 d-flex flex-row ">
-                        <p className="NormalTextSizing">اسم کاربر اینجا</p>
+                        <p className="NormalTextSizing">{firstNameU}</p>
                         <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
                       </div>
                     </div>
@@ -501,8 +505,8 @@ export default function Header() {
               >
                 <div className={style.userinfoInSidebar}>
                   <div className="d-flex flex-column">
-                    <p className="VodeoDisSizing mb-1">بهار رستمی نیا</p>
-                    <p className="discription">091286568542</p>
+                    <p className="VodeoDisSizing mb-1">{firstNameU}{" "}{lastNameU}</p>
+                    <p className="discription">{phoneNumberU}</p>
                   </div>
                   <div
                     // onClick={() => setActiveTab("userInfo")}

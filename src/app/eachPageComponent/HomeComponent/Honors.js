@@ -22,7 +22,7 @@ export default function Honors() {
   SwiperCore.use([Autoplay]);
 
   return (
-    <section className={`${style.mainbackgroundhonor} mt-5 mb-5`}>
+    <section style={{marginTop : "100px"}} className={`${style.mainbackgroundhonor}  mb-5`}>
       <div
         className={`${style.rigthtextslide} d-flex flex-column justify-content-center container`}
       >

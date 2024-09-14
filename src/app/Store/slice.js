@@ -10,6 +10,10 @@ import {
 
 const authinitialState = {
   token: null,
+  firstName: null,
+  lastName: null,
+  phoneNumber : null,
+  code : null,
   signUpSattus : null,
   loading: false,
   error: null,
@@ -32,6 +36,10 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload;
+        state.firstName = action.payload.firstName;
+        state.lastName = action.payload.lastName;
+        state.phoneNumber = action.payload.phoneNumber;
+        state.code = action.payload.code;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -79,6 +87,10 @@ const authSlice = createSlice({
 // export default authSlice.reducer;
 export const authSliceV = authSlice.reducer;
 export const token = (state) => state.auth.token;
+export const firstName = (state) => state.auth.firstName;
+export const lastName = (state) => state.auth.lastName;
+export const phoneNumber = (state) => state.auth.phoneNumber;
+export const code = (state) => state.auth.code;
 export const { resetToken } = authSlice.actions;
 export const signUpSattus = (state) => state.auth.signUpSattus;
 export const loading = (state) => state.auth.loading;

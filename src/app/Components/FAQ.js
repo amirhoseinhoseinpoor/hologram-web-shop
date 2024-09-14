@@ -38,7 +38,7 @@ export default function FAQ() {
   }));
 
   return (
-    <section className="container mt-4 mb-5">
+    <section style={{marginTop : "95px"}} className="container  mb-5">
       <div className={`${style.titleStyle} title mt-2 mb-3`}>
         <span>همه چیز درباره‌ی </span>
         <span className={`${style.coloerdTitle}`}>هولوگرام</span>
