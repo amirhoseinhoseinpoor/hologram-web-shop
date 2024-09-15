@@ -3,7 +3,7 @@ import { firstName, lastName, code, phoneNumber } from "@/app/Store/slice";
 
 import style from "/src/app/Styles/Profile/UserInfoStyle/userInfo.module.scss";
 
-export default function userInfo() {
+export default function UserInfo() {
   const firstNameU = useSelector(firstName);
   const lastNameU = useSelector(lastName);
   const codeU = useSelector(code);
