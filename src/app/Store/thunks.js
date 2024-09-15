@@ -7,18 +7,23 @@ export const login = createAsyncThunk(
     const { username, password } = credentials;
     try {
       const response = await axios.post(
-        "http://217.60.251.31:7000/auth/login",
+        "http://176.120.16.221:7000/auth/login",
         {
+          headers: {
+            'mode': 'no-cors',
+          },
           username,
           password,
         }
       );
       const token = response.data.token;
       const response2 = await axios.get(
-        `http://localhost:7000/users/info/${username}`,
+        `http://176.120.16.221:7000/users/info/${username}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'mode': 'no-cors',
+            
           },
         }
       );
@@ -51,7 +56,7 @@ export const signUp = createAsyncThunk(
     const { firstName, lastName, username, password } = credentials;
     try {
       const response = await axios.post(
-        "http://217.60.251.31:7000/auth/register",
+        "http://176.120.16.221:7000/auth/register",
         {
           firstName,
           lastName,
@@ -81,7 +86,7 @@ export const forgetPassword = createAsyncThunk(
     const { firstName, lastName, username, password } = credentials;
     try {
       const response = await axios.post(
-        "http://217.60.251.31:7000/users/{code}",
+        "http://176.120.16.221:7000/users/{code}",
         {
           firstName,
           lastName,
