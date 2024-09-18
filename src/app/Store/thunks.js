@@ -18,7 +18,7 @@ export const login = createAsyncThunk(
       );
       const token = response.data.token;
       const response2 = await axios.get(
-        `http://176.120.16.221:7000/users/info/${username}`,
+        `http://localhost:7000/users?username=${username}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -27,16 +27,14 @@ export const login = createAsyncThunk(
           },
         }
       );
-      console.log(response2.data.firstName);
-      console.log(response2.data);
-
+      
       
       return {
         token,
-        firstName: response2.data.firstName, 
-        lastName: response2.data.lastName,
-        phoneNumber : response2.data.username,
-        code : response2.data.code,
+        firstName: response2.data[0].firstName, 
+        lastName: response2.data[0].lastName,
+        phoneNumber : response2.data[0].username,
+        code : response2.data[0].code,
       };
     } catch (error) {
       if (error.response && error.response.status === 400) {
