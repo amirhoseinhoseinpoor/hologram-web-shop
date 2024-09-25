@@ -1,9 +1,8 @@
 [
     {
-      "id" : "2",
-     
+      
       "title": "عنوان ویدیو",
-      "coloredTitle" :"اینجاست",
+      "discription" :"اینجاست",
       "src": "/HomeVideo/SampleVideo_1280x720_1mb.mp4",
       "poster": "/HomeImages/Video image.png"
       
@@ -11,7 +10,7 @@
     {
       
       "title": "Video 2",
-      "coloredTitle" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
       "src": "/HomeVideo/sampleVideo2.mp4",
       "poster": "/HomeImages/Video image.png"
       
@@ -19,7 +18,7 @@
     {
       
       "title": "Video 3",
-      "coloredTitle" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
       "src": "/HomeVideo/sampleVideo2.mp4",
       "poster": "/HomeImages/Video image.png"
       
@@ -27,7 +26,7 @@
     {
      
       "title": "Video 3",
-      "coloredTitle" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
       "src": "/HomeVideo/sampleVideo2.mp4",
       "poster": "/HomeImages/Video image.png"
       
@@ -35,7 +34,7 @@
     {
       
       "title": "Video 3",
-      "coloredTitle" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
       "src": "/HomeVideo/sampleVideo2.mp4",
       "poster": "/HomeImages/Video image.png"
       
@@ -43,7 +42,7 @@
     {
       
       "title": "Video 3",
-      "coloredTitle" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
       "src": "/HomeVideo/sampleVideo2.mp4",
       "poster": "/HomeImages/Video image.png"
       
@@ -51,7 +50,7 @@
     {
       
       "title": "Video 3",
-      "coloredTitle" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
       "src": "/HomeVideo/sampleVideo2.mp4",
       "poster": "/HomeImages/Video image.png"
       

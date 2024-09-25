@@ -6,6 +6,7 @@ import {
   logout,
   updateBannerContent,
   updateBlogcontent,
+  list,
 } from "./thunks";
 
 const authinitialState = {
@@ -95,6 +96,56 @@ export const { resetToken } = authSlice.actions;
 export const signUpSattus = (state) => state.auth.signUpSattus;
 export const loading = (state) => state.auth.loading;
 export const error = (state) => state.auth.error;
+
+
+// start product slice
+
+const peoductinitialState = {
+  productListData: null,
+  // uploadedFiles: {},
+  loading: false,
+  error: null,
+};
+
+const productSlice = createSlice({
+  name: "product",
+  initialState: peoductinitialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(list.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(list.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productListData = action.payload;
+      })
+      .addCase(list.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      // .addCase(uploadFile.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(uploadFile.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.uploadedFiles[action.meta.arg.name] = action.payload;
+      // })
+      // .addCase(uploadFile.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.error.message;
+      // });
+  },
+});
+
+export const productSliceV = productSlice.reducer;
+export const productListData = (state) => state.product.productListData;
+
+// end product slice
+
+
 
 const contentInitialState = {
   loading: false,

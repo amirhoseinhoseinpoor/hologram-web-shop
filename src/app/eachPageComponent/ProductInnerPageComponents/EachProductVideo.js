@@ -1,6 +1,6 @@
 "use client";
 
-import videoData from "../../../../public/json/Video.json";
+// import videoData from "../../../../public/json/Video.json";
 
 import React, { useRef, useEffect, useState } from "react";
 import style from "../../Styles/ProductPage/innerProductPage/DynamicProductVideo.module.scss";
@@ -16,13 +16,18 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
-export default function EachProductVideo() {
+export default function EachProductVideo({productData}) {
+
+  const videoData = productData.media;
+
+  
+
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
   const [videoDurations, setVideoDurations] = useState(
     Array(videoData.length).fill("0:00")
-  ); // Initialize with default duration
+  ); 
   const videoRef = useRef();
 
   const handleThumbnailClick = (index) => {
@@ -39,6 +44,7 @@ export default function EachProductVideo() {
     };
 
     const handleLoadedMetadata = () => {
+      
       const duration = video.duration;
       setVideoDurations((prevDurations) => {
         const newDurations = [...prevDurations];
@@ -89,7 +95,7 @@ export default function EachProductVideo() {
 
   // Helper function to format duration
   const formatDuration = (duration) => {
-    if (!duration) return "0:00";
+    if (!duration || isNaN(duration)) return "0:00";
     const minutes = Math.floor(duration / 60);
     const seconds = Math.floor(duration % 60)
       .toString()
@@ -104,7 +110,7 @@ export default function EachProductVideo() {
           <CardContent className="p-2">
             <div className="d-flex flex-column">
               <div className={`${style.titleStyle} title`}>
-                <span>{videoData[currentVideoIndex].title}</span>
+                <span>عنوان استاتیک</span>
                 <span className={style.titleColor}>
                   {" "}
                   {videoData[currentVideoIndex].coloredTitle}
@@ -120,20 +126,17 @@ export default function EachProductVideo() {
                 id="video"
                 style={{ aspectRatio: "2/1" }}
                 component="video"
-                src={videoData[currentVideoIndex].src}
-                poster={videoData[currentVideoIndex].poster}
+                src={`http://localhost:7000/system/download/${videoData[currentVideoIndex].src}`}
+                poster={`http://localhost:7000/system/download/${videoData[currentVideoIndex].poster}`}
                 sx={{ borderRadius: "4px" }}
                 controls
                 ref={videoRef}
               />
               <p className="purchesSize mt-2">
-                طرحهای گیلوچه: امنیت و زیبایی در هنر خطاطی
+              {videoData[currentVideoIndex].title}
               </p>
               <p className="NormalTextSizing mt-2">
-                در دنیای امروزی پر از فناوری و ابتکار، تصویر مخفی هولوگرام یکی
-                از مفاهیم پیشرفته‌ترین است که به تازگی مورد توجه قرار گرفته است.
-                در این مقاله، با دقت به این تصویر مخفی هولوگرام و رازهای پشت
-                پرده آن خواهیم پرداخت.
+              {videoData[currentVideoIndex].description}
               </p>
               {!videoEnded && (
                 <>
@@ -180,8 +183,8 @@ export default function EachProductVideo() {
                     <div className="position-relative w-50">
                       <CardMedia
                         component="img"
-                        src={video.poster} // Use the poster for each video
-                        alt={video.title}
+                        src={`http://localhost:7000/system/download/${video.poster}`} 
+                        alt={`http://localhost:7000/system/download/${video.title}`}
                         sx={{ borderRadius: "4px", height: "100%" }}
                       />
                       <div className={style.BelowContentFixIcon}>
@@ -227,7 +230,7 @@ export default function EachProductVideo() {
                         className={`${style.titleStyle} description`}
                       >
                         <span>{video.title}</span>
-                        <span> {video.coloredTitle}</span>
+                        
                       </div>
                     </CardContent>
                   </div>

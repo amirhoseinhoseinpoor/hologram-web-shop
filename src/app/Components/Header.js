@@ -78,7 +78,7 @@ export default function Header() {
   const phoneNumberU = useSelector(phoneNumber);
 
 
-  console.log(token2);
+  
 
   const getBasePath = (path) => {
     // This will capture the first segment of the path after the initial '/'

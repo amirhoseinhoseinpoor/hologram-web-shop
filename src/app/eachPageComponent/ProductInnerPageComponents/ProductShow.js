@@ -15,15 +15,16 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
-export default function ProductShow({ data }) {
-  // State to track the currently selected media (image or video)
+export default function ProductShow({ productData }) {
+  var data = productData.info;
+
+  
+  
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const comeToken = useSelector(token);
 
-  //color and size part
-  const [colors, setColors] = useState([]);
+
   const [selectedColor, setSelectedColor] = useState("");
-  // const [selectedSize, setSelectedSize] = useState("");
 
   const handleColorChange = (color) => {
     setSelectedColor(color);
@@ -50,10 +51,10 @@ export default function ProductShow({ data }) {
         <div className={`${style.fixMainSizeRight} d-flex flex-column`}>
           <div>
             <Card className="position-relative">
-              {data[0].imgData[currentMediaIndex].type === "video" ? (
+              {data.imgData[currentMediaIndex].type === "2" ? (
                 <CardMedia
                   component="video"
-                  src={data[0].imgData[currentMediaIndex].src}
+                  src={`http://localhost:7000/system/download/${data.imgData[currentMediaIndex].src}`}
                   // poster={data[currentMediaIndex].poster}
                   sx={{ borderRadius: "4px" }}
                   controls
@@ -62,7 +63,7 @@ export default function ProductShow({ data }) {
               ) : (
                 <CardMedia
                   component="img"
-                  src={data[0].imgData[currentMediaIndex].src}
+                  src={`http://localhost:7000/system/download/${data.imgData[currentMediaIndex].src}`}
                   sx={{ borderRadius: "4px" }}
                   style={{ maxHeight: "395px" }}
                 />
@@ -106,7 +107,7 @@ export default function ProductShow({ data }) {
                 className={`${style.swiperWrapergap} mySwiper`}
               >
                 <div className="d-flex mt-2">
-                  {data[0].imgData.map((media, index) => (
+                  {data.imgData.map((media, index) => (
                     <SwiperSlide key={index} className={`d-flex flex-column`}>
                       <div
                         onClick={() => handleThumbnailClick(index)}
@@ -114,7 +115,7 @@ export default function ProductShow({ data }) {
                           cursor: "pointer",
                         }}
                       >
-                        {media.type === "video" ? (
+                        {media.type === "2" ? (
                           <div className="position-relative">
                             <Box
                               className={style.fixStyleSizeImgRe}
@@ -124,7 +125,7 @@ export default function ProductShow({ data }) {
                               //   height: "80px",
                               //   borderRadius: "5px",
                               // }}
-                              src={media.poster}
+                              src={`http://localhost:7000/system/download/${media.poster}`}
                             />
 
                             <div className={`${style.posterIcon}`}>
@@ -150,7 +151,7 @@ export default function ProductShow({ data }) {
                           <Box
                             className={style.fixStyleSizeImgRe}
                             component="img"
-                            src={media.src}
+                            src={`http://localhost:7000/system/download/${media.src}`}
                             alt={`Thumbnail ${index}`}
                           />
                         )}
@@ -284,10 +285,10 @@ export default function ProductShow({ data }) {
             </div>
           </div>
           <div className="mt-2">
-            <p className="title">{data[0].title}</p>
+            <p className="title">{data.title}</p>
           </div>
           <div className="mt-3">
-            <p>{data[0].subtitle}</p>
+            <p>{data.subtitle}</p>
           </div>
           <div className="mt-3">
             <div>
@@ -295,12 +296,13 @@ export default function ProductShow({ data }) {
               <span>{selectedColor}</span>
             </div>
             <div className="d-flex flex-row gap-2 mt-2">
-              {data[0].color.map((item, index) => (
+              {data.color.map((item, index) => (
                 <React.Fragment key={index}>
                   <div
                     className={style.coloredBoxStyle}
                     style={{
-                      backgroundColor: item.value,
+                      // backgroundColor: item.src,
+                      backgroundImage: `url(http://localhost:7000/system/download/${item.src})`,
                       border:
                         selectedColor === item.name ? "3px solid #404756" : "",
 
@@ -316,7 +318,7 @@ export default function ProductShow({ data }) {
             </div>
             <h3 className="mb-3 mt-3">سایز</h3>
             <div style={{ display: "flex", gap: "10px" }}>
-              {data[0].sizes.map((size, index) => (
+              {data.sizes.map((size, index) => (
                 <div
                   className={style.SizezInput}
                   key={index}

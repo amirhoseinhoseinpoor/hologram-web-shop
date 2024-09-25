@@ -116,6 +116,27 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   }
 });
 
+// start Product
+
+export const list = createAsyncThunk("product/list", async (thunkAPI) => {
+  try {
+    const response = await axios.get("http://localhost:7000/product/list");
+    const data = response.data;
+
+    return data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return thunkAPI.rejectWithValue("ارور سمت من");
+    } else {
+      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+    }
+  }
+});
+
+
+// end product
+
+
 export const updateBannerContent = createAsyncThunk(
   "content/updateBannerContent",
   async (_, { rejectWithValue }) => {

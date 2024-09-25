@@ -56,6 +56,8 @@ const ShowRoute = () => {
   // console.log(decodedPathname);
   const returnPath = decodedPathname.split("/").filter((value) => value);
 
+  
+
   // Add "home" to the beginning of the path
   returnPath.unshift("خانه");
 
