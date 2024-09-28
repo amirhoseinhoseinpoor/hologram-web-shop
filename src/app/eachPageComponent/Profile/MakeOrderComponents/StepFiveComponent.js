@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -17,6 +17,7 @@ export default function StepFiveComponent({
   setDisabelInputStep4,
 }) {
   const [value, setValue] = React.useState("تحویل حضوری از مرکز آذر هولوگرام");
+  const [disableButton, setDisableButton] = useState(false);
 
   const [formState, setFormState] = useState({
     name: "",
@@ -30,6 +31,7 @@ export default function StepFiveComponent({
   });
 
   const [PostAdress, setPostAdress] = useState([]);
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +42,8 @@ export default function StepFiveComponent({
   };
 
   const [showModal, setShowModal] = useState(false);
+  const [editModal , setEditModal] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
 
   const handleModalClick = (image) => {
     setShowModal(true);
@@ -51,12 +55,20 @@ export default function StepFiveComponent({
     setValue(event.target.value);
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (value === "تحویل حضوری از مرکز آذر هولوگرام") {
+      setDisableButton(false);
+    } else if (PostAdress.length > 0){
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+  }, [value, PostAdress]);
 
-    // setPostAdress("test");
-    setPostAdress((prevCards) => [...prevCards, formState]); // Store submitted data to display later
+  const handleAddAdress = () => {
+    
+    setPostAdress((prevCards) => [...prevCards, formState]);
+
     setFormState({
       name: "",
       lastName: "",
@@ -71,10 +83,64 @@ export default function StepFiveComponent({
     setShowModal(false);
   };
 
+  const handleSubmit = (e) => {
+    // e.preventDefault();
+    console.log(PostAdress);
+     
+
+  };
+
   const handleDisabelInput = () => {
     setDisabelInputStep4(true);
-    handleNextStep();
+    // handleNextStep();
+    handleSubmit();
   };
+
+  const handleDeleteAdress = (index) => {
+    setPostAdress(PostAdress.filter((_, i) => i !== index));
+  };
+
+  const handleEditAdress = (index) => {
+    setShowModal(true);
+    setEditModal(true);
+    setEditIndex(index);
+    const selectedAddress = PostAdress[index];
+    const newFormState = {
+      ...formState,
+      name: selectedAddress?.name || "",
+      lastName: selectedAddress?.lastName || "",
+      number: selectedAddress?.number || "",
+      companyName: selectedAddress?.companyName || "",
+      postCode: selectedAddress?.postCode || "",
+      city: selectedAddress?.city || "",
+      town: selectedAddress?.town || "",
+      addressText: selectedAddress?.addressText || "",
+    };
+    setFormState(newFormState);
+  
+    
+    
+  }
+
+  const handleEditAdressSubmit = () => {
+
+    if (editModal) {
+      // Update the existing address
+      const newPostAdress = [...PostAdress];
+      newPostAdress[editIndex] = formState;
+      setPostAdress(newPostAdress);
+    } else {
+      // Add a new address (existing logic)
+      setPostAdress((prevCards) => [...prevCards, formState]);
+    }
+  
+    // Reset form and modal states
+    setFormState({ /* initial values */ });
+    setShowModal(false);
+    setEditModal(false);
+  
+
+  }
 
   return (
     <>
@@ -267,7 +333,7 @@ export default function StepFiveComponent({
                       // onClick={() => handleImageClick(item.src)}
                     >
                       <CardContent className={`${style.reStyleCardContent}`}>
-                        <div>
+                        <div onClick={() => handleEditAdress(index)}>
                           <svg
                             width={19}
                             height={18}
@@ -301,7 +367,7 @@ export default function StepFiveComponent({
                             />
                           </svg>
                         </div>
-                        <div>
+                        <div onClick={() => handleDeleteAdress(index)}>
                           <svg
                             width={19}
                             height={18}
@@ -473,7 +539,7 @@ export default function StepFiveComponent({
                       // onClick={() => handleImageClick(item.src)}
                     >
                       <CardContent className={`${style.reStyleCardContent}`}>
-                        <div>
+                        <div onClick={() => handleEditAdress(index)}>
                           <svg
                             width={19}
                             height={18}
@@ -507,7 +573,7 @@ export default function StepFiveComponent({
                             />
                           </svg>
                         </div>
-                        <div>
+                        <div onClick={() => handleDeleteAdress(index)}>
                           <svg
                             width={19}
                             height={18}
@@ -596,6 +662,11 @@ export default function StepFiveComponent({
         <button
           onClick={handleDisabelInput}
           className={`${style.continueButton}`}
+          disabled={disableButton}
+          style={{
+            backgroundColor: disableButton && "#868686",
+            cursor: disableButton ? "not-allowed" : "pointer",
+          }}
         >
           تایید
         </button>
@@ -603,7 +674,7 @@ export default function StepFiveComponent({
           className={style.SeeLastStepButton}
           onClick={handlePreviousStep}
         >
-          مشاهده مراحل قبلی
+          مرحله‌ی قبلی
         </button>
       </div>
 
@@ -616,140 +687,143 @@ export default function StepFiveComponent({
           <h4 className="VodeoDisSizing mb-2 mt-1">
             اطلاعات شخصی تحویل گیرنده
           </h4>
-          <form onSubmit={handleSubmit}>
-            <div className={`${style.resizingTheInputmodal} d-flex flex-row`}>
-              <div className="w-50">
-                <label htmlFor="name" className="d-flex flex-row gap-1">
-                  <span className="NormalTextSizing">نام</span>
-                  <span className={style.StarFixReq}>*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className={`${style.inputTextCompanyName} discription`}
-                  value={formState.name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="w-50">
-                <label htmlFor="lastName" className="d-flex flex-row gap-1">
-                  <span className="NormalTextSizing">نام خانوادگی</span>
-                  <span className={style.StarFixReq}>*</span>
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  className={`${style.inputTextCompanyName} discription`}
-                  value={formState.lastName}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="w-50 mt-3">
-                <label htmlFor="number" className="d-flex flex-row gap-1">
-                  <span className="NormalTextSizing">شماره همراه</span>
-                  <span className={style.StarFixReq}>*</span>
-                </label>
-                <input
-                  dir="ltr"
-                  type="number"
-                  id="number"
-                  name="number"
-                  value="09308314235"
-                  className={`${style.inputTextCompanyName} discription`}
-                  onChange={handleInputChange}
-                  required
-                  disabled
-                />
-              </div>
-            </div>
 
-            <h4 className="mt-3 mb-2 VodeoDisSizing">اطلاعات ارسال</h4>
-            <div className={`${style.resizingTheInputmodal} d-flex flex-row`}>
-              <div className="w-50">
-                <label htmlFor="companyName" className="d-flex flex-row gap-1">
-                  <span className="NormalTextSizing">اسم شرکت</span>
-                </label>
-                <input
-                  type="text"
-                  id="companyName"
-                  name="companyName"
-                  className={`${style.inputTextCompanyName} discription`}
-                  value={formState.companyName}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="w-50">
-                <label htmlFor="postCode" className="d-flex flex-row gap-1">
-                  <span className="NormalTextSizing">کد پستی</span>
-                  <span className={style.StarFixReq}>*</span>
-                </label>
-                <input
-                  placeholder="کد پستی را وارد کنید"
-                  type="number"
-                  id="postCode"
-                  name="postCode"
-                  className={`${style.inputTextCompanyName} discription`}
-                  value={formState.postCode}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="w-50 mt-2">
-                <label htmlFor="city" className="d-flex flex-row gap-1">
-                  <span className="NormalTextSizing">استان</span>
-                  <span className={style.StarFixReq}>*</span>
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  className={`${style.inputTextCompanyName} discription`}
-                  value={formState.city}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="w-50 mt-2">
-                <label htmlFor="town" className="d-flex flex-row gap-1">
-                  <span className="NormalTextSizing">شهر</span>
-                  <span className={style.StarFixReq}>*</span>
-                </label>
-                <input
-                  type="text"
-                  id="town"
-                  name="town"
-                  className={`${style.inputTextCompanyName} discription`}
-                  value={formState.town}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="w-50 mt-2">
-                <label htmlFor="addressText" className="d-flex flex-row gap-1">
-                  <span className="NormalTextSizing">آدرس پستی</span>
-                  <span className={style.StarFixReq}>*</span>
-                </label>
-                <textarea
-                  id="addressText"
-                  name="addressText"
-                  className={`${style.inputTextCompanyName} ${style.SetMaxHeightToTextArea} discription`}
-                  value={formState.addressText}
-                  onChange={handleInputChange}
-                  placeholder="اسم خیابان، اسم کوچه، اسم بن بست"
-                  rows="4" // Number of visible text lines
-                  cols="50" // Number of visible character columns
-                  required
-                />
-              </div>
+          <div className={`${style.resizingTheInputmodal} d-flex flex-row`}>
+            <div className="w-50">
+              <label htmlFor="name" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">نام</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.name}
+                onChange={handleInputChange}
+                required
+              />
             </div>
-            <button className={style.SubmitModalAdress} type="submit">
-              تایید
-            </button>
-          </form>
+            <div className="w-50">
+              <label htmlFor="lastName" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">نام خانوادگی</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.lastName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50 mt-3">
+              <label htmlFor="number" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">شماره همراه</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                dir="ltr"
+                type="number"
+                id="number"
+                name="number"
+                value="09308314235"
+                className={`${style.inputTextCompanyName} discription`}
+                onChange={handleInputChange}
+                required
+                disabled
+              />
+            </div>
+          </div>
+
+          <h4 className="mt-3 mb-2 VodeoDisSizing">اطلاعات ارسال</h4>
+          <div className={`${style.resizingTheInputmodal} d-flex flex-row`}>
+            <div className="w-50">
+              <label htmlFor="companyName" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">اسم شرکت</span>
+              </label>
+              <input
+                type="text"
+                id="companyName"
+                name="companyName"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.companyName}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="w-50">
+              <label htmlFor="postCode" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">کد پستی</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                placeholder="کد پستی را وارد کنید"
+                type="number"
+                id="postCode"
+                name="postCode"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.postCode}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50 mt-2">
+              <label htmlFor="city" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">استان</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.city}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50 mt-2">
+              <label htmlFor="town" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">شهر</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                type="text"
+                id="town"
+                name="town"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.town}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50 mt-2">
+              <label htmlFor="addressText" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">آدرس پستی</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <textarea
+                id="addressText"
+                name="addressText"
+                className={`${style.inputTextCompanyName} ${style.SetMaxHeightToTextArea} discription`}
+                value={formState.addressText}
+                onChange={handleInputChange}
+                placeholder="اسم خیابان، اسم کوچه، اسم بن بست"
+                rows="4" // Number of visible text lines
+                cols="50" // Number of visible character columns
+                required
+              />
+            </div>
+          </div>
+          <button
+            className={style.SubmitModalAdress}
+            onClick={editModal ? handleEditAdressSubmit : handleAddAdress}
+            type="button"
+          >
+            تایید
+          </button>
         </Modal.Body>
       </Modal>
     </>

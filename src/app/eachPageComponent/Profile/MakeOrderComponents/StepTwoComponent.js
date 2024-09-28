@@ -453,15 +453,18 @@ export default function StepTwoComponent({
             </div>
 
             <div className="d-flex flex-row justify-content-between">
-              <div className="d-flex flex-row gap-1  mt-3">
+              <div className="d-flex flex-row gap-2  mt-3">
                 <button
                   onClick={handleDisabelInput}
                   className={`${style.continueButton}`}
                 >
                   ارسال مدارک
                 </button>
-                <button className={style.SeeLastStepButton} onClick={handlePreviousStep}>
-                  مشاهده مراحل قبلی
+                <button
+                  className={style.SeeLastStepButton}
+                  onClick={handlePreviousStep}
+                >
+                  مرحله‌ی قبلی
                 </button>
               </div>
 
@@ -817,8 +820,8 @@ export default function StepTwoComponent({
                   onClick={generatePDF}
                 >
                   <svg
-                    width="21"
-                    height="20"
+                    width={21}
+                    height={20}
                     viewBox="0 0 21 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -826,23 +829,23 @@ export default function StepTwoComponent({
                     <path
                       d="M14.1997 7.41797C17.1997 7.6763 18.4247 9.21797 18.4247 12.593V12.7013C18.4247 16.4263 16.9331 17.918 13.2081 17.918H7.78307C4.05807 17.918 2.56641 16.4263 2.56641 12.7013V12.593C2.56641 9.24297 3.77474 7.7013 6.72474 7.4263"
                       stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M10.5 1.66797V12.4013"
                       stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M13.2913 10.543L10.4997 13.3346L7.70801 10.543"
                       stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                   دانلود فاکتور
