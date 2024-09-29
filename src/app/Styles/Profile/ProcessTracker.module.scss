@@ -32,7 +32,7 @@
 .line {
   width: 80px;
   height: 1px;
-  background-color: #5695f6;
+  background-color: rgba(54, 54, 54, 0.422);
   // border-bottom: 1px dashed #5695F6;
   position: absolute;
   top: 15px;
@@ -43,7 +43,7 @@
 
 .activeLine {
   background-image: none;
-  background-color: #f3802c;
+  background-color: #5695f6;
 }
 
 .active .circle {

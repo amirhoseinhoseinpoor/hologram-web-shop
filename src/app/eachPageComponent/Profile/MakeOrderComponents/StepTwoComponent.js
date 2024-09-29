@@ -138,7 +138,7 @@ export default function StepTwoComponent({
       <div className={`${style.resizeNewresponsive} d-flex flex-row gap-3`}>
         <div className={`${style.fixNewSizes} d-flex flex-column`}>
           <div className={style.stepContent}>
-            <p className="VodeoDisSizing">
+            <p className="discription">
               یه عنوان اینجاست که برای کاربر توضیح میده چه مدارکی رو باید اپلود
               کنند و یک سری توضیحات تکمیلی که در اینجا قرار میگیره
             </p>

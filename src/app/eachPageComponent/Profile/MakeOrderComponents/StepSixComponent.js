@@ -252,7 +252,7 @@ export default function StepSixComponent({
                 className={style.SeeLastStepButton}
                 onClick={handlePreviousStep}
               >
-                مشاهده مراحل قبلی
+                مرحله‌ی قبلی
               </button>
             </div>
           </div>

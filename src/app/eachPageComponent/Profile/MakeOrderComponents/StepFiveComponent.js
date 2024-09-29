@@ -31,7 +31,12 @@ export default function StepFiveComponent({
   });
 
   const [PostAdress, setPostAdress] = useState([]);
-  
+
+  const [PostAdress2, setPostAdress2] = useState([]);
+
+  const [finalData, setFinalData] = useState([]);
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,14 +47,30 @@ export default function StepFiveComponent({
   };
 
   const [showModal, setShowModal] = useState(false);
-  const [editModal , setEditModal] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
+  const [showModal2, setShowModal2] = useState(false);
 
-  const handleModalClick = (image) => {
-    setShowModal(true);
+  const [editModal, setEditModal] = useState(false);
+  const [editModal2, setEditModal2] = useState(false);
+
+  const [editIndex, setEditIndex] = useState(null);
+  const [trackactiveAdress, setTrackActiveAdress] = useState(0);
+  const [trackactiveAdress2, setTrackActiveAdress2] = useState(0);
+
+  const handleModalClick = () => {
+    if (!disabelInputStep4) {
+      setShowModal(true);
+    }
+  };
+
+  const handleModalClick2 = () => {
+    if (!disabelInputStep4) {
+      setShowModal2(true);
+    }
   };
 
   const handleCloseModal = () => setShowModal(false);
+
+  const handleCloseModal2 = () => setShowModal2(false);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -58,17 +79,15 @@ export default function StepFiveComponent({
   useEffect(() => {
     if (value === "تحویل حضوری از مرکز آذر هولوگرام") {
       setDisableButton(false);
-    } else if (PostAdress.length > 0){
+    } else if (PostAdress || PostAdress2.length > 0) {
       setDisableButton(false);
     } else {
       setDisableButton(true);
     }
-  }, [value, PostAdress]);
+  }, [value, PostAdress, PostAdress2]);
 
   const handleAddAdress = () => {
-    
     setPostAdress((prevCards) => [...prevCards, formState]);
-
     setFormState({
       name: "",
       lastName: "",
@@ -83,25 +102,49 @@ export default function StepFiveComponent({
     setShowModal(false);
   };
 
+  const handleAddAdress2 = () => {
+    setPostAdress2((prevCards) => [...prevCards, formState]);
+
+    setFormState({
+      name: "",
+      lastName: "",
+      number: "",
+      companyName: "",
+      postCode: "",
+      city: "",
+      town: "",
+      addressText: "",
+    });
+    setShowModal2(false);
+  };
+
   const handleSubmit = (e) => {
     // e.preventDefault();
-    console.log(PostAdress);
-     
-
+    console.log(finalData);
   };
 
   const handleDisabelInput = () => {
     setDisabelInputStep4(true);
-    // handleNextStep();
+    handleNextStep();
     handleSubmit();
   };
 
   const handleDeleteAdress = (index) => {
-    setPostAdress(PostAdress.filter((_, i) => i !== index));
+    if (!disabelInputStep4) {
+      setPostAdress(PostAdress.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleDeleteAdress2 = (index) => {
+    if (!disabelInputStep4) {
+      setPostAdress2(PostAdress2.filter((_, i) => i !== index));
+    }
   };
 
   const handleEditAdress = (index) => {
-    setShowModal(true);
+    if (!disabelInputStep4) {
+      setShowModal(true);
+    }
     setEditModal(true);
     setEditIndex(index);
     const selectedAddress = PostAdress[index];
@@ -117,30 +160,88 @@ export default function StepFiveComponent({
       addressText: selectedAddress?.addressText || "",
     };
     setFormState(newFormState);
-  
-    
-    
-  }
+  };
+
+  const handleEditAdress2 = (index) => {
+    if (!disabelInputStep4) {
+      setShowModal2(true);
+    }
+    setEditModal2(true);
+    setEditIndex(index);
+    const selectedAddress = PostAdress2[index];
+    const newFormState = {
+      ...formState,
+      name: selectedAddress?.name || "",
+      lastName: selectedAddress?.lastName || "",
+      number: selectedAddress?.number || "",
+      companyName: selectedAddress?.companyName || "",
+      postCode: selectedAddress?.postCode || "",
+      city: selectedAddress?.city || "",
+      town: selectedAddress?.town || "",
+      addressText: selectedAddress?.addressText || "",
+    };
+    setFormState(newFormState);
+  };
 
   const handleEditAdressSubmit = () => {
-
     if (editModal) {
-      // Update the existing address
       const newPostAdress = [...PostAdress];
       newPostAdress[editIndex] = formState;
       setPostAdress(newPostAdress);
     } else {
-      // Add a new address (existing logic)
       setPostAdress((prevCards) => [...prevCards, formState]);
     }
-  
-    // Reset form and modal states
-    setFormState({ /* initial values */ });
+
+    setFormState({});
     setShowModal(false);
     setEditModal(false);
-  
+  };
 
-  }
+  const handleEditAdressSubmit2 = () => {
+    if (editModal2) {
+      const newPostAdress = [...PostAdress2];
+      newPostAdress[editIndex] = formState;
+      setPostAdress2(newPostAdress);
+    } else {
+      setPostAdress2((prevCards) => [...prevCards, formState]);
+    }
+
+    setFormState({});
+    setShowModal2(false);
+    setEditModal2(false);
+  };
+
+  const handleImageClick = (index) => {
+    if (value === "ارسال با پست") {
+      setFinalData(PostAdress[index]);
+      setTrackActiveAdress(index);
+    }
+  };
+
+  const handleImageClick2 = (index) => {
+    if (value === "ارسال با باربری") {
+      setFinalData(PostAdress2[index]);
+      setTrackActiveAdress2(index);
+    }
+  };
+
+  useEffect(() => {
+    
+    if (value === "ارسال با پست") {
+      setTrackActiveAdress2(null);
+      setTrackActiveAdress(0);
+      setFinalData(PostAdress[0]);
+      
+    } else if (value === "ارسال با باربری") {
+      setTrackActiveAdress(null);
+      setTrackActiveAdress2(0);
+      setFinalData(PostAdress2[0]);
+    } else if (value === "تحویل حضوری از مرکز آذر هولوگرام") {
+      setTrackActiveAdress2(null);
+      setTrackActiveAdress(null);
+      setFinalData({ type: "تحویل حضوری" });
+    }
+  }, [value]);
 
   return (
     <>
@@ -330,7 +431,11 @@ export default function StepFiveComponent({
                     <Card
                       key={index}
                       className={style.MainBOXCardStyle}
-                      // onClick={() => handleImageClick(item.src)}
+                      style={{
+                        border:
+                          trackactiveAdress === index && "1px solid #5695F6",
+                      }}
+                      onClick={() => handleImageClick(index)}
                     >
                       <CardContent className={`${style.reStyleCardContent}`}>
                         <div onClick={() => handleEditAdress(index)}>
@@ -450,14 +555,52 @@ export default function StepFiveComponent({
               </>
             )}
 
-            <FormControlLabel
-              className={`${style.resetfontLabel} mt-2`}
-              value="ارسال با باربری"
-              control={<Radio />}
-              label="ارسال با باربری"
-            />
+            <div className="d-flex flex-row justify-content-between align-items-center mt-2">
+              <FormControlLabel
+                className={`${style.resetfontLabel} mt-2`}
+                value="ارسال با باربری"
+                control={<Radio />}
+                label="ارسال با باربری"
+              />
+              {PostAdress2.length > 0 && (
+                <div>
+                  <button
+                    onClick={handleModalClick2}
+                    className={style.butttonAddAdress}
+                  >
+                    <div className="d-flex flex-row gap-2">
+                      <div>
+                        <svg
+                          width={13}
+                          height={13}
+                          viewBox="0 0 13 13"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M5.125 6H7.875"
+                            stroke="#5695F6"
+                            strokeLinecap="round"
+                          />
+                          <path
+                            d="M6.5 7.375V4.625"
+                            stroke="#5695F6"
+                            strokeLinecap="round"
+                          />
+                          <path
+                            d="M2.30985 4.745C3.29485 0.415001 9.70986 0.420001 10.6899 4.75C11.2649 7.29 9.68486 9.44 8.29986 10.77C7.29486 11.74 5.70486 11.74 4.69486 10.77C3.31485 9.44 1.73485 7.285 2.30985 4.745Z"
+                            stroke="#5695F6"
+                          />
+                        </svg>
+                      </div>
+                      <p className="NormalTextSizing">افزودن آدرس جدید </p>
+                    </div>
+                  </button>
+                </div>
+              )}
+            </div>
 
-            {PostAdress.length === 0 ? (
+            {PostAdress2.length === 0 ? (
               <div className="d-flex flex-column justify-content-center text-center">
                 <div>
                   <svg
@@ -498,7 +641,10 @@ export default function StepFiveComponent({
                   <p className="discription mt-2">تاکنون آدرسی ثبت نکردین</p>
                 </div>
                 <div>
-                  <button className={style.butttonAddAdress}>
+                  <button
+                    onClick={handleModalClick2}
+                    className={style.butttonAddAdress}
+                  >
                     <div className="d-flex flex-row gap-2">
                       <div>
                         <svg
@@ -532,14 +678,18 @@ export default function StepFiveComponent({
             ) : (
               <>
                 <div className={`${style.MakeProperForFlex}  mt-3`}>
-                  {PostAdress.map((item, index) => (
+                  {PostAdress2.map((item, index) => (
                     <Card
                       key={index}
                       className={style.MainBOXCardStyle}
-                      // onClick={() => handleImageClick(item.src)}
+                      style={{
+                        border:
+                          trackactiveAdress2 === index && "1px solid #5695F6",
+                      }}
+                      onClick={() => handleImageClick2(index)}
                     >
                       <CardContent className={`${style.reStyleCardContent}`}>
-                        <div onClick={() => handleEditAdress(index)}>
+                        <div onClick={() => handleEditAdress2(index)}>
                           <svg
                             width={19}
                             height={18}
@@ -573,7 +723,7 @@ export default function StepFiveComponent({
                             />
                           </svg>
                         </div>
-                        <div onClick={() => handleDeleteAdress(index)}>
+                        <div onClick={() => handleDeleteAdress2(index)}>
                           <svg
                             width={19}
                             height={18}
@@ -820,6 +970,155 @@ export default function StepFiveComponent({
           <button
             className={style.SubmitModalAdress}
             onClick={editModal ? handleEditAdressSubmit : handleAddAdress}
+            type="button"
+          >
+            تایید
+          </button>
+        </Modal.Body>
+      </Modal>
+
+      {/* Bootstrap Modal for displaying image */}
+      <Modal show={showModal2} onHide={handleCloseModal2} centered>
+        <Modal.Header closeButton className={style.ModalHeadStyle}>
+          <Modal.Title className="sometext">افزودن آدرس جدید</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className={style.modalBodyResetStyle}>
+          <h4 className="VodeoDisSizing mb-2 mt-1">
+            اطلاعات شخصی تحویل گیرنده
+          </h4>
+
+          <div className={`${style.resizingTheInputmodal} d-flex flex-row`}>
+            <div className="w-50">
+              <label htmlFor="name" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">نام</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.name}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50">
+              <label htmlFor="lastName" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">نام خانوادگی</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.lastName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50 mt-3">
+              <label htmlFor="number" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">شماره همراه</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                dir="ltr"
+                type="number"
+                id="number"
+                name="number"
+                value="09308314235"
+                className={`${style.inputTextCompanyName} discription`}
+                onChange={handleInputChange}
+                required
+                disabled
+              />
+            </div>
+          </div>
+
+          <h4 className="mt-3 mb-2 VodeoDisSizing">اطلاعات ارسال</h4>
+          <div className={`${style.resizingTheInputmodal} d-flex flex-row`}>
+            <div className="w-50">
+              <label htmlFor="companyName" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">اسم شرکت</span>
+              </label>
+              <input
+                type="text"
+                id="companyName"
+                name="companyName"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.companyName}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="w-50">
+              <label htmlFor="postCode" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">کد پستی</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                placeholder="کد پستی را وارد کنید"
+                type="number"
+                id="postCode"
+                name="postCode"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.postCode}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50 mt-2">
+              <label htmlFor="city" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">استان</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.city}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50 mt-2">
+              <label htmlFor="town" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">شهر</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <input
+                type="text"
+                id="town"
+                name="town"
+                className={`${style.inputTextCompanyName} discription`}
+                value={formState.town}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="w-50 mt-2">
+              <label htmlFor="addressText" className="d-flex flex-row gap-1">
+                <span className="NormalTextSizing">آدرس پستی</span>
+                <span className={style.StarFixReq}>*</span>
+              </label>
+              <textarea
+                id="addressText"
+                name="addressText"
+                className={`${style.inputTextCompanyName} ${style.SetMaxHeightToTextArea} discription`}
+                value={formState.addressText}
+                onChange={handleInputChange}
+                placeholder="اسم خیابان، اسم کوچه، اسم بن بست"
+                rows="4" // Number of visible text lines
+                cols="50" // Number of visible character columns
+                required
+              />
+            </div>
+          </div>
+          <button
+            className={style.SubmitModalAdress}
+            onClick={editModal2 ? handleEditAdressSubmit2 : handleAddAdress2}
             type="button"
           >
             تایید
