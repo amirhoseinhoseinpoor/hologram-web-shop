@@ -17,17 +17,22 @@ export const login = createAsyncThunk(
         }
       );
       const token = response.data.token;
+      
+      
       const response2 = await axios.get(
-        `http://localhost:7000/users?username=${username}`,
+        "http://localhost:7000/users",
         {
           headers: {
-            Authorization: `Bearer ${token}`,
-            'mode': 'no-cors',
-            
+            Authorization: `Bearer ${token}`,            
           },
+          data : {
+            username : username,
+          },
+          
         }
       );
       
+      console.log(response2.data);
       
       return {
         token,
@@ -116,6 +121,54 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   }
 });
 
+// start send media
+export const uploadFile = createAsyncThunk(
+  "product/uploadFile ",
+  async ({ file, tag, type, isPublic }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+    
+    
+
+    try {
+      // Create a FormData object
+      const formData = new FormData();
+      formData.append("files", file);
+      formData.append("tag", tag);
+      formData.append("type", type);
+      formData.append("isPublic", isPublic);
+
+      const response = await axios.post(
+        "http://localhost:7000/system/upload",
+        formData,
+        {
+          headers: {
+            Authorization: token.token ? `Bearer ${token.token}` : "",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.data[0].fileName) {
+        alert("افزودن عکس با موفقیت انجام شد");
+      }
+
+      return response.data[0].fileName;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert("خطا در افزودن media");
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
+// end send media 
+
 // start Product
 
 export const list = createAsyncThunk("product/list", async (thunkAPI) => {
@@ -135,6 +188,8 @@ export const list = createAsyncThunk("product/list", async (thunkAPI) => {
 
 
 // end product
+
+
 
 
 export const updateBannerContent = createAsyncThunk(

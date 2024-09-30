@@ -1,104 +1,126 @@
-@use '../variable' as var;
+@use "../variable" as var;
 
-
-
-.LoginMainDiv{
-    border: 1.5px solid #DDE0E4;
-    border-radius: 6px;
-    padding: 60px;
-    max-width: fit-content;
-    width: 100%;
-    background-color: white;
+.LoginMainDiv {
+  border: 1.5px solid #dde0e4;
+  border-radius: 6px;
+  padding: 60px;
+  max-width: fit-content;
+  width: 100%;
+  background-color: white;
 }
 
-.sectionSignUpStyle{
-    background-color: #F7F8FC;
-    height: fit-content;
-    min-height: 100%
+.sectionSignUpStyle {
+  background-color: #f7f8fc;
+  height: fit-content;
+  min-height: 100%;
 }
 
-.closeIconImg{
-    position: absolute;
-    left: 8%;
-    top: 8%;
-    transform: translate(50 , -50);
+.closeIconImg {
+  position: absolute;
+  left: 8%;
+  top: 8%;
+  transform: translate(50, -50);
 }
-.submitButton{
-    border-radius: 4px;
-    color: white;
-    border: none;
-    padding: 0;
+.submitButton {
+  border-radius: 4px;
+  color: white;
+  border: none;
+  padding: 0;
 }
-.justPaddingButton{
-    padding: 8px 0;
+.justPaddingButton {
+  padding: 8px 0;
 }
 .disabledButton {
-  background-color:  #868686;
+  background-color: #868686;
   cursor: not-allowed;
 }
 .activeButton {
-    background-color: #5695F6;
-    cursor: pointer;
+  background-color: #5695f6;
+  cursor: pointer;
 }
 .activeButton :hover {
-    background-color: #3E73D3;
-    border-radius: 4px;
+  background-color: #3e73d3;
+  border-radius: 4px;
 }
 
-.formInputNumber:focus{
+.formInputNumber:focus {
   box-shadow: unset !important;
-  border: 1px solid #5695F6;
+  border: 1px solid #5695f6;
 }
-.formInputNumber{
-    border-radius: 4px !important;
+.formInputNumber {
+  border-radius: 4px !important;
 }
-.formInputNumber::-webkit-inner-spin-button{
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
-    margin: 0;
+.formInputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  margin: 0;
 }
-.outerLoginPage{
-    display: flex;
-    justify-content: center;
-    margin: auto;
-    width: 100%;
+.outerLoginPage {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
 }
-.SignUpLink{
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
+.SignUpLink {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
 }
-.SignUpLink :hover{
-    text-decoration: underline;
+.SignUpLink :hover {
+  text-decoration: underline;
 }
-.decoreRole{
-    border-bottom: 1.3px solid lightgray;
+.decoreRole {
+  border-bottom: 1.3px solid lightgray;
 }
 
-.formInputCapcha{
-    border-radius: 4px !important;
-    width: 100%;
+.formInputCapcha {
+  border-radius: 4px !important;
+  width: 100%;
 }
-.formInputCapcha:focus{
-    box-shadow: unset !important;
-    border: 1px solid #5695F6;
+.formInputCapcha:focus {
+  box-shadow: unset !important;
+  border: 1px solid #5695f6;
+}
+
+.formInputCapcha::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  margin: 0;
+}
+
+.handelLoginError {
+  border-radius: 4px;
+  background-color: #ff4f3f;
+  padding: 8px;
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.colorForSignUpButton {
+  color: #5695f6;
+}
+
+.loader {
+  width: 30px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f3802c !important;
+  background-color: #f3802c !important;
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
   }
-
-.formInputCapcha::-webkit-inner-spin-button{
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
-    margin: 0;
 }
 
-.handelLoginError{
-    border-radius: 4px;
-    background-color: #FF4F3F;
-    padding: 8px;
-    color: white;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.colorForSignUpButton{
-    color: #5695F6;
+.loader:hover {
+  opacity: 1; /* Ensure the opacity stays at 1 on hover */
 }

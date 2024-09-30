@@ -1,6 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+
+// redux import  
+
+import { useSelector , useDispatch } from "react-redux";
+import { uploadFile } from "@/app/Store/thunks";
+
+
+
 import jsPDF from "jspdf";
 
 import Tooltip from "@mui/material/Tooltip";
@@ -31,27 +39,33 @@ export default function StepTwoComponent({
   setDisabelInputStep2,
   disabelInputStep2,
 }) {
+
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState("خصوصی");
   const [paying, setPaying] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [logo, setLogo] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const [ sendingFinalData , setSendingFinalData] = useState([]);
+
+  // pdf part delete it if you dont want it
   const [data, setData] = useState({
     title: "PDF Title",
     content: "This is the content of the PDF.",
   });
-
-  // modal part state and function
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const generatePDF = () => {
     const doc = new jsPDF();
     doc.text(data.title, 10, 10);
     doc.text(data.content, 10, 20);
     doc.save("generated.pdf");
   };
+
+  // modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     setIsButtonDisabled(paying === "" || paying === "آپلود فیش");
@@ -87,8 +101,8 @@ export default function StepTwoComponent({
   };
 
   const handleLogoChange = (event) => {
-    const file = event.target.files[0]; // Only get the first file
-    const imageUrl = URL.createObjectURL(file); // Create a URL for the image preview
+    const file = event.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
     setLogo({
       imageUrl,
       file,
@@ -113,24 +127,58 @@ export default function StepTwoComponent({
   };
 
   const handleDisabelInput = () => {
-    setDisabelInputStep2(true);
-    handleNextStep();
+    // setDisabelInputStep2(true);
+    handleSubmit();
+    // handleNextStep();
   };
 
-  const handleSubmit = () => {
-    const formData = new FormData();
-    uploadedFiles.forEach((fileObj, index) => {
-      formData.append(`image_${index}`, fileObj.file);
-      formData.append(`title_${index}`, fileObj.title);
-    });
-    // Use fetch or axios to send the formData to the backend
-    // Example:
-    // fetch('your-backend-url', {
-    //   method: 'POST',
-    //   body: formData,
-    // }).then(response => {
-    //   // Handle response
-    // });
+  const handleSubmit = async () => {
+    
+
+    try {
+
+      
+
+      const uploadDocumentimage = await Promise.all(
+        uploadedFiles.map(async (item) => {
+          let updated = {...item};
+
+          const tag = "testPrivateData";
+          const type = 1;
+          const isPublic = false;
+          const file = item.file;
+          console.log(file);
+
+          const fileId = await dispatch(
+            uploadFile({file, tag, type, isPublic})
+          ).unwrap();
+          
+          updated.file = fileId;
+
+          return updated;
+
+        })
+
+      )
+
+      const preparedData = uploadDocumentimage.map(({ imageUrl, ...rest }) => rest);
+
+      console.log(preparedData);
+     
+      
+      
+
+      const formData = new FormData();
+
+      uploadedFiles.forEach((fileObj, index) => {
+        formData.append(`image_${index}`, fileObj.file);
+        formData.append(`title_${index}`, fileObj.title);
+      });
+
+      
+    } catch (error) {
+      console.error("Error sending media", error);
+    }
   };
 
   return (
@@ -167,8 +215,8 @@ export default function StepTwoComponent({
                         className={style.deleteButton}
                       >
                         <svg
-                          width="17"
-                          height="17"
+                          width={17}
+                          height={17}
                           viewBox="0 0 12 12"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -176,32 +224,32 @@ export default function StepTwoComponent({
                           <path
                             d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M5.16504 8.25H6.83004"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M4.75 6.25H7.25"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                       </button>
@@ -212,7 +260,7 @@ export default function StepTwoComponent({
                         className={style.labelInsteadOfInput}
                         htmlFor="logoUpload"
                       >
-                        <div className="d-flex flex-column text-center">
+                        <div className="d-flex flex-column text-center p-1">
                           <div>
                             <svg
                               width={21}
@@ -236,7 +284,7 @@ export default function StepTwoComponent({
                             </svg>
                           </div>
                           <p
-                            className={`${style.colorTheInputFile} NormalTextSizing`}
+                            className={`${style.colorTheInputFile} discription`}
                           >
                             بارگذاری فایل .png یا .jpg
                           </p>
@@ -323,7 +371,7 @@ export default function StepTwoComponent({
                     className={style.labelInsteadOfInput}
                     htmlFor="fileUpload"
                   >
-                    <div className="d-flex flex-column text-center">
+                    <div className="d-flex flex-column text-center p-1">
                       <div>
                         <svg
                           width={21}
@@ -346,9 +394,7 @@ export default function StepTwoComponent({
                           />
                         </svg>
                       </div>
-                      <p
-                        className={`${style.colorTheInputFile} NormalTextSizing`}
-                      >
+                      <p className={`${style.colorTheInputFile} discription`}>
                         بارگذاری فایل .png یا .jpg
                       </p>
                       <p className={`${style.colorTheInputFile} discription`}>
@@ -383,8 +429,8 @@ export default function StepTwoComponent({
                         className={style.deleteButton}
                       >
                         <svg
-                          width="17"
-                          height="17"
+                          width={17}
+                          height={17}
                           viewBox="0 0 12 12"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -392,32 +438,32 @@ export default function StepTwoComponent({
                           <path
                             d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M5.16504 8.25H6.83004"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M4.75 6.25H7.25"
                             stroke="#FF4F3F"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                       </button>

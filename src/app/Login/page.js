@@ -22,6 +22,7 @@ export default function Login() {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [loadinStatus, setLodaingStatus] = useState(false);
 
   const hasError = Boolean(errorMessage);
 
@@ -53,20 +54,24 @@ export default function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setLodaingStatus(true);
     setErrorMessage(null);
     try {
       const credentials = { username, password };
 
       if (!phoneNumberRegex.test(username)) {
         setErrorMessage("فرمت شماره همراه اشتباه است");
+        setLodaingStatus(false);
       } else {
         const resultAction = await dispatch(login(credentials));
         if (login.rejected.match(resultAction)) {
           setErrorMessage(resultAction.payload);
+          setLodaingStatus(false);
         }
       }
     } catch (error) {
       console.error("Login/page.js", error);
+      setLodaingStatus(false);
     }
   };
 
@@ -356,36 +361,42 @@ export default function Login() {
                   className={`${style.submitButton} ${
                     isButtonDisabled ? style.disabledButton : style.activeButton
                   } w-100 mt-1`}
-                  disabled={isButtonDisabled}
+                  disabled={isButtonDisabled || loadinStatus}
                 >
                   <div
                     className={`${style.justPaddingButton} d-flex flex-row align-items-center justify-content-center`}
                   >
-                    <p className="ms-2 VodeoDisSizing">دریافت کد تایید</p>
-                    <svg
-                      width={21}
-                      height={21}
-                      viewBox="0 0 21 21"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M8.47533 5.91748L3.41699 10.9758L8.47533 16.0341"
-                        stroke="white"
-                        strokeWidth="1.5"
-                        strokeMiterlimit={10}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M17.5836 10.9756H3.55859"
-                        stroke="white"
-                        strokeWidth="1.5"
-                        strokeMiterlimit={10}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    {!loadinStatus ? (
+                      <>
+                        <p className="ms-2 VodeoDisSizing">دریافت کد تایید</p>
+                        <svg
+                          width={21}
+                          height={21}
+                          viewBox="0 0 21 21"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8.47533 5.91748L3.41699 10.9758L8.47533 16.0341"
+                            stroke="white"
+                            strokeWidth="1.5"
+                            strokeMiterlimit={10}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M17.5836 10.9756H3.55859"
+                            stroke="white"
+                            strokeWidth="1.5"
+                            strokeMiterlimit={10}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </>
+                    ) : (
+                      <div className={style.loader}></div>
+                    )}
                   </div>
                 </button>
                 <Link href="/SignUp" className={style.SignUpLink}>
