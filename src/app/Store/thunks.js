@@ -1,45 +1,38 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios"; // Import axios for API calls
 
+// start auth
+
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
     const { username, password } = credentials;
     try {
-      const response = await axios.post(
-        "http://176.120.16.221:7000/auth/login",
-        {
-          headers: {
-            'mode': 'no-cors',
-          },
-          username,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:7000/auth/login", {
+        headers: {
+          mode: "no-cors",
+        },
+        username,
+        password,
+      });
       const token = response.data.token;
-      
-      
-      const response2 = await axios.get(
-        "http://localhost:7000/users",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,            
-          },
-          data : {
-            username : username,
-          },
-          
-        }
-      );
-      
-      console.log(response2.data);
-      
+
+      const response2 = await axios.get("http://localhost:7000/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          username: username,
+        },
+      });
+
       return {
         token,
-        firstName: response2.data[0].firstName, 
+        idOfUser: response.data.id,
+        firstName: response2.data[0].firstName,
         lastName: response2.data[0].lastName,
-        phoneNumber : response2.data[0].username,
-        code : response2.data[0].code,
+        phoneNumber: response2.data[0].username,
+        code: response2.data[0].code,
       };
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -121,14 +114,14 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   }
 });
 
+// end auth
+
 // start send media
 export const uploadFile = createAsyncThunk(
   "product/uploadFile ",
   async ({ file, tag, type, isPublic }, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token;
-    
-    
 
     try {
       // Create a FormData object
@@ -167,7 +160,7 @@ export const uploadFile = createAsyncThunk(
   }
 );
 
-// end send media 
+// end send media
 
 // start Product
 
@@ -186,11 +179,79 @@ export const list = createAsyncThunk("product/list", async (thunkAPI) => {
   }
 });
 
-
 // end product
 
+// start order
 
+export const getUserProduct = createAsyncThunk(
+  "order/getUserProduct",
+  async (_ , thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+    const userId = state.auth.idOfUser;
 
+    try {
+      alert(token);    // Alert should work here unless blocked by environment settings
+      alert(userId);   // Make sure alerts are not blocked in your browser
+      console.log("Token: ", token);
+      console.log("UserId: ", userId);
+
+      const response = await axios.get(
+        `http://localhost:7000/order/findById/${userId}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token.token}` : "",
+          },
+        }
+      );
+      console.log(response.data);
+
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
+export const sendFirstStep = createAsyncThunk(
+  "order/sendFirstStep",
+  async (formData, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token.token;
+    try {
+      const response = await axios.post(
+        "http://localhost:7000/order/request",
+        formData,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+
+      const data = response.data;
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
+// end order
 
 export const updateBannerContent = createAsyncThunk(
   "content/updateBannerContent",

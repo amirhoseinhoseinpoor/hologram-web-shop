@@ -5,8 +5,12 @@ import React, { useState, useEffect } from "react";
 import style from "../../../Styles/Profile/MakeOrderStyle/MakeOrder.module.scss";
 import ProcessTracker from "../ProcessTracker";
 import data from "/public/json/ProfileFirstStepEffect.json";
-
 import PusherChat from "./Talkjs";
+
+// improt redux
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProduct } from "@/app/Store/thunks";
+import { idOfUser } from "@/app/Store/slice";
 
 const SteponeComponent = dynamic(() => import("./StepOneComponent"));
 
@@ -26,11 +30,31 @@ const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
 
 export default function MakeOrder() {
-  const [step, setStep] = useState(1);
+  const dispatch = useDispatch();
 
+  const [step, setStep] = useState(1);
   const [disabelInput, setDisabelInput] = useState(false);
   const [disabelInputStep2, setDisabelInputStep2] = useState(false);
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
+
+  // geting the produc for user
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await dispatch(getUserProduct()).unwrap(); // Unwraps the result from the promise
+        console.log('Dispatch result:', result);  // Logs the actual data returned from the API call
+      } catch (error) {
+        console.error('Error during dispatch:', error);  // Handles any errors
+      }
+    };
+
+    fetchData();
+    
+  }, [dispatch]);
+  
+  const idUser = useSelector(idOfUser);
+  console.log(idUser);
 
   // Function to go to the next step
   const handleNextStep = () => {
@@ -90,7 +114,12 @@ export default function MakeOrder() {
           </div>
         );
       case 5:
-        return <StepSixComponent handleNextStep={handleNextStep} handlePreviousStep={handlePreviousStep} />;
+        return (
+          <StepSixComponent
+            handleNextStep={handleNextStep}
+            handlePreviousStep={handlePreviousStep}
+          />
+        );
       case 6:
         return <StepSeven handleNextStep={handleNextStep} />;
       default:
