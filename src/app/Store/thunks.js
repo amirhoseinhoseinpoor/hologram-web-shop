@@ -9,26 +9,28 @@ export const login = createAsyncThunk(
     const { username, password } = credentials;
     try {
       const response = await axios.post("http://localhost:7000/auth/login", {
-        headers: {
-          mode: "no-cors",
-        },
         username,
         password,
       });
       const token = response.data.token;
 
-      const response2 = await axios.get("http://localhost:7000/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      console.log(token);
+
+      const response2 = await axios.post(
+        "http://localhost:7000/users",
+        {username},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-        data: {
-          username: username,
-        },
-      });
+        
+      );
+
+      console.log(response2);
 
       return {
         token,
-        idOfUser: response.data.id,
         firstName: response2.data[0].firstName,
         lastName: response2.data[0].lastName,
         phoneNumber: response2.data[0].username,
@@ -185,26 +187,16 @@ export const list = createAsyncThunk("product/list", async (thunkAPI) => {
 
 export const getUserProduct = createAsyncThunk(
   "order/getUserProduct",
-  async (_ , thunkAPI) => {
+  async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token;
-    const userId = state.auth.idOfUser;
 
     try {
-      alert(token);    // Alert should work here unless blocked by environment settings
-      alert(userId);   // Make sure alerts are not blocked in your browser
-      console.log("Token: ", token);
-      console.log("UserId: ", userId);
-
-      const response = await axios.get(
-        `http://localhost:7000/order/findById/${userId}`,
-        {
-          headers: {
-            Authorization: token ? `Bearer ${token.token}` : "",
-          },
-        }
-      );
-      console.log(response.data);
+      const response = await axios.get(`http://localhost:7000/order/findById`, {
+        headers: {
+          Authorization: token ? `Bearer ${token.token}` : "",
+        },
+      });
 
       return response.data;
     } catch (error) {
@@ -236,7 +228,6 @@ export const sendFirstStep = createAsyncThunk(
       );
 
       const data = response.data;
-      console.log(data);
 
       return data;
     } catch (error) {

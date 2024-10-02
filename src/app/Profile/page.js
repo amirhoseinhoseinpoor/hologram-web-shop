@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { childValue } from "../Store/slice";
+import { firstName , lastName , phoneNumber } from "../Store/slice";
 import { useSearchParams } from "next/navigation";
 
 import Header from "../Components/Header";
@@ -87,6 +88,10 @@ const Profile = () => {
 
   const childValue2 = useSelector(childValue);
 
+  const firstname = useSelector(firstName);
+  const lastname = useSelector(lastName);
+  const phonenumber = useSelector(phoneNumber);
+
   useEffect(() => {
     if (childValue2 !== null) {
       setActiveTab(childValue2);
@@ -109,8 +114,8 @@ const Profile = () => {
           <aside className={`${style.sidebar} h-100`}>
             <div className={style.userinfoInSidebar}>
               <div className="d-flex flex-column">
-                <p>بهار رستمی نیا</p>
-                <p>091286568542</p>
+                <p>{firstname} {lastname}</p>
+                <p>{phonenumber}</p>
               </div>
               <div
                 onClick={() => setActiveTab("userInfo")}
@@ -202,6 +207,6 @@ const Profile = () => {
 
 Profile.displayName = "Profile";
 
-Hoc(Profile);
 
-export default Profile;
+
+export default Hoc(Profile);

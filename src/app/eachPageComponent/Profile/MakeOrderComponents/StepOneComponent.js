@@ -12,6 +12,8 @@ export default function SteponeComponent({
   setDisabelInput,
   disabelInput,
 }) {
+  
+  
   const dispatch = useDispatch();
 
   const [selectedSize, setSelectedSize] = useState("");
@@ -33,6 +35,23 @@ export default function SteponeComponent({
     information: "",
   });
 
+
+  useEffect(() => {
+    if (data) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        ...data,  
+      }));
+      setSelectedSize(data.selectedSize || "");
+      setSelectedShape(data.selectedShape || "");
+      setSerialtype(data.serialtype || false);
+      setDisabelInput(true);
+      setStatusTraking(true);
+    }
+  
+    
+  }, [data]);
+  
   const handleDisabelInput = () => {
     setDisabelInput(true);
     handleSubmit();
@@ -65,13 +84,13 @@ export default function SteponeComponent({
 
   const checkAllFieldsFilled = () => {
     const isFilled =
-      selectedSize !== "" &&
-      document.getElementById("feature").value !== "" &&
-      document.getElementById("color").value !== "" &&
-      document.getElementById("stick").value !== "" &&
-      document.getElementById("howItWork").value !== "" &&
-      document.getElementById("chosenEffect").value !== "" &&
-      selectedShape !== "";
+    formData.selectedSize !== "" &&
+    formData.feature !== "" &&
+    formData.color !== "" &&
+    formData.stick !== "" &&
+    formData.howItWork !== "" &&
+    formData.chosenEffect !== "" &&
+    formData.selectedShape !== "";
 
     setDisableNextStep(!isFilled);
   };
@@ -79,9 +98,11 @@ export default function SteponeComponent({
   const handleSubmit = async () => {
     setDisableNextStep(true);
     try {
-      const resultAction = await dispatch(sendFirstStep(formData));
-      console.log(resultAction);
-
+            
+      const updatedData = {request: { ...formData }};
+  
+      const resultAction = await dispatch(sendFirstStep(updatedData));
+      
       if (sendFirstStep.fulfilled.match(resultAction)) {
         console.log("Success:", resultAction.payload);
         setStatusTraking(true);
@@ -177,7 +198,7 @@ export default function SteponeComponent({
                 // style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                 id="feature"
                 name="feature"
-                // value={password}
+                value={formData.feature}
                 // ref={passwordRef}
                 // onChange={(e) => setPassword(e.target.value)}
                 placeholder="حداقل 2000"
@@ -250,6 +271,7 @@ export default function SteponeComponent({
                 className={`${style.formInputNumber} form-control discription`}
                 id="color"
                 name="color"
+                value={formData.color}
                 onChange={handleInputChange}
                 disabled={disabelInput}
                 required
@@ -264,6 +286,7 @@ export default function SteponeComponent({
                 className={`${style.formInputNumber} form-control discription`}
                 id="stick"
                 name="stick"
+                value={formData.stick}
                 onChange={handleInputChange}
                 disabled={disabelInput}
               />
@@ -277,6 +300,7 @@ export default function SteponeComponent({
                 className={`${style.formInputNumber} form-control discription`}
                 id="howItWork"
                 name="howItWork"
+                value={formData.howItWork}
                 onChange={handleInputChange}
                 disabled={disabelInput}
               />
@@ -293,6 +317,7 @@ export default function SteponeComponent({
               className={`${style.formInputNumber} form-control discription`}
               id="chosenEffect"
               name="chosenEffect"
+              value={formData.chosenEffect}
               disabled={disabelInput}
               onChange={handleInputChange}
             />
@@ -364,6 +389,7 @@ export default function SteponeComponent({
               className={`${style.formInputNumber} form-control discription`}
               id="useCase"
               name="useCase"
+              value={formData.useCase}
               disabled={disabelInput}
               onChange={handleInputChange}
             />
@@ -406,6 +432,7 @@ export default function SteponeComponent({
                   className={`${style.formInputNumber} form-control discription`}
                   id="serial"
                   name="serial"
+                  value={formData.serial}
                   onChange={handleInputChange}
                   disabled={disabelInput}
                 />
@@ -420,6 +447,7 @@ export default function SteponeComponent({
               className={`${style.formInputNumber} form-control discription`}
               id="information"
               name="information"
+              value={formData.information}
               style={{ maxHeight: "200px" }}
               onChange={handleInputChange}
               disabled={disabelInput}

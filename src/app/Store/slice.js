@@ -11,7 +11,6 @@ import {
 
 const authinitialState = {
   token: null,
-  idOfUser : null,
   firstName: null,
   lastName: null,
   phoneNumber : null,
@@ -38,7 +37,6 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload;
-        state.idOfUser = action.payload.idOfUser;
         state.firstName = action.payload.firstName;
         state.lastName = action.payload.lastName;
         state.phoneNumber = action.payload.phoneNumber;
@@ -90,7 +88,6 @@ const authSlice = createSlice({
 // export default authSlice.reducer;
 export const authSliceV = authSlice.reducer;
 export const token = (state) => state.auth.token;
-export const idOfUser = (state) => state.auth.idOfUser;
 export const firstName = (state) => state.auth.firstName;
 export const lastName = (state) => state.auth.lastName;
 export const phoneNumber = (state) => state.auth.phoneNumber;

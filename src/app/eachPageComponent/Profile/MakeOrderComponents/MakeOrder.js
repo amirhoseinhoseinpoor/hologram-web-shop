@@ -10,7 +10,7 @@ import PusherChat from "./Talkjs";
 // improt redux
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProduct } from "@/app/Store/thunks";
-import { idOfUser } from "@/app/Store/slice";
+
 
 const SteponeComponent = dynamic(() => import("./StepOneComponent"));
 
@@ -36,16 +36,24 @@ export default function MakeOrder() {
   const [disabelInput, setDisabelInput] = useState(false);
   const [disabelInputStep2, setDisabelInputStep2] = useState(false);
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
+  const [orderState , setOrderState] = useState("");
 
   // geting the produc for user
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await dispatch(getUserProduct()).unwrap(); // Unwraps the result from the promise
-        console.log('Dispatch result:', result);  // Logs the actual data returned from the API call
+        const result = await dispatch(getUserProduct()).unwrap(); 
+        
+
+        result.map((item) => {
+          if (item.status === 1) {
+            console.log(item);
+            setOrderState(item);
+          }
+        })
       } catch (error) {
-        console.error('Error during dispatch:', error);  // Handles any errors
+        console.error('Error during dispatch:', error);  
       }
     };
 
@@ -53,8 +61,7 @@ export default function MakeOrder() {
     
   }, [dispatch]);
   
-  const idUser = useSelector(idOfUser);
-  console.log(idUser);
+
 
   // Function to go to the next step
   const handleNextStep = () => {
@@ -73,7 +80,7 @@ export default function MakeOrder() {
         return (
           <div className={style.stepContent}>
             <SteponeComponent
-              data={data}
+              data={orderState.request}
               handleNextStep={handleNextStep}
               setDisabelInput={setDisabelInput}
               disabelInput={disabelInput}
