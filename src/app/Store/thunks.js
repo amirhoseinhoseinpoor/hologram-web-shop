@@ -242,6 +242,39 @@ export const sendFirstStep = createAsyncThunk(
   }
 );
 
+export const sendingSecondStep = createAsyncThunk(
+  "order/sendingSecondStep",
+  async ({code ,  sendingFinalData}, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token.token;
+    try {
+      const response = await axios.patch(
+        `http://localhost:7000/order/document/${code}`,
+        {
+          document : sendingFinalData,
+        },
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+
+      const data = response.data;
+
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
 // end order
 
 export const updateBannerContent = createAsyncThunk(

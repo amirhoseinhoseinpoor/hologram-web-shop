@@ -50,6 +50,7 @@ export default function MakeOrder() {
           if (item.status === 1) {
             console.log(item);
             setOrderState(item);
+            setStep(item.step);
           }
         })
       } catch (error) {
@@ -72,6 +73,9 @@ export default function MakeOrder() {
   const handlePreviousStep = () => {
     setStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
+
+  console.log(orderState);
+  
 
   // Function to render the content based on the current step
   const renderStepContent = () => {
@@ -96,6 +100,8 @@ export default function MakeOrder() {
       case 2:
         return (
           <StepTwoComponent
+            dataFactor={orderState.reqComment}
+            code={orderState.code}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
             setDisabelInputStep2={setDisabelInputStep2}

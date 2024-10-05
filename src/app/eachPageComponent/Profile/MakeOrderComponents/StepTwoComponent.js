@@ -2,12 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 
-// redux import  
+// redux import
 
-import { useSelector , useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { uploadFile } from "@/app/Store/thunks";
-
-
 
 import jsPDF from "jspdf";
 
@@ -19,6 +17,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Box } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import { sendingSecondStep } from "@/app/Store/thunks";
 
 const ModalStyle = {
   position: "absolute",
@@ -34,27 +33,39 @@ const ModalStyle = {
 import style from "../../../Styles/Profile/MakeOrderStyle/StepTwoStyle.module.scss";
 
 export default function StepTwoComponent({
+  dataFactor,
+  code,
   handleNextStep,
   handlePreviousStep,
   setDisabelInputStep2,
   disabelInputStep2,
 }) {
-
+  console.log(dataFactor);
+  
   const dispatch = useDispatch();
 
   const [value, setValue] = useState("خصوصی");
+
   const [paying, setPaying] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [logo, setLogo] = useState(null);
+  const [companyName, setCompanyName] = useState("");
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  const [ sendingFinalData , setSendingFinalData] = useState([]);
+  const [sendingFinalData, setSendingFinalData] = useState({
+    logo: "",
+    companyName: "",
+    companyType: "",
+    documnetImage: "",
+  });
 
   // pdf part delete it if you dont want it
   const [data, setData] = useState({
     title: "PDF Title",
     content: "This is the content of the PDF.",
   });
+
   const generatePDF = () => {
     const doc = new jsPDF();
     doc.text(data.title, 10, 10);
@@ -79,6 +90,10 @@ export default function StepTwoComponent({
 
   const handleChange = (event) => {
     setValue(event.target.value);
+  };
+
+  const handleComanyNameChange = (event) => {
+    setCompanyName(event.target.value);
   };
 
   const handlePayingChange = (event) => {
@@ -133,48 +148,54 @@ export default function StepTwoComponent({
   };
 
   const handleSubmit = async () => {
-    
-
     try {
+      const uploadLogo = await dispatch(
+        uploadFile({
+          file: logo.file,
+          tag: "userDocument",
+          type: 1,
+          isPublic: false,
+        })
+      ).unwrap();
 
-      
 
       const uploadDocumentimage = await Promise.all(
         uploadedFiles.map(async (item) => {
-          let updated = {...item};
+          let updated = { ...item };
 
-          const tag = "testPrivateData";
+          const tag = "userDocument";
           const type = 1;
           const isPublic = false;
           const file = item.file;
           console.log(file);
 
           const fileId = await dispatch(
-            uploadFile({file, tag, type, isPublic})
+            uploadFile({ file, tag, type, isPublic })
           ).unwrap();
-          
+
           updated.file = fileId;
 
           return updated;
-
         })
+      );
 
-      )
+      const preparedData = uploadDocumentimage.map(
+        ({ imageUrl, ...rest }) => rest
+      );
 
-      const preparedData = uploadDocumentimage.map(({ imageUrl, ...rest }) => rest);
 
-      console.log(preparedData);
-     
-      
-      
 
-      const formData = new FormData();
+      const sendingFinalData = {
+        uploadLogo,
+        paying,
+        companyName,
+        value,
+        preparedData,
+      };
 
-      uploadedFiles.forEach((fileObj, index) => {
-        formData.append(`image_${index}`, fileObj.file);
-        formData.append(`title_${index}`, fileObj.title);
-      });
+      console.log(sendingFinalData);
 
+      const finalDataDispatch = await dispatch(sendingSecondStep({code , sendingFinalData}))
       
     } catch (error) {
       console.error("Error sending media", error);
@@ -186,10 +207,7 @@ export default function StepTwoComponent({
       <div className={`${style.resizeNewresponsive} d-flex flex-row gap-3`}>
         <div className={`${style.fixNewSizes} d-flex flex-column`}>
           <div className={style.stepContent}>
-            <p className="discription">
-              یه عنوان اینجاست که برای کاربر توضیح میده چه مدارکی رو باید اپلود
-              کنند و یک سری توضیحات تکمیلی که در اینجا قرار میگیره
-            </p>
+            {dataFactor && <p className="discription">{dataFactor.docInfo}</p>}
 
             <div
               className={`${style.makeTheFormResponsive} d-flex flex-row gap-5 mt-3`}
@@ -322,6 +340,7 @@ export default function StepTwoComponent({
                     type="text"
                     id="CompanyName"
                     placeholder="اسم شرکت را بنویسید"
+                    onChange={handleComanyNameChange}
                     className={`${style.inputTextCompanyName} discription`}
                     disabled={disabelInputStep2}
                   />
@@ -738,7 +757,17 @@ export default function StepTwoComponent({
           </div>
         </div>
 
-        <div
+        <div>
+          {dataFactor && (
+            <Box
+              component="img"
+              sx={{ maxWidth: "250px", maxHeight: "250px" }}
+              src={`http://localhost:7000/system/download/${dataFactor.paymentImage}`}
+            />
+          )}
+        </div>
+
+        {/* <div
           className={`${style.stepContent} ${style.resizingWebInResponsive}  ${style.newWebResizing}`}
         >
           <div className={`mt-2`}>
@@ -899,7 +928,7 @@ export default function StepTwoComponent({
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
