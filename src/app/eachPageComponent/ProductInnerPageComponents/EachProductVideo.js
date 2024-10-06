@@ -126,8 +126,8 @@ export default function EachProductVideo({productData}) {
                 id="video"
                 style={{ aspectRatio: "2/1" }}
                 component="video"
-                src={`http://localhost:7000/system/download/${videoData[currentVideoIndex].src}`}
-                poster={`http://localhost:7000/system/download/${videoData[currentVideoIndex].poster}`}
+                src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].src}`}
+                poster={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].poster}`}
                 sx={{ borderRadius: "4px" }}
                 controls
                 ref={videoRef}
@@ -183,8 +183,8 @@ export default function EachProductVideo({productData}) {
                     <div className="position-relative w-50">
                       <CardMedia
                         component="img"
-                        src={`http://localhost:7000/system/download/${video.poster}`} 
-                        alt={`http://localhost:7000/system/download/${video.title}`}
+                        src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${video.poster}`} 
+                        alt={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${video.title}`}
                         sx={{ borderRadius: "4px", height: "100%" }}
                       />
                       <div className={style.BelowContentFixIcon}>

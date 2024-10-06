@@ -8,7 +8,7 @@ export const login = createAsyncThunk(
   async (credentials, thunkAPI) => {
     const { username, password } = credentials;
     try {
-      const response = await axios.post("http://localhost:7000/auth/login", {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/auth/login`, {
         username,
         password,
       });
@@ -17,7 +17,7 @@ export const login = createAsyncThunk(
       console.log(token);
 
       const response2 = await axios.post(
-        "http://localhost:7000/users",
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/users`,
         {username},
         {
           headers: {
@@ -54,7 +54,7 @@ export const signUp = createAsyncThunk(
     const { firstName, lastName, username, password } = credentials;
     try {
       const response = await axios.post(
-        "http://176.120.16.221:7000/auth/register",
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/auth/register`,
         {
           firstName,
           lastName,
@@ -84,7 +84,7 @@ export const forgetPassword = createAsyncThunk(
     const { firstName, lastName, username, password } = credentials;
     try {
       const response = await axios.post(
-        "http://176.120.16.221:7000/users/{code}",
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/users/{code}`,
         {
           firstName,
           lastName,
@@ -134,7 +134,7 @@ export const uploadFile = createAsyncThunk(
       formData.append("isPublic", isPublic);
 
       const response = await axios.post(
-        "http://localhost:7000/system/upload",
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/upload`,
         formData,
         {
           headers: {
@@ -168,7 +168,7 @@ export const uploadFile = createAsyncThunk(
 
 export const list = createAsyncThunk("product/list", async (thunkAPI) => {
   try {
-    const response = await axios.get("http://localhost:7000/product/list");
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/list`);
     const data = response.data;
 
     return data;
@@ -192,7 +192,7 @@ export const getUserProduct = createAsyncThunk(
     const token = state.auth.token;
 
     try {
-      const response = await axios.get(`http://localhost:7000/order/findById`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/findById`, {
         headers: {
           Authorization: token ? `Bearer ${token.token}` : "",
         },
@@ -218,7 +218,7 @@ export const sendFirstStep = createAsyncThunk(
     const token = state.auth.token.token;
     try {
       const response = await axios.post(
-        "http://localhost:7000/order/request",
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/request`,
         formData,
         {
           headers: {
@@ -249,7 +249,7 @@ export const sendingSecondStep = createAsyncThunk(
     const token = state.auth.token.token;
     try {
       const response = await axios.patch(
-        `http://localhost:7000/order/document/${code}`,
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/document/${code}`,
         {
           document : sendingFinalData,
         },

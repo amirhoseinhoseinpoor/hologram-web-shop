@@ -54,7 +54,7 @@ export default function ProductShow({ productData }) {
               {data.imgData[currentMediaIndex].type === "2" ? (
                 <CardMedia
                   component="video"
-                  src={`http://localhost:7000/system/download/${data.imgData[currentMediaIndex].src}`}
+                  src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${data.imgData[currentMediaIndex].src}`}
                   // poster={data[currentMediaIndex].poster}
                   sx={{ borderRadius: "4px" }}
                   controls
@@ -63,7 +63,7 @@ export default function ProductShow({ productData }) {
               ) : (
                 <CardMedia
                   component="img"
-                  src={`http://localhost:7000/system/download/${data.imgData[currentMediaIndex].src}`}
+                  src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${data.imgData[currentMediaIndex].src}`}
                   sx={{ borderRadius: "4px" }}
                   style={{ maxHeight: "395px" }}
                 />
@@ -125,7 +125,7 @@ export default function ProductShow({ productData }) {
                               //   height: "80px",
                               //   borderRadius: "5px",
                               // }}
-                              src={`http://localhost:7000/system/download/${media.poster}`}
+                              src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.poster}`}
                             />
 
                             <div className={`${style.posterIcon}`}>
@@ -151,7 +151,7 @@ export default function ProductShow({ productData }) {
                           <Box
                             className={style.fixStyleSizeImgRe}
                             component="img"
-                            src={`http://localhost:7000/system/download/${media.src}`}
+                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.src}`}
                             alt={`Thumbnail ${index}`}
                           />
                         )}

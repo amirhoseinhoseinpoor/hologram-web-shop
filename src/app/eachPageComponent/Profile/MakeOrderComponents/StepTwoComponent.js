@@ -152,7 +152,7 @@ export default function StepTwoComponent({
       const uploadLogo = await dispatch(
         uploadFile({
           file: logo.file,
-          tag: "userDocument",
+          tag: "لوگو کاربر",
           type: 1,
           isPublic: false,
         })
@@ -163,7 +163,7 @@ export default function StepTwoComponent({
         uploadedFiles.map(async (item) => {
           let updated = { ...item };
 
-          const tag = "userDocument";
+          const tag = "مدارک کاربر";
           const type = 1;
           const isPublic = false;
           const file = item.file;
