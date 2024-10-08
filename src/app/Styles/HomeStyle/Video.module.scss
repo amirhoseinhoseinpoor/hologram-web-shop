@@ -1,10 +1,10 @@
 @use "../variable" as var;
 
-.responsiveSection {
-  // max-width: 900px;
-  // display: flex;
-  // justify-content: center;
+.hidden {
+  display: none;
 }
+
+
 .adjustWidth {
   div {
     border: none;

@@ -1,7 +1,5 @@
 "use client";
 
-// import videoData from "../../../../public/json/Video.json";
-
 import React, { useRef, useEffect, useState } from "react";
 import style from "../../Styles/ProductPage/innerProductPage/DynamicProductVideo.module.scss";
 import { Card, CardContent, CardMedia } from "@mui/material";

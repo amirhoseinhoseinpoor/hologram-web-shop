@@ -183,6 +183,27 @@ export const list = createAsyncThunk("product/list", async (thunkAPI) => {
 
 // end product
 
+// start HomePage
+export const homePageVideoList = createAsyncThunk("homePage/homePageVideoList", async (_,thunkAPI) => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/video/list`);
+    const data = response.data;
+
+    console.log("litVideo" + data);
+    
+
+    return data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return thunkAPI.rejectWithValue("ارور سمت من");
+    } else {
+      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+    }
+  }
+});
+
+// end HomePage
+
 // start order
 
 export const getUserProduct = createAsyncThunk(
