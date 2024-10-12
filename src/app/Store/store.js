@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authSliceV, contentSliceV , makeOrderSliceV , productSliceV } from "./slice";
+import { authSliceV, contentSliceV , makeOrderSliceV , productSliceV , honorsSliceV } from "./slice";
 // import { useDispatch, useSelector, useStore } from 'react-redux'
 
 const store = configureStore({
   reducer: {
     auth: authSliceV,
     product : productSliceV,
+    honors: honorsSliceV,
     content: contentSliceV,
     makeOrder : makeOrderSliceV,
   },

@@ -39,7 +39,6 @@ export default function Video() {
     fetchData();
   }, [dispatch]);
 
-  console.log(videoData);
 
   const handleThumbnailClick = (index) => {
     setCurrentVideoIndex(index);

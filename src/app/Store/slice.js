@@ -7,6 +7,7 @@ import {
   updateBannerContent,
   updateBlogcontent,
   list,
+  homePageHonorsList,
 } from "./thunks";
 
 const authinitialState = {
@@ -125,18 +126,6 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      // .addCase(uploadFile.pending, (state) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
-      // .addCase(uploadFile.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.uploadedFiles[action.meta.arg.name] = action.payload;
-      // })
-      // .addCase(uploadFile.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.error.message;
-      // });
   },
 });
 
@@ -144,6 +133,42 @@ export const productSliceV = productSlice.reducer;
 export const productListData = (state) => state.product.productListData;
 
 // end product slice
+
+
+// start Honors Slice
+
+const honorsinitialState = {
+  honorsListData: null,
+  loading: false,
+  error: null,
+};
+
+const honorsSlice = createSlice({
+  name: "honors",
+  initialState: honorsinitialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(homePageHonorsList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(homePageHonorsList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.honorsListData = action.payload;
+      })
+      .addCase(homePageHonorsList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+  },
+});
+
+export const honorsSliceV = honorsSlice.reducer;
+export const honorsListData = (state) => state.honors.honorsListData;
+
+
+// end Honors Slice
 
 
 

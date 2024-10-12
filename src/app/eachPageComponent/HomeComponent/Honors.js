@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
+import React , {useEffect} from "react";
 
 import style from "../../Styles/HomeStyle/Honors.module.scss";
-
 import Box from "@mui/material/Box";
 import Link from "next/link";
-import honor from "/public/json/HonorsPage.json";
+// import honor from "/public/json/HonorsPage.json";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,8 +17,26 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
+// import redux 
+import { useDispatch , useSelector } from "react-redux";
+import { homePageHonorsList } from "@/app/Store/thunks";
+import { honorsListData } from "@/app/Store/slice";
+
 export default function Honors() {
   SwiperCore.use([Autoplay]);
+  const dispatch = useDispatch();
+
+  useEffect( () => {
+    const fetchData = async () => {
+     await dispatch(homePageHonorsList())
+    }
+    fetchData();
+   
+  }, [dispatch]);
+
+  const honor = useSelector(honorsListData);
+  console.log(honor);
+  
 
   return (
     <section style={{marginTop : "100px"}} className={`${style.mainbackgroundhonor}  mb-5`}>
@@ -104,11 +121,11 @@ export default function Honors() {
           modules={[Navigation , Pagination]}
           className={`${style.fixSwiper} mySwiper`}
         >
-          {honor.map((item) => (
-            <SwiperSlide className={style.swiperslideHonors} key={item.id}>
-              <Link passHref href={`/Honors/${item.id}`}>
+          {honor?.map((item , index) => (
+            <SwiperSlide className={style.swiperslideHonors} key={index}>
+              <Link passHref href={`/Honors/${item.title}`}>
                 <Box
-                  key={item.id}
+                  key={index}
                   className="h-100"
                   component="img"
                   sx={{
