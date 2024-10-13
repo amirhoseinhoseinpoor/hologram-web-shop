@@ -1,5 +1,4 @@
-import fs from "fs";
-import path from "path";
+
 
 import style from "../../Styles/HonorsPageStyle/HonorsDynamicContent.module.scss";
 import Box from "@mui/material/Box";
@@ -8,45 +7,27 @@ import ShowRoute from "@/app/Components/ShowRoute";
 
 import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
-
-
-
-function findSpeceficIteminjson(id) {
-  // const filepath = path.join(
-  //   process.cwd(),
-  //   "public",
-  //   "json",
-  //   "HonorsContent.json"
-  // );
-  // const readFile = fs.readFileSync(filepath, "utf8");
-  // const honors = JSON.parse(readFile);
-  // const found = honors.find((item) => item.id === id);
-  // if (found) {
-  //   return found;
-  // }
-  // return null;
-}
+import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
 export default async function innerHonors({ params }) {
 
   let response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
   let allHonors = await response.json();
 
-  const honors = allHonors.find((item) => item.title === params.id);
+  const decodedId = decodeURIComponent(params.id);
+
+  console.log(decodedId);
+  console.log(allHonors);
+  
+  
+
+  const honors = allHonors.find((item) => 
+    item.title.trim().toLowerCase() == decodedId.trim().toLowerCase()
+  );
 
   if (!honors) {
     notFound();
   }
-
-  console.log(honors);
-  
-
-
-
-  
-  console.log(params.id);
-  
-  // const honors = findSpeceficIteminjson(params);
 
   return (
     <>
@@ -58,7 +39,7 @@ export default async function innerHonors({ params }) {
         </div>
         <div>
           <p className={`${style.discriptionColor} discription mb-3`}>
-            {honors?.date}
+            {formatPersianDate(honors.date)}
           </p>
         </div>
         <div>
@@ -66,7 +47,7 @@ export default async function innerHonors({ params }) {
             component="img"
             sx={{
               width: "100%",
-              maxHeight: "400px",
+              maxHeight: "100%",
               objectFit: "contain",
               aspectRatio: 0.7,
               borderRadius: "4px",
@@ -75,18 +56,9 @@ export default async function innerHonors({ params }) {
             src={honors?.src}
           />
         </div>
-        <div>
-          <p>{honors?.content1}</p>
-        </div>
-        <div className={`${style.boldContentStyle} mt-2 mb-2 purchesSize`}>
-          <p>{honors?.boldContent}</p>
-        </div>
-        <div className="mt-2 mb-2">
-          <h3 className="purchesSize">{honors?.title2}</h3>
-        </div>
-        <div>
-          <p>{honors?.content2}</p>
-        </div>
+       
+       <div dangerouslySetInnerHTML={{ __html: honors.content }} />
+
         <div
           className={`${style.socialMediaIcon} d-flex align-items-center flex-row mt-3 gap-3`}
         >
@@ -165,11 +137,11 @@ export default async function innerHonors({ params }) {
         </div>
         <div className="mt-3">
           <ul className={`${style.tagsStyle} d-flex flex-row gap-3`}>
-            {/* {honors?.tags.split(",").map((tag) => (
+            {honors?.tags.split(",").map((tag) => (
               <>
                 <li>{tag.trim()}</li>
               </>
-            ))} */}
+            ))}
           </ul>
         </div>
       </section>

@@ -2,7 +2,7 @@ import React from "react";
 
 import HeaderSeo from "../Components/HeaderSeo";
 import style from "../Styles/HonorsPageStyle/Honors.module.scss";
-import honors from "/public/json/HonorsPage.json";
+import { formatPersianDate } from "../utils/persionDateUtils";
 
 import Link from "next/link";
 import Card from "@mui/material/Card";
@@ -11,7 +11,15 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import MainLayout from "../layouts/MainLayout";
 
-export default function Honors() {
+
+
+
+export default async function Honors() {
+
+  let response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
+  let honors = await response.json();
+
+
   function fixTitleSize(text) {
     var shortTitle;
     if(text.length > 60) {
@@ -34,7 +42,7 @@ export default function Honors() {
               >
                 <Link
                   className="text-decoration-none"
-                  href={`/Honors/${honor.id}`}
+                  href={`/Honors/${honor.title}`}
                   passHref
                 >
                   <CardMedia
@@ -51,7 +59,7 @@ export default function Honors() {
                       variant="span"
                       component="div"
                     >
-                       {honor.date}
+                       {formatPersianDate(honor.date)}
                     </Typography>
                     <Typography
                       className="subitem"
