@@ -17,29 +17,39 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
-// data part
-
+// import redux
 import { useSelector, useDispatch } from "react-redux";
-import { updateBannerContent } from "../../Store/thunks";
+import { homePageExhibitionList } from "../../Store/thunks";
+import { exhibitionListData } from "@/app/Store/slice";
 
 export default function Exhibition() {
   const dispatch = useDispatch();
 
-  const { data, loading, error } = useSelector((state) => state.content);
+  // const { data, loading, error } = useSelector((state) => state.content);
+
+  // useEffect(() => {
+  //   dispatch(updateBannerContent());
+  // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(updateBannerContent());
+    const fetchData = async () => {
+      await dispatch(homePageExhibitionList());
+    };
+    fetchData();
   }, [dispatch]);
 
+  const exhibition = useSelector(exhibitionListData);
+  console.log(exhibition);
+
   const addKeys = (items) => {
-    return items.map((item, index) => ({
+    return items?.map((item, index) => ({
       ...item,
       id: index,
       subItems: item.slides ? addKeys(item.slides) : [],
     }));
   };
 
-  const mainItemObject = addKeys(data);
+  const mainItemObject = addKeys(exhibition);
 
   SwiperCore.use([Autoplay]);
   function fixTitleSize(text) {
@@ -52,11 +62,8 @@ export default function Exhibition() {
     }
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-
   return (
-    <section style={{marginTop : "100px"}} className={style.mainbackground}>
+    <section style={{ marginTop: "100px" }} className={style.mainbackground}>
       <div
         className={`d-flex flex-row container-lg h-100 ${style.exhibitionresponsivemaindiv}`}
       >
@@ -64,14 +71,13 @@ export default function Exhibition() {
           className={`${style.rigthtextslide} ${style.rprighttext} d-flex flex-column justify-content-center`}
         >
           <div className="sometext">
-            {mainItemObject.map((item) => (
-              <React.Fragment key={item.id}>
-                <span>{item.Title}{" "}</span>
-                <span className={`${style.slidernexttext} mt-1`}>
-                  {item.coloredTitle}
-                </span>
-              </React.Fragment>
-            ))}
+            {/* {mainItemObject?.map((item , index) => ( ))} */}
+            <React.Fragment>
+              <span>حضور ما در سرتاسر جهان، نشان‌دهنده تعهد ما به </span>
+              <span className={`${style.slidernexttext} mt-1`}>
+                پیشرفت و توسعه است...
+              </span>
+            </React.Fragment>
           </div>
           <div className={`mt-4 d-flex gap-3 ${style.rpexhibitionarrow}`}>
             <button
@@ -87,7 +93,7 @@ export default function Exhibition() {
           </div>
         </div>
         <div className={style.leftslidewidth}>
-          {data.length ? (
+          {exhibition?.length ? (
             <Swiper
               loop={true}
               autoplay={{ delay: 4000 }}
@@ -105,35 +111,34 @@ export default function Exhibition() {
               modules={[Navigation]}
               className={`${style.swiperCustom} mySwiper container`}
             >
-              {mainItemObject.map((mainItem) => (
-                <React.Fragment key={mainItem.id}>
-                  {mainItem.slides.map((item, index) => (
-                    <SwiperSlide key={index}>
-                      <Link
-                        className="text-decoration-none"
-                        href={`/Exhibition/${item.id}`}
-                        style={{color: "black"}}
-                        passHref
-                      >
-                        <div className={style.resetexhibition}>
-                          <Box
-                            className={`${style.adjustaspectratioinner} h-100`}
-                            component="img"
-                            sx={{
-                              width: "100%",
-                              maxHeight: "100%",
-                              objectFit: "cover",
-                              aspectRatio: 2.4,
-                              borderRadius: 3,
-                            }}
-                            alt="slieds"
-                            src={item.url}
-                          />
-                          <p>{fixTitleSize(item.text)}</p>
-                        </div>
-                      </Link>
-                    </SwiperSlide>
-                  ))}
+              {mainItemObject?.map((item, index) => (
+                <React.Fragment key={index}>
+                  {/* {mainItem.slides.map((item, index) => ())} */}
+                  <SwiperSlide key={index}>
+                    <Link
+                      className="text-decoration-none"
+                      href={`/Exhibition/${item.title}`}
+                      style={{ color: "black" }}
+                      passHref
+                    >
+                      <div className={style.resetexhibition}>
+                        <Box
+                          className={`${style.adjustaspectratioinner} h-100`}
+                          component="img"
+                          sx={{
+                            width: "100%",
+                            maxHeight: "100%",
+                            objectFit: "cover",
+                            aspectRatio: 2.4,
+                            borderRadius: 3,
+                          }}
+                          alt="slieds"
+                          src={item.src}
+                        />
+                        <p>{fixTitleSize(item.title)}</p>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
                 </React.Fragment>
               ))}
             </Swiper>

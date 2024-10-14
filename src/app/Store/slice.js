@@ -4,10 +4,11 @@ import {
   signUp,
   forgetPassword,
   logout,
-  updateBannerContent,
-  updateBlogcontent,
+  // updateBannerContent,
+  // updateBlogcontent,
   list,
   homePageHonorsList,
+  homePageExhibitionList,
 } from "./thunks";
 
 const authinitialState = {
@@ -170,56 +171,90 @@ export const honorsListData = (state) => state.honors.honorsListData;
 
 // end Honors Slice
 
-
-
-const contentInitialState = {
+// start Exhibition slice 
+const exhibitioninitialState = {
+  exhibitionListData: null,
   loading: false,
-  data: [],
-  error: "",
+  error: null,
 };
 
-const contentSlice = createSlice({
-  name: "content",
-  initialState: contentInitialState,
+const exhibitionSlice = createSlice({
+  name: "exhibition",
+  initialState: exhibitioninitialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(updateBannerContent.pending, (state) => {
+      .addCase(homePageExhibitionList.pending, (state) => {
         state.loading = true;
-        state.error = null; // Update banner data on success
+        state.error = null;
       })
-
-      .addCase(updateBannerContent.fulfilled, (state, action) => {
+      .addCase(homePageExhibitionList.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload; // Update banner data on success
+        state.exhibitionListData = action.payload;
       })
-      .addCase(updateBannerContent.rejected, (state, action) => {
+      .addCase(homePageExhibitionList.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || "Something went wrong";
+        state.error = action.error.message;
       })
-      .addCase(updateBlogcontent.pending, (state, action) => {
-        state.loading = true;
-        state.error = null; // Update banner data on success
-      })
-      .addCase(updateBlogcontent.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload; // Update banner data on success
-      })
-      .addCase(updateBlogcontent.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || "Something went wrong";
-      });
   },
 });
-export const contentSliceV = contentSlice.reducer;
-export const UrlsContent = (state) => state.content.data;
-export const loadingContent = (state) => state.content.loading;
-export const errorcontent = (state) => state.content.error;
+
+export const exhibitionSliceV = exhibitionSlice.reducer;
+export const exhibitionListData = (state) => state.exhibition.exhibitionListData;
+
+// end exhibition slice 
+
+
+
+
+// const contentInitialState = {
+//   loading: false,
+//   data: [],
+//   error: "",
+// };
+
+// const contentSlice = createSlice({
+//   name: "content",
+//   initialState: contentInitialState,
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(updateBannerContent.pending, (state) => {
+//         state.loading = true;
+//         state.error = null; // Update banner data on success
+//       })
+
+//       .addCase(updateBannerContent.fulfilled, (state, action) => {
+//         state.loading = false;
+//         state.data = action.payload; // Update banner data on success
+//       })
+//       .addCase(updateBannerContent.rejected, (state, action) => {
+//         state.loading = false;
+//         state.error = action.payload || "Something went wrong";
+//       })
+//       .addCase(updateBlogcontent.pending, (state, action) => {
+//         state.loading = true;
+//         state.error = null; // Update banner data on success
+//       })
+//       .addCase(updateBlogcontent.fulfilled, (state, action) => {
+//         state.loading = false;
+//         state.data = action.payload; // Update banner data on success
+//       })
+//       .addCase(updateBlogcontent.rejected, (state, action) => {
+//         state.loading = false;
+//         state.error = action.payload || "Something went wrong";
+//       });
+//   },
+// });
+// export const contentSliceV = contentSlice.reducer;
+// export const UrlsContent = (state) => state.content.data;
+// export const loadingContent = (state) => state.content.loading;
+// export const errorcontent = (state) => state.content.error;
+
 
 const makeOrderinitialState = {
   childValue: null,
 };
-
 
 export const makeOrderSlice = createSlice({
   name: "makeOrder",

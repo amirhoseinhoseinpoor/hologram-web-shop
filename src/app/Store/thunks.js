@@ -222,6 +222,29 @@ export const homePageHonorsList = createAsyncThunk("honors/homePageHonorsList", 
 
 // end HomePage Honors
 
+// start exhibition
+
+export const homePageExhibitionList = createAsyncThunk("exhibition/homePageExhibitionList", async (_,thunkAPI) => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
+    const data = response.data;
+
+    console.log(data);
+    
+
+    return data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return thunkAPI.rejectWithValue("ارور سمت من");
+    } else {
+      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+    }
+  }
+});
+
+
+// end exhibition
+
 // start order
 
 export const getUserProduct = createAsyncThunk(
@@ -316,28 +339,28 @@ export const sendingSecondStep = createAsyncThunk(
 
 // end order
 
-export const updateBannerContent = createAsyncThunk(
-  "content/updateBannerContent",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get("/json/ExhibitionPage.json");
+// export const updateBannerContent = createAsyncThunk(
+//   "content/updateBannerContent",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const response = await axios.get("/json/ExhibitionPage.json");
 
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 
-export const updateBlogcontent = createAsyncThunk(
-  "content/updateBlogcontent",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get("/json/Blog.json");
+// export const updateBlogcontent = createAsyncThunk(
+//   "content/updateBlogcontent",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const response = await axios.get("/json/Blog.json");
 
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );

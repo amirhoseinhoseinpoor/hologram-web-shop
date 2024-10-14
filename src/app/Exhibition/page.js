@@ -2,7 +2,8 @@ import React from "react";
 
 import style from "../Styles/ExhibitionPageStyle/Exhibition.module.scss";
 import HeaderSeo from "../Components/HeaderSeo";
-import exhibition from "../../../public/json/ExhibitionPage.json";
+// import exhibition from "../../../public/json/ExhibitionPage.json";
+import { formatPersianDate } from "../utils/persionDateUtils";
 
 import Link from "next/link";
 import Card from "@mui/material/Card";
@@ -12,7 +13,10 @@ import Typography from "@mui/material/Typography";
 import MainLayout from "../layouts/MainLayout";
 
 
-export default function Exhibition() {
+export default async function Exhibition() {
+
+  let response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
+  let exhibition = await response.json();
 
   function fixTitleSize(text) {
     var shortTitle;
@@ -31,24 +35,24 @@ export default function Exhibition() {
       <HeaderSeo />
       <section>
         <div className={`${style.MainDiv} container`}>
-          {exhibition.map((exhi, index) => (
+          {exhibition.map((item, index) => (
             <React.Fragment key={index}>
-              {exhi.slides.map((exhiinner, index) => (
+              {/* {exhi.slides.map((exhiinner, index) => ())} */}
                 <React.Fragment key={index}>
                   <Card
                     className={`${style.mainCardStyle} ${style.adjustpriority}`}
                   >
                     <Link
                       className={`${style.adjustMobileFlow} text-decoration-none`}
-                      href={`/Exhibition/${exhiinner.id}`}
+                      href={`/Exhibition/${item.title}`}
                       passHref
                     >
                       <div>
                         <CardMedia
                         className={`${style.fixBoxSize} gap-3 h-100`}
                         component="img"
-                        image={exhiinner.url}
-                        alt={exhiinner.text}
+                        image={item.src}
+                        alt={item.title}
                       />
                       </div>
                       
@@ -60,7 +64,7 @@ export default function Exhibition() {
                           variant="span"
                           component="div"
                         >
-                          {exhiinner.date}
+                          {formatPersianDate(item.date)}
                         </Typography>
                         <Typography
                           className="subitem"
@@ -68,14 +72,14 @@ export default function Exhibition() {
                           variant="p"
                           component="div"
                         >
-                          {fixTitleSize(exhiinner.text)}
+                          {fixTitleSize(item.title)}
                           
                         </Typography>
                       </CardContent>
                     </Link>
                   </Card>
                 </React.Fragment>
-              ))}
+              
             </React.Fragment>
           ))}
         </div>

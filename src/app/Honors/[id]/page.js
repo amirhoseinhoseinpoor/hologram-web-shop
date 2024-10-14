@@ -16,11 +16,6 @@ export default async function innerHonors({ params }) {
 
   const decodedId = decodeURIComponent(params.id);
 
-  console.log(decodedId);
-  console.log(allHonors);
-  
-  
-
   const honors = allHonors.find((item) => 
     item.title.trim().toLowerCase() == decodedId.trim().toLowerCase()
   );
