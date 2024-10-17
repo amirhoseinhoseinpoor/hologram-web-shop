@@ -39,7 +39,7 @@ export default function Exhibition() {
   }, [dispatch]);
 
   const exhibition = useSelector(exhibitionListData);
-  console.log(exhibition);
+
 
   const addKeys = (items) => {
     return items?.map((item, index) => ({

@@ -4,122 +4,114 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import blogs from "/public/json/BlogPage.json";
+// import blogs from "/public/json/BlogPage.json";
+import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
-function BlogCard() {
+export default async function BlogCard() {
+  let response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`
+  );
+  let honors = await response.json();
+
+  const dataFillterd = honors.filter((item) => item.content.priority === true);
+
+  const findData = dataFillterd.slice(0, 2);
+
+  const findSecontImportant = dataFillterd.slice(2, 5);
+
+  console.log(findSecontImportant);
+
   function fixTitleSize(text) {
     var shortTitle;
-    if(text.length > 60) {
-      shortTitle = text.slice(0 , 60) + "...";
+    if (text.length > 60) {
+      shortTitle = text.slice(0, 60) + "...";
       return shortTitle;
-    }else{
-      return text
+    } else {
+      return text;
     }
   }
+
   return (
     <>
       <div className={`${style.MainDiv} container gap-2`}>
-        {blogs.map((blog) => (
-          <> 
-              {blog.card.map((cards) => (
-                <>
-                  {/* render more priority blog */}
-                  {cards.morpriority && (
-                    <Card
-                      className={`${style.mainCardStyle} ${style.morpriority}`}
-                    >
-                      <Link
-                        className="text-decoration-none"
-                        href={`/Blog/${cards.id}`}
-                        passHref
-                      >
-                        <CardMedia
-                          className={`${style.fixBoxSize} gap-3`}
-                          component="img"
-                          image={cards.imageSrc}
-                          alt={cards.title}
-                        />
+        {findData?.map((blog) => (
+          <>
+            <Card className={`${style.mainCardStyle} ${style.morpriority}`}>
+              <Link
+                className="text-decoration-none"
+                href={`/Blog/${blog.content.title}`}
+                passHref
+              >
+                <CardMedia
+                  className={`${style.fixBoxSize} gap-3`}
+                  component="img"
+                  image={blog.content.imageSrc}
+                  alt={blog.content.title}
+                />
 
-                        <CardContent className={style.adjustContent}>
-                          <Typography
-                            className={`${style.dateTime} discription`}
-                            gutterBottom
-                            variant="span"
-                            component="div"
-                          >
-                            {cards.time} | {cards.date}
-                          </Typography>
-                          <Typography
-                            className="subitem"
-                            gutterBottom
-                            variant="p"
-                            component="div"
-                          >
-                            {fixTitleSize(cards.title)}
-                          </Typography>
-                        </CardContent>
-                      </Link>
-                    </Card>
-                  )}
-                </>
-              ))}
-            </>
-          ))}
-          </div>
+                <CardContent className={style.adjustContent}>
+                  <Typography
+                    className={`${style.dateTime} discription`}
+                    gutterBottom
+                    variant="span"
+                    component="div"
+                  >
+                    {blog.content.time} | {formatPersianDate(blog.date)}
+                  </Typography>
+                  <Typography
+                    className="subitem"
+                    gutterBottom
+                    variant="p"
+                    component="div"
+                  >
+                    {fixTitleSize(blog.content.title)}
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+          </>
+        ))}
+      </div>
 
+      <div className={`${style.MainDiv} container gap-2`}>
+        {findSecontImportant?.map((blog) => (
+          <>
+            <Card className={`${style.mainCardStyle} ${style.adjustpriority}`}>
+              <Link
+                className="text-decoration-none"
+                href={`/Blog/${blog.content.title}`}
+                passHref
+              >
+                <CardMedia
+                  className={`${style.fixBoxSize} gap-3`}
+                  component="img"
+                  image={blog.content.imageSrc}
+                  alt={blog.content.title}
+                />
 
-         <div className={`${style.MainDiv} container gap-2`}>
-          {blogs.map((blog) => (<>
-              {blog.card.map((cards) => (
-                <>
-                  {/* render priority blog */}
-                  {cards.priority && (
-                    <Card
-                      className={`${style.mainCardStyle} ${style.adjustpriority}`}
-                    >
-                      <Link
-                        className="text-decoration-none"
-                        href={`/Blog/${cards.id}`}
-                        passHref
-                      >
-                        <CardMedia
-                          className={`${style.fixBoxSize} gap-3`}
-                          component="img"
-                          image={cards.imageSrc}
-                          alt={cards.title}
-                        />
-
-                        <CardContent className={style.adjustContent}>
-                          <Typography
-                            className={`${style.dateTime} discription`}
-                            gutterBottom
-                            variant="span"
-                            component="div"
-                          >
-                            {cards.time} | {cards.date}
-                          </Typography>
-                          <Typography
-                            className="subitem"
-                            gutterBottom
-                            variant="p"
-                            component="div"
-                          >
-                            {cards.title}
-                          </Typography>
-                        </CardContent>
-                      </Link>
-                    </Card>
-                  )}
-                </>
-              ))}
-            
-          </>))}
-          </div>
-           
-
-     
+                <CardContent className={style.adjustContent}>
+                  <Typography
+                    className={`${style.dateTime} discription`}
+                    gutterBottom
+                    variant="span"
+                    component="div"
+                  >
+                    {blog.content.time} | {formatPersianDate(blog.date)}
+                  </Typography>
+                  <Typography
+                    className="subitem"
+                    gutterBottom
+                    variant="p"
+                    component="div"
+                  >
+                    {fixTitleSize(blog.content.title)}
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+          </>
+        ))}
+      </div>
     </>
   );
 }
-
-export default BlogCard;

@@ -4,20 +4,23 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Box from "@mui/material/Box";
 import React from "react";
 
-// const getData = async () => {
-
-//       const response = await axios.get('/json/Blog.json');
-//       console.log(response.data);
-
-//       return response.data;
-
-// }
-
 export default async function Magazine() {
-  // const data = await getData()
+  let response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`
+  );
+  let honors = await response.json();
+
+  const dataFillterd = honors.filter((item) => item.content.priority === true);
+
+  const findData = dataFillterd.slice(0, 3);
+
+  console.log(findData);
 
   return (
-    <section style={{marginTop : "90px" , marginBottom : "90px"}} className=" container">
+    <section
+      style={{ marginTop: "90px", marginBottom: "90px" }}
+      className=" container"
+    >
       <div className="d-flex flex-row justify-content-between">
         <div>
           <span className="title">مجله آذر هولگرام </span>
@@ -31,77 +34,45 @@ export default async function Magazine() {
           </Link>
         </div>
       </div>
+
       <div
         className={`${style.responsiveFirstBox} d-flex flex-row gap-3 mt-4 justify-content-center`}
       >
-        <div
-          className={`${style.boxBackgroundMain} d-flex flex-column justify-content-center`}
-        >
-          <div className={style.mobilePictureResponsiveBlog}>
-            <Box
-              component="img"
-              sx={{
-                width: "100%",
-                maxHeight: 300,
-                objectFit: "cover",
-                aspectRatio: 1.48,
-              }}
-              alt="image."
-              src="/HomeImages/coin.png"
-            />
-          </div>
+        {findData &&
+          findData.map((item, index) => (
+            <React.Fragment key={index}>
+              <Link style={{textDecoration: "none" , color: "unset"}} passHref href={`/Blog/${item.content.title}`}>
+                <div
+                  className={`${style.boxBackgroundMain} d-flex flex-column justify-content-center`}
+                >
+                  <div className={style.mobilePictureResponsiveBlog}>
+                    <Box
+                      component="img"
+                      sx={{
+                        width: "100%",
+                        maxHeight: 300,
+                        objectFit: "cover",
+                        aspectRatio: 1.48,
+                      }}
+                      alt="image."
+                      src={item.content.imageSrc}
+                    />
+                  </div>
 
-          <div>
-            <p className={`${style.studingtimetext} mt-2 mb-2 discription`}>
-              مطالعه: 5دقیقه
-            </p>
-          </div>
-          <div>
-            <p className="VodeoDisSizing">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-            </p>
-          </div>
-        </div>
-        <div
-          className={`${style.boxBackgroundMain} d-flex flex-column d-none d-lg-block d-md-block`}
-        >
-          <Box
-            component="img"
-            sx={{
-              width: "100%",
-              maxHeight: 300,
-              objectFit: "cover",
-            }}
-            alt="The house from the offer."
-            src="/HomeImages/cube-coin.png"
-          />
-          <p className={`${style.studingtimetext} mt-2 mb-2 discription`}>
-            مطالعه: 5دقیقه
-          </p>
-          <p className="VodeoDisSizing">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-          </p>
-        </div>
-        <div
-          className={`${style.boxBackgroundMain} d-flex flex-column d-none d-lg-block d-md-block d-xl-block`}
-        >
-          <Box
-            component="img"
-            sx={{
-              width: "100%", // Ensures responsiveness
-              maxHeight: 300, // Set a maximum height (optional)
-              objectFit: "cover",
-            }}
-            alt="The house from the offer."
-            src="/HomeImages/text.png"
-          />
-          <p className={`${style.studingtimetext} mt-2 mb-2 discription`}>
-            مطالعه: 5دقیقه
-          </p>
-          <p className="VodeoDisSizing">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-          </p>
-        </div>
+                  <div>
+                    <p
+                      className={`${style.studingtimetext} mt-2 mb-2 discription`}
+                    >
+                      {item.content.time}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="VodeoDisSizing">{item.content.title}</p>
+                  </div>
+                </div>
+              </Link>
+            </React.Fragment>
+          ))}
       </div>
     </section>
   );

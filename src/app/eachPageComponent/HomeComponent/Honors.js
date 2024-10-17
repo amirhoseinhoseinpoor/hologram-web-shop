@@ -35,7 +35,7 @@ export default function Honors() {
   }, [dispatch]);
 
   const honor = useSelector(honorsListData);
-  console.log(honor);
+
   
 
   return (
