@@ -1,12 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-
 import style from "../../Styles/BlogStyle/BloginnerSearch.module.scss";
-import blogPage from "/public/json/BlogPage.json";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
 // cards style
 import Card from "@mui/material/Card";
@@ -14,7 +12,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
-export default function BlogInnerSearch() {
+export default function BlogInnerSearch({ allBlogs }) {
   // search engine
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -34,25 +32,55 @@ export default function BlogInnerSearch() {
 
   const normalizeString = (str) => str.replace(/\s+/g, "").toLowerCase();
 
-  const filteredBlogs = blogPage.map((blog) => ({
-    ...blog,
-    card: blog.card.filter((cards) => {
-      const normalizedTitle = cards.title ? normalizeString(cards.title) : "";
-      const normalizeddate = cards.date ? normalizeString(cards.date) : "";
+  // Filtering and grouping logic
+  const groupedBlogs = allBlogs
+    .filter((blog) => {
+      // Filter based on search term matching the blog's content fields (e.g., title or time)
+      const normalizedTitle = blog.content?.title
+        ? normalizeString(blog.content.title)
+        : "";
+      const normalizedDate = blog.content?.time
+        ? normalizeString(blog.content.time)
+        : "";
       const normalizedSearchTerm = normalizeString(searchTerm);
+
+      // Check if either title or time includes the search term
       return (
         normalizedTitle.includes(normalizedSearchTerm) ||
-        normalizeddate.includes(normalizedSearchTerm)
+        normalizedDate.includes(normalizedSearchTerm)
       );
-    }),
-  }));
+    })
+    .reduce((acc, blog) => {
+      // Group blogs by their type
+      const blogType = blog.content?.type || "غیره";
+      if (!acc[blogType]) {
+        acc[blogType] = [];
+      }
+      acc[blogType].push({
+        id: blog.id,
+        title: blog.content?.title || "Untitled",
+        date: blog.date,
+        time: blog.content?.time || "No time provided",
+        imageSrc: blog.content?.imageSrc || "/default-image.jpg",
+      });
+      return acc;
+    }, {});
+
+  // Get the keys (blog types) to create the tabs
+  const blogTypes = Object.keys(groupedBlogs);
+
+  // Get the number of blogs for each category
+  const blogCount = blogTypes.reduce((acc, type) => {
+    acc[type] = groupedBlogs[type].length;
+    return acc;
+  }, {});
+
   // get url content
   const router = useRouter();
-
   const handleCategoryClick = (blogType) => {
     router.push(`/Blog?type=${encodeURIComponent(blogType)}`);
   };
-
+ 
   return (
     <>
       <div className={style.inputStyle}>
@@ -99,7 +127,7 @@ export default function BlogInnerSearch() {
         </div>
       </div>
 
-      <div className={`${style.backgroundbox}`}>
+      {/* <div className={`${style.backgroundbox}`}>
       {filteredBlogs.map((blog, index) =>
         blog.card.length > 0 ? (
           searchTerm &&
@@ -150,19 +178,68 @@ export default function BlogInnerSearch() {
           </React.Fragment>
         )
       )}
+      </div> */}
+
+      <div className={`${style.backgroundbox}`}>
+        {blogTypes.map((blogType, index) =>
+          groupedBlogs[blogType].length > 0 ? (
+            searchTerm &&
+            groupedBlogs[blogType].map((blog, index) => (
+              <React.Fragment key={index}>
+                <div>
+                  <Card className={`${style.mainCardStyle}`}>
+                    <Link
+                      className="text-decoration-none"
+                      href={`/Blog/${blog.title}`}
+                      passHref
+                    >
+                      <CardMedia
+                        className={`${style.fixBoxSize} gap-3`}
+                        component="img"
+                        image={blog.imageSrc}
+                        alt={blog.title}
+                      />
+
+                      <CardContent className={style.adjustContent}>
+                        <Typography
+                          className={`${style.dateTime} discription`}
+                          gutterBottom
+                          variant="span"
+                          component="div"
+                        >
+                          {blog.time} | {formatPersianDate(blog.date)}
+                        </Typography>
+                        <Typography
+                          className="subitem"
+                          gutterBottom
+                          variant="p"
+                          component="div"
+                        >
+                          {fixTitleSize(blog.title)}
+                        </Typography>
+                      </CardContent>
+                    </Link>
+                  </Card>
+                </div>
+              </React.Fragment>
+            ))
+          ) : (
+            <React.Fragment key={index}></React.Fragment>
+          )
+        )}
       </div>
 
       <div className="d-flex flex-column">
         <p className="subitem mt-2 mb-1">دسته بندی</p>
         <ul>
-          {blogPage.map((blog, index) => (
+          {blogTypes.map((blog, index) => (
             <React.Fragment key={index}>
               <li
                 className={`${style.borderbuttom} d-flex flex-row justify-content-between pb-2 pt-2`}
-                onClick={() => handleCategoryClick(blog.type)}
+                onClick={() => handleCategoryClick(blog)}
               >
-                <p>{blog.type}</p>
-                <p>2</p>
+                <p>{blog}</p>
+                <p>{blogCount[blog]}</p>
               </li>
             </React.Fragment>
           ))}

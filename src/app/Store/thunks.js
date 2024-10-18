@@ -245,6 +245,26 @@ export const homePageExhibitionList = createAsyncThunk("exhibition/homePageExhib
 
 // end exhibition
 
+// start blog
+export const homePageBlogList = createAsyncThunk("blogs/homePageBlogList", async (_,thunkAPI) => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/listPaginated`);
+    const data = response.data;
+
+    console.log(data);
+    
+
+    return data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return thunkAPI.rejectWithValue("ارور سمت من");
+    } else {
+      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+    }
+  }
+});
+// end blog
+
 // start order
 
 export const getUserProduct = createAsyncThunk(

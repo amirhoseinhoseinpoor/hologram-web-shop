@@ -1,41 +1,73 @@
-import fs from "fs";
-import path from "path";
-
 import style from "../../Styles/BlogStyle/BlogDynamicContent.module.scss";
 import Box from "@mui/material/Box";
 import CopyLinkButton from "../../Components/CopyLinkButton";
 import ShowRoute from "@/app/Components/ShowRoute";
 import BlogInnerSearch from "@/app/eachPageComponent/BlogComponents/BlogInnerSearch";
 import MainLayout from "@/app/layouts/MainLayout";
+import { notFound } from "next/navigation";
+import { formatPersianDate } from "@/app/utils/persionDateUtils";
+import Link from "next/link";
+import parse from "html-react-parser";
 
-function getBlogPostById(id) {
-  const filePath2 = path.join(
-    process.cwd(),
-    "public",
-    "json",
-    "BlogContent.json"
+export default async function BlogPostPage({ params }) {
+  let response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`
   );
-  const jsonData2 = fs.readFileSync(filePath2, "utf8");
+  let allBlogs = await response.json();
 
-  // const blogs = JSON.parse(jsonData);
-  const blogs2 = JSON.parse(jsonData2);
+  const decodedId = decodeURIComponent(params.id);
 
-  const found = blogs2.find((card) => card.id === id);
-  if (found) {
-    return found;
-  }
-
-  return null;
-}
-
-export default function BlogPostPage({ params }) {
-  const { id } = params;
-
-  const blogPost = getBlogPostById(id);
+  const blogPost = allBlogs.find(
+    (item) =>
+      item.content.title?.trim().toLowerCase() == decodedId.trim().toLowerCase()
+  );
 
   if (!blogPost) {
-    return <div>Blog post not found.</div>;
+    notFound();
   }
+
+  const groupedBlogs = allBlogs.reduce((acc, blog) => {
+    // Group blogs by their type
+    const blogType = blog.content?.type || "غیره";
+    if (!acc[blogType]) {
+      acc[blogType] = [];
+    }
+    acc[blogType].push({
+      title: blog.content?.title || "Untitled",
+      date: blog.date,
+      time: blog.content?.time || "No time provided",
+      imageSrc: blog.content?.imageSrc || "/default-image.jpg",
+    });
+    return acc;
+  }, {});
+
+
+  const blogTypes = Object.keys(groupedBlogs);
+
+
+  // Function to extract <h3> tags from the blog content and assign IDs
+  const extractAndModifyH3Tags = (content) => {
+    let index = 0;
+    const h3Tags = [];
+
+    // Modify the content and extract <h3> headings with IDs
+    const contentWithIds = content.replace(
+      /<h3>(.*?)<\/h3>/g,
+      (match, text) => {
+        const id = `heading-${index}`; // Generate a unique ID for each <h3>
+        h3Tags.push({ id, text }); // Push the heading and its ID to the array
+        index++;
+        return `<h3 id="${id}">${text}</h3>`; // Return the <h3> tag with the id
+      }
+    );
+
+    return { contentWithIds, h3Tags };
+  };
+
+  // Get the content with modified <h3> tags and the extracted headings
+  const { contentWithIds, h3Tags } = extractAndModifyH3Tags(
+    blogPost.content.content
+  );
 
   return (
     <>
@@ -44,9 +76,9 @@ export default function BlogPostPage({ params }) {
           <ShowRoute />
           <div className={`${style.MainDiv} d-flex flex-row`}>
             <div className={`${style.textContent} d-flex flex-column`}>
-              <h3 className="title mt-3 mb-1">{blogPost.title}</h3>
+              <h3 className="title mt-3 mb-1">{blogPost.content.title}</h3>
               <p className={`${style.discriptionColor} discription mb-3`}>
-                {blogPost.time} | {blogPost.date}
+                {blogPost.content.time} | {formatPersianDate(blogPost.date)}
               </p>
               <div>
                 <Box
@@ -58,19 +90,45 @@ export default function BlogPostPage({ params }) {
                     aspectRatio: 1.3,
                     borderRadius: "4px",
                   }}
-                  alt={blogPost.title}
-                  src={blogPost.imageSrc}
+                  alt={blogPost.content.title}
+                  src={blogPost.content.imageSrc}
                 />
               </div>
+
+              {/* Table of Contents (TOC) based on h3 tags */}
               <div className={`${style.seasonMaindiv}`}>
                 <p className="sometext">سرفصل‌ها</p>
                 <ul className={`${style.discriptionColor} mt-2 subitem`}>
-                  <li className="mb-2">
-                    <a href={`#${blogPost.title2}`}>{blogPost.title2}</a>
-                  </li>
+                  {h3Tags.map((heading) => (
+                    <li className="mb-2" key={heading.id}>
+                      {/* Anchor links will scroll to the matching <h3> id */}
+                      <a href={`#${heading.id}`}>{heading.text}</a>
+                    </li>
+                  ))}
                 </ul>
               </div>
-              <div className="mt-4">
+
+              {/* <div className={`${style.seasonMaindiv}`}>
+                <p className="sometext">سرفصل‌ها</p>
+                <ul className={`${style.discriptionColor} mt-2 subitem`}>
+                  {h3Headings.map((heading) => (
+                    <li className="mb-2" key={heading.id}>
+                      <a
+                        href={`#${heading.id}`}
+                        onClick={(e) => {
+                          e.preventDefault(); // Prevent default anchor link behavior
+                          scrollToHeading(heading.id); // Scroll to the target element
+                        }}
+                      >
+                        {heading.text}
+                      </a>
+                    </li>
+                  ))}
+                 
+                </ul>
+              </div> */}
+
+              {/* <div className="mt-4">
                 <p>{blogPost.content1}</p>
               </div>
               <div
@@ -85,30 +143,37 @@ export default function BlogPostPage({ params }) {
               </div>
               <div>
                 <p>{blogPost.content2}</p>
-              </div>
+              </div> */}
+
+              {/* Blog content with scrollable h3 tags */}
               <div
-                className={`${style.restylethePositiveNegetive} d-flex flex-row gap-3`}
+                className={`${style.restylethePositiveNegetive} d-flex flex-row gap-3 mt-3`}
               >
                 <div className={`${style.positiveMaindiv} d-flex flex-column`}>
                   <p className={style.posetivestyle}>نقاط مثبت</p>
                   <ul>
-                    <li>قیمت مناسب</li>
-                    <li>کیفیت عالی</li>
-                    <li>زمان کم تولید</li>
-                    <li>زیبایی</li>
+                    {blogPost.content.posetives.split(",").map((pos) => (
+                      <>
+                        <li>{pos.trim()}</li>
+                      </>
+                    ))}
                   </ul>
                 </div>
                 <div className={`${style.positiveMaindiv} d-flex flex-column`}>
                   <p className={style.negetive}>نقاط منفی</p>
                   <ul>
-                    <li>قیمت بالا</li>
-                    <li>دسترسی برای همه ممکن نیست</li>
-                    <li>دوام پایین</li>
-                    <li>کم یابی در بازار</li>
+                    {blogPost.content.negetive.split(",").map((neg) => (
+                      <>
+                        <li>{neg.trim()}</li>
+                      </>
+                    ))}
                   </ul>
                 </div>
               </div>
-              <div className="d-flex flex-column mt-4">
+
+              <div className="mt-4">{parse(contentWithIds)}</div>
+
+              {/* <div className="d-flex flex-column mt-4">
                 <Box
                   component="img"
                   sx={{
@@ -129,34 +194,38 @@ export default function BlogPostPage({ params }) {
               </div>
               <div className="mt-3">
                 <p>{blogPost.content3}</p>
-              </div>
+              </div> */}
+
               <div className={`${style.advertismentBox} d-flex flex-row mt-3`}>
-                {blogPost.product.map((item) => (
-                  <>
-                    <Box
-                      component="img"
-                      sx={{
-                        width: "30%",
-                        maxHeight: "200px",
-                        objectFit: "cover",
-                        aspectRatio: 1.5,
-                        borderRadius: "4px",
-                      }}
-                      alt={item.title}
-                      src={item.src}
-                    />
-                    <div
-                      className={`${style.contenttextButton} d-flex flex-column`}
+                <>
+                  <Box
+                    component="img"
+                    sx={{
+                      width: "30%",
+                      maxHeight: "200px",
+                      objectFit: "cover",
+                      aspectRatio: 1.5,
+                      borderRadius: "4px",
+                    }}
+                    alt={blogPost.content.product.title}
+                    src={blogPost.content.product.src}
+                  />
+                  <div
+                    className={`${style.contenttextButton} d-flex flex-column`}
+                  >
+                    <p className="subitem">{blogPost.content.product.title}</p>
+
+                    <Link
+                      style={{ textDecoration: "none", color: "unset" }}
+                      passHref
+                      href={blogPost.content.product.link}
                     >
-                      <p className="subitem">{item.title}</p>
                       <button>ثبت سفارش</button>
-                    </div>
-                  </>
-                ))}
+                    </Link>
+                  </div>
+                </>
               </div>
-              <div className="mt-4">
-                <p>{blogPost.content4}</p>
-              </div>
+
               <div
                 className={`${style.socialMediaIcon} d-flex flex-row mt-3 gap-3`}
               >
@@ -233,106 +302,107 @@ export default function BlogPostPage({ params }) {
                   </Box>
                 </a>
               </div>
+
               <div className="mt-3">
                 <ul className={`${style.tagsStyle} d-flex flex-row gap-3`}>
-                  {blogPost.tags.split(",").map((tag) => (
+                  {blogPost.content.tags.split(",").map((tag) => (
                     <>
                       <li>{tag.trim()}</li>
                     </>
                   ))}
                 </ul>
               </div>
+
               <section className="mb-5 mt-4 container">
                 <div className="d-flex flex-row justify-content-between">
                   <div>
                     <span className="title">مقالات مرتبط</span>
                   </div>
                 </div>
+
                 <div
                   className={`${style.responsiveFirstBox} d-flex flex-row gap-3 mt-4 justify-content-center`}
                 >
-                  <div
-                    className={`${style.boxBackgroundMain} d-flex flex-column justify-content-center`}
-                  >
-                    <div className={style.mobilePictureResponsiveBlog}>
-                      <Box
-                        component="img"
-                        sx={{
-                          width: "100%",
-                          maxHeight: 300,
-                          objectFit: "cover",
-                          aspectRatio: 1.48,
-                        }}
-                        alt="image."
-                        src="/HomeImages/coin.png"
-                      />
-                    </div>
-
-                    <div>
-                      <p
-                        className={`${style.studingtimetext} mt-2 mb-2 discription`}
-                      >
-                        مطالعه: 5دقیقه
-                      </p>
-                    </div>
-                    <div>
-                      <p className="subitem">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                        چاپ
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className={`${style.boxBackgroundMain} d-flex flex-column d-none d-lg-block d-md-block`}
-                  >
-                    <Box
-                      component="img"
-                      sx={{
-                        width: "100%",
-                        maxHeight: 300,
-                        objectFit: "cover",
-                      }}
-                      alt="The house from the offer."
-                      src="/HomeImages/cube-coin.png"
-                    />
-                    <p
-                      className={`${style.studingtimetext} mt-2 mb-2 discription`}
-                    >
-                      مطالعه: 5دقیقه
-                    </p>
-                    <p className="subitem">
-                      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-                    </p>
-                  </div>
-                  <div
-                    className={`${style.boxBackgroundMain} d-flex flex-column d-none d-lg-block d-md-block d-xl-block`}
-                  >
-                    <Box
-                      component="img"
-                      sx={{
-                        width: "100%",
-                        maxHeight: 300,
-                        objectFit: "cover",
-                      }}
-                      alt="The house from the offer."
-                      src="/HomeImages/text.png"
-                    />
-                    <p
-                      className={`${style.studingtimetext} mt-2 mb-2 discription`}
-                    >
-                      مطالعه: 5دقیقه
-                    </p>
-                    <p className="subitem">
-                      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-                    </p>
-                  </div>
+                  {blogPost?.content?.type &&
+                  groupedBlogs[blogPost.content.type] ? (
+                    <>
+                      {/* Map through the first 3 blogs of the found type */}
+                      {groupedBlogs[blogPost.content.type]
+                        .slice(0, 3)
+                        .map((blog, index) => (
+                          <div
+                            key={index}
+                            className={`${style.boxBackgroundMain} d-flex flex-column justify-content-center`}
+                          >
+                            <div className={style.mobilePictureResponsiveBlog}>
+                              <Box
+                                component="img"
+                                sx={{
+                                  width: "100%",
+                                  maxHeight: 300,
+                                  objectFit: "cover",
+                                  aspectRatio: 1.48,
+                                }}
+                                alt={blog.title}
+                                src={blog.imageSrc || "/default-image.jpg"} // Use blog's image
+                              />
+                            </div>
+                            <div>
+                              <p
+                                className={`${style.studingtimetext} mt-2 mb-2 discription`}
+                              >
+                                مطالعه: {blog.time}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="subitem">{blog.title}</p>
+                            </div>
+                          </div>
+                        ))}
+                    </>
+                  ) : (
+                    <>
+                      {/* If the type is not found, map through the first 3 blogs of the 'غیره' category */}
+                      {groupedBlogs["غیره"] &&
+                        groupedBlogs["غیره"].slice(0, 3).map((blog, index) => (
+                          <div
+                            key={index}
+                            className={`${style.boxBackgroundMain} d-flex flex-column justify-content-center`}
+                          >
+                            <div className={style.mobilePictureResponsiveBlog}>
+                              <Box
+                                component="img"
+                                sx={{
+                                  width: "100%",
+                                  maxHeight: 300,
+                                  objectFit: "cover",
+                                  aspectRatio: 1.48,
+                                }}
+                                alt={blog.title}
+                                src={blog.imageSrc || "/default-image.jpg"} // Use blog's image
+                              />
+                            </div>
+                            <div>
+                              <p
+                                className={`${style.studingtimetext} mt-2 mb-2 discription`}
+                              >
+                                مطالعه: {blog.time}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="subitem">{blog.title}</p>
+                            </div>
+                          </div>
+                        ))}
+                    </>
+                  )}
                 </div>
               </section>
             </div>
 
             {/* second part */}
             <div className={`${style.inputContent} d-flex flex-column`}>
-              <BlogInnerSearch />
+              <BlogInnerSearch allBlogs={allBlogs} />
             </div>
           </div>
         </section>

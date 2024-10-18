@@ -20,6 +20,7 @@
     "bootstrap": "^5.3.3",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.4",
+    "html-react-parser": "^5.1.18",
     "jquery": "^3.7.1",
     "jspdf": "^2.5.1",
     "mui-image": "^1.0.7",
