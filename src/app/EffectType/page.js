@@ -8,8 +8,12 @@ import Box from "@mui/material/Box";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Modal from "react-bootstrap/Modal";
-
 import MainLayout from "../layouts/MainLayout";
+
+// import redux
+import { useSelector , useDispatch } from "react-redux";
+import { productListData } from "../Store/slice";
+import { list } from "../Store/thunks";
 
 export default function EffectTypeWrapper() {
   return (
@@ -20,6 +24,16 @@ export default function EffectTypeWrapper() {
 }
 
 function EffectType() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(list());
+    };
+
+    fetchData();
+  }, [dispatch]);
+
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
 
@@ -150,6 +164,10 @@ function EffectType() {
 
   const currentVideo =
     currentVideoIndex !== null ? filteredContent[currentVideoIndex] : null;
+
+    const dataCome = useSelector(productListData)
+    console.log(dataCome);
+    
 
   return (
     <>

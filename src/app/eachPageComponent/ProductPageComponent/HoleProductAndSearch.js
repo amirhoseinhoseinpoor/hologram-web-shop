@@ -14,7 +14,6 @@ export default function HoleProductAndSearch({ itemsClick , matchedTitle }) {
   
   const [searchTerm, setSearchTerm] = useState("");
   
-  // console.log(searchTerm);
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };

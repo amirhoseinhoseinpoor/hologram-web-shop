@@ -32,7 +32,6 @@ export default function Banner() {
     fetchData();
   }, [dispatch]);
 
-  console.log(dataCome);
 
   const UrlsObject = dataCome?.map((data, i) => ({
     id: i,

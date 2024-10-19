@@ -14,7 +14,6 @@ export default async function Magazine() {
 
   const findData = dataFillterd.slice(0, 3);
 
-  console.log(findData);
 
   return (
     <section
