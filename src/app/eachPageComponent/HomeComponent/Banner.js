@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import style from "../../Styles/HomeStyle/Banner.module.scss";
 import Box from "@mui/material/Box";
@@ -14,16 +14,31 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-export default function Banner() {
-  const Urls = [
-    { url: "/HomeImages/newbanner.png" },
-    { url: "/HomeImages/newbanner.png" },
-    { url: "/HomeImages/newbanner.png" },
-  ];
+//import redux
+import { useDispatch } from "react-redux";
+import { homePageBannerList } from "@/app/Store/thunks";
 
-  const UrlsObject = Urls.map((url, i) => ({
+export default function Banner() {
+  const dispatch = useDispatch();
+
+  const [dataCome, setDataCome] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const dataComeAPI = await dispatch(homePageBannerList()).unwrap();
+      setDataCome(dataComeAPI || []);
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  console.log(dataCome);
+
+  const UrlsObject = dataCome?.map((data, i) => ({
     id: i,
-    url: url.url,
+    url: data.src,
+    title: data.title,
+    link: data.link,
   }));
 
   SwiperCore.use([Autoplay]);
@@ -58,15 +73,16 @@ export default function Banner() {
               />
               <div className={style.BannerTextDiv}>
                 <div className="mb-2 Banner-title">
-                  <h3>نقش هولوگرام امنیتی در </h3>
-                  <h3>کاهش تخلفات</h3>
+                  <h3>{item.title}</h3>
                 </div>
-                <Link href={`/Profile?type=makeOrder`} passHref>
-                  <div className={style.buttonBanner}>
-                   <button>ثبت سفارش</button>
-                 </div>
-                </Link>
-               
+
+                {item.link && (
+                  <Link href={item.link} passHref>
+                    <div className={style.buttonBanner}>
+                      <button>ثبت سفارش</button>
+                    </div>
+                  </Link>
+                )}
               </div>
             </SwiperSlide>
           ))}

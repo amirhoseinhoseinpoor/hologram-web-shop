@@ -205,10 +205,6 @@ export const homePageHonorsList = createAsyncThunk("honors/homePageHonorsList", 
   try {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
     const data = response.data;
-
-    console.log(data);
-    
-
     return data;
   } catch (error) {
     if (error.response && error.response.status === 400) {
@@ -228,10 +224,6 @@ export const homePageExhibitionList = createAsyncThunk("exhibition/homePageExhib
   try {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
     const data = response.data;
-
-    console.log(data);
-    
-
     return data;
   } catch (error) {
     if (error.response && error.response.status === 400) {
@@ -264,6 +256,25 @@ export const homePageBlogList = createAsyncThunk("blogs/homePageBlogList", async
   }
 });
 // end blog
+
+// start banner 
+export const homePageBannerList = createAsyncThunk("banner/homePageBannerList", async (_,thunkAPI) => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/banner/list`);
+    const data = response.data;
+
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return thunkAPI.rejectWithValue("ارور سمت من");
+    } else {
+      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+    }
+  }
+});
+
+// end banner
 
 // start order
 
