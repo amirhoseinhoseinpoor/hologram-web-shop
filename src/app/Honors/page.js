@@ -12,12 +12,30 @@ import Typography from "@mui/material/Typography";
 import MainLayout from "../layouts/MainLayout";
 
 
+async function fetchHonors() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const honors = await response.json();
+    return honors;
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return []; // Return fallback data if fetch fails
+  }
+}
 
 
 export default async function Honors() {
 
-  let response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
-  let honors = await response.json();
+  const honors = await fetchHonors();
+
+  if (honors.length === 0) {
+    return <p>No honors data available at the moment. Please try again later.</p>;
+  }
 
 
   function fixTitleSize(text) {
@@ -35,7 +53,7 @@ export default async function Honors() {
       <HeaderSeo />
       <section>
         <div className={`${style.MainDiv} container`}>
-          {honors.map((honor, index) => (
+          {honors?.map((honor, index) => (
             <React.Fragment key={index}>
               <Card
                 className={`${style.mainCardStyle} ${style.adjustpriority}`}

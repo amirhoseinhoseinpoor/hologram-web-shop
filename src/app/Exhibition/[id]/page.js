@@ -8,27 +8,30 @@ import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
-// function findSpeceficIteminjson(id) {
-//   const filepath = path.join(
-//     process.cwd(),
-//     "public",
-//     "json",
-//     "ExhibitionContent.json"
-//   );
-//   const readFile = fs.readFileSync(filepath, "utf8");
-//   const honors = JSON.parse(readFile);
-//   const found = honors.find((item) => item.id === id);
-//   if (found) {
-//     return found;
-//   }
-//   return null;
-// }
+async function fetchExhibition() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const allHonors = await response.json();
+    return allHonors;
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return []; // Return fallback data if fetch fails
+  }
+}
+
 
 export default async function innerExhibition({ params }) {
-  let response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`
-  );
-  let allHonors = await response.json();
+
+  const allHonors = await fetchExhibition();
+
+  if (allHonors.length === 0) {
+    return <p>No honors data available at the moment. Please try again later.</p>;
+  }
 
   const decodedId = decodeURIComponent(params.id);
 

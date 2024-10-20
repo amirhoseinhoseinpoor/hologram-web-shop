@@ -12,11 +12,30 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import MainLayout from "../layouts/MainLayout";
 
+async function fetchExhibition() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const exhibition = await response.json();
+    return exhibition;
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return []; // Return fallback data if fetch fails
+  }
+}
+
 
 export default async function Exhibition() {
 
-  let response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
-  let exhibition = await response.json();
+  const exhibition = await fetchExhibition();
+
+  if (exhibition.length === 0) {
+    return <p>No honors data available at the moment. Please try again later.</p>;
+  }
 
   function fixTitleSize(text) {
     var shortTitle;

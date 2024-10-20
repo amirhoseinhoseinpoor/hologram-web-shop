@@ -9,14 +9,35 @@ import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
+
+async function fetchHonors() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const allHonors = await response.json();
+    return allHonors;
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return []; // Return fallback data if fetch fails
+  }
+}
+
+
 export default async function innerHonors({ params }) {
 
-  let response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
-  let allHonors = await response.json();
+  const allHonors = await fetchHonors();
+
+  if (allHonors.length === 0) {
+    return <p>No honors data available at the moment. Please try again later.</p>;
+  }
 
   const decodedId = decodeURIComponent(params.id);
 
-  const honors = allHonors.find((item) => 
+  const honors = allHonors?.find((item) => 
     item.title.trim().toLowerCase() == decodedId.trim().toLowerCase()
   );
 
