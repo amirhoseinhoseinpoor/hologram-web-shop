@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authSliceV , makeOrderSliceV , productSliceV , honorsSliceV , exhibitionSliceV } from "./slice";
+import { authSliceV , makeOrderSliceV , productSliceV , honorsSliceV , exhibitionSliceV , headerSliceV } from "./slice";
 // import { useDispatch, useSelector, useStore } from 'react-redux'
 
 const store = configureStore({
@@ -8,7 +8,7 @@ const store = configureStore({
     product : productSliceV,
     honors: honorsSliceV,
     exhibition: exhibitionSliceV,
-    // content: contentSliceV,
+    header: headerSliceV,
     makeOrder : makeOrderSliceV,
   },
 });

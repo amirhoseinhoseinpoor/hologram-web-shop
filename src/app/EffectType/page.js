@@ -11,9 +11,10 @@ import Modal from "react-bootstrap/Modal";
 import MainLayout from "../layouts/MainLayout";
 
 // import redux
-import { useSelector , useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { productListData } from "../Store/slice";
 import { list } from "../Store/thunks";
+import { headerListData } from "../Store/slice";
 
 export default function EffectTypeWrapper() {
   return (
@@ -26,6 +27,17 @@ export default function EffectTypeWrapper() {
 function EffectType() {
   const dispatch = useDispatch();
 
+  const typeCome = useSelector(headerListData);
+
+  const typeComeContent = typeCome?.content;
+
+  const fillterdType = typeComeContent?.find((item) => item.link == "#test2");
+
+  console.log(fillterdType);
+
+  const dataCome = useSelector(productListData);
+  console.log(dataCome);
+
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(list());
@@ -36,30 +48,53 @@ function EffectType() {
 
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
-
   const [searchTerm, setSearchTerm] = useState("");
   const [currentVideoIndex, setCurrentVideoIndex] = useState(null);
   const [userInteracted, setUserInteracted] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
   const [videoDurations, setVideoDurations] = useState([]);
   const [activeTab, setActiveTab] = useState(type || "");
-
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-
   const videoRef = useRef();
 
   const normalizeString = (str) => str.replace(/\s+/g, "").toLowerCase();
 
   const filteredContent = useMemo(() => {
-    return (
-      activeTab
-        ? videoData.find((item) => item.fillter === activeTab)?.content || []
-        : videoData.flatMap((item) => item.content)
-    ).filter((item) =>
-      normalizeString(item.title || "").includes(normalizeString(searchTerm))
-    );
-  }, [activeTab, searchTerm]);
+    if (!fillterdType?.subItems) return []; // Check for valid subItems
+
+    let result = activeTab
+      ? fillterdType.subItems.filter((item) => item.title === activeTab) // Filter subItems based on activeTab
+      : fillterdType.subItems; // Return all subItems if no activeTab
+
+    // Perform search filter based on the search term
+    if (searchTerm) {
+      result = result.filter((item) =>
+        normalizeString(item.title || "").includes(normalizeString(searchTerm))
+      );
+    }
+
+    // Ensure result is always an array (even if it's just one item)
+    return Array.isArray(result) ? result : [result];
+  }, [activeTab, searchTerm, fillterdType]);
+
+  console.log(filteredContent);
+
+  const finalData = filteredContent.flatMap((item) =>
+    item.subItems.flatMap((itemInner) => {
+      if (itemInner.title) {
+        // Filter the products from dataCome that match the title of itemInner
+        const matchingProducts = dataCome?.filter(
+          (product) => product.name === itemInner.title
+        );
+        return matchingProducts;
+      }
+      return [];
+    })
+  );
+
+  // Log the finalData to see the result
+  console.log(finalData);
 
   useEffect(() => {
     if (type) {
@@ -68,15 +103,14 @@ function EffectType() {
   }, [type]);
 
   useEffect(() => {
-    if (filteredContent.length > 0 && currentVideoIndex === null) {
-      const firstVideoIndex = filteredContent.findIndex(
-        (item) => item.type === "video"
-      );
-      if (firstVideoIndex !== -1) {
-        setCurrentVideoIndex(firstVideoIndex);
-      }
+    if (finalData.length > 0 && currentVideoIndex === null) {
+      // const firstVideoIndex = finalData.findIndex(
+      //   (item) => item.type === "video"
+      // );
+      // if (firstVideoIndex !== -1) {  }
+      setCurrentVideoIndex(0);
     }
-  }, [filteredContent, currentVideoIndex]);
+  }, [finalData, currentVideoIndex]);
 
   const handleThumbnailClick = (index) => {
     setCurrentVideoIndex(index);
@@ -117,7 +151,7 @@ function EffectType() {
         video.removeEventListener("loadedmetadata", handleLoadedMetadata);
       };
     }
-  }, [currentVideoIndex, filteredContent]);
+  }, [currentVideoIndex, finalData]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -126,36 +160,35 @@ function EffectType() {
     }
   }, [currentVideoIndex, userInteracted]);
 
-  useEffect(() => {
-    const preloadVideoDurations = () => {
-      filteredContent.forEach((video, index) => {
-        if (video.type === "video") {
-          const videoElement = document.createElement("video");
-          videoElement.src = video.src;
-          videoElement.preload = "metadata";
-          videoElement.onloadedmetadata = () => {
-            const duration = videoElement.duration;
-            setVideoDurations((prevDurations) => {
-              const newDurations = [...prevDurations];
-              newDurations[index] = duration;
-              return newDurations;
-            });
-          };
-        }
-      });
-    };
+  // useEffect(() => {
+  //   const preloadVideoDurations = () => {
+  //     finalData.forEach((video, index) => {
+  //       if (video.type === "video") {
+  //         const videoElement = document.createElement("video");
+  //         videoElement.src = video.src;
+  //         videoElement.preload = "metadata";
+  //         videoElement.onloadedmetadata = () => {
+  //           const duration = videoElement.duration;
+  //           setVideoDurations((prevDurations) => {
+  //             const newDurations = [...prevDurations];
+  //             newDurations[index] = duration;
+  //             return newDurations;
+  //           });
+  //         };
+  //       }
+  //     });
+  //   };
+  //   preloadVideoDurations();
+  // }, [finalData]);
 
-    preloadVideoDurations();
-  }, [filteredContent]);
-
-  const formatDuration = (duration) => {
-    if (!duration) return "0:00";
-    const minutes = Math.floor(duration / 60);
-    const seconds = Math.floor(duration % 60)
-      .toString()
-      .padStart(2, "0");
-    return `${minutes}:${seconds}`;
-  };
+  // const formatDuration = (duration) => {
+  //   if (!duration) return "0:00";
+  //   const minutes = Math.floor(duration / 60);
+  //   const seconds = Math.floor(duration % 60)
+  //     .toString()
+  //     .padStart(2, "0");
+  //   return `${minutes}:${seconds}`;
+  // };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -163,11 +196,8 @@ function EffectType() {
   };
 
   const currentVideo =
-    currentVideoIndex !== null ? filteredContent[currentVideoIndex] : null;
+    currentVideoIndex !== null ? finalData[0]?.media[currentVideoIndex] : null;
 
-    const dataCome = useSelector(productListData)
-    console.log(dataCome);
-    
 
   return (
     <>
@@ -179,16 +209,16 @@ function EffectType() {
               activeKey={activeTab}
               onSelect={(k) => setActiveTab(k)}
             >
-              {videoData.map((item, index) => (
+              {fillterdType?.subItems.map((item, index) => (
                 <Tab
                   key={index}
-                  eventKey={item.fillter}
+                  eventKey={item.title}
                   title={
                     <div className="d-flex flex-column">
                       <p
                         className={`${style.TabTitleText} text-end mb-2 VodeoDisSizing`}
                       >
-                        {item.fillter}
+                        {item.title}
                       </p>
                       <Box
                         className={`${style.TabImageIconsEach} `}
@@ -198,7 +228,7 @@ function EffectType() {
                           objectFit: "cover",
                         }}
                         alt="image."
-                        src={item.tabSrc}
+                        src="/HomeImages/SecureTab1.png"
                       />
                     </div>
                   }
@@ -252,42 +282,48 @@ function EffectType() {
 
             {/* Images on the top of the video */}
             <div className={style.fixLeftSideVideo}>
-              {filteredContent.map(
-                (item, index) =>
-                  item.type === "img" && (
-                    <Card
-                      key={index}
-                      className={style.MainBOXCardStyle}
-                      onClick={() => handleImageClick(item.src)}
-                    >
-                      <div className="d-flex flex-column gap-2 p-2">
-                        <div className="position-relative">
-                          <CardMedia
-                            component="img"
-                            src={item.src}
-                            alt={item.title}
-                            sx={{
-                              borderRadius: "4px",
-                              height: "100%",
-                            }}
-                          />
-                        </div>
-                        <CardContent className={`${style.resetPaddingMui}`}>
-                          <div dir="rtl" className={`${style.titleStyle}`}>
-                            <p className="VodeoDisSizing">{item.title}</p>
-                            <span className="discription mt-1">
-                              {item.description}
-                            </span>
+              {finalData.map((itemF) =>
+                itemF?.info?.imgData?.map(
+                  (item, index) =>
+                    item.type === "1" ? (
+                      <Card
+                        key={index}
+                        className={style.MainBOXCardStyle}
+                        onClick={() =>
+                          handleImageClick(
+                            `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.src}`
+                          )
+                        }
+                      >
+                        <div className="d-flex flex-column gap-2 p-2">
+                          <div className="position-relative">
+                            <CardMedia
+                              component="img"
+                              src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.src}`}
+                              alt={item.title}
+                              sx={{
+                                borderRadius: "4px",
+                                height: "100%",
+                              }}
+                            />
                           </div>
-                        </CardContent>
-                      </div>
-                    </Card>
-                  )
+                          {/* <CardContent className={`${style.resetPaddingMui}`}>
+                            <div dir="rtl" className={`${style.titleStyle}`}>
+                              <p className="VodeoDisSizing">{item.title}</p>
+                              <span className="discription mt-1">
+                                {item.description}
+                              </span>
+                            </div>
+                          </CardContent> */}
+                        </div>
+                      </Card>
+                    ) : null // Ensure it returns null if item.type !== 'img'
+                )
               )}
             </div>
 
             <div className={`${style.adjustWidth}`}>
-              {currentVideo && (
+              {currentVideo &&  (
                 <Card className="position-relative mt-5 mb-3">
                   <div className="mb-3 me-3">
                     <p className="sometext">ویدئو افکت‌ها</p>
@@ -301,8 +337,8 @@ function EffectType() {
                       <CardMedia
                         id="video"
                         component="video"
-                        src={currentVideo.src}
-                        poster={currentVideo.poster}
+                        src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${currentVideo.src}`}
+                        poster={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${currentVideo.poster}`}
                         sx={{ borderRadius: "4px", maxHeight: "500px" }}
                         controls
                         ref={videoRef}
@@ -310,14 +346,17 @@ function EffectType() {
                       <CardContent>
                         <div className="d-flex flex-column">
                           <div className={`${style.titleStyle} purchesSize`}>
-                            <span>{currentVideo.title}</span>
+                            <span>
+                              {currentVideo.title || "Untitled Video"}
+                            </span>
                           </div>
                           <p className="VodeoDisSizing">
-                            {currentVideo.description}
+                            {currentVideo.description ||
+                              "No description available."}
                           </p>
                         </div>
                       </CardContent>
-                      {!videoEnded && (
+                      {/* {!videoEnded && (
                         <>
                           <div className={style.BelowContentFixIcon}>
                             <svg
@@ -348,14 +387,15 @@ function EffectType() {
                             </svg>
                           </div>
                         </>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </Card>
               )}
+
               <div className={`${style.fixLeftSideVideo}`}>
-                {filteredContent.map((video, index) =>
-                  video.type === "video" ? (
+                {finalData.map((itemF) =>
+                  itemF?.media?.map((video, index) => (
                     <Card
                       key={index}
                       className={style.MainBOXCardStyle}
@@ -365,7 +405,7 @@ function EffectType() {
                         <div className="position-relative">
                           <CardMedia
                             component="img"
-                            src={video.poster}
+                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${video.poster}`}
                             alt={video.title}
                             sx={{
                               borderRadius: "4px",
@@ -400,9 +440,9 @@ function EffectType() {
                               />
                             </svg>
                           </div>
-                          <div className={style.duration}>
+                          {/* <div className={style.duration}>
                             {formatDuration(videoDurations[index])}
-                          </div>
+                          </div> */}
                         </div>
                         <CardContent className={`${style.resetPaddingMui}`}>
                           <div dir="rtl" className={`${style.titleStyle}`}>
@@ -414,7 +454,7 @@ function EffectType() {
                         </CardContent>
                       </div>
                     </Card>
-                  ) : null
+                  ))
                 )}
               </div>
             </div>

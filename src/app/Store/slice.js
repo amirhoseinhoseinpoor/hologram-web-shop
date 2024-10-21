@@ -9,6 +9,7 @@ import {
   list,
   homePageHonorsList,
   homePageExhibitionList,
+  headerList,
 } from "./thunks";
 
 const authinitialState = {
@@ -204,52 +205,44 @@ export const exhibitionListData = (state) => state.exhibition.exhibitionListData
 
 // end exhibition slice 
 
+// start header slice 
+const headerinitialState = {
+  headerListData: null,
+  loading: false,
+  error: null,
+};
+
+const headerSlice = createSlice({
+  name: "header",
+  initialState: headerinitialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(headerList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(headerList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.headerListData = action.payload;
+      })
+      .addCase(headerList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+  },
+});
+
+export const headerSliceV = headerSlice.reducer;
+export const headerListData = (state) => state.header.headerListData;
+
+
+// end header slice 
 
 
 
-// const contentInitialState = {
-//   loading: false,
-//   data: [],
-//   error: "",
-// };
 
-// const contentSlice = createSlice({
-//   name: "content",
-//   initialState: contentInitialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(updateBannerContent.pending, (state) => {
-//         state.loading = true;
-//         state.error = null; // Update banner data on success
-//       })
 
-//       .addCase(updateBannerContent.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.data = action.payload; // Update banner data on success
-//       })
-//       .addCase(updateBannerContent.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload || "Something went wrong";
-//       })
-//       .addCase(updateBlogcontent.pending, (state, action) => {
-//         state.loading = true;
-//         state.error = null; // Update banner data on success
-//       })
-//       .addCase(updateBlogcontent.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.data = action.payload; // Update banner data on success
-//       })
-//       .addCase(updateBlogcontent.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload || "Something went wrong";
-//       });
-//   },
-// });
-// export const contentSliceV = contentSlice.reducer;
-// export const UrlsContent = (state) => state.content.data;
-// export const loadingContent = (state) => state.content.loading;
-// export const errorcontent = (state) => state.content.error;
 
 
 const makeOrderinitialState = {

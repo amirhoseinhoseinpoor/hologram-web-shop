@@ -1,10 +1,7 @@
 "use client";
-// import data ( remove it later )
-
-import mainItems from "/public/json/Header.json";
 
 import style from "../Styles/MainStyle/Header.module.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
   Navbar,
@@ -16,12 +13,14 @@ import {
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CallIcon from "@mui/icons-material/Call";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 // import redux
 import { useSelector , useDispatch } from "react-redux";
-import Link from "next/link";
 import { token , firstName, lastName , phoneNumber } from "../Store/slice";
-import { resetToken } from "../Store/slice"
+import { resetToken } from "../Store/slice";
+import { headerList } from "../Store/thunks";
+import { headerListData } from "../Store/slice";
 
 const renderSubItems = (subItems, depth = 1) => {
   return subItems.map((subItem) => {
@@ -71,6 +70,7 @@ export default function Header() {
   const handleResetToken = () => {
     dispatch(resetToken());
   };
+  
 
   const token2 = useSelector(token);
   const firstNameU = useSelector(firstName);
@@ -100,14 +100,24 @@ export default function Header() {
   };
 
   const addKeys = (items) => {
-    return items.map((item, index) => ({
+    return items?.map((item, index) => ({
       ...item,
       id: index,
       subItems: item.subItems ? addKeys(item.subItems) : [],
     }));
   };
 
-  const mainItemObject = addKeys(mainItems);
+  const checkData = useSelector(headerListData);
+  
+
+  useEffect(() => {
+    if (!checkData) {
+      dispatch(headerList())
+    }
+   
+  }, [dispatch , checkData]);
+
+  const mainItemObject = addKeys(checkData?.content);
 
   // store the url
   const storeLastVisitedPage = () => {
@@ -116,6 +126,7 @@ export default function Header() {
       sessionStorage.setItem("lastPage", lastPage);
     }
   };
+  
 
   return (
     <section
@@ -147,7 +158,7 @@ export default function Header() {
               className={`d-lg-block d-none justify-content-between m-auto ${style.navbaritemheader}`}
             >
               <Nav className="align-items-center gap-3">
-                {mainItemObject.map((item) => (
+                {mainItemObject?.map((item) => (
                   <React.Fragment key={item.id}>
                     {item.subItems.length > 0 ? (
                       <NavDropdown
@@ -396,7 +407,7 @@ export default function Header() {
               </Offcanvas.Header>
 
               <Nav className="align-items-center me-2 gap-3">
-                {mainItemObject.map((item) => (
+                {mainItemObject?.map((item) => (
                   <React.Fragment key={item.id}>
                     {item.subItems.length > 0 ? (
                       <React.Fragment key={item.id}>

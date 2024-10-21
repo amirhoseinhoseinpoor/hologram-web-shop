@@ -118,6 +118,25 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 
 // end auth
 
+// start header
+
+export const headerList = createAsyncThunk("header/headerList", async (_,thunkAPI) => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/header/find`);
+    const data = response.data;
+
+    return data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return thunkAPI.rejectWithValue("ارور سمت من");
+    } else {
+      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+    }
+  }
+});
+
+// end header
+
 // start send media
 export const uploadFile = createAsyncThunk(
   "product/uploadFile ",
@@ -243,9 +262,6 @@ export const homePageBlogList = createAsyncThunk("blogs/homePageBlogList", async
     const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/listPaginated`);
     const data = response.data;
 
-    console.log(data);
-    
-
     return data;
   } catch (error) {
     if (error.response && error.response.status === 400) {
@@ -263,7 +279,6 @@ export const homePageBannerList = createAsyncThunk("banner/homePageBannerList", 
     const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/banner/list`);
     const data = response.data;
 
-    console.log(data);
     return data;
   } catch (error) {
     if (error.response && error.response.status === 400) {
@@ -370,28 +385,3 @@ export const sendingSecondStep = createAsyncThunk(
 
 // end order
 
-// export const updateBannerContent = createAsyncThunk(
-//   "content/updateBannerContent",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.get("/json/ExhibitionPage.json");
-
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
-
-// export const updateBlogcontent = createAsyncThunk(
-//   "content/updateBlogcontent",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.get("/json/Blog.json");
-
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
