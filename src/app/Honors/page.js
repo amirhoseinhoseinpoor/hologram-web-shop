@@ -18,10 +18,11 @@ async function fetchHonors() {
 
     if (!response.ok) {
       console.log('Failed to fetch data');
+      return [];
     }
 
     const honors = await response.json();
-    return honors;
+    return Array.isArray(honors) ? honors : [];
   } catch (error) {
     console.error("Fetch failed:", error);
     return []; // Return fallback data if fetch fails

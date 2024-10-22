@@ -14,10 +14,11 @@ async function fetchExhibition() {
 
     if (!response.ok) {
       console.log('Failed to fetch data');
+      return [];
     }
 
     const allHonors = await response.json();
-    return allHonors;
+    return Array.isArray(allHonors) ? allHonors : [];
   } catch (error) {
     console.error("Fetch failed:", error);
     return []; // Return fallback data if fetch fails
