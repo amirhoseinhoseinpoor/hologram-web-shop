@@ -9,7 +9,7 @@ async function fetchBlogs() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`);
 
     if (!response.ok) {
-      throw new Error('Failed to fetch data');
+      console.log("Failed to fetch data");
     }
 
     const honors = await response.json();

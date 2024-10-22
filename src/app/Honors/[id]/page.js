@@ -15,7 +15,7 @@ async function fetchHonors() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
 
     if (!response.ok) {
-      throw new Error('Failed to fetch data');
+      console.log('Failed to fetch data');
     }
 
     const allHonors = await response.json();

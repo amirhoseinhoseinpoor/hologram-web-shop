@@ -9,11 +9,32 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 import Link from "next/link";
 import parse from "html-react-parser";
 
+async function fetchBlogs() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`
+    );
+
+    if (!response.ok) {
+      console.log("Failed to fetch data");
+    }
+
+    const honors = await response.json();
+    return honors;
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return []; // Return fallback data if fetch fails
+  }
+}
+
 export default async function BlogPostPage({ params }) {
-  let response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`
-  );
-  let allBlogs = await response.json();
+  const allBlogs = await fetchBlogs();
+
+  if (allBlogs.length === 0) {
+    return (
+      <p>No honors data available at the moment. Please try again later.</p>
+    );
+  }
 
   const decodedId = decodeURIComponent(params.id);
 
@@ -41,9 +62,7 @@ export default async function BlogPostPage({ params }) {
     return acc;
   }, {});
 
-
   const blogTypes = Object.keys(groupedBlogs);
-
 
   // Function to extract <h3> tags from the blog content and assign IDs
   const extractAndModifyH3Tags = (content) => {
