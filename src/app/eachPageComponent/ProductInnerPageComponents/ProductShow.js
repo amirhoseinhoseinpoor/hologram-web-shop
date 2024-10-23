@@ -18,11 +18,8 @@ import "swiper/css/autoplay";
 export default function ProductShow({ productData }) {
   var data = productData.info;
 
-  
-  
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const comeToken = useSelector(token);
-
 
   const [selectedColor, setSelectedColor] = useState("");
 
@@ -302,7 +299,7 @@ export default function ProductShow({ productData }) {
                     className={style.coloredBoxStyle}
                     style={{
                       // backgroundColor: item.src,
-                      backgroundImage: `url(http://localhost:7000/system/download/${item.src})`,
+                      backgroundImage: `url(${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.src})`,
                       border:
                         selectedColor === item.name ? "3px solid #404756" : "",
 
@@ -324,7 +321,7 @@ export default function ProductShow({ productData }) {
                   key={index}
                   style={{
                     // border: selectedSize === size ? "1.5px solid #404756" : "",
-                    border : "1.5px solid #404756",
+                    border: "1.5px solid #404756",
                     borderRadius: "5px",
                     cursor: "pointer",
                   }}
