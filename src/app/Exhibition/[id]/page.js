@@ -70,7 +70,7 @@ export default async function innerExhibition({ params }) {
                 borderRadius: "4px",
               }}
               alt={honors.title}
-              src={honors.src}
+              src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${honors.src}`}
             />
           </div>
 

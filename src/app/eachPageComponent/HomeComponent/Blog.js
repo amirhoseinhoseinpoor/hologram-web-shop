@@ -73,7 +73,7 @@ export default async function Magazine() {
                         aspectRatio: 1.48,
                       }}
                       alt="image."
-                      src={item.content.imageSrc}
+                      src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.content.imageSrc}`}
                     />
                   </div>
 

@@ -67,7 +67,7 @@ export default async function Honors() {
                   <CardMedia
                     className={`${style.fixBoxSize} gap-3`}
                     component="img"
-                    image={honor.src}
+                    image={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${honor.src}`}
                     alt={honor.title}
                   />
 

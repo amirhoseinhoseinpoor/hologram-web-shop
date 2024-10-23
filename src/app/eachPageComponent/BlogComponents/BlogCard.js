@@ -62,7 +62,7 @@ export default async function BlogCard() {
                 <CardMedia
                   className={`${style.fixBoxSize} gap-3`}
                   component="img"
-                  image={blog.content.imageSrc}
+                  image={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.content.imageSrc}`}
                   alt={blog.content.title}
                 />
 
@@ -102,7 +102,7 @@ export default async function BlogCard() {
                 <CardMedia
                   className={`${style.fixBoxSize} gap-3`}
                   component="img"
-                  image={blog.content.imageSrc}
+                  image={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.content.imageSrc}`}
                   alt={blog.content.title}
                 />
 

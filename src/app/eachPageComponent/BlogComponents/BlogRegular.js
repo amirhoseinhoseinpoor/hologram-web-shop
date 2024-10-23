@@ -169,7 +169,7 @@ export default function BlogRegular() {
                         <CardMedia
                           className={`${style.fixBoxSize} gap-3`}
                           component="img"
-                          image={blog.imageSrc}
+                          image={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.imageSrc}`}
                           alt={blog.title}
                         />
                         <CardContent className={style.adjustContent}>

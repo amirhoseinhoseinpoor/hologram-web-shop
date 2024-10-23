@@ -68,7 +68,7 @@ export default function Banner() {
                   borderRadius: 3,
                 }}
                 alt="slieds"
-                src={item.url}
+                src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.url}`}
               />
               <div className={style.BannerTextDiv}>
                 <div className="mb-2 Banner-title">

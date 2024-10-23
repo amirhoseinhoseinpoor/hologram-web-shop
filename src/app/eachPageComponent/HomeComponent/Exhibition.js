@@ -133,7 +133,7 @@ export default function Exhibition() {
                             borderRadius: 3,
                           }}
                           alt="slieds"
-                          src={item.src}
+                          src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.src}`}
                         />
                         <p>{fixTitleSize(item.title)}</p>
                       </div>

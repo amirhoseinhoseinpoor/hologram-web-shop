@@ -71,7 +71,7 @@ export default async function Exhibition() {
                         <CardMedia
                         className={`${style.fixBoxSize} gap-3 h-100`}
                         component="img"
-                        image={item.src}
+                        image={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.src}`}
                         alt={item.title}
                       />
                       </div>

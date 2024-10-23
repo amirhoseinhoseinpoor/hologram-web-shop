@@ -80,19 +80,6 @@ export default function Honors() {
             </Link>
           </div>
         </div>
-
-        {/* <div className="mt-4 d-flex gap-3">
-            <button
-              className={`${style.arrowforward} review-swiper-button-prev2`}
-            >
-              <ArrowForwardIcon></ArrowForwardIcon>
-            </button>
-            <button
-              className={`${style.arrowbackward} review-swiper-button-next2`}
-            >
-              <ArrowBackIcon></ArrowBackIcon>
-            </button>
-          </div> */}
       </div>
       <div className={`${style.honorsFixPagination} container`}>
         <Swiper
@@ -134,7 +121,7 @@ export default function Honors() {
                     borderRadius: 3,
                   }}
                   alt={item.title}
-                  src={item.src}
+                  src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.src}`}
                 />
               </Link>
             </SwiperSlide>

@@ -111,7 +111,7 @@ export default async function BlogPostPage({ params }) {
                     borderRadius: "4px",
                   }}
                   alt={blogPost.content.title}
-                  src={blogPost.content.imageSrc}
+                  src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blogPost.content.imageSrc}`}
                 />
               </div>
 
@@ -228,7 +228,7 @@ export default async function BlogPostPage({ params }) {
                       borderRadius: "4px",
                     }}
                     alt={blogPost.content.product.title}
-                    src={blogPost.content.product.src}
+                    src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blogPost.content.product.src}`}
                   />
                   <div
                     className={`${style.contenttextButton} d-flex flex-column`}
@@ -364,7 +364,7 @@ export default async function BlogPostPage({ params }) {
                                   aspectRatio: 1.48,
                                 }}
                                 alt={blog.title}
-                                src={blog.imageSrc || "/default-image.jpg"} // Use blog's image
+                                src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.imageSrc}` || "/default-image.jpg"} // Use blog's image
                               />
                             </div>
                             <div>
@@ -399,7 +399,7 @@ export default async function BlogPostPage({ params }) {
                                   aspectRatio: 1.48,
                                 }}
                                 alt={blog.title}
-                                src={blog.imageSrc || "/default-image.jpg"} // Use blog's image
+                                src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.imageSrc}` || "/default-image.jpg"} // Use blog's image
                               />
                             </div>
                             <div>

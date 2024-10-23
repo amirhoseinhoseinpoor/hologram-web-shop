@@ -33,10 +33,8 @@ function EffectType() {
 
   const fillterdType = typeComeContent?.find((item) => item.link == "#test2");
 
-  console.log(fillterdType);
-
   const dataCome = useSelector(productListData);
-  console.log(dataCome);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +76,6 @@ function EffectType() {
     return Array.isArray(result) ? result : [result];
   }, [activeTab, searchTerm, fillterdType]);
 
-  console.log(filteredContent);
 
   const finalData = filteredContent.flatMap((item) =>
     item.subItems.flatMap((itemInner) => {
@@ -93,8 +90,6 @@ function EffectType() {
     })
   );
 
-  // Log the finalData to see the result
-  console.log(finalData);
 
   useEffect(() => {
     if (type) {
