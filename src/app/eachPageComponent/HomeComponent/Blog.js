@@ -36,8 +36,7 @@ export default async function Magazine() {
 
   return (
     <section
-      style={{ marginTop: "90px", marginBottom: "90px" }}
-      className=" container"
+      className={`container ${style.mainSection}`}
     >
       <div className="d-flex flex-row justify-content-between">
         <div>

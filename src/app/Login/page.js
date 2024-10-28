@@ -110,7 +110,6 @@ export default function Login() {
   const handleVerifyOtp = async (otp) => {
     setErrorMessage(null);
     try {
-      alert("your OTP   " + otp);
       const lastPage = sessionStorage.getItem("lastPage") || "/";
       router.push(lastPage);
 

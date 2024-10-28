@@ -88,6 +88,10 @@
 //      }
 // }
 
+.mainSection{
+  margin-top: 95px;
+}
+
 .titleColor {
   span {
     color: var.$arrow-background;
@@ -118,14 +122,22 @@
 }
 @media (max-width: 980px) {
   .mainSizez {
-    grid-gap: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 35px;
+  }
+  .mainSection{
+    margin-top: 47px;
   }
 }
 @media (max-width: 768px) {
   .fixCardStyle{
     padding: 8px;
+  }
+  .mainSection{
+    margin-top: 32px;
+  }
+  .mainSizez {
+    grid-gap: 10px;
   }
 }

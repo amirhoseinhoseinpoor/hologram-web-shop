@@ -39,7 +39,7 @@ export default function Honors() {
   
 
   return (
-    <section style={{marginTop : "100px"}} className={`${style.mainbackgroundhonor}  mb-5`}>
+    <section className={`${style.mainbackgroundhonor} `}>
       <div
         className={`${style.rigthtextslide} d-flex flex-column justify-content-center container`}
       >

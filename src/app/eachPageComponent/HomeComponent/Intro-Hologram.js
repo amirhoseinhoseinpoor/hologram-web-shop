@@ -16,7 +16,7 @@ export default function IntroHologram() {
   };
 
   return (
-    <section style={{marginTop: "100px"}} className="container  mb-4">
+    <section className={`container ${style.mainSection}`}>
       <div className={`${style.mainDivResponsive} d-flex flex-row`}>
         <div
           className={`${style.responsiveMarginText} ${style.textStyle} d-flex flex-column container justify-content-evenly`}

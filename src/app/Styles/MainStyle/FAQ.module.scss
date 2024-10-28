@@ -1,68 +1,77 @@
 @use "../variable" as var;
 
-.coloerdTitle{
-    color: var.$arrow-background;
+.coloerdTitle {
+  color: var.$arrow-background;
 }
 
-.buttonsTabbed{
-    border-bottom: none;
-    margin-bottom: 15px;
+.mainSection {
+  margin-top: 95px;
 }
-.buttonsTabbed li button{
-    background-color: unset !important;
-    color: var.$tabbed ;
-    border: 1px solid var.$tabbed !important;
-    padding : 6px 12px;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 32px !important;
-    
+
+.buttonsTabbed {
+  border-bottom: none;
+  margin-bottom: 15px;
 }
-.buttonsTabbed li{
-    padding: 8px;
+.buttonsTabbed li button {
+  background-color: unset !important;
+  color: var.$tabbed;
+  border: 1px solid var.$tabbed !important;
+  padding: 6px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 32px !important;
+}
+.buttonsTabbed li {
+  padding: 8px;
 }
 //acordion
-.accordionStyle div h2{
-    background-color: var.$footer-background;
-    
+.accordionStyle div h2 {
+  background-color: var.$footer-background;
 }
-.accordionBody{
-    background-color: var.$footer-background;
-    margin: 0 !important;
-    line-height: normal;
+.accordionBody {
+  background-color: var.$footer-background;
+  margin: 0 !important;
+  line-height: normal;
 }
-.accordionItem{
-    margin: 10px 0;
-
+.accordionItem {
+  margin: 10px 0;
 }
 
-.accordionStyle div{
-    border: none;
+.accordionStyle div {
+  border: none;
 }
-.accordionStyle div :focus{
-    outline: none !important;
+.accordionStyle div :focus {
+  outline: none !important;
 }
-.accordionStyle div h2 button{
-    background-color: var.$footer-background;
-    justify-content: space-between;
+.accordionStyle div h2 button {
+  background-color: var.$footer-background;
+  justify-content: space-between;
 }
-.accordionStyle div h2 button::after{ 
-    margin: 0;
+.accordionStyle div h2 button::after {
+  margin: 0;
+}
+@media (max-width: 980px) {
+  .mainSection {
+    margin-top: 55px;
+  }
 }
 
-@media (max-width :768px) {
-    .accordionItem :global{
-        .accordion-header button{
-            padding: 17px 7px;
-            font-size: 15px;
-            text-align: right;
-        }
+@media (max-width: 768px) {
+  .accordionItem :global {
+    .accordion-header button {
+      padding: 17px 7px;
+      font-size: 15px;
+      text-align: right;
     }
-    .buttonsTabbed li button{
-        padding: 5px 12px;
-        font-size: 15px;
-    }
-    .accordionStyle div h2 button{
-        justify-content: unset;
-    }
+  }
+  .buttonsTabbed li button {
+    padding: 5px 12px;
+    font-size: 15px;
+  }
+  .accordionStyle div h2 button {
+    justify-content: unset;
+  }
+  .mainSection {
+    margin-top: 35px;
+  }
 }

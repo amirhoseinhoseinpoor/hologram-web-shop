@@ -76,7 +76,6 @@ export default function Video() {
 
   return (
     <section
-      style={{ marginTop: "100px" }}
       className={`mb-5 container ${style.responsiveSection} ${videoData.length === 0 ? style.hidden : ''}`}
     >
       {videoData.length > 0 ? (

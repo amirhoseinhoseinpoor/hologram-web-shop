@@ -4,6 +4,10 @@
     color: var.$arrow-background;
 }
 
+.mainSection{
+    margin-top: 90px;
+    margin-bottom: 90px;
+}
 
 .arrowbacklink{
     
@@ -24,6 +28,14 @@
     padding: 10px;
     background-color: var.$footer-background;
 }
+
+@media (max-width :980px) {
+    .mainSection{
+        margin-top: 55px;
+        margin-bottom: 55px;
+    }
+}
+
 @media (max-width :768px) {
     .mobilePictureResponsiveBlog{
         img{
@@ -35,4 +47,8 @@
         display: block !important;
     }
 
+    .mainSection{
+        margin-top: 35px;
+        margin-bottom: 35px;
+    }
 }

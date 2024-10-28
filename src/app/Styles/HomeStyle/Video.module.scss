@@ -3,7 +3,9 @@
 .hidden {
   display: none;
 }
-
+.responsiveSection{
+  margin-top: 100px;
+}
 
 .adjustWidth {
   div {
@@ -119,6 +121,9 @@
     width: 63px;
     height: 26px;
   }
+  .responsiveSection{
+    margin-top: 55px;
+  }
 }
 @media (max-width: 768px) {
   .posterIcon {
@@ -128,5 +133,8 @@
   .posterIconArrow {
     width: 50px;
     height: 20px;
+  }
+  .responsiveSection{
+    margin-top: 35px;
   }
 }

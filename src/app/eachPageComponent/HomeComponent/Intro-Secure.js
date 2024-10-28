@@ -20,7 +20,7 @@ export default function IntroSecure() {
   };
 
   return (
-    <section style={{marginTop : "100px"}} className="container  mb-5">
+    <section className={`container ${style.mainSection}`}>
       <div className={`${style.mainDivResponsive} d-flex flex-row`}>
         <div className={`${style.imageStyle} d-flex`}>
           <Box

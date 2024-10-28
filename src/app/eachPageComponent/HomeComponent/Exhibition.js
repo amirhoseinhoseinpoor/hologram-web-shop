@@ -25,12 +25,6 @@ import { exhibitionListData } from "@/app/Store/slice";
 export default function Exhibition() {
   const dispatch = useDispatch();
 
-  // const { data, loading, error } = useSelector((state) => state.content);
-
-  // useEffect(() => {
-  //   dispatch(updateBannerContent());
-  // }, [dispatch]);
-
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(homePageExhibitionList());
@@ -63,7 +57,7 @@ export default function Exhibition() {
   }
 
   return (
-    <section style={{ marginTop: "100px" }} className={style.mainbackground}>
+    <section className={style.mainbackground}>
       <div
         className={`d-flex flex-row container-lg h-100 ${style.exhibitionresponsivemaindiv}`}
       >
