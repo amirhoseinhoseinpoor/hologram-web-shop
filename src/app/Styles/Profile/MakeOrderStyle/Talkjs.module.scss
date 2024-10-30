@@ -54,7 +54,8 @@
 .allTextStyle {
   background-color: #e7ecf0;
   border-radius: 4px;
-  padding: 7px;
+  padding: 5px;
+  margin-top: 10px;
   width: fit-content;
   color: var.$social-media-color;
   display: flex;
@@ -93,7 +94,7 @@
 .LabelFileUpload {
   position: absolute;
   left: 0%;
-  top: 20%;
+  top: 46%;
   transform: translate(50%, -50%);
   cursor: pointer;
 }
@@ -106,7 +107,7 @@
   position: absolute;
   transform: translate(50%, -50%);
   left: -1%;
-  top: 55%;
+  top: 47%;
 }
 
 .inputChatBoxStyle:focus-visible {

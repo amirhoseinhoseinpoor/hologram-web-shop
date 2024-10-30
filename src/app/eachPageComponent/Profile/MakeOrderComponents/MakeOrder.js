@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import style from "../../../Styles/Profile/MakeOrderStyle/MakeOrder.module.scss";
 import ProcessTracker from "../ProcessTracker";
-import data from "/public/json/ProfileFirstStepEffect.json";
 import PusherChat from "./Talkjs";
 
 // improt redux
@@ -47,11 +46,10 @@ export default function MakeOrder() {
         
 
         result.map((item) => {
-          if (item.status === 1) {
-            console.log(item);
+          // if (item.status === 1) {}
             setOrderState(item);
             setStep(item.step);
-          }
+          
         })
       } catch (error) {
         console.error('Error during dispatch:', error);  
@@ -111,6 +109,8 @@ export default function MakeOrder() {
       case 3:
         return (
           <PusherChat
+            chatData={orderState.chat}
+            code={orderState.code}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
           />

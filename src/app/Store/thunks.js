@@ -8,26 +8,26 @@ export const login = createAsyncThunk(
   async (credentials, thunkAPI) => {
     const { username, password } = credentials;
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/auth/login`, {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/auth/login`,
+        {
+          username,
+          password,
+        }
+      );
       const token = response.data.token;
 
       console.log(token);
 
       const response2 = await axios.post(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/users`,
-        {username},
+        { username },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },
-        
+        }
       );
-
-      console.log(response2);
 
       return {
         token,
@@ -120,20 +120,27 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 
 // start header
 
-export const headerList = createAsyncThunk("header/headerList", async (_,thunkAPI) => {
-  try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/header/find`);
-    const data = response.data;
+export const headerList = createAsyncThunk(
+  "header/headerList",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/header/find`
+      );
+      const data = response.data;
 
-    return data;
-  } catch (error) {
-    if (error.response && error.response.status === 400) {
-      return thunkAPI.rejectWithValue("ارور سمت من");
-    } else {
-      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
     }
   }
-});
+);
 
 // end header
 
@@ -187,7 +194,9 @@ export const uploadFile = createAsyncThunk(
 
 export const list = createAsyncThunk("product/list", async (thunkAPI) => {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/list`);
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/list`
+    );
     const data = response.data;
 
     return data;
@@ -202,96 +211,162 @@ export const list = createAsyncThunk("product/list", async (thunkAPI) => {
 
 // end product
 
-// start HomePage Video 
-export const homePageVideoList = createAsyncThunk("homePage/homePageVideoList", async (_,thunkAPI) => {
-  try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/video/list`);
-    const data = response.data; 
-    return data;
-  } catch (error) {
-    if (error.response && error.response.status === 400) {
-      return thunkAPI.rejectWithValue("ارور سمت من");
-    } else {
-      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+// start HomePage Video
+export const homePageVideoList = createAsyncThunk(
+  "homePage/homePageVideoList",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/video/list`
+      );
+      const data = response.data;
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
     }
   }
-});
+);
 
 // end HomePage video
 
 // start HomePage Honors
-export const homePageHonorsList = createAsyncThunk("honors/homePageHonorsList", async (_,thunkAPI) => {
-  try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
-    const data = response.data;
-    return data;
-  } catch (error) {
-    if (error.response && error.response.status === 400) {
-      return thunkAPI.rejectWithValue("ارور سمت من");
-    } else {
-      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+export const homePageHonorsList = createAsyncThunk(
+  "honors/homePageHonorsList",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`
+      );
+      const data = response.data;
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
     }
   }
-});
-
+);
 
 // end HomePage Honors
 
 // start exhibition
 
-export const homePageExhibitionList = createAsyncThunk("exhibition/homePageExhibitionList", async (_,thunkAPI) => {
-  try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
-    const data = response.data;
-    return data;
-  } catch (error) {
-    if (error.response && error.response.status === 400) {
-      return thunkAPI.rejectWithValue("ارور سمت من");
-    } else {
-      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+export const homePageExhibitionList = createAsyncThunk(
+  "exhibition/homePageExhibitionList",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`
+      );
+      const data = response.data;
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
     }
   }
-});
-
+);
 
 // end exhibition
 
 // start blog
-export const homePageBlogList = createAsyncThunk("blogs/homePageBlogList", async (_,thunkAPI) => {
-  try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/listPaginated`);
-    const data = response.data;
+export const homePageBlogList = createAsyncThunk(
+  "blogs/homePageBlogList",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/listPaginated`
+      );
+      const data = response.data;
 
-    return data;
-  } catch (error) {
-    if (error.response && error.response.status === 400) {
-      return thunkAPI.rejectWithValue("ارور سمت من");
-    } else {
-      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
     }
   }
-});
+);
 // end blog
 
-// start banner 
-export const homePageBannerList = createAsyncThunk("banner/homePageBannerList", async (_,thunkAPI) => {
-  try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/banner/list`);
-    const data = response.data;
+// start banner
+export const homePageBannerList = createAsyncThunk(
+  "banner/homePageBannerList",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/banner/list`
+      );
+      const data = response.data;
 
-    return data;
-  } catch (error) {
-    if (error.response && error.response.status === 400) {
-      return thunkAPI.rejectWithValue("ارور سمت من");
-    } else {
-      return thunkAPI.rejectWithValue("مشکلی به وجود امده لطفا بعدا تلاش کنید");
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
     }
   }
-});
+);
 
 // end banner
 
 // start order
+
+export const sendNewMessage = createAsyncThunk(
+  "order/sendNewMessage",
+  async ({ code, newMessageSend }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/chat/${code}`,
+        {
+          chat : newMessageSend},
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token.token}` : "",
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
 
 export const getUserProduct = createAsyncThunk(
   "order/getUserProduct",
@@ -300,11 +375,14 @@ export const getUserProduct = createAsyncThunk(
     const token = state.auth.token;
 
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/findById`, {
-        headers: {
-          Authorization: token ? `Bearer ${token.token}` : "",
-        },
-      });
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/findById`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token.token}` : "",
+          },
+        }
+      );
 
       return response.data;
     } catch (error) {
@@ -352,14 +430,14 @@ export const sendFirstStep = createAsyncThunk(
 
 export const sendingSecondStep = createAsyncThunk(
   "order/sendingSecondStep",
-  async ({code ,  sendingFinalData}, thunkAPI) => {
+  async ({ code, sendingFinalData }, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token.token;
     try {
       const response = await axios.patch(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/document/${code}`,
         {
-          document : sendingFinalData,
+          document: sendingFinalData,
         },
         {
           headers: {
@@ -384,4 +462,3 @@ export const sendingSecondStep = createAsyncThunk(
 );
 
 // end order
-
