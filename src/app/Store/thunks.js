@@ -170,10 +170,6 @@ export const uploadFile = createAsyncThunk(
         }
       );
 
-      if (response.data[0].fileName) {
-        alert("افزودن عکس با موفقیت انجام شد");
-      }
-
       return response.data[0].fileName;
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -182,6 +178,39 @@ export const uploadFile = createAsyncThunk(
       } else {
         return thunkAPI.rejectWithValue(
           "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
+export const fetchPrivateImage = createAsyncThunk(
+  "image/fetchPrivateImage",
+  async ({ filename }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${filename}`,
+        {}, // No body is needed for this request
+        {
+          headers: {
+            Authorization: token.token ? `Bearer ${token.token}` : "",
+          },
+          responseType: "blob",
+        }
+      );
+
+      const imageObjectURL = URL.createObjectURL(response.data);
+
+      return imageObjectURL;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("Error from server");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "Something went wrong, please try again later"
         );
       }
     }
