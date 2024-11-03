@@ -36,7 +36,6 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageCache, setImageCache] = useState({});
 
-  console.log(image);
 
   // modal part state and function
   const [open, setOpen] = useState(false);
@@ -50,15 +49,14 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
     // Listen for chat updates
     socket.on("chatUpdate", (data) => {
       if (data.code === code) {
-        console.log(data);
         setMessages(Array.isArray(data.chat) ? data.chat : []);
       }
     });
 
-    // Clean up the listener on unmount
-    return () => {
-      socket.disconnect();
-    };
+    // // Clean up the listener on unmount
+    // return () => {
+    //   socket.disconnect();
+    // };
   }, [code, chatData]);
 
   const handleEditMessage = (index) => {
@@ -117,7 +115,6 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
           const response = await dispatch(
             uploadFile({ file: image, tag, type, isPublic })
           ).unwrap();
-          console.log(response);
 
           newMessageObject.imageUrl = response;
         } catch (error) {
