@@ -36,6 +36,7 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageCache, setImageCache] = useState({});
 
+  console.log(image);
 
   // modal part state and function
   const [open, setOpen] = useState(false);
@@ -115,6 +116,7 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
           const response = await dispatch(
             uploadFile({ file: image, tag, type, isPublic })
           ).unwrap();
+          console.log(response);
 
           newMessageObject.imageUrl = response;
         } catch (error) {
