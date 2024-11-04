@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserProduct } from "@/app/Store/thunks";
 import { userOrdersData } from "@/app/Store/slice";
 
-export default function seeOrder() {
+export default function SeeOrder() {
   const dispatch = useDispatch();
 
   const checkData = useSelector(userOrdersData);

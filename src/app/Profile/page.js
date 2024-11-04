@@ -74,7 +74,7 @@ const ProfileTabs = ({ setActiveTab, activeTab }) => {
       className={style.sidebarMain}
     >
       <Tab eventKey="makeOrder" title="ثبت سفارش"></Tab>
-      <Tab eventKey="seeOrder" title="پیگیری سفارش"></Tab>
+      <Tab eventKey="SeeOrder" title="پیگیری سفارش"></Tab>
       <Tab eventKey="userInfo" title="اطلاعات کاربری"></Tab>
       <Tab eventKey="message" title="پیغام ها"></Tab>
       <Tab eventKey="favorite" title="لیست‌های مورد علاقه"></Tab>
@@ -194,7 +194,7 @@ const Profile = () => {
               </Link>
             </div>
             {activeTab === "makeOrder" && <MakeOrder />}
-            {activeTab === "seeOrder" && <SeeOrder />}
+            {activeTab === "SeeOrder" && <SeeOrder />}
             {activeTab === "userInfo" && <UserInfo />}
             {activeTab === "message" && <Message />}
             {activeTab === "favorite" && <Favorite />}
