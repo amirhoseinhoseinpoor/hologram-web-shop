@@ -1,17 +1,24 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authSliceV , makeOrderSliceV , productSliceV , honorsSliceV , exhibitionSliceV , headerSliceV } from "./slice";
-// import { useDispatch, useSelector, useStore } from 'react-redux'
+import {
+  authSliceV,
+  makeOrderSliceV,
+  productSliceV,
+  honorsSliceV,
+  exhibitionSliceV,
+  headerSliceV,
+  userOrdersSliceV,
+} from "./slice";
 
 const store = configureStore({
   reducer: {
     auth: authSliceV,
-    product : productSliceV,
+    product: productSliceV,
     honors: honorsSliceV,
     exhibition: exhibitionSliceV,
     header: headerSliceV,
-    makeOrder : makeOrderSliceV,
+    makeOrder: makeOrderSliceV,
+    userOrders: userOrdersSliceV,
   },
 });
 
 export default store;
-

@@ -7,14 +7,17 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Modal from "react-bootstrap/Modal";
 import { Card, CardContent } from "@mui/material";
-
 import style from "../../../Styles/Profile/MakeOrderStyle/StepFiveStyle.module.scss";
+// import redux
+import { useDispatch, useSelector } from "react-redux";
+import { sendingAdressStep } from "@/app/Store/thunks";
 
 export default function StepFiveComponent({
   handleNextStep,
   handlePreviousStep,
   disabelInputStep4,
   setDisabelInputStep4,
+  code,
 }) {
   const [value, setValue] = React.useState("تحویل حضوری از مرکز آذر هولوگرام");
   const [disableButton, setDisableButton] = useState(false);
@@ -35,8 +38,6 @@ export default function StepFiveComponent({
   const [PostAdress2, setPostAdress2] = useState([]);
 
   const [finalData, setFinalData] = useState([]);
-
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -86,8 +87,16 @@ export default function StepFiveComponent({
     }
   }, [value, PostAdress, PostAdress2]);
 
-  const handleAddAdress = () => {
-    setPostAdress((prevCards) => [...prevCards, formState]);
+  const handleAddAdress = async () => {
+    // First, create the new address object
+    const newAddress = {
+      ...formState,
+      type: "ارسال با پست",
+    };
+    if (PostAdress.length === 0) {
+      setFinalData(newAddress);
+    }
+    setPostAdress((prevCards) => [...prevCards, newAddress]);
     setFormState({
       name: "",
       lastName: "",
@@ -103,7 +112,14 @@ export default function StepFiveComponent({
   };
 
   const handleAddAdress2 = () => {
-    setPostAdress2((prevCards) => [...prevCards, formState]);
+    const newAddress = {
+      ...formState,
+      type: "ارسال با باربری",
+    };
+    if (PostAdress2.length === 0) {
+      setFinalData(newAddress);
+    }
+    setPostAdress2((prevCards) => [...prevCards, newAddress]);
 
     setFormState({
       name: "",
@@ -118,14 +134,13 @@ export default function StepFiveComponent({
     setShowModal2(false);
   };
 
-  const handleSubmit = (e) => {
-    // e.preventDefault();
+  const handleSubmit = () => {
     console.log(finalData);
   };
 
   const handleDisabelInput = () => {
-    setDisabelInputStep4(true);
-    handleNextStep();
+    // setDisabelInputStep4(true);
+    // handleNextStep();
     handleSubmit();
   };
 
@@ -226,12 +241,10 @@ export default function StepFiveComponent({
   };
 
   useEffect(() => {
-    
     if (value === "ارسال با پست") {
       setTrackActiveAdress2(null);
       setTrackActiveAdress(0);
       setFinalData(PostAdress[0]);
-      
     } else if (value === "ارسال با باربری") {
       setTrackActiveAdress(null);
       setTrackActiveAdress2(0);

@@ -36,8 +36,6 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageCache, setImageCache] = useState({});
 
-  console.log(image);
-
   // modal part state and function
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);

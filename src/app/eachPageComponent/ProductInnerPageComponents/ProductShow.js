@@ -337,7 +337,7 @@ export default function ProductShow({ productData }) {
               <div className={style.justAddMarginRespon}>
                 <Link
                   onClick={storeLastVisitedPage}
-                  href={comeToken ? `/Profile?type=makeOrder` : `/Login`}
+                  href={comeToken ? `/Profile?type=makeOrder&name=${productData.name}` : `/Login`}
                   passHref
                 >
                   <button className={style.addProductPage} type="button">

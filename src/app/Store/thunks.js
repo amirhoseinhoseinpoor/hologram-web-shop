@@ -395,7 +395,7 @@ export const sendNewMessage = createAsyncThunk(
 );
 
 export const getUserProduct = createAsyncThunk(
-  "order/getUserProduct",
+  "userOrders/getUserProduct",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token;
@@ -486,5 +486,39 @@ export const sendingSecondStep = createAsyncThunk(
     }
   }
 );
+
+export const sendingAdressStep = createAsyncThunk(
+  "order/sendingAdressStep",
+  async ({ code, sendingFinalData }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token.token;
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/document/${code}`,
+        {
+          document: sendingFinalData,
+        },
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+
+      const data = response.data;
+
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
 
 // end order

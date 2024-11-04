@@ -1,10 +1,35 @@
+import React, { useState, useEffect } from "react";
 import data from "/public/json/seeOrder.json";
 import { Card, CardMedia, CardContent } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
-
 import style from "/src/app/Styles/Profile/SeeOrderStyle/SeeOrder.module.scss";
+import { formatPersianDate } from "@/app/utils/persionDateUtils";
+// import redux
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProduct } from "@/app/Store/thunks";
+import { userOrdersData } from "@/app/Store/slice";
 
 export default function seeOrder() {
+  const dispatch = useDispatch();
+
+  const checkData = useSelector(userOrdersData);
+  console.log(checkData);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!checkData) {
+          await dispatch(getUserProduct());
+        }
+      } catch (error) {
+        console.error("Error during dispatch:", error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch, checkData]);
+
   const copyUrlToClipboard = async (number) => {
     try {
       const url = number;
@@ -15,17 +40,38 @@ export default function seeOrder() {
     }
   };
 
+  // Function to convert status number to text
+  const getStatusText = (status) => {
+    switch (status) {
+      case 1:
+        return "معلق";
+      case 2:
+        return "درحال تولید";
+      case 3:
+        return "درحال ارسال";
+      case 4:
+        return "تحویل داده شده";
+      case 5:
+        return "لغو شده";
+
+      default:
+        return "Unknown Status";
+    }
+  };
+
   return (
     <section>
       <div>
         <div className={style.EachDivStyle}>
-          {data.map((item, index) => (
+          {checkData?.map((item, index) => (
             <Card
               key={index}
               className={style.MainBOXCardStyle}
               //   onClick={() => handleImageClick(item.src)}
             >
-              <div className={`${style.MakeTheContentResponsive} d-flex flex-row`}>
+              <div
+                className={`${style.MakeTheContentResponsive} d-flex flex-row`}
+              >
                 <div>
                   <CardMedia
                     component="img"
@@ -34,40 +80,42 @@ export default function seeOrder() {
                     sx={{
                       borderRadius: "4px",
                       maxHeight: "210px",
-                      height : "100%",
+                      height: "100%",
                       width: "100%",
                       aspectRatio: "1.1",
-                      padding : "10px",
-                      borderRadius : "14px",
+                      padding: "10px",
+                      borderRadius: "14px",
                     }}
                   />
                 </div>
                 <CardContent className={`${style.resetPaddingMui}`}>
                   <div dir="rtl">
-                    <p className="seeOrderFont">{item.title}</p>
-                    <p className="NormalTextSizing mt-2 mb-1">{item.effects}</p>
-                    <div className="d-flex flex-row gap-2">
+                    <p className="seeOrderFont">{item?.prodName}</p>
+                    {/* <p className="NormalTextSizing mt-2 mb-1">{item.effects}</p> */}
+                    {/* <div className="d-flex flex-row gap-2">
                       <p
                         className={`${style.coloredTitle} discription mt-1 mb-1`}
                       >
                         تاریخ ثبت سفارش:
                       </p>
                       <p className="discription mt-1 mb-1">{item.typeOfPay}</p>
-                    </div>
+                    </div> */}
                     <div className="d-flex flex-row gap-2">
                       <p
                         className={`${style.coloredTitle} discription mt-1 mb-1`}
                       >
                         تاریخ ثبت سفارش:
                       </p>
-                      <p className="discription mt-1 mb-1">{item.date}</p>
+                      <p className="discription mt-1 mb-1">
+                        {formatPersianDate(item.createdAt)}
+                      </p>
                     </div>
                     <div className="d-flex flex-row gap-2 align-items-center mt-1 mb-1">
                       <p className={`${style.coloredTitle} discription `}>
                         کد رهگیری:
                       </p>
                       <p className={`${style.trackCode} discription`}>
-                        {item.trackCode}
+                        {item.code}
                       </p>
                       <Tooltip title="کپی شبا">
                         <span
@@ -107,7 +155,9 @@ export default function seeOrder() {
                 </CardContent>
               </div>
               <div className={style.situationSatus}>
-                <div className={`${style.situationMainDiv} d-flex flex-row align-items-center gap-2`}>
+                <div
+                  className={`${style.situationMainDiv} d-flex flex-row align-items-center gap-2`}
+                >
                   <svg
                     width={6}
                     height={6}
@@ -115,9 +165,9 @@ export default function seeOrder() {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <circle cx={3} cy={3} r={3} className={style.dotText}/>
+                    <circle cx={3} cy={3} r={3} className={style.dotText} />
                   </svg>
-                  <span className="discription">{item.statusProduct}</span>
+                  <span className="discription">{getStatusText(item.status)}</span>
                 </div>
               </div>
             </Card>

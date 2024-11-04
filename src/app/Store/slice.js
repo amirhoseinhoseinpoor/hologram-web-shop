@@ -4,12 +4,11 @@ import {
   signUp,
   forgetPassword,
   logout,
-  // updateBannerContent,
-  // updateBlogcontent,
   list,
   homePageHonorsList,
   homePageExhibitionList,
   headerList,
+  getUserProduct,
 } from "./thunks";
 
 const authinitialState = {
@@ -135,6 +134,40 @@ export const productSliceV = productSlice.reducer;
 export const productListData = (state) => state.product.productListData;
 
 // end product slice
+
+// userOrders Slice
+
+const userOrdersinitialState = {
+  userOrdersData: null,
+  loading: false,
+  error: null,
+};
+
+const userOrdersSlice = createSlice({
+  name: "userOrders",
+  initialState: userOrdersinitialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userOrdersData = action.payload;
+      })
+      .addCase(getUserProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+  },
+});
+
+export const userOrdersSliceV = userOrdersSlice.reducer;
+export const userOrdersData = (state) => state.userOrders.userOrdersData;
+
+// end userOrders Slice
 
 
 // start Honors Slice
