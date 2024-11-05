@@ -19,6 +19,8 @@ export default function StepFiveComponent({
   setDisabelInputStep4,
   code,
 }) {
+  const dispatch = useDispatch();
+
   const [value, setValue] = React.useState("تحویل حضوری از مرکز آذر هولوگرام");
   const [disableButton, setDisableButton] = useState(false);
 
@@ -134,14 +136,25 @@ export default function StepFiveComponent({
     setShowModal2(false);
   };
 
-  const handleSubmit = () => {
-    console.log(finalData);
+  const handleSubmit = async () => {
+    try {
+      const response = await dispatch(
+        sendingAdressStep({ code: code, finalData: finalData })
+      );
+  
+      if (response.payload.statusCode == 200) {
+        setDisabelInputStep4(true);
+        handleNextStep();
+      }
+    } catch (error) {
+      alert("خطا در ارسال دیتا");
+    }
   };
 
   const handleDisabelInput = () => {
+    handleSubmit();
     // setDisabelInputStep4(true);
     // handleNextStep();
-    handleSubmit();
   };
 
   const handleDeleteAdress = (index) => {

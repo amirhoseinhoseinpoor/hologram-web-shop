@@ -85,6 +85,7 @@ const ProfileTabs = ({ setActiveTab, activeTab }) => {
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("makeOrder");
   const [lastPage, setLastPage] = useState("/");
+  const [currentOrder , setCurrentorder] = useState("");
 
   const childValue2 = useSelector(childValue);
 
@@ -156,7 +157,7 @@ const Profile = () => {
               </div>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
-              <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+             <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             </Suspense>
           </aside>
           <div className={style.content}>
@@ -189,12 +190,12 @@ const Profile = () => {
                       />
                     </svg>
                   </div>
-                  <p className="QASize">باگشت به پروفایل</p>
+                  <p className="QASize">بازگشت به پروفایل</p>
                 </div>
               </Link>
             </div>
-            {activeTab === "makeOrder" && <MakeOrder />}
-            {activeTab === "SeeOrder" && <SeeOrder />}
+            {activeTab === "makeOrder" && <MakeOrder currentOrder={currentOrder}/>}
+            {activeTab === "SeeOrder" && <SeeOrder setActiveTab={setActiveTab} setCurrentorder={setCurrentorder} />}
             {activeTab === "userInfo" && <UserInfo />}
             {activeTab === "message" && <Message />}
             {activeTab === "favorite" && <Favorite />}

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserProduct } from "@/app/Store/thunks";
 import { userOrdersData } from "@/app/Store/slice";
 
-export default function SeeOrder() {
+export default function SeeOrder({setActiveTab , setCurrentorder}) {
   const dispatch = useDispatch();
 
   const checkData = useSelector(userOrdersData);
@@ -40,6 +40,11 @@ export default function SeeOrder() {
     }
   };
 
+  const handelOrderClick = (item) => {
+    setActiveTab("makeOrder");
+    setCurrentorder(item);
+  }
+
   // Function to convert status number to text
   const getStatusText = (status) => {
     switch (status) {
@@ -65,9 +70,10 @@ export default function SeeOrder() {
         <div className={style.EachDivStyle}>
           {checkData?.map((item, index) => (
             <Card
+            style={{cursor: "pointer"}}
               key={index}
               className={style.MainBOXCardStyle}
-              //   onClick={() => handleImageClick(item.src)}
+                onClick={() => handelOrderClick(item)}
             >
               <div
                 className={`${style.MakeTheContentResponsive} d-flex flex-row`}
@@ -149,7 +155,12 @@ export default function SeeOrder() {
                       >
                         نوع تحویل:
                       </p>
-                      <p className="discription mt-1 mb-1">{item.howToGetIT}</p>
+                      {item.delivery.type ? (
+                        <p className="discription mt-1 mb-1">{item.delivery.type}</p>
+                      ) : (
+                        <p className="discription mt-1 mb-1">نوع تحویل هنوز مشخص نشده</p>
+                      )}
+                      
                     </div>
                   </div>
                 </CardContent>

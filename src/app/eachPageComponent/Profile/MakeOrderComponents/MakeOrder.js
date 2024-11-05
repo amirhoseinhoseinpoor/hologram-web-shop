@@ -28,44 +28,53 @@ const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
 
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
 
-export default function MakeOrder() {
+export default function MakeOrder({ currentOrder }) {
   const dispatch = useDispatch();
+
+  console.log(currentOrder);
 
   const [step, setStep] = useState(1);
   const [disabelInput, setDisabelInput] = useState(false);
   const [disabelInputStep2, setDisabelInputStep2] = useState(false);
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
-  const [orderState, setOrderState] = useState("");
+  // const [orderState, setOrderState] = useState("");
+
+  useEffect(() => {
+    if (currentOrder) {
+      setStep(currentOrder.step);
+    } 
+  }, [currentOrder]);
+
+  
 
   // geting the produc for user
 
-  const checkData = useSelector(userOrdersData);
+  // const checkData = useSelector(userOrdersData);
+  // console.log(checkData);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!checkData) {
-          await dispatch(getUserProduct());
-          console.log(checkData);
-          checkData.map((item) => {
-            // if (item.status === 1) {}
-            setOrderState(item);
-            setStep(item.step);
-          });
-        } else {
-          checkData.map((item) => {
-            // if (item.status === 1) {}
-            setOrderState(item);
-            setStep(item.step);
-          });
-        }
-      } catch (error) {
-        console.error("Error during dispatch:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       if (!checkData) {
+  //         await dispatch(getUserProduct());
+  //         console.log(checkData);
+  //         checkData?.map((item) => {
+  //           setOrderState(item);
+  //           setStep(item.step);
+  //         });
+  //       } else {
+  //         checkData.map((item) => {
+  //           setOrderState(item);
+  //           setStep(item.step);
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error during dispatch:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [dispatch , checkData]);
+  //   fetchData();
+  // }, [dispatch, checkData]);
 
   // Function to go to the next step
   const handleNextStep = () => {
@@ -77,7 +86,6 @@ export default function MakeOrder() {
     setStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
 
-  console.log(orderState);
 
   // Function to render the content based on the current step
   const renderStepContent = () => {
@@ -86,24 +94,18 @@ export default function MakeOrder() {
         return (
           <div className={style.stepContent}>
             <SteponeComponent
-              data={orderState.request}
+              data={currentOrder.request}
               handleNextStep={handleNextStep}
               setDisabelInput={setDisabelInput}
               disabelInput={disabelInput}
             />
           </div>
         );
-      // case 2:
-      //   return (
-      //     <div className={style.stepContent}>
-      //       <StepBetweenOneAndTwo data={data} handleNextStep={handleNextStep}/>
-      //     </div>
-      //   );
       case 2:
         return (
           <StepTwoComponent
-            dataFactor={orderState.reqComment}
-            code={orderState.code}
+            dataFactor={currentOrder.reqComment}
+            code={currentOrder.code}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
             setDisabelInputStep2={setDisabelInputStep2}
@@ -113,8 +115,8 @@ export default function MakeOrder() {
       case 3:
         return (
           <PusherChat
-            chatData={orderState.chat}
-            code={orderState.code}
+            chatData={currentOrder.chat}
+            code={currentOrder.code}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
           />
@@ -123,7 +125,7 @@ export default function MakeOrder() {
         return (
           <div className={style.stepContent}>
             <StepFiveComponent
-              code={orderState.code}
+              code={currentOrder.code}
               handleNextStep={handleNextStep}
               handlePreviousStep={handlePreviousStep}
               setDisabelInputStep4={setDisabelInputStep4}

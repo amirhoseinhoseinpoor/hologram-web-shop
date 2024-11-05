@@ -315,7 +315,7 @@ export default function Header() {
                     <Link
                       onClick={storeLastVisitedPage}
                       className={style.LinkOfprofile}
-                      href={`/Profile?type=${encodeURIComponent("seeOrder")}`}
+                      href={`/Profile?type=${encodeURIComponent("SeeOrder")}`}
                     >
                       <p className="VodeoDisSizing">پیگیری سفارش</p>
                     </Link>
@@ -573,7 +573,7 @@ export default function Header() {
                   <Link
                     onClick={storeLastVisitedPage}
                     className={style.LinkOfprofile}
-                    href={`/Profile?type=${encodeURIComponent("seeOrder")}`}
+                    href={`/Profile?type=${encodeURIComponent("SeeOrder")}`}
                   >
                     <p className="VodeoDisSizing">پیگیری سفارش</p>
                   </Link>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 // import redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { sendFirstStep } from "@/app/Store/thunks";
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepOneStyle.module.scss";
+
 
 export default function SteponeComponent({
   data,
@@ -15,6 +17,9 @@ export default function SteponeComponent({
   
   
   const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+  const name = searchParams.get("name");
+  const code = searchParams.get("code"); 
 
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedShape, setSelectedShape] = useState("");
@@ -33,6 +38,8 @@ export default function SteponeComponent({
     useCase: "",
     serial: "",
     information: "",
+    prodName: name || "",
+    prodCode: code || "",
   });
 
 
@@ -55,7 +62,7 @@ export default function SteponeComponent({
   const handleDisabelInput = () => {
     setDisabelInput(true);
     handleSubmit();
-    // handleNextStep();
+    handleNextStep();
   };
 
   const handleSizeChange = (size) => {
@@ -97,8 +104,7 @@ export default function SteponeComponent({
 
   const handleSubmit = async () => {
     setDisableNextStep(true);
-    try {
-            
+    try {     
       const updatedData = {request: { ...formData }};
   
       const resultAction = await dispatch(sendFirstStep(updatedData));

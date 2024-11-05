@@ -489,14 +489,14 @@ export const sendingSecondStep = createAsyncThunk(
 
 export const sendingAdressStep = createAsyncThunk(
   "order/sendingAdressStep",
-  async ({ code, sendingFinalData }, thunkAPI) => {
+  async ({ code, finalData }, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token.token;
     try {
       const response = await axios.patch(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/document/${code}`,
         {
-          document: sendingFinalData,
+          delivery: finalData,
         },
         {
           headers: {
