@@ -31,13 +31,13 @@ const StepSeven = dynamic(() => import("./StepSevenComponent"));
 export default function MakeOrder({ currentOrder }) {
   const dispatch = useDispatch();
 
-  console.log(currentOrder);
-
   const [step, setStep] = useState(1);
   const [disabelInput, setDisabelInput] = useState(false);
   const [disabelInputStep2, setDisabelInputStep2] = useState(false);
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
   // const [orderState, setOrderState] = useState("");
+
+
 
   useEffect(() => {
     if (currentOrder) {
@@ -94,6 +94,7 @@ export default function MakeOrder({ currentOrder }) {
         return (
           <div className={style.stepContent}>
             <SteponeComponent
+              step={currentOrder.step}
               data={currentOrder.request}
               handleNextStep={handleNextStep}
               setDisabelInput={setDisabelInput}
@@ -105,7 +106,9 @@ export default function MakeOrder({ currentOrder }) {
         return (
           <StepTwoComponent
             dataFactor={currentOrder.reqComment}
+            data={currentOrder.document}
             code={currentOrder.code}
+            step={currentOrder.step}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
             setDisabelInputStep2={setDisabelInputStep2}

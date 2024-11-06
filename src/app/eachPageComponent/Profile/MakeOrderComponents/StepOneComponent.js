@@ -4,28 +4,27 @@ import { useSearchParams } from "next/navigation";
 // import redux
 import { useDispatch } from "react-redux";
 import { sendFirstStep } from "@/app/Store/thunks";
-
 import style from "../../../Styles/Profile/MakeOrderStyle/StepOneStyle.module.scss";
-
+import ErrorModal from "@/app/BaseComponent/ErrorModal";
 
 export default function SteponeComponent({
   data,
+  step,
   handleNextStep,
   setDisabelInput,
   disabelInput,
 }) {
-  
-  
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
-  const code = searchParams.get("code"); 
+  const code = searchParams.get("code");
 
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedShape, setSelectedShape] = useState("");
   const [serialtype, setSerialtype] = useState(false);
   const [disablenextStep, setDisableNextStep] = useState(true);
   const [statusTraking, setStatusTraking] = useState(false);
+  const [moveForward, setMoveForward] = useState(false);
   const [formData, setFormData] = useState({
     feature: "",
     color: "",
@@ -42,12 +41,22 @@ export default function SteponeComponent({
     prodCode: code || "",
   });
 
+  useEffect(() => {
+    if (step > 1) {
+      setMoveForward(true);
+    }
+  }, [step]);
+
+  // modal state
+  const [openModal3, setOpenModal3] = useState(false);
+  // Close modal
+  const closeModal3 = () => setOpenModal3(false);
 
   useEffect(() => {
     if (data) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        ...data,  
+        ...data,
       }));
       setSelectedSize(data.selectedSize || "");
       setSelectedShape(data.selectedShape || "");
@@ -55,14 +64,11 @@ export default function SteponeComponent({
       setDisabelInput(true);
       setStatusTraking(true);
     }
-  
-    
   }, [data]);
-  
+
   const handleDisabelInput = () => {
     setDisabelInput(true);
     handleSubmit();
-    handleNextStep();
   };
 
   const handleSizeChange = (size) => {
@@ -91,35 +97,34 @@ export default function SteponeComponent({
 
   const checkAllFieldsFilled = () => {
     const isFilled =
-    formData.selectedSize !== "" &&
-    formData.feature !== "" &&
-    formData.color !== "" &&
-    formData.stick !== "" &&
-    formData.howItWork !== "" &&
-    formData.chosenEffect !== "" &&
-    formData.selectedShape !== "";
+      formData.selectedSize !== "" &&
+      formData.feature !== "" &&
+      formData.color !== "" &&
+      formData.stick !== "" &&
+      formData.howItWork !== "" &&
+      formData.chosenEffect !== "" &&
+      formData.selectedShape !== "";
 
     setDisableNextStep(!isFilled);
   };
 
   const handleSubmit = async () => {
     setDisableNextStep(true);
-    try {     
-      const updatedData = {request: { ...formData }};
-  
+    try {
+      const updatedData = { request: { ...formData } };
+
       const resultAction = await dispatch(sendFirstStep(updatedData));
-      
+
       if (sendFirstStep.fulfilled.match(resultAction)) {
         console.log("Success:", resultAction.payload);
         setStatusTraking(true);
-        
       } else {
         console.error("Error:", resultAction.payload);
         alert(resultAction.payload);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("مشکلی به وجود آمده است، لطفا بعدا تلاش کنید.");
+      setOpenModal3(true);
     }
   };
 
@@ -468,7 +473,8 @@ export default function SteponeComponent({
         </h4>
       ) : (
         <h4 className="VodeoDisSizing mt-3 mb-3">
-          درخواست شما با موفقیت ثبت شد کارشناسان ما در اولین فرصت با شما تماس میگیردند
+          درخواست شما با موفقیت ثبت شد کارشناسان ما در اولین فرصت با شما تماس
+          میگیردند
         </h4>
       )}
 
@@ -493,18 +499,36 @@ export default function SteponeComponent({
           </svg>
         </span>
       </div>
-      <button
-        type="button"
-        onClick={handleDisabelInput}
-        disabled={disablenextStep}
-        style={{
-          cursor: disablenextStep ? "not-allowed" : "pointer",
-          backgroundColor: disablenextStep && "#868686",
-        }}
-        className={`${style.continueButton} mt-3 mb-2`}
-      >
-        استعلام
-      </button>
+      <div className="d-flex flex-row gap-3 align-items-center">
+        <button
+          type="button"
+          onClick={handleDisabelInput}
+          disabled={disablenextStep}
+          style={{
+            cursor: disablenextStep ? "not-allowed" : "pointer",
+            backgroundColor: disablenextStep && "#868686",
+          }}
+          className={`${style.continueButton} mt-3 mb-2`}
+        >
+          استعلام
+        </button>
+        {moveForward && (
+          <button
+            type="bitton"
+            onClick={handleNextStep}
+            className={`${style.continueButton} mt-3 mb-2`}
+          >
+            رد کردن
+          </button>
+        )}
+      </div>
+
+      {/* modals */}
+      <ErrorModal
+        open={openModal3}
+        onClose={closeModal3}
+        text={"مشکلی به وجود آمده است، لطفا بعدا تلاش کنید."}
+      />
     </>
   );
 }

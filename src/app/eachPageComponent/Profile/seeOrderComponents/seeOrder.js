@@ -9,12 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserProduct } from "@/app/Store/thunks";
 import { userOrdersData } from "@/app/Store/slice";
 
-export default function SeeOrder({setActiveTab , setCurrentorder}) {
+export default function SeeOrder({ setActiveTab, setCurrentorder }) {
   const dispatch = useDispatch();
 
   const checkData = useSelector(userOrdersData);
   console.log(checkData);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +42,7 @@ export default function SeeOrder({setActiveTab , setCurrentorder}) {
   const handelOrderClick = (item) => {
     setActiveTab("makeOrder");
     setCurrentorder(item);
-  }
+  };
 
   // Function to convert status number to text
   const getStatusText = (status) => {
@@ -64,17 +63,30 @@ export default function SeeOrder({setActiveTab , setCurrentorder}) {
     }
   };
 
+  // Function to get corresponding CSS class based on the status number
+  const getStatusClass = (status) => {
+    switch (status) {
+      case 1:
+        return style.pendingStatus; // Class for pending status
+      case 2:
+        return style.inProductionStatus; // Class for in production status
+      case 3:
+        return style.inDeliveryStatus; // Class for in delivery status
+      case 4:
+        return style.deliveredStatus; // Class for delivered status
+      case 5:
+        return style.canceledStatus; // Class for canceled status
+      default:
+        return style.defaultStatus; // Class for unknown status
+    }
+  };
+
   return (
     <section>
       <div>
         <div className={style.EachDivStyle}>
           {checkData?.map((item, index) => (
-            <Card
-            style={{cursor: "pointer"}}
-              key={index}
-              className={style.MainBOXCardStyle}
-                onClick={() => handelOrderClick(item)}
-            >
+            <Card key={index} className={style.MainBOXCardStyle}>
               <div
                 className={`${style.MakeTheContentResponsive} d-flex flex-row`}
               >
@@ -96,7 +108,9 @@ export default function SeeOrder({setActiveTab , setCurrentorder}) {
                 </div>
                 <CardContent className={`${style.resetPaddingMui}`}>
                   <div dir="rtl">
-                    <p className="seeOrderFont">{item?.prodName}</p>
+                    <p className="seeOrderFont">
+                      {item?.request?.prodName || "محصول پایه"}
+                    </p>
                     {/* <p className="NormalTextSizing mt-2 mb-1">{item.effects}</p> */}
                     {/* <div className="d-flex flex-row gap-2">
                       <p
@@ -156,18 +170,36 @@ export default function SeeOrder({setActiveTab , setCurrentorder}) {
                         نوع تحویل:
                       </p>
                       {item.delivery.type ? (
-                        <p className="discription mt-1 mb-1">{item.delivery.type}</p>
+                        <p className="discription mt-1 mb-1">
+                          {item.delivery.type}
+                        </p>
                       ) : (
-                        <p className="discription mt-1 mb-1">نوع تحویل هنوز مشخص نشده</p>
+                        <p className="discription mt-1 mb-1">
+                          نوع تحویل هنوز مشخص نشده
+                        </p>
                       )}
-                      
                     </div>
+                    {item.status == 1 && (
+                      <div>
+                        <button
+                          onClick={() => handelOrderClick(item)}
+                          className={style.seeOrderButton}
+                          type="button"
+                        >
+                          مشاهده سفارش
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </div>
               <div className={style.situationSatus}>
                 <div
-                  className={`${style.situationMainDiv} d-flex flex-row align-items-center gap-2`}
+                  className={`${
+                    style.situationMainDiv
+                  }  d-flex flex-row align-items-center gap-2 ${getStatusClass(
+                    item.status
+                  )}`}
                 >
                   <svg
                     width={6}
@@ -178,7 +210,9 @@ export default function SeeOrder({setActiveTab , setCurrentorder}) {
                   >
                     <circle cx={3} cy={3} r={3} className={style.dotText} />
                   </svg>
-                  <span className="discription">{getStatusText(item.status)}</span>
+                  <span className="discription">
+                    {getStatusText(item.status)}
+                  </span>
                 </div>
               </div>
             </Card>

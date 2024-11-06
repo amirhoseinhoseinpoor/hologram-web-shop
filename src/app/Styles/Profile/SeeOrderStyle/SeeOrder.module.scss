@@ -30,18 +30,63 @@
   transform: translate(50, -50);
 }
 
-.dotText {
-  fill: #5695f6;
-  color: #5695f6;
-}
+// .dotText {
+//   fill: #5695f6;
+//   color: #5695f6;
+// }
 
 .situationMainDiv {
-  background-color: #e1f1ff;
+  // background-color: #e1f1ff;
   border-radius: 20px;
   padding: 5px 12px;
+}
+
+.seeOrderButton{
+  border: none;
+  padding: 6px 10px;
+  color: white;
+  border-radius: 4px;
+  background-color: #5695F6;
+  margin-top: 10px;
+}
+
+
+.pendingStatus {  
+  background-color: #e1f1ff;
   border: 1.4px solid #5695f6;
   color: #5695f6;
-}
+}  
+
+.inProductionStatus {  
+  border: 1.4px solid #F3802C;  
+  color: #F3802C;
+  background-color: #FFF8F3;
+}  
+
+.inDeliveryStatus {  
+  border: 1.4px solid #F3802C; /* Style for pending status */  
+  color: #F3802C;
+}  
+
+.deliveredStatus {  
+  border: 1.4px solid #5695f6; /* Style for pending status */  
+  color: #5695f6;
+}  
+
+.canceledStatus {  
+  border: 1.4px solid #FF4F3F; /* Style for pending status */  
+  color: #FF4F3F;
+  background-color: #FFF2F1;
+}  
+
+.defaultStatus {  
+  border: 1.4px solid #5695f6; /* Style for pending status */  
+  color: #5695f6;
+}  
+
+.dotText {  
+  fill: currentColor;
+}  
 
 @media (max-width: 768px) {
   .MakeTheContentResponsive {
@@ -52,7 +97,6 @@
     left: 4%;
   }
   .situationMainDiv {
-    background-color: #e1f1ff;
     border-radius: 20px;
     padding: 3px 9px;
   }

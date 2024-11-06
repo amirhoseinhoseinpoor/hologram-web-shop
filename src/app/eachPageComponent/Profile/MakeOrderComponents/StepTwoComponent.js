@@ -3,11 +3,10 @@
 import React, { useState, useEffect } from "react";
 
 // redux import
-
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { uploadFile } from "@/app/Store/thunks";
-
-import jsPDF from "jspdf";
+import { deleteOrder } from "@/app/Store/thunks";
+import { fetchPrivateImage } from "@/app/Store/thunks";
 
 import Tooltip from "@mui/material/Tooltip";
 import Radio from "@mui/material/Radio";
@@ -18,6 +17,8 @@ import FormLabel from "@mui/material/FormLabel";
 import { Box } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { sendingSecondStep } from "@/app/Store/thunks";
+import ErrorModal from "@/app/BaseComponent/ErrorModal";
+import ConfirmModal from "@/app/BaseComponent/ConfirmingModal";
 
 const ModalStyle = {
   position: "absolute",
@@ -34,49 +35,41 @@ import style from "../../../Styles/Profile/MakeOrderStyle/StepTwoStyle.module.sc
 
 export default function StepTwoComponent({
   dataFactor,
+  data,
   code,
+  step,
   handleNextStep,
   handlePreviousStep,
   setDisabelInputStep2,
   disabelInputStep2,
 }) {
-  console.log(dataFactor);
-  
+  console.log(data);
+
   const dispatch = useDispatch();
 
   const [value, setValue] = useState("خصوصی");
-
   const [paying, setPaying] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [logo, setLogo] = useState(null);
   const [companyName, setCompanyName] = useState("");
-
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  const [sendingFinalData, setSendingFinalData] = useState({
-    logo: "",
-    companyName: "",
-    companyType: "",
-    documnetImage: "",
-  });
-
-  // pdf part delete it if you dont want it
-  const [data, setData] = useState({
-    title: "PDF Title",
-    content: "This is the content of the PDF.",
-  });
-
-  const generatePDF = () => {
-    const doc = new jsPDF();
-    doc.text(data.title, 10, 10);
-    doc.text(data.content, 10, 20);
-    doc.save("generated.pdf");
-  };
+  // const [sendingFinalData, setSendingFinalData] = useState({
+  //   logo: "",
+  //   companyName: "",
+  //   companyType: "",
+  //   documnetImage: "",
+  // });
 
   // modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [openModal2, setOpenModal2] = useState(false);
+  const [openModal3, setOpenModal3] = useState(false);
+  const closeModal2 = () => setOpenModal2(false);
+  const closeModal3 = () => setOpenModal3(false);
 
   useEffect(() => {
     setIsButtonDisabled(paying === "" || paying === "آپلود فیش");
@@ -87,6 +80,50 @@ export default function StepTwoComponent({
       setIsButtonDisabled(false);
     }
   }, [paying]);
+
+  useEffect(() => {
+    if (data) {
+      setValue(data.value);
+      // setPaying(data.selectedSize || "");
+      // setUploadedFiles(data.preparedData || "");
+
+      const fetchDocumentImages = async () => {
+        if (data.preparedData && data.preparedData.length > 0) {
+          const imageFetchPromises = data.preparedData.map(async (item) => {
+            // Fetch the image using the dispatch and await its resolution
+            const fetchedImage = await dispatch(
+              fetchPrivateImage({ filename: item.file })
+            ).unwrap();
+
+            // Return an object combining the fetched image and the corresponding title
+            return { imageUrl: fetchedImage, title: item.title || "" }; // Assuming 'fetchedImage' corresponds to the filename
+          });
+
+          const fetchedDocuments = await Promise.all(imageFetchPromises);
+          console.log(fetchedDocuments);
+
+          // Set the uploaded files to the formatted structure
+          setUploadedFiles(fetchedDocuments);
+        } else {
+          // Handle the case where there are no prepared images
+          setUploadedFiles([]); // or however else you'd like to initialize this
+        }
+      };
+
+      fetchDocumentImages();
+
+      const fetchImage = async () => {
+        const gettingPrivatelogo = await dispatch(
+          fetchPrivateImage({ filename: data.uploadLogo })
+        ).unwrap();
+        setLogo({ imageUrl: gettingPrivatelogo || null });
+      };
+      fetchImage();
+
+      setCompanyName(data.companyName || "");
+      setDisabelInputStep2(true);
+    }
+  }, [data]);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -147,6 +184,24 @@ export default function StepTwoComponent({
     // handleNextStep();
   };
 
+  function closeModalOnTimeout() {
+    setTimeout(() => {
+      setOpenModal2(false);
+    }, 3000);
+  }
+
+  const handleDelete = async (code) => {
+    try {
+      const fetchData = await dispatch(deleteOrder({ code })).unwrap();
+      if (fetchData) {
+        setOpenModal2(true);
+        closeModalOnTimeout();
+      }
+    } catch (error) {
+      setOpenModal3(true);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
       const uploadLogo = await dispatch(
@@ -158,7 +213,6 @@ export default function StepTwoComponent({
         })
       ).unwrap();
 
-
       const uploadDocumentimage = await Promise.all(
         uploadedFiles.map(async (item) => {
           let updated = { ...item };
@@ -167,7 +221,6 @@ export default function StepTwoComponent({
           const type = 1;
           const isPublic = false;
           const file = item.file;
-          console.log(file);
 
           const fileId = await dispatch(
             uploadFile({ file, tag, type, isPublic })
@@ -183,8 +236,6 @@ export default function StepTwoComponent({
         ({ imageUrl, ...rest }) => rest
       );
 
-
-
       const sendingFinalData = {
         uploadLogo,
         paying,
@@ -193,12 +244,15 @@ export default function StepTwoComponent({
         preparedData,
       };
 
-      console.log(sendingFinalData);
-
-      const finalDataDispatch = await dispatch(sendingSecondStep({code , sendingFinalData}))
-      
+      const finalDataDispatch = await dispatch(
+        sendingSecondStep({ code, sendingFinalData })
+      ).unwrap();
+      console.log(finalDataDispatch);
+      if (finalDataDispatch.statusCode == 200) {
+        setDisabelInputStep2(true);
+      }
     } catch (error) {
-      console.error("Error sending media", error);
+      setOpenModal3(true);
     }
   };
 
@@ -228,49 +282,51 @@ export default function StepTwoComponent({
                         alt="UserLogo"
                         className={style.LogoReplaceStyle}
                       />
-                      <button
-                        onClick={handleDeleteLogo}
-                        className={style.deleteButton}
-                      >
-                        <svg
-                          width={17}
-                          height={17}
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                      {!disabelInputStep2 && (
+                        <button
+                          onClick={handleDeleteLogo}
+                          className={style.deleteButton}
                         >
-                          <path
-                            d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M5.16504 8.25H6.83004"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M4.75 6.25H7.25"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </button>
+                          <svg
+                            width={17}
+                            height={17}
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M5.16504 8.25H6.83004"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M4.75 6.25H7.25"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                   ) : (
                     <>
@@ -339,6 +395,7 @@ export default function StepTwoComponent({
                   <input
                     type="text"
                     id="CompanyName"
+                    value={companyName}
                     placeholder="اسم شرکت را بنویسید"
                     onChange={handleComanyNameChange}
                     className={`${style.inputTextCompanyName} discription`}
@@ -430,7 +487,7 @@ export default function StepTwoComponent({
                     disabled={disabelInputStep2}
                   />
                 </div>
-                {uploadedFiles.map((fileObj, index) => (
+                {uploadedFiles?.map((fileObj, index) => (
                   <div
                     key={index}
                     className={`${style.imagesContainerForDoucument}`}
@@ -443,49 +500,51 @@ export default function StepTwoComponent({
                         alt={`uploaded ${index}`}
                         className={style.uploadedImage}
                       />
-                      <button
-                        onClick={() => handleDeleteImage(index)}
-                        className={style.deleteButton}
-                      >
-                        <svg
-                          width={17}
-                          height={17}
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                      {!disabelInputStep2 && (
+                        <button
+                          onClick={() => handleDeleteImage(index)}
+                          className={style.deleteButton}
                         >
-                          <path
-                            d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M5.16504 8.25H6.83004"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M4.75 6.25H7.25"
-                            stroke="#FF4F3F"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </button>
+                          <svg
+                            width={17}
+                            height={17}
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M5.16504 8.25H6.83004"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M4.75 6.25H7.25"
+                              stroke="#FF4F3F"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                     {/* modal */}
 
@@ -533,7 +592,11 @@ export default function StepTwoComponent({
                 </button>
               </div>
 
-              <button type="button" className={`${style.cancelOrder} mt-3`}>
+              <button
+                type="button"
+                onClick={() => handleDelete(code)}
+                className={`${style.cancelOrder} mt-3`}
+              >
                 لغو سفارش
               </button>
             </div>
@@ -766,6 +829,17 @@ export default function StepTwoComponent({
             />
           )}
         </div>
+        {/* modals */}
+        <ErrorModal
+          open={openModal3}
+          onClose={closeModal3}
+          text={"خطا لطفا بعدا دوباره تلاش فرمایید"}
+        />
+        <ConfirmModal
+          open={openModal2}
+          onClose={closeModal2}
+          text={"سفارش با موفقیت حذف شد"}
+        />
 
         {/* <div
           className={`${style.stepContent} ${style.resizingWebInResponsive}  ${style.newWebResizing}`}
