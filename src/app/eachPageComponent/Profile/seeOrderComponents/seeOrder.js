@@ -7,27 +7,72 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 // import redux
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProduct } from "@/app/Store/thunks";
-import { userOrdersData } from "@/app/Store/slice";
+import { productListData, userOrdersData } from "@/app/Store/slice";
+import { list } from "@/app/Store/thunks";
 
 export default function SeeOrder({ setActiveTab, setCurrentorder }) {
   const dispatch = useDispatch();
 
   const checkData = useSelector(userOrdersData);
-  console.log(checkData);
+  const products = useSelector(productListData);
+
+  const [newFinalData, setNewFinalData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!checkData) {
-          await dispatch(getUserProduct());
-        }
+        // if (!checkData) {}
+        await dispatch(getUserProduct());
       } catch (error) {
         console.error("Error during dispatch:", error);
       }
     };
 
     fetchData();
-  }, [dispatch, checkData]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!products) {
+          await dispatch(list());
+        }
+      } catch (error) {
+        console.error("Error during dispatch:", error);
+      }
+    };
+    fetchData();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const nameOfEachOrder = checkData?.map((item) => item?.request?.prodName);
+    console.log('Product Orders:', nameOfEachOrder);  
+
+    // Map through products to get names and image src
+    const productImageMap = products?.reduce((acc, item) => {
+      const imageSrc =
+        item.info.imgData.find((image) => image.type === "1")?.src || null;
+      if (item.name && imageSrc) {
+        acc[item.name] = imageSrc; // Map product name to its first image src
+      }
+      return acc;
+    }, {});
+
+    console.log('Product Image Map:', productImageMap);
+
+    // Add the corresponding image src to each item in checkData
+    const updatedCheckData = checkData?.map((item) => {
+      const productName = item?.request?.prodName?.trim().toLowerCase(); 
+      const imageSrc = productName && productImageMap[productName] ? productImageMap[productName] : null; // Find the corresponding image src
+      return {
+        ...item,
+        imageSrc, // Add new property
+      };
+    });
+
+    console.log("Updated Check Data:", updatedCheckData);
+    setNewFinalData(updatedCheckData || []);
+  }, [checkData, products]);
 
   const copyUrlToClipboard = async (number) => {
     try {
@@ -85,27 +130,30 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
     <section>
       <div>
         <div className={style.EachDivStyle}>
-          {checkData?.map((item, index) => (
+          {newFinalData?.map((item, index) => (
             <Card key={index} className={style.MainBOXCardStyle}>
               <div
                 className={`${style.MakeTheContentResponsive} d-flex flex-row`}
               >
-                <div>
-                  <CardMedia
-                    component="img"
-                    src={item.src}
-                    alt={item.title}
-                    sx={{
-                      borderRadius: "4px",
-                      maxHeight: "210px",
-                      height: "100%",
-                      width: "100%",
-                      aspectRatio: "1.1",
-                      padding: "10px",
-                      borderRadius: "14px",
-                    }}
-                  />
-                </div>
+                {item.imageSrc && (
+                  <div>
+                    <CardMedia
+                      component="img"
+                      src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.imageSrc}`}
+                      alt={item.title}
+                      sx={{
+                        borderRadius: "4px",
+                        maxHeight: "210px",
+                        height: "100%",
+                        width: "100%",
+                        aspectRatio: "1.1",
+                        padding: "10px",
+                        borderRadius: "14px",
+                      }}
+                    />
+                  </div>
+                )}
+
                 <CardContent className={`${style.resetPaddingMui}`}>
                   <div dir="rtl">
                     <p className="seeOrderFont">

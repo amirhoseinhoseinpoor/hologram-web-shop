@@ -10,8 +10,6 @@ import ProductShow from "@/app/eachPageComponent/ProductInnerPageComponents/Prod
 import { notFound } from "next/navigation";
 import { usePathname } from "next/navigation";
 
-
-
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { list } from "@/app/Store/thunks";
