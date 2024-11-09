@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import data from "/public/json/seeOrder.json";
 import { Card, CardMedia, CardContent } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import style from "/src/app/Styles/Profile/SeeOrderStyle/SeeOrder.module.scss";
@@ -63,7 +62,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
     // Add the corresponding image src to each item in checkData
     const updatedCheckData = checkData?.map((item) => {
       const productName = item?.request?.prodName?.trim().toLowerCase(); 
-      const imageSrc = productName && productImageMap[productName] ? productImageMap[productName] : null; // Find the corresponding image src
+      const imageSrc = productImageMap && productImageMap[productName] ? productImageMap[productName] : null; // Find the corresponding image src
       return {
         ...item,
         imageSrc, // Add new property

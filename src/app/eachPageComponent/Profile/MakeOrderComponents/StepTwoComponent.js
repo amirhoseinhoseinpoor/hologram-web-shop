@@ -51,6 +51,7 @@ export default function StepTwoComponent({
   const [paying, setPaying] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [logo, setLogo] = useState(null);
+  const [FactorImage, setFactorImage] = useState(null);
   const [companyName, setCompanyName] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -119,6 +120,14 @@ export default function StepTwoComponent({
         setLogo({ imageUrl: gettingPrivatelogo || null });
       };
       fetchImage();
+
+      const fetchFactorImage = async () => {
+        const gettingPrivateImageFactor = await dispatch(
+          fetchPrivateImage({ filename: dataFactor.paymentImage })
+        ).unwrap();
+        setFactorImage({ imageUrl: gettingPrivateImageFactor || null });
+      };
+      fetchFactorImage();
 
       setCompanyName(data.companyName || "");
       setDisabelInputStep2(true);
@@ -825,7 +834,7 @@ export default function StepTwoComponent({
             <Box
               component="img"
               sx={{ maxWidth: "250px", maxHeight: "250px" }}
-              src={`http://localhost:7000/system/download/${dataFactor.paymentImage}`}
+              src={FactorImage?.imageUrl}
             />
           )}
         </div>

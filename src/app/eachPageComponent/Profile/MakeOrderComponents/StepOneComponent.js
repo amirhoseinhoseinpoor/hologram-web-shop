@@ -25,6 +25,7 @@ export default function SteponeComponent({
   const [disablenextStep, setDisableNextStep] = useState(true);
   const [statusTraking, setStatusTraking] = useState(false);
   const [moveForward, setMoveForward] = useState(false);
+  
   const [formData, setFormData] = useState({
     feature: "",
     color: "",
@@ -514,7 +515,7 @@ export default function SteponeComponent({
         </button>
         {moveForward && (
           <button
-            type="bitton"
+            type="button"
             onClick={handleNextStep}
             className={`${style.continueButton} mt-3 mb-2`}
           >
