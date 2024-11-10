@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-
 // redux import
 import { useDispatch } from "react-redux";
 import { uploadFile } from "@/app/Store/thunks";
@@ -19,6 +18,7 @@ import Modal from "@mui/material/Modal";
 import { sendingSecondStep } from "@/app/Store/thunks";
 import ErrorModal from "@/app/BaseComponent/ErrorModal";
 import ConfirmModal from "@/app/BaseComponent/ConfirmingModal";
+import ZoomModal from "@/app/BaseComponent/ZoomModal";
 
 const ModalStyle = {
   position: "absolute",
@@ -44,6 +44,9 @@ export default function StepTwoComponent({
   disabelInputStep2,
 }) {
   console.log(data);
+  console.log(dataFactor);
+
+  var hasData = Object.keys(data).length > 0;
 
   const dispatch = useDispatch();
 
@@ -54,23 +57,23 @@ export default function StepTwoComponent({
   const [FactorImage, setFactorImage] = useState(null);
   const [companyName, setCompanyName] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-  // const [sendingFinalData, setSendingFinalData] = useState({
-  //   logo: "",
-  //   companyName: "",
-  //   companyType: "",
-  //   documnetImage: "",
-  // });
+  const [statusTraking, setStatusTraking] = useState(false);
+  const [zoomedImage, setZoomedImage] = useState(null);
 
   // modal
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = (fileObj) => {
+    setZoomedImage(fileObj);
+  };
+
+  const handleClose = () => {
+    setZoomedImage(null);
+  };
 
   const [openModal2, setOpenModal2] = useState(false);
   const [openModal3, setOpenModal3] = useState(false);
   const closeModal2 = () => setOpenModal2(false);
   const closeModal3 = () => setOpenModal3(false);
+  const [disablenextStep, setDisableNextStep] = useState(true);
 
   useEffect(() => {
     setIsButtonDisabled(paying === "" || paying === "آپلود فیش");
@@ -85,9 +88,6 @@ export default function StepTwoComponent({
   useEffect(() => {
     if (data) {
       setValue(data.value);
-      // setPaying(data.selectedSize || "");
-      // setUploadedFiles(data.preparedData || "");
-
       const fetchDocumentImages = async () => {
         if (data.preparedData && data.preparedData.length > 0) {
           const imageFetchPromises = data.preparedData.map(async (item) => {
@@ -110,7 +110,6 @@ export default function StepTwoComponent({
           setUploadedFiles([]); // or however else you'd like to initialize this
         }
       };
-
       fetchDocumentImages();
 
       const fetchImage = async () => {
@@ -130,7 +129,12 @@ export default function StepTwoComponent({
       fetchFactorImage();
 
       setCompanyName(data.companyName || "");
-      setDisabelInputStep2(true);
+      if (hasData) {
+        setStatusTraking(true);
+        setDisabelInputStep2(true);
+      } else {
+        setDisabelInputStep2(false);
+      }
     }
   }, [data]);
 
@@ -211,7 +215,23 @@ export default function StepTwoComponent({
     }
   };
 
+  useEffect(() => {
+    if (!hasData) {
+      checkAllFieldsFilled();
+    }
+  }, [companyName, logo, value, uploadedFiles]);
+
+  const checkAllFieldsFilled = () => {
+    const isFilled =
+      companyName !== "" &&
+      logo !== null &&
+      uploadedFiles.length > 0 &&
+      value !== "";
+    setDisableNextStep(!isFilled);
+  };
+
   const handleSubmit = async () => {
+    setDisableNextStep(true);
     try {
       const uploadLogo = await dispatch(
         uploadFile({
@@ -256,9 +276,10 @@ export default function StepTwoComponent({
       const finalDataDispatch = await dispatch(
         sendingSecondStep({ code, sendingFinalData })
       ).unwrap();
-      console.log(finalDataDispatch);
+
       if (finalDataDispatch.statusCode == 200) {
         setDisabelInputStep2(true);
+        setStatusTraking(true);
       }
     } catch (error) {
       setOpenModal3(true);
@@ -286,6 +307,7 @@ export default function StepTwoComponent({
                       className={`${style.onlyFitContentWidth} position-relative`}
                     >
                       <Box
+                        onClick={() => handleOpen(logo)}
                         component="img"
                         src={logo.imageUrl}
                         alt="UserLogo"
@@ -503,7 +525,7 @@ export default function StepTwoComponent({
                   >
                     <div className="position-relative">
                       <Box
-                        onClick={handleOpen}
+                        onClick={() => handleOpen(fileObj)}
                         component="img"
                         src={fileObj.imageUrl}
                         alt={`uploaded ${index}`}
@@ -555,22 +577,6 @@ export default function StepTwoComponent({
                         </button>
                       )}
                     </div>
-                    {/* modal */}
-
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box
-                        component="img"
-                        src={fileObj.imageUrl}
-                        alt={`uploaded ${index}`}
-                        className={style.modalStyleclass}
-                        sx={ModalStyle}
-                      ></Box>
-                    </Modal>
 
                     <input
                       type="text"
@@ -585,10 +591,27 @@ export default function StepTwoComponent({
               </div>
             </div>
 
+            {!statusTraking ? (
+              <h4 className="discription mt-3 mb-3">
+                پس از ثبت درخواست مدارک شما برسی و توسط کارشناسان ما با شما تماس
+                حاصل میشود
+              </h4>
+            ) : (
+              <h4 className="discription mt-3 mb-3">
+                مدارک شما با موفقیت ثبت شدند پس از برسی به مرحله طراحی خواهید
+                رفت
+              </h4>
+            )}
+
             <div className="d-flex flex-row justify-content-between">
               <div className="d-flex flex-row gap-2  mt-3">
                 <button
                   onClick={handleDisabelInput}
+                  disabled={disablenextStep}
+                  style={{
+                    cursor: disablenextStep ? "not-allowed" : "pointer",
+                    backgroundColor: disablenextStep && "#868686",
+                  }}
                   className={`${style.continueButton}`}
                 >
                   ارسال مدارک
@@ -832,13 +855,24 @@ export default function StepTwoComponent({
         <div>
           {dataFactor && (
             <Box
+              onClick={() => handleOpen(FactorImage)}
               component="img"
-              sx={{ maxWidth: "250px", maxHeight: "250px" }}
+              className={style.factorImageStyle}
               src={FactorImage?.imageUrl}
+              alt="Factorimage"
             />
           )}
         </div>
         {/* modals */}
+        {zoomedImage && (
+          <ZoomModal
+            open={!!zoomedImage}
+            onClose={handleClose}
+            src={zoomedImage.imageUrl}
+            alt={zoomedImage.title || `uploaded image`}
+          />
+        )}
+
         <ErrorModal
           open={openModal3}
           onClose={closeModal3}

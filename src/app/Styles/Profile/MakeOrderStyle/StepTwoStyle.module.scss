@@ -15,6 +15,7 @@
     font-family: unset;
   }
 }
+
 .stepContent {
   background-color: white;
   height: 100%;
@@ -39,6 +40,11 @@
   color: white;
   background-color: #f3802c;
   padding: 8px 10px;
+}
+
+.factorImageStyle{
+  max-width: 250px;
+  max-height: 250px;
 }
 
 .continueButtonpaying {
@@ -91,17 +97,17 @@
   padding: 6px 20px;
 }
 
-.SeeLastStepButton{
-  border: 1.5px solid #5695F6;
-  color: #5695F6;
+.SeeLastStepButton {
+  border: 1.5px solid #5695f6;
+  color: #5695f6;
   background-color: white;
   border-radius: 4px;
   padding: 2px 6px;
 }
 
-.cancelOrder{
+.cancelOrder {
   border: none;
-  color: #FF4F3F;
+  color: #ff4f3f;
   background-color: white;
   border-radius: 4px;
   padding: 5px 18px;
@@ -167,7 +173,7 @@
   width: 40%;
 }
 
-.modalStyleclass{
+.modalStyleclass {
   width: 600px;
   border-radius: 3px;
 }
@@ -187,7 +193,7 @@
     flex-direction: column !important;
     gap: 10px !important;
   }
-  .modalStyleclass{
+  .modalStyleclass {
     width: 500px;
   }
 }
@@ -217,10 +223,16 @@
     width: 210px;
     height: 140px;
   }
-  .onlyFitContentWidth{
+  .onlyFitContentWidth {
     width: fit-content;
   }
-  .modalStyleclass{
+  .modalStyleclass {
     width: 350px;
+  }
+  .factorImageStyle{
+    width: 100%;
+    height: 100%;
+    max-width: unset;
+    max-height: unset;
   }
 }
