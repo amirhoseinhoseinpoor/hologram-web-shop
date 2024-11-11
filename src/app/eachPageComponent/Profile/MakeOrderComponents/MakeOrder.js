@@ -7,9 +7,9 @@ import ProcessTracker from "../ProcessTracker";
 import PusherChat from "./Talkjs";
 
 // improt redux
-import { useDispatch, useSelector } from "react-redux";
-import { getUserProduct } from "@/app/Store/thunks";
-import { userOrdersData } from "@/app/Store/slice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getUserProduct } from "@/app/Store/thunks";
+// import { userOrdersData } from "@/app/Store/slice";
 
 const SteponeComponent = dynamic(() => import("./StepOneComponent"));
 
@@ -28,8 +28,7 @@ const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
 
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
 
-export default function MakeOrder({ currentOrder }) {
-  const dispatch = useDispatch();
+export default function MakeOrder({ currentOrder , setActiveTab }) {
 
   const [step, setStep] = useState(1);
   const [disabelInput, setDisabelInput] = useState(false);
@@ -109,6 +108,7 @@ export default function MakeOrder({ currentOrder }) {
             data={currentOrder.document}
             code={currentOrder.code}
             step={currentOrder.step}
+            setActiveTab={setActiveTab}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
             setDisabelInputStep2={setDisabelInputStep2}
@@ -118,8 +118,10 @@ export default function MakeOrder({ currentOrder }) {
       case 3:
         return (
           <PusherChat
+            data={currentOrder.request}
             chatData={currentOrder.chat}
             code={currentOrder.code}
+            step={currentOrder.step}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
           />
@@ -129,6 +131,7 @@ export default function MakeOrder({ currentOrder }) {
           <div className={style.stepContent}>
             <StepFiveComponent
               code={currentOrder.code}
+              step={currentOrder.step}
               handleNextStep={handleNextStep}
               handlePreviousStep={handlePreviousStep}
               setDisabelInputStep4={setDisabelInputStep4}

@@ -520,6 +520,35 @@ export const sendingAdressStep = createAsyncThunk(
   }
 );
 
+export const increaseStep = createAsyncThunk(
+  "order/increaseStep",
+  async ({ code, step }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token.token;
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/step/${code}/${step}`,
+        {},
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const data = response.data;
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
 
 export const deleteOrder = createAsyncThunk(
   "order/deleteOrder",
@@ -527,6 +556,18 @@ export const deleteOrder = createAsyncThunk(
     const state = thunkAPI.getState();
     const token = state.auth.token.token;
     try {
+      
+
+      const secondResponse = await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/status/${code}/5`,
+        {},
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/deleteById/${code}`,
         {
@@ -537,8 +578,12 @@ export const deleteOrder = createAsyncThunk(
       );
 
       const data = response.data;
+      const secondDataCome = secondResponse.data;
 
-      return data;
+      return {
+        firstData : data,
+        secondData: secondDataCome,
+      };
     } catch (error) {
       if (error.response && error.response.status === 400) {
         return thunkAPI.rejectWithValue("ارور سمت من");

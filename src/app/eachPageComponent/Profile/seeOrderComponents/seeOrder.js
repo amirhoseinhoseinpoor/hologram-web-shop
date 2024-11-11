@@ -17,6 +17,9 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
 
   const [newFinalData, setNewFinalData] = useState([]);
 
+  console.log(newFinalData);
+  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,8 +47,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
   }, [dispatch]);
 
   useEffect(() => {
-    const nameOfEachOrder = checkData?.map((item) => item?.request?.prodName);
-    console.log('Product Orders:', nameOfEachOrder);  
+    const nameOfEachOrder = checkData?.map((item) => item?.request?.prodName);  
 
     // Map through products to get names and image src
     const productImageMap = products?.reduce((acc, item) => {
@@ -69,7 +71,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
       };
     });
 
-    console.log("Updated Check Data:", updatedCheckData);
+    // console.log("Updated Check Data:", updatedCheckData);
     setNewFinalData(updatedCheckData || []);
   }, [checkData, products]);
 

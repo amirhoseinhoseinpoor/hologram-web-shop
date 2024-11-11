@@ -10,7 +10,8 @@ import { Card, CardContent } from "@mui/material";
 import style from "../../../Styles/Profile/MakeOrderStyle/StepFiveStyle.module.scss";
 // import redux
 import { useDispatch, useSelector } from "react-redux";
-import { sendingAdressStep } from "@/app/Store/thunks";
+import { sendingAdressStep, increaseStep } from "@/app/Store/thunks";
+import { phoneNumber } from "@/app/Store/slice";
 
 export default function StepFiveComponent({
   handleNextStep,
@@ -18,8 +19,11 @@ export default function StepFiveComponent({
   disabelInputStep4,
   setDisabelInputStep4,
   code,
+  step,
 }) {
   const dispatch = useDispatch();
+
+  const gettingPhoneNumber = useSelector(phoneNumber);
 
   const [value, setValue] = React.useState("تحویل حضوری از مرکز آذر هولوگرام");
   const [disableButton, setDisableButton] = useState(false);
@@ -27,7 +31,7 @@ export default function StepFiveComponent({
   const [formState, setFormState] = useState({
     name: "",
     lastName: "",
-    number: "09308415264",
+    number: gettingPhoneNumber || "",
     companyName: "",
     postCode: "",
     city: "",
@@ -40,6 +44,7 @@ export default function StepFiveComponent({
   const [PostAdress2, setPostAdress2] = useState([]);
 
   const [finalData, setFinalData] = useState([]);
+  const [moveForward, setMoveForward] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,6 +53,12 @@ export default function StepFiveComponent({
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (step > 4) {
+      setMoveForward(true);
+    }
+  }, [step]);
 
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -102,7 +113,7 @@ export default function StepFiveComponent({
     setFormState({
       name: "",
       lastName: "",
-      number: "",
+      number: gettingPhoneNumber || "",
       companyName: "",
       postCode: "",
       city: "",
@@ -126,7 +137,7 @@ export default function StepFiveComponent({
     setFormState({
       name: "",
       lastName: "",
-      number: "",
+      number: gettingPhoneNumber || "",
       companyName: "",
       postCode: "",
       city: "",
@@ -141,10 +152,13 @@ export default function StepFiveComponent({
       const response = await dispatch(
         sendingAdressStep({ code: code, finalData: finalData })
       );
-  
+
       if (response.payload.statusCode == 200) {
-        setDisabelInputStep4(true);
-        handleNextStep();
+        const increseingStep = await dispatch(increaseStep({ code, step: 5 }));
+        if (increseingStep.payload.message == "Success") {
+          setDisabelInputStep4(true);
+          handleNextStep();
+        }
       }
     } catch (error) {
       alert("خطا در ارسال دیتا");
@@ -834,24 +848,37 @@ export default function StepFiveComponent({
           </RadioGroup>
         </FormControl>
       </div>
-      <div className="d-flex flex-row gap-2 mt-3">
-        <button
-          onClick={handleDisabelInput}
-          className={`${style.continueButton}`}
-          disabled={disableButton}
-          style={{
-            backgroundColor: disableButton && "#868686",
-            cursor: disableButton ? "not-allowed" : "pointer",
-          }}
-        >
-          تایید
-        </button>
-        <button
-          className={style.SeeLastStepButton}
-          onClick={handlePreviousStep}
-        >
-          مرحله‌ی قبلی
-        </button>
+      <div className="d-flex flex-row align-items-center justify-content-between mt-3">
+        <div className="d-flex flex-row gap-2 ">
+          <button
+            onClick={handleDisabelInput}
+            className={`${style.continueButton}`}
+            disabled={disableButton}
+            style={{
+              backgroundColor: disableButton && "#868686",
+              cursor: disableButton ? "not-allowed" : "pointer",
+            }}
+          >
+            تایید
+          </button>
+          <button
+            className={style.SeeLastStepButton}
+            onClick={handlePreviousStep}
+          >
+            مرحله‌ی قبلی
+          </button>
+        </div>
+        <div>
+          {moveForward && (
+            <button
+              type="button"
+              onClick={handleNextStep}
+              className={`${style.continueButton}`}
+            >
+              رد کردن
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Bootstrap Modal for displaying image */}
@@ -905,11 +932,10 @@ export default function StepFiveComponent({
                 type="number"
                 id="number"
                 name="number"
-                value="09308314235"
+                value={formState.number}
                 className={`${style.inputTextCompanyName} discription`}
                 onChange={handleInputChange}
                 required
-                disabled
               />
             </div>
           </div>
@@ -1054,11 +1080,10 @@ export default function StepFiveComponent({
                 type="number"
                 id="number"
                 name="number"
-                value="09308314235"
+                value={formState.number}
                 className={`${style.inputTextCompanyName} discription`}
                 onChange={handleInputChange}
                 required
-                disabled
               />
             </div>
           </div>

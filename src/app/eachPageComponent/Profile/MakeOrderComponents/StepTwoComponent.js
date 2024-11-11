@@ -14,7 +14,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
 import { sendingSecondStep } from "@/app/Store/thunks";
 import ErrorModal from "@/app/BaseComponent/ErrorModal";
 import ConfirmModal from "@/app/BaseComponent/ConfirmingModal";
@@ -37,15 +36,13 @@ export default function StepTwoComponent({
   dataFactor,
   data,
   code,
+  setActiveTab,
   step,
   handleNextStep,
   handlePreviousStep,
   setDisabelInputStep2,
   disabelInputStep2,
 }) {
-  console.log(data);
-  console.log(dataFactor);
-
   var hasData = Object.keys(data).length > 0;
 
   const dispatch = useDispatch();
@@ -59,6 +56,14 @@ export default function StepTwoComponent({
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [statusTraking, setStatusTraking] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
+  const [moveForward, setMoveForward] = useState(false);
+
+  useEffect(() => {
+    if (step > 2) {
+      setMoveForward(true);
+    }  
+  }, [step]);
+
 
   // modal
   const handleOpen = (fileObj) => {
@@ -101,7 +106,6 @@ export default function StepTwoComponent({
           });
 
           const fetchedDocuments = await Promise.all(imageFetchPromises);
-          console.log(fetchedDocuments);
 
           // Set the uploaded files to the formatted structure
           setUploadedFiles(fetchedDocuments);
@@ -200,13 +204,17 @@ export default function StepTwoComponent({
   function closeModalOnTimeout() {
     setTimeout(() => {
       setOpenModal2(false);
+      setActiveTab("SeeOrder");
     }, 3000);
   }
 
   const handleDelete = async (code) => {
     try {
       const fetchData = await dispatch(deleteOrder({ code })).unwrap();
-      if (fetchData) {
+      if (
+        fetchData.firstData.statusCode == 200 &&
+        fetchData.secondData.statusCode == 200
+      ) {
         setOpenModal2(true);
         closeModalOnTimeout();
       }
@@ -624,13 +632,23 @@ export default function StepTwoComponent({
                 </button>
               </div>
 
-              <button
-                type="button"
-                onClick={() => handleDelete(code)}
-                className={`${style.cancelOrder} mt-3`}
-              >
-                لغو سفارش
-              </button>
+              {moveForward ? (
+                <button
+                  type="button"
+                  onClick={handleNextStep}
+                  className={`${style.continueButton} mt-3`}
+                >
+                  رد کردن
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => handleDelete(code)}
+                  className={`${style.cancelOrder} mt-3`}
+                >
+                  لغو سفارش
+                </button>
+              )}
             </div>
           </div>
           <div

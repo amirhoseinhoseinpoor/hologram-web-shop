@@ -194,7 +194,7 @@ const Profile = () => {
                 </div>
               </Link>
             </div>
-            {activeTab === "makeOrder" && <MakeOrder currentOrder={currentOrder}/>}
+            {activeTab === "makeOrder" && <MakeOrder setActiveTab={setActiveTab} currentOrder={currentOrder}/>}
             {activeTab === "SeeOrder" && <SeeOrder setActiveTab={setActiveTab} setCurrentorder={setCurrentorder} />}
             {activeTab === "userInfo" && <UserInfo />}
             {activeTab === "message" && <Message />}

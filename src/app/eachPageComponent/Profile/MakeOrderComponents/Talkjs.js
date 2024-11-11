@@ -5,6 +5,9 @@ import style from "/src/app/Styles/Profile/MakeOrderStyle/Talkjs.module.scss";
 import { Box } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import socket from "@/app/utils/socket";
+// import modals
+import AreYouShureModal from "@/app/BaseComponent/AreYouSureModal";
+
 // import redux
 import { useDispatch } from "react-redux";
 import {
@@ -24,7 +27,17 @@ const ModalStyle = {
   p: 0,
 };
 
-const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
+const ChatBox = ({
+  handlePreviousStep,
+  handleNextStep,
+  chatData,
+  code,
+  step,
+  data,
+}) => {
+  // console.log(code);
+  // console.log(data);
+
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState("");
@@ -35,11 +48,23 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageCache, setImageCache] = useState({});
+  const [messageToDeleteIndex, setMessageToDeleteIndex] = useState(null);
+  const [moveForward, setMoveForward] = useState(false);
+
+  // modal state
+  const [openModal, setOpenModal] = useState(false);
+  // Close modal
+  const closeModal = () => setOpenModal(false);
 
   // modal part state and function
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const areYouShureFunction = (index) => {
+    setMessageToDeleteIndex(index);
+    setOpenModal(true);
+  };
 
   // Initialize socket connection
   useEffect(() => {
@@ -71,11 +96,11 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
   };
 
   const handleDeleteMessage = (index) => {
-    if (window.confirm("Are you sure you want to delete this message?")) {
-      const updatedMessages = messages.filter((_, i) => i !== index);
-      setMessages(updatedMessages);
-      updateMessagesOnServer(updatedMessages);
-    }
+    const updatedMessages = messages.filter((_, i) => i !== index);
+    setMessages(updatedMessages);
+    updateMessagesOnServer(updatedMessages);
+    setOpenModal(false);
+    setMessageToDeleteIndex(null);
   };
 
   const sendMessage = async () => {
@@ -187,6 +212,12 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
     });
   }, [messages, dispatch, imageCache]);
 
+  useEffect(() => {
+    if (step > 3) {
+      setMoveForward(true);
+    }
+  }, [step]);
+
   return (
     <>
       <div className={style.stepContent}>
@@ -195,13 +226,24 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
             className={`${style.headerChatBox} d-flex flex-row justify-content-between`}
           >
             <div>
-              <p className="discription">اسم محصول پایه</p>
+              <p className="discription">
+                {data?.prodName ? data.prodName : "محصول پایه"}
+              </p>
             </div>
-            <div className="discription">#235486</div>
+            <div className="discription">{code}</div>
           </div>
 
           {/* Scrollable chat area */}
           <div className={`${style.chatContainer} container`} ref={chatBoxRef}>
+            {messages.length == 0 && (
+              <p
+                style={{ marginTop: "60px", marginBottom: "60px" }}
+                className="discription text-center"
+              >
+                در حال حاضر پیامی وجود ندارد پیام خود را ارسال کنید
+              </p>
+            )}
+
             {Array.isArray(messages) &&
               messages.map((msg, index) => (
                 <div
@@ -226,7 +268,7 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
                         {msg.isAdmin == false && (
                           <div className="d-flex flex-row">
                             <svg
-                              style={{cursor: "pointer"}}
+                              style={{ cursor: "pointer" }}
                               onClick={() => handleEditMessage(index)}
                               width={18}
                               height={17}
@@ -261,8 +303,8 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
                             </svg>
 
                             <svg
-                              style={{cursor: "pointer"}}
-                              onClick={() => handleDeleteMessage(index)}
+                              style={{ cursor: "pointer" }}
+                              onClick={() => areYouShureFunction(index)}
                               width={18}
                               height={17}
                               viewBox="0 0 25 24"
@@ -316,7 +358,6 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
                       {imageCache[msg.imageUrl] ? (
                         <>
                           {/* modal */}
-
                           <Modal
                             open={open}
                             onClose={handleClose}
@@ -353,8 +394,8 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
                               {msg.isAdmin == false && (
                                 <div className="d-flex flex-row">
                                   <svg
-                                    style={{cursor: "pointer"}}
-                                    onClick={() => handleDeleteMessage(index)}
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => areYouShureFunction(index)}
                                     width={18}
                                     height={17}
                                     viewBox="0 0 25 24"
@@ -412,7 +453,7 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
           </div>
         </div>
 
-        <div className="position-relative mt-3">
+        <div className="position-relative mt-3 d-flex">
           {selectedImage ? (
             <>
               <div
@@ -535,16 +576,29 @@ const ChatBox = ({ handlePreviousStep, handleNextStep, chatData, code }) => {
         </div> */}
       </div>
       <div className="d-flex flex-row gap-2 mt-3">
-        <button onClick={handleNextStep} className={style.continueButton}>
-          Continue
-        </button>
         <button
           className={style.SeeLastStepButton}
           onClick={handlePreviousStep}
         >
           مرحله‌ی قبلی
         </button>
+        {moveForward && (
+          <button
+            type="button"
+            onClick={handleNextStep}
+            className={`${style.continueButton}`}
+          >
+            رد کردن
+          </button>
+        )}
       </div>
+      {/* modals */}
+      <AreYouShureModal
+        open={openModal}
+        onClose={closeModal}
+        text={"ایا از حذف پیام مطمئن هستید ؟"}
+        func={() => handleDeleteMessage(messageToDeleteIndex)}
+      />
     </>
   );
 };
