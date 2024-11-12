@@ -1,25 +1,54 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setChildValue  } from "../../../Store/slice";
+import { setChildValue } from "../../../Store/slice";
 
 import { Tooltip } from "@mui/material";
 import style from "../../../Styles/Profile/MakeOrderStyle/StepSevenStyle.module.scss";
+import ConfirmingModal from "@/app/BaseComponent/ConfirmingModal";
+import { formatPersianDate } from "@/app/utils/persionDateUtils";
+import { formatPersianTime } from "@/app/utils/formatPersianTimeUtils";
 
-export default function StepSevenComponent() {
-
+export default function StepSevenComponent({ currentOrder }) {
   const dispatch = useDispatch();
 
   const handelNavigate = (value) => {
     dispatch(setChildValue(value));
+  };
+
+  const [ConfirmModal, setConfirmModal] = useState(false);
+  const [timer, setTimer] = useState(60); // Timer set for 1 minutes (60 seconds)
+
+  const closeConfirmModal = () => setConfirmModal(false);
+
+  function closeModalOnTimeout() {
+    setTimeout(() => {
+      setConfirmModal(false);
+    }, 2000);
   }
 
+  // Timer logic
+  useEffect(() => {  
+    const countdown = setInterval(() => {  
+      setTimer((prev) => {  
+        if (prev > 0) {  
+          return prev - 1; // Decrement the timer  
+        } else {  
+          clearInterval(countdown); // Clear the interval if timer reaches 0  
+          handelNavigate("SeeOrder"); // Call the navigation function  
+          return 0; // Ensure timer is set to 0  
+        }  
+      });  
+    }, 1000);  
+
+    return () => clearInterval(countdown); // Cleanup interval on unmount  
+  }, [handelNavigate]); // Include handleNavigate in the dependency array 
 
   const copyUrlToClipboard = async (number) => {
     try {
       const url = number;
       await navigator.clipboard.writeText(url);
-      alert("کپی موفق امیز بود");
+      setConfirmModal(true);
+      closeModalOnTimeout();
     } catch (err) {
       alert("کپی ناموفق بود" + err);
     }
@@ -56,14 +85,20 @@ export default function StepSevenComponent() {
           </div>
           <div>
             <div className="text-center mt-1 NormalTextSizing">
-              <p className={`${style.changeTheColor} VodeoDisSizing`}>سفارشتون ثبت شد</p>
+              <p className={`${style.changeTheColor} VodeoDisSizing`}>
+                سفارشتون ثبت شد
+              </p>
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
               <div>
-                <p className={`${style.changeTheColor} purchesSize`}>نام کالا:</p>
+                <p className={`${style.changeTheColor} purchesSize`}>
+                  نام کالا:
+                </p>
               </div>
               <div>
-                <p className="NormalTextSizing">اسم محصول پایه</p>
+                <p className="NormalTextSizing">
+                  {currentOrder?.request?.prodName || "محصول پایه"}
+                </p>
               </div>
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
@@ -71,7 +106,9 @@ export default function StepSevenComponent() {
                 <p className={`${style.changeTheColor} purchesSize`}>تاریخ:</p>
               </div>
               <div>
-                <p className="NormalTextSizing">23 اردیبهشت</p>
+                <p className="NormalTextSizing">
+                  {formatPersianDate(currentOrder?.createdAt)}
+                </p>
               </div>
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
@@ -79,20 +116,22 @@ export default function StepSevenComponent() {
                 <p className={`${style.changeTheColor} purchesSize`}>ساعت:</p>
               </div>
               <div>
-                <p className="NormalTextSizing">20:15</p>
+                <p className="NormalTextSizing">
+                  {formatPersianTime(currentOrder?.createdAt)}
+                </p>
               </div>
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
               <div>
-                <p className={`${style.changeTheColor} purchesSize`}>کد رهگیری:</p>
+                <p className={`${style.changeTheColor} purchesSize`}>
+                  کد رهگیری:
+                </p>
               </div>
               <div className="d-flex flex-row align-items-center gap-2">
                 <Tooltip title="کپی کد رهگیری">
                   <span
                     className={`${style.CopySvgButton} d-flex`}
-                    onClick={() =>
-                      copyUrlToClipboard("15385025181722497417038")
-                    }
+                    onClick={() => copyUrlToClipboard(currentOrder?.code)}
                   >
                     <svg
                       width={18}
@@ -114,28 +153,47 @@ export default function StepSevenComponent() {
                 </Tooltip>
 
                 <span className={`${style.CopyTextRahgir} purchesSize`}>
-                  15385025181722497417038
+                  {currentOrder?.code}
                 </span>
               </div>
-
             </div>
             <div className="d-flex flex-row justify-content-between mt-3">
               <div>
-                <p className={`${style.changeTheColor} purchesSize`}>نوع تحویل:</p>
+                <p className={`${style.changeTheColor} purchesSize`}>
+                  نوع تحویل:
+                </p>
               </div>
               <div>
-                <p className="NormalTextSizing">تحویل به پست</p>
+                <p className="NormalTextSizing">
+                  {currentOrder?.delivery?.type}
+                </p>
               </div>
             </div>
             <div className="mt-4">
-              <p className="discription">شما میتوانید سفارش خود را در صفحه پیگیری سفارش مشاهده کنید و پس از آماده شدن و تحویل به پست نهایت تا 48 ساعت بعد کد رهگیری براتون پیامک میشود.</p>
+              <p className="discription">
+                شما میتوانید سفارش خود را در صفحه پیگیری سفارش مشاهده کنید و پس
+                از آماده شدن و تحویل به پست نهایت تا 48 ساعت بعد کد رهگیری
+                براتون پیامک میشود.
+              </p>
             </div>
             <div className="d-flex justify-content-center">
-              <button onClick={() => handelNavigate('seeOrder')} type="button" className={style.buttonNavigatePeigiri}>انتقال به صفحه پیگیری سفارش (12)</button>
+              <button
+                onClick={() => handelNavigate("SeeOrder")}
+                type="button"
+                className={style.buttonNavigatePeigiri}
+              >
+                {`انتقال به صفحه پیگیری سفارش (${timer})`}
+              </button>
             </div>
           </div>
         </div>
       </div>
+      {/* modals */}
+      <ConfirmingModal
+        open={ConfirmModal}
+        onClose={closeConfirmModal}
+        text={"شبا با موفقیت کپی شد"}
+      />
     </section>
   );
 }

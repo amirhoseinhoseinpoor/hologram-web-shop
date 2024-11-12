@@ -20,7 +20,11 @@ export default function StepFiveComponent({
   setDisabelInputStep4,
   code,
   step,
+  data,
 }) {
+  console.log(data);
+  const hasData = Object.keys(data).length > 0;
+  
   const dispatch = useDispatch();
 
   const gettingPhoneNumber = useSelector(phoneNumber);
@@ -90,15 +94,15 @@ export default function StepFiveComponent({
     setValue(event.target.value);
   };
 
-  useEffect(() => {
-    if (value === "تحویل حضوری از مرکز آذر هولوگرام") {
-      setDisableButton(false);
-    } else if (PostAdress || PostAdress2.length > 0) {
-      setDisableButton(false);
-    } else {
-      setDisableButton(true);
-    }
-  }, [value, PostAdress, PostAdress2]);
+  // useEffect(() => {
+  //   if (value === "تحویل حضوری از مرکز آذر هولوگرام") {
+  //     setDisableButton(false);
+  //   } else if (PostAdress || PostAdress2.length > 0) {
+  //     setDisableButton(false);
+  //   } else {
+  //     setDisableButton(true);
+  //   }
+  // }, [value, PostAdress, PostAdress2]);
 
   const handleAddAdress = async () => {
     // First, create the new address object
@@ -268,6 +272,20 @@ export default function StepFiveComponent({
   };
 
   useEffect(() => {
+    if (hasData) {
+      setDisabelInputStep4(true);
+      setDisableButton(true);
+      setValue(data.type || "");
+      if (data?.type == "ارسال با پست") {
+        setPostAdress([data]);
+      } else if (data?.type == "ارسال با باربری") {
+        setPostAdress2([data]);
+      }
+
+    } 
+  }, [data , hasData]);
+
+  useEffect(() => {
     if (value === "ارسال با پست") {
       setTrackActiveAdress2(null);
       setTrackActiveAdress(0);
@@ -279,7 +297,7 @@ export default function StepFiveComponent({
     } else if (value === "تحویل حضوری از مرکز آذر هولوگرام") {
       setTrackActiveAdress2(null);
       setTrackActiveAdress(null);
-      setFinalData({ type: "تحویل حضوری" });
+      setFinalData({ type: "تحویل حضوری از مرکز آذر هولوگرام" });
     }
   }, [value]);
 

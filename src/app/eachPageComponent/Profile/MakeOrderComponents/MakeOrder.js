@@ -6,14 +6,7 @@ import style from "../../../Styles/Profile/MakeOrderStyle/MakeOrder.module.scss"
 import ProcessTracker from "../ProcessTracker";
 import PusherChat from "./Talkjs";
 
-// improt redux
-// import { useDispatch, useSelector } from "react-redux";
-// import { getUserProduct } from "@/app/Store/thunks";
-// import { userOrdersData } from "@/app/Store/slice";
-
 const SteponeComponent = dynamic(() => import("./StepOneComponent"));
-
-// const StepBetweenOneAndTwo = dynamic(() => import("./StepBetweenOneAndTwo"))
 
 const StepTwoComponent = dynamic(() => import("./StepTwoComponent"), {
   ssr: false,
@@ -36,15 +29,11 @@ export default function MakeOrder({ currentOrder , setActiveTab }) {
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
   // const [orderState, setOrderState] = useState("");
 
-
-
   useEffect(() => {
     if (currentOrder) {
       setStep(currentOrder.step);
     } 
   }, [currentOrder]);
-
-  
 
   // geting the produc for user
 
@@ -130,6 +119,7 @@ export default function MakeOrder({ currentOrder , setActiveTab }) {
         return (
           <div className={style.stepContent}>
             <StepFiveComponent
+              data={currentOrder.delivery}
               code={currentOrder.code}
               step={currentOrder.step}
               handleNextStep={handleNextStep}
@@ -147,7 +137,7 @@ export default function MakeOrder({ currentOrder , setActiveTab }) {
           />
         );
       case 6:
-        return <StepSeven handleNextStep={handleNextStep} />;
+        return <StepSeven handleNextStep={handleNextStep} currentOrder={currentOrder}/>;
       default:
         return null;
     }
