@@ -139,7 +139,6 @@ const ChatBox = ({
           const response = await dispatch(
             uploadFile({ file: image, tag, type, isPublic })
           ).unwrap();
-          console.log(response);
 
           newMessageObject.imageUrl = response;
         } catch (error) {
@@ -220,7 +219,7 @@ const ChatBox = ({
 
   return (
     <>
-      <div className={style.stepContent}>
+      <div className={`${style.stepContent}`}>
         <div className={style.mainChatBox}>
           <div
             className={`${style.headerChatBox} d-flex flex-row justify-content-between`}

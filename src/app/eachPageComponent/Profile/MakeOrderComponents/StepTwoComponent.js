@@ -61,9 +61,8 @@ export default function StepTwoComponent({
   useEffect(() => {
     if (step > 2) {
       setMoveForward(true);
-    }  
+    }
   }, [step]);
-
 
   // modal
   const handleOpen = (fileObj) => {
@@ -117,10 +116,14 @@ export default function StepTwoComponent({
       fetchDocumentImages();
 
       const fetchImage = async () => {
-        const gettingPrivatelogo = await dispatch(
-          fetchPrivateImage({ filename: data.uploadLogo })
-        ).unwrap();
-        setLogo({ imageUrl: gettingPrivatelogo || null });
+        if (data?.uploadLogo) {
+          const gettingPrivatelogo = await dispatch(
+            fetchPrivateImage({ filename: data?.uploadLogo })
+          ).unwrap();
+          setLogo({ imageUrl: gettingPrivatelogo || null });
+        } else {
+          setLogo(null);
+        }
       };
       fetchImage();
 
