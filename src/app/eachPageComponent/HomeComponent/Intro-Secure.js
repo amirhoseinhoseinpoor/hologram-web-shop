@@ -54,9 +54,9 @@ export default function IntroSecure() {
           <div>
             <button
               className={`${style.buttonPclass} d-flex flex-row align-items-center mt-2`}
-              onClick={() => handleCategoryClick('افکت‌های امنیتی')}
+              onClick={() => handleCategoryClick('لیبل‌های امنیتی')}
             >
-              <div>معرفی محصولات</div>
+              <div>معرفی افکت ها</div>
               <ArrowBackIcon className="me-2" />
             </button>
           </div>

@@ -201,8 +201,9 @@ export default function SteponeComponent({
 
           <div className="d-flex flex-column">
             <div className="d-flex flex-column">
-              <label htmlFor="feature" className="mt-1 mb-1 discription">
-                تعداد یا تیراژ
+              <label htmlFor="feature" className="mt-1 mb-1 discription d-flex flex-row gap-2 align-items-center">
+                <span>تعداد یا تیراژ</span>
+                <span className={style.redStarStyle}>*</span>
               </label>
               <input
                 type="text"
@@ -219,7 +220,10 @@ export default function SteponeComponent({
                 required
               />
             </div>
-            <h3 className="mb-3 mt-3 discription">سایز</h3>
+            <h3 className="mb-3 mt-3 discription d-flex flex-row gap-2 align-items-center">
+              <span>سایز</span>
+              <span className={style.redStarStyle}>*</span>
+            </h3>
             <div style={{ display: "flex", gap: "4px" }}>
               <div
                 className={style.SizezInput}
@@ -275,8 +279,9 @@ export default function SteponeComponent({
               </div>
             </div>
             <div className="d-flex flex-column">
-              <label htmlFor="color" className="mt-3 mb-1 discription">
-                رنگ
+              <label htmlFor="color" className="mt-3 mb-1 discription d-flex flex-row gap-2 align-items-center">
+                <span>رنگ</span>
+                <span className={style.redStarStyle}>*</span>
               </label>
               <input
                 type="text"
@@ -290,8 +295,9 @@ export default function SteponeComponent({
               />
             </div>
             <div className="d-flex flex-column">
-              <label htmlFor="stick" className="mt-2 mb-2 discription">
-                قالب برچسب
+              <label htmlFor="stick" className="mt-2 mb-2 discription d-flex flex-row gap-2 align-items-center">
+                <span>قالب برچسب</span>
+                <span className={style.redStarStyle}>*</span>
               </label>
               <input
                 type="text"
@@ -304,8 +310,9 @@ export default function SteponeComponent({
               />
             </div>
             <div className="d-flex flex-column">
-              <label htmlFor="howItWork" className="mt-2 mb-2 discription">
-                نوع اثرگذاری
+              <label htmlFor="howItWork" className="mt-2 mb-2 discription d-flex flex-row gap-2 align-items-center">
+                <span>نوع اثرگذاری</span>
+                <span className={style.redStarStyle}>*</span>
               </label>
               <input
                 type="text"
@@ -321,8 +328,9 @@ export default function SteponeComponent({
         </div>
         <div className={`${style.adjustWithLeft} d-flex flex-column`}>
           <div className="d-flex flex-column">
-            <label htmlFor="chosenEffect" className="mt-1 mb-1 discription">
-              افکت مورد نظر
+            <label htmlFor="chosenEffect" className="mt-1 mb-1 discription d-flex flex-row gap-2 align-items-center">
+              <span>افکت مورد نظر</span>
+              <span className={style.redStarStyle}>*</span>
             </label>
             <input
               type="text"
@@ -335,7 +343,10 @@ export default function SteponeComponent({
             />
           </div>
 
-          <h3 className="mb-3 mt-3 discription">شکل هولوگرام</h3>
+          <h3 className="mb-3 mt-3 discription d-flex flex-row gap-2 align-items-center">
+            <span>شکل هولوگرام</span>
+            <span className={style.redStarStyle}>*</span>
+          </h3>
           <div className="d-flex flex-row gap-1">
             <div
               className={style.SizezInputFirst}
@@ -393,8 +404,9 @@ export default function SteponeComponent({
           </div>
 
           <div className="d-flex flex-column">
-            <label htmlFor="useCase" className="mt-3 mb-1 discription">
-              موارد مصرف
+            <label htmlFor="useCase" className="mt-3 mb-1 discription d-flex flex-row gap-2 align-items-center">
+              <span>موارد مصرف</span>
+              <span className={style.redStarStyle}>*</span>
             </label>
             <input
               type="text"
@@ -452,8 +464,9 @@ export default function SteponeComponent({
             )}
           </div>
           <div className="d-flex flex-column">
-            <label htmlFor="information" className=" mb-1 discription">
-              توضیحات
+            <label htmlFor="information" className=" mb-1 discription d-flex flex-row gap-2 align-items-center">
+              <span>توضیحات</span>
+              <span className={style.redStarStyle}>*</span>
             </label>
             <textarea
               className={`${style.formInputNumber} form-control discription`}

@@ -414,6 +414,7 @@ export default function StepTwoComponent({
                       <input
                         className={style.displayNoneTheInput}
                         id="logoUpload"
+                        accept={`${process.env.NEXT_PUBLIC_INPUT_IMAGE_FORMAT}`}
                         type="file"
                         onChange={handleLogoChange}
                         disabled={disabelInputStep2}
@@ -524,6 +525,7 @@ export default function StepTwoComponent({
                     className={style.displayNoneTheInput}
                     id="fileUpload"
                     type="file"
+                    accept={`${process.env.NEXT_PUBLIC_INPUT_IMAGE_FORMAT}`}
                     multiple
                     onChange={handleFileUpload}
                     disabled={disabelInputStep2}

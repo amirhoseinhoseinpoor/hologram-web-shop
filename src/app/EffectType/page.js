@@ -1,7 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useState, Suspense, useMemo } from "react";
 import style from "../Styles/EffectType/EffectType.module.scss";
-import videoData from "/public/json/EffectType.json";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardMedia } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -34,7 +33,6 @@ function EffectType() {
   const fillterdType = typeComeContent?.find((item) => item.link == "#test2");
 
   const dataCome = useSelector(productListData);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +74,6 @@ function EffectType() {
     return Array.isArray(result) ? result : [result];
   }, [activeTab, searchTerm, fillterdType]);
 
-
   const finalData = filteredContent.flatMap((item) =>
     item.subItems.flatMap((itemInner) => {
       if (itemInner.title) {
@@ -89,7 +86,6 @@ function EffectType() {
       return [];
     })
   );
-
 
   useEffect(() => {
     if (type) {
@@ -192,7 +188,6 @@ function EffectType() {
 
   const currentVideo =
     currentVideoIndex !== null ? finalData[0]?.media[currentVideoIndex] : null;
-
 
   return (
     <>
@@ -318,7 +313,7 @@ function EffectType() {
             </div>
 
             <div className={`${style.adjustWidth}`}>
-              {currentVideo &&  (
+              {currentVideo && (
                 <Card className="position-relative mt-5 mb-3">
                   <div className="mb-3 me-3">
                     <p className="sometext">ویدئو افکت‌ها</p>
@@ -458,10 +453,11 @@ function EffectType() {
 
         {/* Bootstrap Modal for displaying image */}
         <Modal show={showModal} onHide={handleCloseModal} centered>
-          <Modal.Header closeButton className={style.ModalHeadStyle}>
-            <Modal.Title>Image Preview</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className={style.modalBodyResetStyle}>
+          <Modal.Header
+            closeButton
+            className={style.ModalHeadStyle}
+          ></Modal.Header>
+          <Modal.Body className={`${style.modalBodyResetStyle} d-flex`}>
             <Box
               className={`${style.modalImgStyle} `}
               component="img"

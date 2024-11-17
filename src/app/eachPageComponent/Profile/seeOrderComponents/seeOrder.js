@@ -47,7 +47,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
   }, [dispatch]);
 
   useEffect(() => {
-    const nameOfEachOrder = checkData?.map((item) => item?.request?.prodName);  
+    // const nameOfEachOrder = checkData?.map((item) => item?.request?.prodName);  
 
     // Map through products to get names and image src
     const productImageMap = products?.reduce((acc, item) => {
