@@ -37,6 +37,11 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
     }
   }
 
+  console.log(filteredProducts);
+  console.log(matchedTitle);
+  
+  
+
   return (
     <section className="mt-3">
       <div className="d-flex flex-row justify-content-between align-items-center">
@@ -98,7 +103,7 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
               <Card className={`${style.mainCardStyle}`}>
                 <Link
                   className="text-decoration-none"
-                  href={`/product/${item.code}`}
+                  href={`/${matchedTitle}/${item.name}`}
                   passHref
                 >
                   <CardMedia
