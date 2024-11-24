@@ -44,7 +44,7 @@
 
 .factorImageStyle{
   max-width: 250px;
-  max-height: 250px;
+  // max-height: 250px;
 }
 .continueButton {
   border: none;
@@ -161,8 +161,8 @@
 .uploadedImage {
   width: 210px;
   border-radius: 4px;
-  height: 140px;
-  aspect-ratio: 5/4;
+  // height: 140px;
+  // aspect-ratio: 5/4;
 }
 
 .gridOfDocument {
@@ -191,7 +191,7 @@
   }
   .uploadedImage {
     width: 175px;
-    height: 110px;
+    // height: 110px;
   }
 }
 
@@ -228,7 +228,7 @@
   }
   .uploadedImage {
     width: 210px;
-    height: 140px;
+    // height: 140px;
   }
   .onlyFitContentWidth {
     width: fit-content;

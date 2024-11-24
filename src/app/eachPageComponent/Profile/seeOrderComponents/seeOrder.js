@@ -144,10 +144,8 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
                       alt={item.title}
                       sx={{
                         borderRadius: "4px",
-                        maxHeight: "210px",
-                        height: "100%",
-                        width: "100%",
-                        aspectRatio: "1.1",
+                        maxHeight: "190px",
+                        maxWidth: "220px",
                         padding: "10px",
                         borderRadius: "14px",
                       }}
