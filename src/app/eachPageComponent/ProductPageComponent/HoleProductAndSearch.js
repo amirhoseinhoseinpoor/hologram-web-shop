@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -28,6 +27,7 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
     const normalizedSearchTerm = normalizeString(searchTerm);
     return normalizedTitle.includes(normalizedSearchTerm);
   });
+  console.log(filteredProducts);
 
   function fixTitleSize(text) {
     if (text.length > 60) {
@@ -36,11 +36,6 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
       return text;
     }
   }
-
-  console.log(filteredProducts);
-  console.log(matchedTitle);
-  
-  
 
   return (
     <section className="mt-3">
@@ -93,16 +88,14 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
       <div className={`${style.fixContentSizePlace} mt-2`}>
         {filteredProducts?.map((item, index) => {
           // Extract the image with type '1' from imgData
-          const imageData = item.info.imgData.find(
-            (img) => img.type === "1"
-          );
+          const imageData = item.info.imgData.find((img) => img.type === "1");
           const imageSrc = imageData ? imageData.src : null;
 
           return (
             <React.Fragment key={index}>
               <Card className={`${style.mainCardStyle}`}>
                 <Link
-                  className="text-decoration-none"
+                  className="text-decoration-none d-flex flex-row"
                   href={`/${matchedTitle}/${item.name}`}
                   passHref
                 >
@@ -115,12 +108,21 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
 
                   <CardContent className={style.adjustContent}>
                     <Typography
-                      className="discription"
+                      className={`${style.textResetColor} QASize`}
                       gutterBottom
                       variant="p"
                       component="div"
                     >
                       {fixTitleSize(item.name)}
+                    </Typography>
+
+                    <Typography
+                      className="discription"
+                      gutterBottom
+                      variant="p"
+                      component="div"
+                    >
+                      {item.info.subtitleCompelete}
                     </Typography>
                   </CardContent>
                 </Link>
@@ -132,10 +134,6 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
     </section>
   );
 }
-
-
-
-
 
 // "use client";
 
@@ -150,9 +148,9 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
 // import Typography from "@mui/material/Typography";
 
 // export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
-  
+
 //   const [searchTerm, setSearchTerm] = useState("");
-  
+
 //   const handleSearchChange = (e) => {
 //     setSearchTerm(e.target.value);
 //   };

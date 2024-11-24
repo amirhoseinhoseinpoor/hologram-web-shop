@@ -43,7 +43,7 @@ export default function StepTwoComponent({
   setDisabelInputStep2,
   disabelInputStep2,
 }) {
-  var hasData = Object.keys(data).length > 0;
+  var hasData = Object.keys(data).length > 0; 
 
   const dispatch = useDispatch();
 
@@ -57,6 +57,9 @@ export default function StepTwoComponent({
   const [statusTraking, setStatusTraking] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
   const [moveForward, setMoveForward] = useState(false);
+
+  // console.log(FactorImage);
+  
 
   useEffect(() => {
     if (step > 2) {

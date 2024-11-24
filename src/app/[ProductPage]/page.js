@@ -85,12 +85,14 @@ async function fetchProduct() {
     }
 
     const allProductCome = await response.json();
+    
     return Array.isArray(allProductCome) ? allProductCome : [];
   } catch (error) {
     console.error("Fetch failed:", error);
     return []; // Return fallback data if fetch fails
   }
 }
+
 
 async function fetchHeader() {
   try {
@@ -117,6 +119,7 @@ export default async function ProductPage({ params }) {
   const decodedId = decodeURIComponent(id);
 
   const allProduct = await fetchProduct();
+  
   const headerCome = await fetchHeader();
 
   // Find the matched category in the header based on the decodedId

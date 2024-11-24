@@ -94,7 +94,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
   const getStatusText = (status) => {
     switch (status) {
       case 1:
-        return "معلق";
+        return "درحال برسی";
       case 2:
         return "درحال تولید";
       case 3:
