@@ -17,7 +17,6 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
 
   const [newFinalData, setNewFinalData] = useState([]);
 
-  console.log(newFinalData);
   
 
   useEffect(() => {
@@ -59,7 +58,6 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
       return acc;
     }, {});
 
-    console.log('Product Image Map:', productImageMap);
 
     // Add the corresponding image src to each item in checkData
     const updatedCheckData = checkData?.map((item) => {
@@ -70,8 +68,6 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
         imageSrc, // Add new property
       };
     });
-
-    // console.log("Updated Check Data:", updatedCheckData);
     setNewFinalData(updatedCheckData || []);
   }, [checkData, products]);
 

@@ -394,6 +394,38 @@ export const sendNewMessage = createAsyncThunk(
   }
 );
 
+export const chatImageSend = createAsyncThunk(
+  "order/chatImageSend",
+  async ({ code, chatImage }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token.token;
+
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/chatImage/${code}`,
+        {
+          chatImage,
+        },
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const data = response.data;
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
 export const getUserProduct = createAsyncThunk(
   "userOrders/getUserProduct",
   async (_, thunkAPI) => {
