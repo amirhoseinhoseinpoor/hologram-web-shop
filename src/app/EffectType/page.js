@@ -47,7 +47,7 @@ function EffectType() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentVideoIndex, setCurrentVideoIndex] = useState(null);
   const [userInteracted, setUserInteracted] = useState(false);
-  const [videoEnded, setVideoEnded] = useState(false);
+  // const [videoEnded, setVideoEnded] = useState(false);
   const [videoDurations, setVideoDurations] = useState([]);
   const [activeTab, setActiveTab] = useState(type || "");
   const [showModal, setShowModal] = useState(false);

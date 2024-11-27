@@ -7,6 +7,7 @@ import Modal from "@mui/material/Modal";
 import socket from "@/app/utils/socket";
 // import modals
 import AreYouShureModal from "@/app/BaseComponent/AreYouSureModal";
+import ZoomModal from "@/app/BaseComponent/ZoomModal";
 
 // import redux
 import { useDispatch } from "react-redux";
@@ -53,14 +54,18 @@ const ChatBox = ({
   const [HoldChatImage, setHoldChatImage] = useState(null);
   const [ConvertedImage, setConvertedImage] = useState([]);
 
-  console.log(chatImage);
-
-  console.log(HoldChatImage);
-
   // modal state
   const [openModal, setOpenModal] = useState(false);
+  const [openModal2, setOpenModal2] = useState(null);
+  console.log(openModal2);
+  
   // Close modal
   const closeModal = () => setOpenModal(false);
+  const closeModal2 = () => setOpenModal2(null);
+
+  const handleZoomFinalPattern = (fileObj) => {
+    setOpenModal2(fileObj);
+  }
 
   // modal part state and function
   const [open, setOpen] = useState(false);
@@ -520,7 +525,7 @@ const ChatBox = ({
                 <div className="d-flex flex-row mb-2 mt-2" key={index}>
                   <div>
                     <Box
-                      onClick={handleOpen}
+                      onClick={() => handleZoomFinalPattern(item)}
                       className={`${style.imageChatStyle} `}
                       component="img"
                       src={item}
@@ -674,6 +679,12 @@ const ChatBox = ({
         onClose={closeModal}
         text={"ایا از حذف پیام مطمئن هستید ؟"}
         func={() => handleDeleteMessage(messageToDeleteIndex)}
+      />
+      <ZoomModal
+       open={openModal2}
+       onClose={closeModal2}
+       src={openModal2}
+       alt={`zoomModalImage`}
       />
     </>
   );

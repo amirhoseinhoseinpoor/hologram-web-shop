@@ -85,15 +85,13 @@ export default function Video() {
               <CardContent>
                 <div className="d-flex flex-column">
                   <div className={`${style.titleStyle} title `}>
-                    <span>{videoData[currentVideoIndex].media.title}</span>
+                    {/* <span>{videoData[currentVideoIndex].media.title}</span> */}
                     <span className={style.titleColor}>
-                      {" "}
-                      {videoData[currentVideoIndex].media.description}
+                      {videoData[currentVideoIndex].media.title}
                     </span>
                   </div>
                   <p className="subtitle">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                    با استفاده از طراحان گرافیک است.
+                  {videoData[currentVideoIndex].media.description}
                   </p>
                 </div>
               </CardContent>
@@ -215,7 +213,7 @@ export default function Video() {
                             className={`${style.titleStyle} discription `}
                           >
                             <span>{video.media.title}</span>
-                            <span> {video.media.description}</span>
+                            {/* <span> {video.media.description}</span> */}
                           </div>
                         </CardContent>
                       </Card>

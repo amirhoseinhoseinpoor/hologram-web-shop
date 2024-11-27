@@ -257,7 +257,16 @@ export default function StepSixComponent({
             </div>
           </div>
         </div>
-        <div
+        <div>
+          {/* <Box
+            onClick={() => handleOpen(FactorImage)}
+            component="img"
+            className={style.factorImageStyle}
+            src={FactorImage?.imageUrl}
+            alt="Factorimage"
+          /> */}
+        </div>
+        {/* <div
           className={`${style.SectionStyle} ${style.adjustTheLeftWidht} mt-2`}
         >
           <p className={`${style.changingopacity} text-center VodeoDisSizing`}>
@@ -313,7 +322,7 @@ export default function StepSixComponent({
           <div className="text-center mt-5 fs-2">
             <p>.لوگو</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import { Modal, Box } from "@mui/material";
 import styled from "styled-components";
 
 const ModalStyle = {
+  display: "flex",
   position: "absolute",
   maxHeight: "90vh",
   maxWidth: "90vw",
