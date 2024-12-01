@@ -154,15 +154,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
                     <p className="seeOrderFont">
                       {item?.request?.prodName || "محصول پایه"}
                     </p>
-                    {/* <p className="NormalTextSizing mt-2 mb-1">{item.effects}</p> */}
-                    {/* <div className="d-flex flex-row gap-2">
-                      <p
-                        className={`${style.coloredTitle} discription mt-1 mb-1`}
-                      >
-                        تاریخ ثبت سفارش:
-                      </p>
-                      <p className="discription mt-1 mb-1">{item.typeOfPay}</p>
-                    </div> */}
+                    
                     <div className="d-flex flex-row gap-2">
                       <p
                         className={`${style.coloredTitle} discription mt-1 mb-1`}
@@ -260,6 +252,9 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
               </div>
             </Card>
           ))}
+          {newFinalData?.length == 0 && (<>
+            <p>سفارشی ثبت نشده</p>
+          </>)}
         </div>
       </div>
     </section>

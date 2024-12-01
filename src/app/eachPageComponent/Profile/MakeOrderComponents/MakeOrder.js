@@ -34,7 +34,6 @@ export default function MakeOrder({ currentOrder , setActiveTab }) {
       setStep(currentOrder.step);
     } 
   }, [currentOrder]);
-  console.log(currentOrder);
   
 
   // geting the produc for user

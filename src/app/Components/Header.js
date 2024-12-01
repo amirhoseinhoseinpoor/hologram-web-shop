@@ -16,8 +16,8 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 // import redux
-import { useSelector , useDispatch } from "react-redux";
-import { token , firstName, lastName , phoneNumber } from "../Store/slice";
+import { useSelector, useDispatch } from "react-redux";
+import { token, firstName, lastName, phoneNumber } from "../Store/slice";
 import { resetToken } from "../Store/slice";
 import { headerList } from "../Store/thunks";
 import { headerListData } from "../Store/slice";
@@ -70,15 +70,11 @@ export default function Header() {
   const handleResetToken = () => {
     dispatch(resetToken());
   };
-  
 
   const token2 = useSelector(token);
   const firstNameU = useSelector(firstName);
   const lastNameU = useSelector(lastName);
   const phoneNumberU = useSelector(phoneNumber);
-
-
-  
 
   const getBasePath = (path) => {
     // This will capture the first segment of the path after the initial '/'
@@ -108,14 +104,12 @@ export default function Header() {
   };
 
   const checkData = useSelector(headerListData);
-  
 
   useEffect(() => {
     if (!checkData) {
-      dispatch(headerList())
+      dispatch(headerList());
     }
-   
-  }, [dispatch , checkData]);
+  }, [dispatch, checkData]);
 
   const mainItemObject = addKeys(checkData?.content);
 
@@ -126,7 +120,6 @@ export default function Header() {
       sessionStorage.setItem("lastPage", lastPage);
     }
   };
-  
 
   return (
     <section
@@ -246,7 +239,7 @@ export default function Header() {
                         </div>
                         <div className="me-1 d-flex flex-row align-items-center">
                           <p className="NormalTextSizing align-items-center">
-                            اسم کاربر اینجا
+                            {firstNameU}
                           </p>
                           <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
                         </div>
@@ -257,8 +250,10 @@ export default function Header() {
                 >
                   <div className={style.userinfoInSidebar}>
                     <div className="d-flex flex-column">
-                      <p className="VodeoDisSizing mb-1">بهار رستمی نیا</p>
-                      <p className="discription">091286568542</p>
+                      <p className="VodeoDisSizing mb-1">
+                        {firstNameU} {lastNameU}
+                      </p>
+                      <p className="discription">{phoneNumberU}</p>
                     </div>
                     <div
                       // onClick={() => setActiveTab("userInfo")}
@@ -341,7 +336,11 @@ export default function Header() {
                       <p className="VodeoDisSizing">لیست‌های مورد علاقه</p>
                     </Link>
                     <div className="d-flex justify-content-end">
-                      <button onClick={handleResetToken} type="button" className={style.cnaleLoginButton}>
+                      <button
+                        onClick={handleResetToken}
+                        type="button"
+                        className={style.cnaleLoginButton}
+                      >
                         خروج
                       </button>
                     </div>
@@ -516,7 +515,9 @@ export default function Header() {
               >
                 <div className={style.userinfoInSidebar}>
                   <div className="d-flex flex-column">
-                    <p className="VodeoDisSizing mb-1">{firstNameU}{" "}{lastNameU}</p>
+                    <p className="VodeoDisSizing mb-1">
+                      {firstNameU} {lastNameU}
+                    </p>
                     <p className="discription">{phoneNumberU}</p>
                   </div>
                   <div
@@ -599,7 +600,11 @@ export default function Header() {
                     <p className="VodeoDisSizing">لیست‌های مورد علاقه</p>
                   </Link>
                   <div className="d-flex justify-content-end">
-                    <button onClick={handleResetToken} type="button" className={style.cnaleLoginButton}>
+                    <button
+                      onClick={handleResetToken}
+                      type="button"
+                      className={style.cnaleLoginButton}
+                    >
                       خروج
                     </button>
                   </div>
