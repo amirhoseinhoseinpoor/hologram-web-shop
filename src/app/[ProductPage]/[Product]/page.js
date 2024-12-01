@@ -1,5 +1,4 @@
 "use client";
-
 // components
 import MainLayout from "@/app/layouts/MainLayout";
 import EachProductVideo from "@/app/eachPageComponent/ProductInnerPageComponents/EachProductVideo";
@@ -15,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { list } from "@/app/Store/thunks";
 import { productListData } from "@/app/Store/slice";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Product() {
   const dispatch = useDispatch();

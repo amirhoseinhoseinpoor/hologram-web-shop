@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 
 import React from "react";
 
@@ -9,10 +8,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SecurityIcon from "@mui/icons-material/Security";
 import { useRouter } from "next/navigation";
 
-
 export default function IntroSecure() {
-
-
   const router = useRouter();
 
   const handleCategoryClick = (blogType) => {
@@ -40,23 +36,25 @@ export default function IntroSecure() {
         >
           <div className="title mb-1">
             <span>
-              انواع افکت‌های <span className={style.titleColor}>امنیتی</span>
+              افکتهای <span className={style.titleColor}> امنیتی </span>
+              هولوگرام: یک نگاه دقیق به جلب اطمینان
             </span>
           </div>
           <div>
             <p className="subtitle">
-              در دنیای پر آشوب جعل و تقلب، هولوگرام‌ها به مثابه گارد‌های نامرئی
-              عمل می‌کنند و با ظرافت و دقت، اصالت و کیفیت را تضمین می‌کنند.
-              هولوگرام‌ها قابل شخصی‌سازی هستند با درج لوگو، تصاویر یا کدهای
-              منحصر به فرد، هولوگرام‌ها به مهر تأیید اصالت محصول تبدیل می‌شوند.
+              هولوگرام یکی از بهترین روش های امنیتی برای جلوگیری از جعل و کپی
+              است. در این برچسب ها میکرو متن ها، تصاویر، کدها، تصاویر و نورهای
+              لیزری در کنار یک دیگر قرار گرفته‌اند. سطح امنیتی لیبل های سه بعدی
+              بسیار بالاست، زیرا این برچسب ها با استفاده از دستگاه لیزری بسیار
+              پیشرفته تولید می شوند.
             </p>
           </div>
           <div>
             <button
               className={`${style.buttonPclass} d-flex flex-row align-items-center mt-2`}
-              onClick={() => handleCategoryClick('افکت‌های امنیتی')}
+              onClick={() => handleCategoryClick("لیبل‌های امنیتی")}
             >
-              <div>معرفی محصولات</div>
+              <div>معرفی افکت ها</div>
               <ArrowBackIcon className="me-2" />
             </button>
           </div>
@@ -138,7 +136,6 @@ export default function IntroSecure() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                
               }}
             >
               <svg

@@ -37,9 +37,9 @@ export default function IntroHologram() {
           <div>
             <button
               className={`${style.buttonPclass} d-flex flex-row align-items-center mt-2`}
-              onClick={() => handleCategoryClick("افکت‌های هولوگرامی")}
+              onClick={() => handleCategoryClick("هولوگرام")}
             >
-              <div>معرفی محصولات</div>
+              <div>معرفی افکت ها</div>
               <ArrowBackIcon className="me-2" />
             </button>
           </div>
@@ -114,15 +114,15 @@ export default function IntroHologram() {
               </svg>
             </Box>
           </div>
-          <h4>سطح 100 امنیت</h4>
-          <p className="discription">معمای امنیتی با ظرافت‌های غیرقابل تکرار</p>
+          <h4>غیر قابل کپی‌برداری</h4>
+          <p className="discription">حتی با استفاده از جدیدترین روشهای کپی</p>
         </div>
         <div className={`${style.rowBox} d-flex flex-column`}>
           <div>
             <SecurityIcon />
           </div>
-          <h4>نفوذپذیری صفر</h4>
-          <p className="discription">نفوذناپذیر در برابر روش‌های معمول جعل</p>
+          <h4>قابلیت گنجاندن تصاویر</h4>
+          <p className="discription">تصاویر مخفی درون هولوگرام</p>
         </div>
         <div className={`${style.rowBox} d-flex flex-column`}>
           <div>
@@ -159,7 +159,7 @@ export default function IntroHologram() {
             </Box>
           </div>
           <h4>نفوذپذیری صفر</h4>
-          <p className="discription">نفوذناپذیر در برابر روش‌های معمول جعل</p>
+          <p className="discription">کدهای مخفی درون هولوگرام</p>
         </div>
       </div>
     </section>

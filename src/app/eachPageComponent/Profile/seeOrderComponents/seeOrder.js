@@ -17,7 +17,6 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
 
   const [newFinalData, setNewFinalData] = useState([]);
 
-  console.log(newFinalData);
   
 
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
   }, [dispatch]);
 
   useEffect(() => {
-    const nameOfEachOrder = checkData?.map((item) => item?.request?.prodName);  
+    // const nameOfEachOrder = checkData?.map((item) => item?.request?.prodName);  
 
     // Map through products to get names and image src
     const productImageMap = products?.reduce((acc, item) => {
@@ -59,7 +58,6 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
       return acc;
     }, {});
 
-    console.log('Product Image Map:', productImageMap);
 
     // Add the corresponding image src to each item in checkData
     const updatedCheckData = checkData?.map((item) => {
@@ -70,8 +68,6 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
         imageSrc, // Add new property
       };
     });
-
-    // console.log("Updated Check Data:", updatedCheckData);
     setNewFinalData(updatedCheckData || []);
   }, [checkData, products]);
 
@@ -94,7 +90,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
   const getStatusText = (status) => {
     switch (status) {
       case 1:
-        return "معلق";
+        return "درحال برسی";
       case 2:
         return "درحال تولید";
       case 3:
@@ -144,10 +140,8 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
                       alt={item.title}
                       sx={{
                         borderRadius: "4px",
-                        maxHeight: "210px",
-                        height: "100%",
-                        width: "100%",
-                        aspectRatio: "1.1",
+                        maxHeight: "190px",
+                        maxWidth: "220px",
                         padding: "10px",
                         borderRadius: "14px",
                       }}

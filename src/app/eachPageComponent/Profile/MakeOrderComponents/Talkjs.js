@@ -7,6 +7,7 @@ import Modal from "@mui/material/Modal";
 import socket from "@/app/utils/socket";
 // import modals
 import AreYouShureModal from "@/app/BaseComponent/AreYouSureModal";
+import ZoomModal from "@/app/BaseComponent/ZoomModal";
 
 // import redux
 import { useDispatch } from "react-redux";
@@ -14,6 +15,8 @@ import {
   sendNewMessage,
   uploadFile,
   fetchPrivateImage,
+  chatImageSend,
+  increaseStep,
 } from "@/app/Store/thunks";
 
 const ModalStyle = {
@@ -34,10 +37,8 @@ const ChatBox = ({
   code,
   step,
   data,
+  chatImage,
 }) => {
-  // console.log(code);
-  // console.log(data);
-
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState("");
@@ -50,11 +51,21 @@ const ChatBox = ({
   const [imageCache, setImageCache] = useState({});
   const [messageToDeleteIndex, setMessageToDeleteIndex] = useState(null);
   const [moveForward, setMoveForward] = useState(false);
+  const [HoldChatImage, setHoldChatImage] = useState(null);
+  const [ConvertedImage, setConvertedImage] = useState([]);
 
   // modal state
   const [openModal, setOpenModal] = useState(false);
+  const [openModal2, setOpenModal2] = useState(null);
+  console.log(openModal2);
+  
   // Close modal
   const closeModal = () => setOpenModal(false);
+  const closeModal2 = () => setOpenModal2(null);
+
+  const handleZoomFinalPattern = (fileObj) => {
+    setOpenModal2(fileObj);
+  }
 
   // modal part state and function
   const [open, setOpen] = useState(false);
@@ -82,6 +93,36 @@ const ChatBox = ({
     //   socket.disconnect();
     // };
   }, [code, chatData]);
+
+  useEffect(() => {
+    if (chatImage && chatImage.images) {
+      setHoldChatImage(chatImage);
+
+      // Fetch each image one by one
+      const fetchImages = async () => {
+        const allImages = []; // This will hold all fetched image data
+
+        for (const filename of chatImage.images) {
+          try {
+            const imageData = await dispatch(
+              fetchPrivateImage({ filename })
+            ).unwrap();
+            allImages.push(imageData); // Accumulate each image data in the array
+          } catch (error) {
+            console.error("Failed to fetch image:", error);
+          }
+        }
+
+        // After all images are fetched, update the state once
+        setConvertedImage((prevCache) => ({
+          ...prevCache,
+          allImages, // Append all new images to the existing ones
+        }));
+      };
+
+      fetchImages(); // Call the async function
+    }
+  }, [chatImage]);
 
   const handleEditMessage = (index) => {
     setEditIndex(index);
@@ -216,6 +257,31 @@ const ChatBox = ({
       setMoveForward(true);
     }
   }, [step]);
+
+  const handleUserChoice = async (index) => {
+    console.log(index);
+
+    // Clone the current state of ConvertedImage
+    const finalUserChose = {
+      ...chatImage,
+      userChoices: [...(chatImage.userChoices || []), chatImage?.images[index]], // Append the new item
+    };
+
+    // Dispatch the new object with the appended user choices
+    const fetchUserChoiceImage = dispatch(
+      chatImageSend({ code, chatImage: finalUserChose })
+    );
+
+    const increseingStep = dispatch(increaseStep({ code, step: 4 }));
+
+    try {
+      await fetchUserChoiceImage;
+      await increseingStep;
+      handleNextStep();
+    } catch (error) {
+      console.error("Failed to dispatch user choice image:", error);
+    }
+  };
 
   return (
     <>
@@ -452,127 +518,143 @@ const ChatBox = ({
           </div>
         </div>
 
-        <div className="position-relative mt-3 d-flex">
-          {selectedImage ? (
-            <>
-              <div
-                className={`${style.mainDivSelectedImage} d-flex flex-row align-items-center justify-content-between`}
-              >
-                <Box
-                  component="img"
-                  src={selectedImage}
-                  alt="uploaded"
-                  className={style.selectedImageForSend}
-                ></Box>
-                <div className="d-flex flex-column gap-2 ms-3">
-                  <button
-                    onClick={sendMessage}
-                    className={`${style.sendMessageChatBox} smallest`}
-                  >
-                    ارسال
-                  </button>
-                  <button
-                    onClick={handleCancelSending}
-                    className={`${style.cancelSendingImage} smallest`}
-                  >
-                    لغو
-                  </button>
+        {chatImage?.images.length > 0 ? (
+          <>
+            <div className={`mt-3 ${style.confirmImage} `}>
+              {ConvertedImage?.allImages?.map((item, index) => (
+                <div className="d-flex flex-row mb-2 mt-2" key={index}>
+                  <div>
+                    <Box
+                      onClick={() => handleZoomFinalPattern(item)}
+                      className={`${style.imageChatStyle} `}
+                      component="img"
+                      src={item}
+                      style={{ width: "100px", height: "100%" }}
+                      alt="uploaded"
+                    />
+                  </div>
+                  <div className="d-flex flex-column">
+                    <div className="me-2">
+                      <p className="smallest">
+                        آیا طرح نهایی مورد تایید شماست؟
+                      </p>
+                    </div>
+                    <div className={`d-flex flex-row gap-2 mt-1 me-1`}>
+                      <button
+                        onClick={() => handleUserChoice(index)}
+                        className={`${style.confirmFirstButton} smallest`}
+                      >
+                        بله، مورد تایید است
+                      </button>
+                      <button
+                        className={`${style.confirmSecondButton} smallest`}
+                      >
+                        نه، نیاز به تغییر دارد
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <textarea
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="پیام خود را بنویسید"
-                className={`${style.inputChatBoxStyle} discription`}
-              />
-              {message.length == 0 && (
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="position-relative mt-3 d-flex">
+              {selectedImage ? (
                 <>
-                  <label
-                    htmlFor="fileInputChatBox"
-                    className={style.LabelFileUpload}
+                  <div
+                    className={`${style.mainDivSelectedImage} d-flex flex-row align-items-center justify-content-between`}
                   >
-                    <svg
-                      width={27}
-                      height={27}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M14.5 7.5H15.7924C18.3773 7.5 20.5 9.52091 20.5 12C20.5 14.4709 18.3859 16.5 15.7924 16.5H14.5"
-                        stroke="#292D32"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M9.5 16.5H8.21429C5.61714 16.5 3.5 14.4791 3.5 12C3.5 9.52909 5.61714 7.5 8.21429 7.5H9.5"
-                        stroke="#292D32"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M8.5 12H15.5"
-                        stroke="#292D32"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </label>
-                  <input
-                    type="file"
-                    onChange={handleSelectImage}
-                    accept="image/*"
-                    className={`d-none`}
-                    id="fileInputChatBox"
+                    <Box
+                      component="img"
+                      src={selectedImage}
+                      alt="uploaded"
+                      className={style.selectedImageForSend}
+                    ></Box>
+                    <div className="d-flex flex-column gap-2 ms-3">
+                      <button
+                        onClick={sendMessage}
+                        className={`${style.sendMessageChatBox} smallest`}
+                      >
+                        ارسال
+                      </button>
+                      <button
+                        onClick={handleCancelSending}
+                        className={`${style.cancelSendingImage} smallest`}
+                      >
+                        لغو
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <textarea
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="پیام خود را بنویسید"
+                    className={`${style.inputChatBoxStyle} discription`}
                   />
+                  {message.length == 0 && (
+                    <>
+                      <label
+                        htmlFor="fileInputChatBox"
+                        className={style.LabelFileUpload}
+                      >
+                        <svg
+                          width={27}
+                          height={27}
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14.5 7.5H15.7924C18.3773 7.5 20.5 9.52091 20.5 12C20.5 14.4709 18.3859 16.5 15.7924 16.5H14.5"
+                            stroke="#292D32"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M9.5 16.5H8.21429C5.61714 16.5 3.5 14.4791 3.5 12C3.5 9.52909 5.61714 7.5 8.21429 7.5H9.5"
+                            stroke="#292D32"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M8.5 12H15.5"
+                            stroke="#292D32"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </label>
+                      <input
+                        type="file"
+                        onChange={handleSelectImage}
+                        accept="image/*"
+                        className={`d-none`}
+                        id="fileInputChatBox"
+                      />
+                    </>
+                  )}
+
+                  {message.length > 0 && (
+                    <button
+                      onClick={sendMessage}
+                      className={`${style.sendMessageChatBox2} smallest`}
+                    >
+                      ارسال
+                    </button>
+                  )}
                 </>
               )}
-
-              {message.length > 0 && (
-                <button
-                  onClick={sendMessage}
-                  className={`${style.sendMessageChatBox2} smallest`}
-                >
-                  ارسال
-                </button>
-              )}
-            </>
-          )}
-        </div>
-        {/* <div className={`mt-3 ${style.confirmImage} `}>
-          <div className="d-flex flex-row">
-            <div>
-              <Box
-                onClick={handleOpen}
-                className={`${style.imageChatStyle} `}
-                component="img"
-                src={`/HomeImages/coin.png`}
-                style={{ width: "85px", height: "100%" }}
-                alt="uploaded"
-              />
             </div>
-            <div className="d-flex flex-column">
-              <div className="me-2">
-                <p className="smallest">آیا طرح نهایی مورد تایید شماست؟</p>
-              </div>
-              <div className={`d-flex flex-row gap-2 mt-1 me-1`}>
-                <button className={`${style.confirmFirstButton} smallest`}>
-                  بله، مورد تایید است
-                </button>
-                <button className={`${style.confirmSecondButton} smallest`}>
-                  نه، نیاز به تغییر دارد
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> */}
+          </>
+        )}
       </div>
       <div className="d-flex flex-row gap-2 mt-3">
         <button
@@ -597,6 +679,12 @@ const ChatBox = ({
         onClose={closeModal}
         text={"ایا از حذف پیام مطمئن هستید ؟"}
         func={() => handleDeleteMessage(messageToDeleteIndex)}
+      />
+      <ZoomModal
+       open={openModal2}
+       onClose={closeModal2}
+       src={openModal2}
+       alt={`zoomModalImage`}
       />
     </>
   );

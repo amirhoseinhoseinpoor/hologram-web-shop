@@ -35,39 +35,42 @@
 
 .fixBoxSize{
     border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
 }
 .adjustContent{
     padding: 0 !important;
-    margin-top: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    margin-right: 10px;
     div:last-child{
         color: var.$social-media-color;
     }
 }
 
+.textResetColor{
+    color: var.$social-media-color;
+}
+
 .fixContentSizePlace{
     display: grid;
-    grid-template-columns: repeat(4 , 1fr);
+    grid-template-columns: repeat(2 , 1fr);
     grid-gap: 10px;
 }
 
 @media (max-width: 980px) {
     .fixContentSizePlace{
-        grid-template-columns: repeat(3 , 1fr);
+        grid-template-columns: repeat(1 , 1fr);
        
     }
 }
 
-@media (max-width :768px) {
-    
-    .fixBoxSize{
-        // aspect-ratio: 2;
-    }
-    .fixContentSizePlace{
-        grid-template-columns: repeat(2 , 1fr);
+// @media (max-width :768px) {
+//     .fixContentSizePlace{
+//         grid-template-columns: repeat(1 , 1fr);
         
-    }
+//     }
 
-}
+// }

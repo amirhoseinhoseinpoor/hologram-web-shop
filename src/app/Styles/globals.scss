@@ -23,13 +23,22 @@ body {
   line-height: normal;
   overflow-x: hidden;
 }
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input {
+  -moz-appearance: textfield !important;
+}
+
 //global sizing
 .sometext{
   font-size: 20px;
   font-weight: 600;
 }
 .title {
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 600;
 }
 .QASize{

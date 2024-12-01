@@ -22,7 +22,6 @@ export default function StepFiveComponent({
   step,
   data,
 }) {
-  console.log(data);
   const hasData = Object.keys(data).length > 0;
   
   const dispatch = useDispatch();

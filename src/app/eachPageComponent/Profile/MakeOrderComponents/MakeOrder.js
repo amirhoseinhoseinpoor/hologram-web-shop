@@ -34,6 +34,8 @@ export default function MakeOrder({ currentOrder , setActiveTab }) {
       setStep(currentOrder.step);
     } 
   }, [currentOrder]);
+  console.log(currentOrder);
+  
 
   // geting the produc for user
 
@@ -111,6 +113,7 @@ export default function MakeOrder({ currentOrder , setActiveTab }) {
             chatData={currentOrder.chat}
             code={currentOrder.code}
             step={currentOrder.step}
+            chatImage={currentOrder.chatImage}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
           />

@@ -43,7 +43,7 @@ export default function StepTwoComponent({
   setDisabelInputStep2,
   disabelInputStep2,
 }) {
-  var hasData = Object.keys(data).length > 0;
+  var hasData = Object.keys(data).length > 0; 
 
   const dispatch = useDispatch();
 
@@ -57,6 +57,9 @@ export default function StepTwoComponent({
   const [statusTraking, setStatusTraking] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
   const [moveForward, setMoveForward] = useState(false);
+
+  // console.log(FactorImage);
+  
 
   useEffect(() => {
     if (step > 2) {
@@ -414,6 +417,7 @@ export default function StepTwoComponent({
                       <input
                         className={style.displayNoneTheInput}
                         id="logoUpload"
+                        accept={`${process.env.NEXT_PUBLIC_INPUT_IMAGE_FORMAT}`}
                         type="file"
                         onChange={handleLogoChange}
                         disabled={disabelInputStep2}
@@ -524,6 +528,7 @@ export default function StepTwoComponent({
                     className={style.displayNoneTheInput}
                     id="fileUpload"
                     type="file"
+                    accept={`${process.env.NEXT_PUBLIC_INPUT_IMAGE_FORMAT}`}
                     multiple
                     onChange={handleFileUpload}
                     disabled={disabelInputStep2}
