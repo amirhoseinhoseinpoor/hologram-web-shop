@@ -1,22 +1,42 @@
 import React, { useState, useEffect } from "react";
-
+// import mui
+import { Box } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Tooltip from "@mui/material/Tooltip";
+// import redux
+import { useDispatch } from "react-redux";
+import { fetchPrivateImage } from "@/app/Store/thunks";
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepSixStyle.module.scss";
 
+
 export default function StepSixComponent({
+  finalFactor,
   handleNextStep,
   handlePreviousStep,
 }) {
+  console.log(finalFactor);
+
+  const dispatch = useDispatch();
+
   const [value, setValue] = React.useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
   const [selectedFile, setSelectedFile] = useState(null);
+  const [finalPaymentImage, setFinalPaymentImage] = useState(null);
+
+  useEffect(() => {
+    const fetchFinalPayment = async () => {
+      const gettingFinalImageAPI = await dispatch(
+        fetchPrivateImage({ filename: finalFactor?.finalPayment })
+      ).unwrap();
+      setFinalPaymentImage(gettingFinalImageAPI);
+    };
+    fetchFinalPayment();
+  }, [dispatch, finalFactor]);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -258,13 +278,16 @@ export default function StepSixComponent({
           </div>
         </div>
         <div>
-          {/* <Box
-            onClick={() => handleOpen(FactorImage)}
-            component="img"
-            className={style.factorImageStyle}
-            src={FactorImage?.imageUrl}
-            alt="Factorimage"
-          /> */}
+          {finalPaymentImage && (
+            <Box
+              // onClick={() => handleOpen(FactorImage)}
+              component="img"
+              className={style.factorImageStyle}
+              sx={{width: "100%" , height: "100%"}}
+              src={finalPaymentImage}
+              alt="Factorimage"
+            />
+          )}
         </div>
         {/* <div
           className={`${style.SectionStyle} ${style.adjustTheLeftWidht} mt-2`}

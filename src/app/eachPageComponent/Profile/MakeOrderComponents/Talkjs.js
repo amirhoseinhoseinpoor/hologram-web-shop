@@ -51,21 +51,21 @@ const ChatBox = ({
   const [imageCache, setImageCache] = useState({});
   const [messageToDeleteIndex, setMessageToDeleteIndex] = useState(null);
   const [moveForward, setMoveForward] = useState(false);
-  const [HoldChatImage, setHoldChatImage] = useState(null);
+  const [userChoiseImage, setUserChoiseImage] = useState(null);
   const [ConvertedImage, setConvertedImage] = useState([]);
+  console.log(ConvertedImage);
 
   // modal state
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(null);
-  console.log(openModal2);
-  
+
   // Close modal
   const closeModal = () => setOpenModal(false);
   const closeModal2 = () => setOpenModal2(null);
 
   const handleZoomFinalPattern = (fileObj) => {
     setOpenModal2(fileObj);
-  }
+  };
 
   // modal part state and function
   const [open, setOpen] = useState(false);
@@ -96,8 +96,6 @@ const ChatBox = ({
 
   useEffect(() => {
     if (chatImage && chatImage.images) {
-      setHoldChatImage(chatImage);
-
       // Fetch each image one by one
       const fetchImages = async () => {
         const allImages = []; // This will hold all fetched image data
@@ -108,6 +106,17 @@ const ChatBox = ({
               fetchPrivateImage({ filename })
             ).unwrap();
             allImages.push(imageData); // Accumulate each image data in the array
+          } catch (error) {
+            console.error("Failed to fetch image:", error);
+          }
+        }
+
+        if (chatImage?.userChoices) {
+          try {
+            const imageData = await dispatch(
+              fetchPrivateImage({ filename: chatImage?.userChoices[0] })
+            ).unwrap();
+            setUserChoiseImage(imageData);
           } catch (error) {
             console.error("Failed to fetch image:", error);
           }
@@ -259,8 +268,6 @@ const ChatBox = ({
   }, [step]);
 
   const handleUserChoice = async (index) => {
-    console.log(index);
-
     // Clone the current state of ConvertedImage
     const finalUserChose = {
       ...chatImage,
@@ -521,40 +528,58 @@ const ChatBox = ({
         {chatImage?.images.length > 0 ? (
           <>
             <div className={`mt-3 ${style.confirmImage} `}>
-              {ConvertedImage?.allImages?.map((item, index) => (
-                <div className="d-flex flex-row mb-2 mt-2" key={index}>
+              {userChoiseImage ? (
+                <div className="d-flex flex-row mb-2 mt-2 align-items-center">
                   <div>
                     <Box
-                      onClick={() => handleZoomFinalPattern(item)}
+                      onClick={() => handleZoomFinalPattern(userChoiseImage)}
                       className={`${style.imageChatStyle} `}
                       component="img"
-                      src={item}
-                      style={{ width: "100px", height: "100%" }}
+                      src={userChoiseImage}
+                      style={{ width: "200px", height: "100%" }}
                       alt="uploaded"
                     />
                   </div>
-                  <div className="d-flex flex-column">
-                    <div className="me-2">
-                      <p className="smallest">
-                        آیا طرح نهایی مورد تایید شماست؟
-                      </p>
-                    </div>
-                    <div className={`d-flex flex-row gap-2 mt-1 me-1`}>
-                      <button
-                        onClick={() => handleUserChoice(index)}
-                        className={`${style.confirmFirstButton} smallest`}
-                      >
-                        بله، مورد تایید است
-                      </button>
-                      <button
-                        className={`${style.confirmSecondButton} smallest`}
-                      >
-                        نه، نیاز به تغییر دارد
-                      </button>
-                    </div>
-                  </div>
+                  <p className="VodeoDisSizing me-2">طرح مورد تایید</p>
                 </div>
-              ))}
+              ) : (
+                <>
+                  {ConvertedImage?.allImages?.map((item, index) => (
+                    <div className="d-flex flex-row mb-2 mt-2" key={index}>
+                      <div>
+                        <Box
+                          onClick={() => handleZoomFinalPattern(item)}
+                          className={`${style.imageChatStyle} `}
+                          component="img"
+                          src={item}
+                          style={{ width: "100px", height: "100%" }}
+                          alt="uploaded"
+                        />
+                      </div>
+                      <div className="d-flex flex-column justify-content-center">
+                        <div className="me-2">
+                          <p className="smallest">
+                            آیا طرح نهایی مورد تایید شماست؟
+                          </p>
+                        </div>
+                        <div className={`d-flex flex-row gap-2 mt-1 me-1`}>
+                          <button
+                            onClick={() => handleUserChoice(index)}
+                            className={`${style.confirmFirstButton} smallest`}
+                          >
+                            بله، مورد تایید است
+                          </button>
+                          <button
+                            className={`${style.confirmSecondButton} smallest`}
+                          >
+                            نه، نیاز به تغییر دارد
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </>
         ) : (
@@ -681,10 +706,10 @@ const ChatBox = ({
         func={() => handleDeleteMessage(messageToDeleteIndex)}
       />
       <ZoomModal
-       open={openModal2}
-       onClose={closeModal2}
-       src={openModal2}
-       alt={`zoomModalImage`}
+        open={openModal2}
+        onClose={closeModal2}
+        src={openModal2}
+        alt={`zoomModalImage`}
       />
     </>
   );

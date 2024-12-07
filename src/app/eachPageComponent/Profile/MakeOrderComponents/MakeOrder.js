@@ -134,6 +134,7 @@ export default function MakeOrder({ currentOrder , setActiveTab }) {
       case 5:
         return (
           <StepSixComponent
+            finalFactor={currentOrder.payment}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
           />
