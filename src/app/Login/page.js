@@ -27,10 +27,11 @@ export default function Login() {
   const [loadinStatus, setLodaingStatus] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
   const [isCaptchaRequired, setIsCaptchaRequired] = useState(false);
-  const [saveEachRequest, setSaveEachRequest] = useState(0);
-
+  const [failedAttempts, setFailedAttempts] = useState(0);
   const hasError = Boolean(errorMessage);
 
+  // ReCAPTCHA Ref
+  const recaptchaRef = useRef(null);
   // focuse the number filed
   const numberRef = useRef(null);
   // // input ref for moving to the next
@@ -46,17 +47,22 @@ export default function Login() {
   }, [username]);
 
   useEffect(() => {
-    if (username.length == 11 && password.length >= 4) {
-      setIsButtonDisabled(false);
-      if (!isCaptchaRequired && captchaValue) {
+    if (username.length === 11 && password.length >= 4) {
+      if (isCaptchaRequired) {
+        setIsButtonDisabled(!captchaValue);
+      } else {
         setIsButtonDisabled(false);
-      } else if (!captchaValue && isCaptchaRequired) {
-        setIsButtonDisabled(true);
       }
     } else {
       setIsButtonDisabled(true);
     }
-  }, [username, password ,captchaValue , isCaptchaRequired]);
+  }, [username, password, captchaValue, isCaptchaRequired]);
+
+  useEffect(() => {
+    if (failedAttempts >= 3) {
+      setIsCaptchaRequired(true);
+    }
+  }, [failedAttempts]);
 
   // Send OTP to the user's phone
 
@@ -82,11 +88,18 @@ export default function Login() {
       } else {
         const resultAction = await dispatch(login(credentials));
         if (login.rejected.match(resultAction)) {
-          setErrorMessage(resultAction.payload);
-          setSaveEachRequest((prevRequest) => prevRequest + 1);
+          setErrorMessage(resultAction.payload || "ورود ناموفق");
+          setFailedAttempts((prevRequest) => prevRequest + 1);
           // Check if CAPTCHA is required after failed login attempts
-          if (resultAction.error.message == "Rejected" && saveEachRequest > 1) {
-            setIsCaptchaRequired(true);
+          // if (resultAction.error.message == "Rejected" && failedAttempts > 1) {
+          //   setIsCaptchaRequired(true);
+          // }
+          // If CAPTCHA is required, reset the ReCAPTCHA widget and captchaValue
+          if (isCaptchaRequired) {
+            setCaptchaValue(null);
+            if (recaptchaRef.current) {
+              recaptchaRef.current.reset(); // Reset ReCAPTCHA widget
+            }
           }
           setLodaingStatus(false);
         }
@@ -278,51 +291,15 @@ export default function Login() {
                   </div>
                 </div>
 
-                {/* <div className="mb-4">
-                  <label htmlFor="capcha" className="mb-2 me-2 discription">
-                    متن تصویر
-                  </label>
-                  <div className="d-flex flex-row justify-content-between">
-                    <div>
-                      <input
-                        type="number"
-                        id="capcha"
-                        className={`${style.formInputCapcha} form-control`}
-                        style={{
-                          border: hasError ? "1.2px solid #FF4F3F" : "",
-                        }}
-                      />
-                    </div>
-
-                    <div className="d-flex flex-row align-items-center ">
-                      <svg
-                        className="me-2"
-                        width={24}
-                        height={25}
-                        viewBox="0 0 24 25"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3.67981 12.3089H2.92981H3.67981ZM3.67981 13.9756L3.15157 14.508C3.44398 14.7981 3.91565 14.7981 4.20805 14.508L3.67981 13.9756ZM5.88787 12.8413C6.18191 12.5496 6.18377 12.0747 5.89203 11.7807C5.60029 11.4866 5.12542 11.4848 4.83138 11.7765L5.88787 12.8413ZM2.52824 11.7765C2.2342 11.4848 1.75933 11.4866 1.46759 11.7807C1.17585 12.0747 1.17772 12.5496 1.47176 12.8413L2.52824 11.7765ZM18.6156 8.36838C18.8325 8.72124 19.2944 8.83144 19.6473 8.6145C20.0001 8.39757 20.1103 7.93566 19.8934 7.5828L18.6156 8.36838ZM12.0789 3.22559C7.03155 3.22559 2.92981 7.28679 2.92981 12.3089H4.42981C4.42981 8.1263 7.84884 4.72559 12.0789 4.72559V3.22559ZM2.92981 12.3089L2.92981 13.9756H4.42981L4.42981 12.3089H2.92981ZM4.20805 14.508L5.88787 12.8413L4.83138 11.7765L3.15157 13.4432L4.20805 14.508ZM4.20805 13.4432L2.52824 11.7765L1.47176 12.8413L3.15157 14.508L4.20805 13.4432ZM19.8934 7.5828C18.287 4.96986 15.3873 3.22559 12.0789 3.22559V4.72559C14.8484 4.72559 17.2727 6.18403 18.6156 8.36838L19.8934 7.5828Z"
-                          fill="#5695F6"
-                        />
-                        <path
-                          d="M20.3139 11.9756L20.8411 11.4422C20.549 11.1534 20.0788 11.1534 19.7867 11.4422L20.3139 11.9756ZM18.1004 13.1088C17.8058 13.4 17.8031 13.8749 18.0942 14.1695C18.3854 14.4641 18.8603 14.4668 19.1549 14.1757L18.1004 13.1088ZM21.4729 14.1757C21.7675 14.4668 22.2424 14.4641 22.5335 14.1695C22.8247 13.8749 22.822 13.4 22.5274 13.1088L21.4729 14.1757ZM5.31794 17.5817C5.1004 17.2292 4.6383 17.1198 4.28581 17.3373C3.93331 17.5549 3.82391 18.017 4.04144 18.3695L5.31794 17.5817ZM11.8827 22.7256C16.9451 22.7256 21.0639 18.6671 21.0639 13.6423H19.5639C19.5639 17.8222 16.1332 21.2256 11.8827 21.2256V22.7256ZM21.0639 13.6423V11.9756H19.5639V13.6423H21.0639ZM19.7867 11.4422L18.1004 13.1088L19.1549 14.1757L20.8411 12.509L19.7867 11.4422ZM19.7867 12.509L21.4729 14.1757L22.5274 13.1088L20.8411 11.4422L19.7867 12.509ZM4.04144 18.3695C5.65405 20.9826 8.56403 22.7256 11.8827 22.7256V21.2256C9.10023 21.2256 6.66584 19.7659 5.31794 17.5817L4.04144 18.3695Z"
-                          fill="#5695F6"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div> */}
-
                 {/* reCAPTCHA */}
                 {isCaptchaRequired && (
                   <div className="mb-4">
                     <ReCAPTCHA
+                      ref={recaptchaRef}
                       className={style.captchaContainer}
                       sitekey="6Ld_oI4qAAAAAK1UKDgdrplzpiAbffOBTiarZ37i" // Replace with your site key
                       onChange={(value) => setCaptchaValue(value)}
+                      onExpired={() => setCaptchaValue(null)}
                     />
                   </div>
                 )}
