@@ -1,6 +1,8 @@
-// socket.js
 import { io } from 'socket.io-client';
 
-const socket = io(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}`); // Replace with your backend URL
+// Initialize chat socket without authentication
+const socket = io(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/chat`, {
+  transports: ["websocket"],
+});
 
 export default socket;
