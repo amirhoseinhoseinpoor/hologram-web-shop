@@ -7,26 +7,31 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Tooltip from "@mui/material/Tooltip";
+import Link from "next/link";
 // import redux
 import { useDispatch } from "react-redux";
-import { fetchPrivateImage } from "@/app/Store/thunks";
+import { fetchPrivateImage, logout } from "@/app/Store/thunks";
+// improt base Modal
+import ZoomModal from "@/app/BaseComponent/ZoomModal";
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepSixStyle.module.scss";
-
 
 export default function StepSixComponent({
   finalFactor,
   handleNextStep,
   handlePreviousStep,
 }) {
-  console.log(finalFactor);
-
   const dispatch = useDispatch();
 
   const [value, setValue] = React.useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [finalPaymentImage, setFinalPaymentImage] = useState(null);
+  console.log(finalPaymentImage);
+
+  const [zoomModal, setZoomModal] = useState(false);
+
+  const handleCloseZoomModal = () => setZoomModal(false);
 
   useEffect(() => {
     const fetchFinalPayment = async () => {
@@ -249,8 +254,8 @@ export default function StepSixComponent({
               </RadioGroup>
             </FormControl>
           </div>
-          <div className="d-flex flex-row justify-content-between mt-3 align-items-center">
-            <div className="d-flex flex-row  gap-4 align-items-center">
+          <div className="d-flex flex-row justify-content-between mt-3 align-items-start">
+            <div className="d-flex flex-column  gap-2 align-items-start">
               <button
                 onClick={handleNextStep}
                 className={style.continueButton}
@@ -267,86 +272,95 @@ export default function StepSixComponent({
                 <span className="NormalTextSizing"> ریال </span>
               </div>
             </div>
-            <div>
+            <div className="d-flex flex-row  h-100  gap-2">
               <button
                 className={style.SeeLastStepButton}
                 onClick={handlePreviousStep}
               >
                 مرحله‌ی قبلی
               </button>
+              <div className="d-flex justify-content-center">
+                {/* <a href={finalPaymentImage || ""} download></a> */}
+                <button
+                  type="button"
+                  className={`${style.downloadFactor} d-flex fwlex-row gap-2`}
+                  onClick={() => {
+                    const link = document.createElement("a");
+
+                    // Check if finalPaymentImage is a blob or a base64 URL
+                    let filename = "finalPayment.png"; // Default filename
+                    if (finalPaymentImage.includes("data:image/png")) {
+                      filename = "finalPayment.png";
+                    } else if (
+                      finalPaymentImage.includes("data:image/svg+xml")
+                    ) {
+                      filename = "finalPayment.svg";
+                    }
+
+                    link.href = finalPaymentImage;
+                    link.download = filename; // Set filename with correct extension
+                    link.click(); // Trigger the download
+                  }}
+                >
+                  <svg
+                    width={21}
+                    height={20}
+                    viewBox="0 0 21 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14.1997 7.41797C17.1997 7.6763 18.4247 9.21797 18.4247 12.593V12.7013C18.4247 16.4263 16.9331 17.918 13.2081 17.918H7.78307C4.05807 17.918 2.56641 16.4263 2.56641 12.7013V12.593C2.56641 9.24297 3.77474 7.7013 6.72474 7.4263"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M10.5 1.66797V12.4013"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M13.2913 10.543L10.4997 13.3346L7.70801 10.543"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  دانلود فاکتور
+                </button>
+              </div>
             </div>
           </div>
         </div>
         <div>
           {finalPaymentImage && (
-            <Box
-              // onClick={() => handleOpen(FactorImage)}
-              component="img"
-              className={style.factorImageStyle}
-              sx={{width: "100%" , height: "100%"}}
-              src={finalPaymentImage}
-              alt="Factorimage"
-            />
+            <>
+              <Box
+                onClick={() => setZoomModal(true)}
+                component="img"
+                className={style.factorImageStyle}
+                sx={{ width: "100%", height: "100%", cursor: "pointer" }}
+                src={finalPaymentImage}
+                alt="Factorimage"
+              />
+            </>
           )}
         </div>
-        {/* <div
-          className={`${style.SectionStyle} ${style.adjustTheLeftWidht} mt-2`}
-        >
-          <p className={`${style.changingopacity} text-center VodeoDisSizing`}>
-            فاکتور نهایی
-          </p>
-          <div className="d-flex flex-column mt-2">
-            <div className="d-flex flex-row justify-content-between mt-3">
-              <div>
-                <p>عنوان:</p>
-              </div>
-              <div>
-                <span className="VodeoDisSizing">20.000.000.000</span>
-                <span className="me-1 VodeoDisSizing">ریال</span>
-              </div>
-            </div>
-            <div className="d-flex flex-row justify-content-between mt-3">
-              <div>
-                <p>عنوان:</p>
-              </div>
-              <div>
-                <span className="VodeoDisSizing">20.000.000.000</span>
-                <span className="me-1 VodeoDisSizing">ریال</span>
-              </div>
-            </div>
-            <div className="d-flex flex-row justify-content-between mt-3">
-              <div>
-                <p>عنوان:</p>
-              </div>
-              <div>
-                <span className="VodeoDisSizing">20.000.000.000</span>
-                <span className="me-1 VodeoDisSizing">ریال</span>
-              </div>
-            </div>
-            <div className="d-flex flex-row justify-content-between mt-3">
-              <div>
-                <p>عنوان:</p>
-              </div>
-              <div>
-                <span className="VodeoDisSizing">20.000.000.000</span>
-                <span className="me-1 VodeoDisSizing">ریال</span>
-              </div>
-            </div>
-            <div className="d-flex flex-row justify-content-between mt-3">
-              <div>
-                <p>عنوان:</p>
-              </div>
-              <div>
-                <span className="VodeoDisSizing">20.000.000.000</span>
-                <span className="me-1 VodeoDisSizing">ریال</span>
-              </div>
-            </div>
-          </div>
-          <div className="text-center mt-5 fs-2">
-            <p>.لوگو</p>
-          </div>
-        </div> */}
       </div>
+      {/* modals */}
+      {finalPaymentImage && (
+        <ZoomModal
+          open={zoomModal}
+          onClose={handleCloseZoomModal}
+          src={finalPaymentImage}
+          alt={"FactorImage"}
+        />
+      )}
     </section>
   );
 }
