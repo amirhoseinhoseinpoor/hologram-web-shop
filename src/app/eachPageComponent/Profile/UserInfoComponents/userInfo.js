@@ -1,18 +1,91 @@
+import React, { useState, useEffect } from "react";
+// import redux
 import { useDispatch, useSelector } from "react-redux";
-import { firstName, lastName, code, phoneNumber } from "@/app/Store/slice";
+import {
+  firstName,
+  lastName,
+  code,
+  phoneNumber,
+  email,
+  gender,
+} from "@/app/Store/slice";
+import { editUser } from "@/app/Store/thunks";
+import { setUserData } from "@/app/Store/slice";
+// import base component
+import ConfirmingModal from "@/app/BaseComponent/ConfirmingModal";
+import ErrorModal from "@/app/BaseComponent/ErrorModal";
 
 import style from "/src/app/Styles/Profile/UserInfoStyle/userInfo.module.scss";
 
 export default function UserInfo() {
+  const dispatch = useDispatch();
+
   const firstNameU = useSelector(firstName);
   const lastNameU = useSelector(lastName);
   const codeU = useSelector(code);
+  const emailU = useSelector(email);
   const phoneNumberU = useSelector(phoneNumber);
+  const genderU = useSelector(gender);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+  });  
+
+  const [confirmModal, setConfirmModal] = useState(false);
+  const [confirmModal2, setConfirmModal2] = useState(false);
+
+  const handleCloseModal = () => setConfirmModal(false);
+  const handleCloseModal2 = () => setConfirmModal2(false);
+
+  function closeModalOnTimeout() {
+    setTimeout(() => {
+      setConfirmModal(false);
+    }, 2000);
+  }
+
+  useEffect(() => {
+    setFormData({
+      email: emailU,
+      firstName: firstNameU,
+      lastName: lastNameU,
+      gender: genderU,
+    });
+  }, [emailU, phoneNumberU, firstNameU, lastNameU, genderU]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleChangingData = async (e) => {
+    e.preventDefault();
+    try {
+      const sendDataToApi = await dispatch(
+        editUser({ code: codeU, ...formData })
+      ).unwrap();
+      if (sendDataToApi.statusCode == 200) {
+        setConfirmModal(true);
+        closeModalOnTimeout();
+
+        dispatch(setUserData(formData));
+      }
+    } catch (error) {
+      setConfirmModal2(true);
+      console.error("Error updating user info:", error);
+    }
+  };
 
   return (
     <section className={style.mainSection}>
-      <form>
-        <p className="NormalTextSizing mb-1 mt-3">لوگو شرکت</p>
+      <form onSubmit={handleChangingData}>
+        {/* <p className="NormalTextSizing mb-1 mt-3">لوگو شرکت</p>
         <div>
           <label htmlFor="LogoComapnyInput" className={style.LabelComapntInput}>
             <div className="d-flex flex-column text-center">
@@ -47,46 +120,63 @@ export default function UserInfo() {
             </div>
           </label>
           <input type="file" className="d-none" id="LogoComapnyInput" />
-        </div>
+        </div> */}
         <div
           className={`${style.mainDivMakeResponsive} d-flex flex-row mt-3 gap-5`}
         >
           <div className={`${style.forManagingSize} d-flex flex-column`}>
             <div className="d-flex flex-column mb-3">
-              <label htmlFor="CompanyName" className={`mb-1 me-1`}>
-                <span className="discription">نام شرکت</span>
+              <label htmlFor="email" className={`mb-1 me-1`}>
+                <span className="discription">ایمیل</span>
+                {/* <span className={`${style.redStar} discription`}> *</span> */}
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                onChange={handleInputChange}
+                value={formData.email || ""}
+                className={`${style.inputStyleMain} discription`}
+                placeholder="ایمیل خود را وارد کنید"
+              />
+            </div>
+            <div className="d-flex flex-column mb-3">
+              <label htmlFor="gender" className={`mb-1 me-1`}>
+                <span className="discription">جنسیت</span>
+              </label>
+              {/* <input
+                dir="ltr"
+                type="number"
+                id="gender"
+                className={`${style.inputStyleMain} ${style.inputNimberSpecific} discription`}
+                placeholder="021234567"
+              /> */}
+              <select
+                id="gender"
+                value={formData.gender || ""}
+                name="gender"
+                onChange={handleInputChange}
+                className="form-select mb-2 discription"
+                style={{ boxShadow: "unset" }}
+              >
+                <option value="u">انتخواب کنید</option>
+                <option value="f">زن</option>
+                <option value="m">مرد</option>
+              </select>
+            </div>
+            <div className="d-flex flex-column mb-3">
+              <label htmlFor="firstName" className={`mb-1 me-1`}>
+                <span className="discription">نام</span>
                 <span className={`${style.redStar} discription`}> *</span>
               </label>
               <input
                 type="text"
-                id="CompanyName"
+                name="firstName"
+                onChange={handleInputChange}
+                value={formData.firstName || ""}
+                id="firstName"
                 className={`${style.inputStyleMain} discription`}
-                placeholder="اسم شرکت را وارد کنید"
-                required
-              />
-            </div>
-            <div className="d-flex flex-column mb-3">
-              <label htmlFor="CompanyNumber" className={`mb-1 me-1`}>
-                <span className="discription">شماره ثابت شرکت</span>
-              </label>
-              <input
-                dir="ltr"
-                type="number"
-                id="CompanyNumber"
-                className={`${style.inputStyleMain} ${style.inputNimberSpecific} discription`}
-                placeholder="021234567"
-              />
-            </div>
-            <div className="d-flex flex-column mb-3">
-              <label htmlFor="password" className={`mb-1 me-1`}>
-                <span className="discription">رمز</span>
-                <span className={`${style.redStar} discription`}> *</span>
-              </label>
-              <input
-                type="password"
-                id="password"
-                className={`${style.inputStyleMain} discription`}
-                placeholder="********"
+                placeholder="نام"
                 required
               />
             </div>
@@ -100,22 +190,27 @@ export default function UserInfo() {
                 dir="ltr"
                 type="number"
                 id="PhoneNumber"
+                name="PhoneNumber"
+                value={phoneNumberU || ""}
                 className={`${style.inputStyleMain} ${style.inputNimberSpecific} discription`}
-                placeholder={phoneNumberU}
                 required
                 disabled
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label htmlFor="userNameAndFamily" className={`mb-1 me-1`}>
-                <span className="discription">نام و نام خانوادگی</span>
+              <label htmlFor="lastName" className={`mb-1 me-1`}>
+                <span className="discription">نام خانوادگی</span>
+                <span className={`${style.redStar} discription`}> *</span>
               </label>
               <input
                 type="text"
-                id="userNameAndFamily"
+                id="lastName"
+                name="lastName"
+                onChange={handleInputChange}
+                value={formData.lastName || ""}
                 className={`${style.inputStyleMain}  discription`}
-                placeholder={`${firstNameU} ${" "} ${lastNameU}`}
-                disabled
+                placeholder="نام خانوادگی خود را وارد کنید"
+                required
               />
             </div>
           </div>
@@ -126,6 +221,17 @@ export default function UserInfo() {
           </button>
         </div>
       </form>
+      {/* modals */}
+      <ConfirmingModal
+        open={confirmModal}
+        onClose={handleCloseModal}
+        text={`ویرایش اطلاعات با موفقیت انجام یافت`}
+      />
+      <ErrorModal
+        open={confirmModal2}
+        onClose={handleCloseModal2}
+        text={"خطا در انجام عملیات"}
+      />
     </section>
   );
 }

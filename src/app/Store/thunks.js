@@ -17,7 +17,6 @@ export const login = createAsyncThunk(
       );
       const token = response.data.token;
 
-      console.log(token);
 
       const response2 = await axios.post(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/users`,
@@ -29,12 +28,17 @@ export const login = createAsyncThunk(
         }
       );
 
+      console.log(response2);
+      
+
       return {
         token,
         firstName: response2.data[0].firstName,
         lastName: response2.data[0].lastName,
         phoneNumber: response2.data[0].username,
         code: response2.data[0].code,
+        email : response2.data[0].email,
+        gender: response2.data[0].gender,
       };
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -47,6 +51,45 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const editUser = createAsyncThunk(
+  "auth/editUser",
+  async (
+    { code, firstName, lastName, gender, email , active },
+    thunkAPI
+  ) => {
+    
+    const state = thunkAPI.getState();
+    const token = state.auth.token.token;
+
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/users/editUserSite/${code}`,
+        {
+          firstName,
+          lastName,
+          email,
+          gender,
+          active,
+        },
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        }
+      );
+      const data = response.data;
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("error");
+      } else {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  }
+);
+
 
 export const signUp = createAsyncThunk(
   "auth/signUp",
