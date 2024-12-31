@@ -21,7 +21,7 @@ const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
 
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
 
-export default function MakeOrder({ currentOrder , setActiveTab }) {
+export default function MakeOrder({ currentOrder , setActiveTab , setUpdateData}) {
 
   const [step, setStep] = useState(1);
   const [disabelInput, setDisabelInput] = useState(false);
@@ -113,6 +113,7 @@ export default function MakeOrder({ currentOrder , setActiveTab }) {
             code={currentOrder.code}
             step={currentOrder.step}
             chatImage={currentOrder.chatImage}
+            setUpdateData={setUpdateData}
             handleNextStep={handleNextStep}
             handlePreviousStep={handlePreviousStep}
           />

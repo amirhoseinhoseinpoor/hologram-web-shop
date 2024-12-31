@@ -38,6 +38,7 @@ const ChatBox = ({
   step,
   data,
   chatImage,
+  setUpdateData,
 }) => {
   const dispatch = useDispatch();
 
@@ -53,7 +54,6 @@ const ChatBox = ({
   const [moveForward, setMoveForward] = useState(false);
   const [userChoiseImage, setUserChoiseImage] = useState(null);
   const [ConvertedImage, setConvertedImage] = useState([]);
-  console.log(ConvertedImage);
 
   // modal state
   const [openModal, setOpenModal] = useState(false);
@@ -79,19 +79,29 @@ const ChatBox = ({
 
   // Initialize socket connection
   useEffect(() => {
+    if (!socket) {
+      console.error("Socket not initialized.");
+      return;
+    }
+
     setMessages(Array.isArray(chatData) ? chatData : []);
 
     // Listen for chat updates
-    socket.on("chatUpdate", (data) => {
+    socket.on("message", (data) => {
       if (data.code === code) {
         setMessages(Array.isArray(data.chat) ? data.chat : []);
       }
     });
 
-    // // Clean up the listener on unmount
-    // return () => {
-    //   socket.disconnect();
-    // };
+    // Handle connection errors
+    socket.on("connect_error", (err) => {
+      console.error("Chat Socket Connection Error:", err.message);
+    });
+
+    // Clean up the listener on unmount
+    return () => {
+      socket.off("message");
+    };
   }, [code, chatData]);
 
   useEffect(() => {
@@ -231,7 +241,6 @@ const ChatBox = ({
     setImage(file);
     const imageUrl = URL.createObjectURL(file);
     setSelectedImage(imageUrl);
-    console.log(image);
   };
 
   const handleCancelSending = () => {
@@ -284,7 +293,8 @@ const ChatBox = ({
     try {
       await fetchUserChoiceImage;
       await increseingStep;
-      handleNextStep();
+      setUpdateData(true);
+      // handleNextStep();
     } catch (error) {
       console.error("Failed to dispatch user choice image:", error);
     }
@@ -525,7 +535,7 @@ const ChatBox = ({
           </div>
         </div>
 
-        {chatImage?.images?.length > 0 ? (
+        {chatImage?.images?.length > 0 && (
           <>
             <div className={`mt-3 ${style.confirmImage} `}>
               {userChoiseImage ? (
@@ -582,104 +592,102 @@ const ChatBox = ({
               )}
             </div>
           </>
-        ) : (
-          <>
-            <div className="position-relative mt-3 d-flex">
-              {selectedImage ? (
-                <>
-                  <div
-                    className={`${style.mainDivSelectedImage} d-flex flex-row align-items-center justify-content-between`}
-                  >
-                    <Box
-                      component="img"
-                      src={selectedImage}
-                      alt="uploaded"
-                      className={style.selectedImageForSend}
-                    ></Box>
-                    <div className="d-flex flex-column gap-2 ms-3">
-                      <button
-                        onClick={sendMessage}
-                        className={`${style.sendMessageChatBox} smallest`}
-                      >
-                        ارسال
-                      </button>
-                      <button
-                        onClick={handleCancelSending}
-                        className={`${style.cancelSendingImage} smallest`}
-                      >
-                        لغو
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <textarea
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="پیام خود را بنویسید"
-                    className={`${style.inputChatBoxStyle} discription`}
-                  />
-                  {message.length == 0 && (
-                    <>
-                      <label
-                        htmlFor="fileInputChatBox"
-                        className={style.LabelFileUpload}
-                      >
-                        <svg
-                          width={27}
-                          height={27}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M14.5 7.5H15.7924C18.3773 7.5 20.5 9.52091 20.5 12C20.5 14.4709 18.3859 16.5 15.7924 16.5H14.5"
-                            stroke="#292D32"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M9.5 16.5H8.21429C5.61714 16.5 3.5 14.4791 3.5 12C3.5 9.52909 5.61714 7.5 8.21429 7.5H9.5"
-                            stroke="#292D32"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M8.5 12H15.5"
-                            stroke="#292D32"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </label>
-                      <input
-                        type="file"
-                        onChange={handleSelectImage}
-                        accept="image/*"
-                        className={`d-none`}
-                        id="fileInputChatBox"
-                      />
-                    </>
-                  )}
+        )}
 
-                  {message.length > 0 && (
-                    <button
-                      onClick={sendMessage}
-                      className={`${style.sendMessageChatBox2} smallest`}
+        <div className="position-relative mt-3 d-flex">
+          {selectedImage ? (
+            <>
+              <div
+                className={`${style.mainDivSelectedImage} d-flex flex-row align-items-center justify-content-between`}
+              >
+                <Box
+                  component="img"
+                  src={selectedImage}
+                  alt="uploaded"
+                  className={style.selectedImageForSend}
+                ></Box>
+                <div className="d-flex flex-column gap-2 ms-3">
+                  <button
+                    onClick={sendMessage}
+                    className={`${style.sendMessageChatBox} smallest`}
+                  >
+                    ارسال
+                  </button>
+                  <button
+                    onClick={handleCancelSending}
+                    className={`${style.cancelSendingImage} smallest`}
+                  >
+                    لغو
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <textarea
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="پیام خود را بنویسید"
+                className={`${style.inputChatBoxStyle} discription`}
+              />
+              {message.length == 0 && (
+                <>
+                  <label
+                    htmlFor="fileInputChatBox"
+                    className={style.LabelFileUpload}
+                  >
+                    <svg
+                      width={27}
+                      height={27}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      ارسال
-                    </button>
-                  )}
+                      <path
+                        d="M14.5 7.5H15.7924C18.3773 7.5 20.5 9.52091 20.5 12C20.5 14.4709 18.3859 16.5 15.7924 16.5H14.5"
+                        stroke="#292D32"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M9.5 16.5H8.21429C5.61714 16.5 3.5 14.4791 3.5 12C3.5 9.52909 5.61714 7.5 8.21429 7.5H9.5"
+                        stroke="#292D32"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M8.5 12H15.5"
+                        stroke="#292D32"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </label>
+                  <input
+                    type="file"
+                    onChange={handleSelectImage}
+                    accept="image/*"
+                    className={`d-none`}
+                    id="fileInputChatBox"
+                  />
                 </>
               )}
-            </div>
-          </>
-        )}
+
+              {message.length > 0 && (
+                <button
+                  onClick={sendMessage}
+                  className={`${style.sendMessageChatBox2} smallest`}
+                >
+                  ارسال
+                </button>
+              )}
+            </>
+          )}
+        </div>
       </div>
       <div className="d-flex flex-row gap-2 mt-3">
         <button

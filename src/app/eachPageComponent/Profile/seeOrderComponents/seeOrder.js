@@ -1,83 +1,22 @@
-import React, { useState, useEffect } from "react";
+// src/components/SeeOrder.js
+
+import React from "react";
 import { Card, CardMedia, CardContent } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import style from "/src/app/Styles/Profile/SeeOrderStyle/SeeOrder.module.scss";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
-// import redux
-import { useDispatch, useSelector } from "react-redux";
-import { getUserProduct } from "@/app/Store/thunks";
-import { productListData, userOrdersData } from "@/app/Store/slice";
-import { list } from "@/app/Store/thunks";
 
-export default function SeeOrder({ setActiveTab, setCurrentorder }) {
-  const dispatch = useDispatch();
-
-  const checkData = useSelector(userOrdersData);
-  const products = useSelector(productListData);
-
-  const [newFinalData, setNewFinalData] = useState([]);
-
-  
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // if (!checkData) {}
-        await dispatch(getUserProduct());
-      } catch (error) {
-        console.error("Error during dispatch:", error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!products) {
-          await dispatch(list());
-        }
-      } catch (error) {
-        console.error("Error during dispatch:", error);
-      }
-    };
-    fetchData();
-  }, [dispatch]);
-
-  useEffect(() => {
-    // const nameOfEachOrder = checkData?.map((item) => item?.request?.prodName);  
-
-    // Map through products to get names and image src
-    const productImageMap = products?.reduce((acc, item) => {
-      const imageSrc =
-        item.info.imgData.find((image) => image.type === "1")?.src || null;
-      if (item.name && imageSrc) {
-        acc[item.name] = imageSrc; // Map product name to its first image src
-      }
-      return acc;
-    }, {});
-
-
-    // Add the corresponding image src to each item in checkData
-    const updatedCheckData = checkData?.map((item) => {
-      const productName = item?.request?.prodName?.trim().toLowerCase(); 
-      const imageSrc = productImageMap && productImageMap[productName] ? productImageMap[productName] : null; // Find the corresponding image src
-      return {
-        ...item,
-        imageSrc, // Add new property
-      };
-    });
-    setNewFinalData(updatedCheckData || []);
-  }, [checkData, products]);
-
-  const copyUrlToClipboard = async (number) => {
+export default function SeeOrder({
+  setActiveTab,
+  setCurrentorder,
+  newFinalData,
+}) {
+  const copyUrlToClipboard = async (code) => {
     try {
-      const url = number;
-      await navigator.clipboard.writeText(url);
-      alert("کپی موفق امیز بود");
+      await navigator.clipboard.writeText(code);
+      alert("کپی موفق آمیز بود");
     } catch (err) {
-      alert("کپی ناموفق بود" + err);
+      alert("کپی ناموفق بود: " + err);
     }
   };
 
@@ -99,7 +38,6 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
         return "تحویل داده شده";
       case 5:
         return "لغو شده";
-
       default:
         return "Unknown Status";
     }
@@ -137,13 +75,12 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
                     <CardMedia
                       component="img"
                       src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.imageSrc}`}
-                      alt={item.title}
+                      alt={item.title || "Order Image"}
                       sx={{
-                        borderRadius: "4px",
+                        borderRadius: "14px",
                         maxHeight: "190px",
                         maxWidth: "220px",
                         padding: "10px",
-                        borderRadius: "14px",
                       }}
                     />
                   </div>
@@ -154,7 +91,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
                     <p className="seeOrderFont">
                       {item?.request?.prodName || "محصول پایه"}
                     </p>
-                    
+
                     <div className="d-flex flex-row gap-2">
                       <p
                         className={`${style.coloredTitle} discription mt-1 mb-1`}
@@ -172,11 +109,9 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
                       <p className={`${style.trackCode} discription`}>
                         {item.code}
                       </p>
-                      <Tooltip title="کپی شبا">
+                      <Tooltip title="کپی کد رهگیری">
                         <span
-                          onClick={() =>
-                            copyUrlToClipboard("15385025181722497417038")
-                          }
+                          onClick={() => copyUrlToClipboard(item.code)}
                           className={`${style.CopySvgButton} d-flex`}
                         >
                           <svg
@@ -214,7 +149,7 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
                         </p>
                       )}
                     </div>
-                    {item.status == 1 && (
+                    {item.status === 1 && (
                       <div>
                         <button
                           onClick={() => handelOrderClick(item)}
@@ -252,9 +187,11 @@ export default function SeeOrder({ setActiveTab, setCurrentorder }) {
               </div>
             </Card>
           ))}
-          {newFinalData?.length == 0 && (<>
-            <p>سفارشی ثبت نشده</p>
-          </>)}
+          {newFinalData?.length === 0 && (
+            <>
+              <p>سفارشی ثبت نشده</p>
+            </>
+          )}
         </div>
       </div>
     </section>

@@ -1,54 +1,74 @@
-"use client"
+// src/components/Profile.js
 
-import React, { useState, useEffect, Suspense } from "react";
-import { useSelector } from "react-redux";
+"use client";
+
+import React, { useState, useEffect, Suspense, useCallback } from "react";
+// Import Redux
 import { childValue } from "../Store/slice";
-import { firstName , lastName , phoneNumber } from "../Store/slice";
-import { useSearchParams } from "next/navigation";
+import { firstName, lastName, phoneNumber } from "../Store/slice";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProduct, list } from "@/app/Store/thunks";
+import { productListData, userOrdersData } from "@/app/Store/slice";
 
+import { useSearchParams } from "next/navigation";
 import Header from "../Components/Header";
 import Hoc from "../Components/HOCcomponent";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
-// Lazy load the MakeOrder component
+// Lazy load the components
 const MakeOrder = dynamic(
-  () => import("../eachPageComponent/Profile/MakeOrderComponents/MakeOrder"),
+  () =>
+    import(
+      "../eachPageComponent/Profile/MakeOrderComponents/MakeOrder"
+    ),
   {
-    ssr: false, // Disable SSR if it's a client-side component
-    loading: () => <p>Loading...</p>, // Fallback content while loading
+    ssr: false,
+    loading: () => <p>Loading...</p>,
   }
 );
 
 const SeeOrder = dynamic(
-  () => import("../eachPageComponent/Profile/seeOrderComponents/seeOrder"),
+  () =>
+    import(
+      "../eachPageComponent/Profile/seeOrderComponents/seeOrder"
+    ),
   {
-    ssr: false, // Disable SSR if it's a client-side component
-    loading: () => <p>Loading...</p>, // Fallback content while loading
+    ssr: false,
+    loading: () => <p>Loading...</p>,
   }
 );
 
 const UserInfo = dynamic(
-  () => import("../eachPageComponent/Profile/UserInfoComponents/userInfo"),
+  () =>
+    import(
+      "../eachPageComponent/Profile/UserInfoComponents/userInfo"
+    ),
   {
-    ssr: false, // Disable SSR if it's a client-side component
-    loading: () => <p>Loading...</p>, // Fallback content while loading
+    ssr: false,
+    loading: () => <p>Loading...</p>,
   }
 );
 
 const Message = dynamic(
-  () => import("../eachPageComponent/Profile/messageComponents/message"),
+  () =>
+    import(
+      "../eachPageComponent/Profile/messageComponents/message"
+    ),
   {
-    ssr: false, // Disable SSR if it's a client-side component
-    loading: () => <p>Loading...</p>, // Fallback content while loading
+    ssr: false,
+    loading: () => <p>Loading...</p>,
   }
 );
 
 const Favorite = dynamic(
-  () => import("../eachPageComponent/Profile/FavoriteComponents/favorite"),
+  () =>
+    import(
+      "../eachPageComponent/Profile/FavoriteComponents/favorite"
+    ),
   {
-    ssr: false, // Disable SSR if it's a client-side component
-    loading: () => <p>Loading...</p>, // Fallback content while loading
+    ssr: false,
+    loading: () => <p>Loading...</p>,
   }
 );
 
@@ -63,8 +83,10 @@ const ProfileTabs = ({ setActiveTab, activeTab }) => {
   const type = searchParams.get("type");
 
   useEffect(() => {
-    setActiveTab(type);
-  }, [type]);
+    if (type) {
+      setActiveTab(type);
+    }
+  }, [type, setActiveTab]);
 
   return (
     <Tabs
@@ -83,9 +105,12 @@ const ProfileTabs = ({ setActiveTab, activeTab }) => {
 };
 
 const Profile = () => {
+  const dispatch = useDispatch();
+
   const [activeTab, setActiveTab] = useState("makeOrder");
   const [lastPage, setLastPage] = useState("/");
-  const [currentOrder , setCurrentorder] = useState("");
+  const [currentOrder, setCurrentorder] = useState("");
+  const [updateData, setUpdateData] = useState(false);
 
   const childValue2 = useSelector(childValue);
 
@@ -93,19 +118,94 @@ const Profile = () => {
   const lastname = useSelector(lastName);
   const phonenumber = useSelector(phoneNumber);
 
+  const checkData = useSelector(userOrdersData);
+
+  const products = useSelector(productListData);
+
+  const [newFinalData, setNewFinalData] = useState([]);
+
+  // Consolidated useEffect for fetching data when updateData is true
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(getUserProduct());
+        await dispatch(list());
+        setUpdateData(false);
+      } catch (error) {
+        console.error("Error during dispatch:", error);
+      }
+    };
+
+    if (updateData) {
+      fetchData();
+    }
+  }, [dispatch, updateData]);
+
+  // Initial data fetch on component mount
+  useEffect(() => {
+    const initialFetch = async () => {
+      try {
+        await dispatch(getUserProduct());
+        await dispatch(list());
+      } catch (error) {
+        console.error("Error during initial fetch:", error);
+      }
+    };
+    initialFetch();
+  }, [dispatch]);
+
+  // Synchronize newFinalData and currentOrder
+  useEffect(() => {
+    const productImageMap = products?.reduce((acc, item) => {
+      const imageSrc =
+        item.info.imgData.find((image) => image.type === "1")?.src || null;
+      if (item.name && imageSrc) {
+        acc[item.name.trim().toLowerCase()] = imageSrc; // Ensure the key is lowercase and trimmed
+      }
+      return acc;
+    }, {});
+
+    // Add the corresponding image src to each item in checkData
+    const updatedCheckData = checkData?.map((item) => {
+      const productName = item?.request?.prodName?.trim().toLowerCase();
+      const imageSrc =
+        productImageMap && productImageMap[productName]
+          ? productImageMap[productName]
+          : null; // Find the corresponding image src
+      return {
+        ...item,
+        imageSrc, // Add new property
+      };
+    });
+    setNewFinalData(updatedCheckData || []);
+  }, [checkData, products]);
+
+  // Update activeTab based on childValue2 from Redux
   useEffect(() => {
     if (childValue2 !== null) {
       setActiveTab(childValue2);
     }
   }, [childValue2]);
 
-  
+  // Retrieve lastPage from sessionStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       const lastPage = sessionStorage.getItem("lastPage") || "/";
       setLastPage(lastPage);
     }
   }, []);
+
+  // Synchronize currentOrder with updated newFinalData
+  useEffect(() => {
+    if (currentOrder) {
+      const updatedOrder = newFinalData.find(
+        (order) => order.code === currentOrder.code
+      );
+      if (updatedOrder) {
+        setCurrentorder(updatedOrder);
+      }
+    }
+  }, [newFinalData, currentOrder]);
 
   return (
     <>
@@ -115,7 +215,9 @@ const Profile = () => {
           <aside className={`${style.sidebar} h-100`}>
             <div className={style.userinfoInSidebar}>
               <div className="d-flex flex-column">
-                <p>{firstname} {lastname}</p>
+                <p>
+                  {firstname} {lastname}
+                </p>
                 <p>{phonenumber}</p>
               </div>
               <div
@@ -157,7 +259,7 @@ const Profile = () => {
               </div>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
-             <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+              <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             </Suspense>
           </aside>
           <div className={style.content}>
@@ -194,8 +296,20 @@ const Profile = () => {
                 </div>
               </Link>
             </div>
-            {activeTab === "makeOrder" && <MakeOrder setActiveTab={setActiveTab} currentOrder={currentOrder}/>}
-            {activeTab === "SeeOrder" && <SeeOrder setActiveTab={setActiveTab} setCurrentorder={setCurrentorder} />}
+            {activeTab === "makeOrder" && (
+              <MakeOrder
+                setUpdateData={setUpdateData}
+                setActiveTab={setActiveTab}
+                currentOrder={currentOrder}
+              />
+            )}
+            {activeTab === "SeeOrder" && (
+              <SeeOrder
+                newFinalData={newFinalData}
+                setActiveTab={setActiveTab}
+                setCurrentorder={setCurrentorder}
+              />
+            )}
             {activeTab === "userInfo" && <UserInfo />}
             {activeTab === "message" && <Message />}
             {activeTab === "favorite" && <Favorite />}
@@ -207,7 +321,5 @@ const Profile = () => {
 };
 
 Profile.displayName = "Profile";
-
-
 
 export default Hoc(Profile);
