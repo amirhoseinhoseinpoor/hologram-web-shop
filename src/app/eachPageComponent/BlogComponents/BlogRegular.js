@@ -13,29 +13,8 @@ import Tabs from "react-bootstrap/Tabs";
 import { useDispatch } from "react-redux";
 import { homePageBlogList } from "@/app/Store/thunks";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
-
-// Pagination Component
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  return (
-    <div className="d-flex justify-content-center mt-3">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        Previous
-      </button>
-      <span>
-        Page {currentPage} of {totalPages}
-      </span>
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
-        Next
-      </button>
-    </div>
-  );
-};
+// improt base component
+import Pagination from "@/app/BaseComponent/Pagination";
 
 export default function BlogRegular() {
   const dispatch = useDispatch();
