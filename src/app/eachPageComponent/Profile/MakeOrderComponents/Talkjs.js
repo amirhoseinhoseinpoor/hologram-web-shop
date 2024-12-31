@@ -525,7 +525,7 @@ const ChatBox = ({
           </div>
         </div>
 
-        {chatImage?.images.length > 0 ? (
+        {chatImage?.images?.length > 0 ? (
           <>
             <div className={`mt-3 ${style.confirmImage} `}>
               {userChoiseImage ? (

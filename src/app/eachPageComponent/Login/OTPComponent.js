@@ -13,21 +13,20 @@ export default function OTPInput({
   const [timer, setTimer] = useState(120); // Timer set for 2 minutes (120 seconds)
   const inputRefs = useRef([]); // Array of refs for input elements
 
-  
-
-
-  // Update OTP array on input change
   const handleChange = (index, value) => {
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
+    // Only allow digits (0-9)
+    if (value === "" || /^[0-9]$/.test(value)) {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
 
-    // Move focus to previous input if value is empty and there is an input before
-    if (value === "" && index > 0) {
-      inputRefs.current[index - 1].focus();
-    } else if (value && index < otp.length - 1) {
-      // Move focus to next input if a digit is entered
-      inputRefs.current[index + 1].focus();
+      // Move focus to previous input if value is empty and there is an input before
+      if (value === "" && index > 0) {
+        inputRefs.current[index - 1].focus();
+      } else if (value && index < otp.length - 1) {
+        // Move focus to next input if a digit is entered
+        inputRefs.current[index + 1].focus();
+      }
     }
   };
 
