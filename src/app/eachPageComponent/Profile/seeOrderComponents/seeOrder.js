@@ -70,7 +70,7 @@ export default function SeeOrder({
               <div
                 className={`${style.MakeTheContentResponsive} d-flex flex-row`}
               >
-                {item.imageSrc && (
+                {item.imageSrc ? (
                   <div>
                     <CardMedia
                       component="img"
@@ -78,12 +78,28 @@ export default function SeeOrder({
                       alt={item.title || "Order Image"}
                       sx={{
                         borderRadius: "14px",
-                        maxHeight: "190px",
-                        maxWidth: "220px",
+                        maxHeight: "100%",
+                        maxWidth: "200px",
                         padding: "10px",
                       }}
                     />
                   </div>
+                ) : (
+                  <>
+                    <div>
+                      <CardMedia
+                        component="img"
+                        src={`/HomeImages/coin.png`}
+                        alt={item.title || "Order Image"}
+                        sx={{
+                          borderRadius: "14px",
+                          height: "100%",
+                          maxWidth: "200px",
+                          padding: "10px",
+                        }}
+                      />
+                    </div>
+                  </>
                 )}
 
                 <CardContent className={`${style.resetPaddingMui}`}>

@@ -36,35 +36,6 @@ export default function MakeOrder({ currentOrder , setActiveTab , setUpdateData}
   }, [currentOrder]);
   
 
-  // geting the produc for user
-
-  // const checkData = useSelector(userOrdersData);
-  // console.log(checkData);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       if (!checkData) {
-  //         await dispatch(getUserProduct());
-  //         console.log(checkData);
-  //         checkData?.map((item) => {
-  //           setOrderState(item);
-  //           setStep(item.step);
-  //         });
-  //       } else {
-  //         checkData.map((item) => {
-  //           setOrderState(item);
-  //           setStep(item.step);
-  //         });
-  //       }
-  //     } catch (error) {
-  //       console.error("Error during dispatch:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [dispatch, checkData]);
-
   // Function to go to the next step
   const handleNextStep = () => {
     setStep((prevStep) => prevStep + 1);

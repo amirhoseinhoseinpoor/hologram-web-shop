@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import style from "/src/app/Styles/Profile/MakeOrderStyle/Talkjs.module.scss";
 import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { Skeleton } from "@mui/material";
 import LoadingCss from "@/app/BaseComponent/LoadingCss";
@@ -11,6 +10,8 @@ import socket from "@/app/utils/socket";
 // import modals
 import AreYouShureModal from "@/app/BaseComponent/AreYouSureModal";
 import ZoomModal from "@/app/BaseComponent/ZoomModal";
+// import utils
+import { downloadImage } from "@/app/utils/downloadImage";
 
 // import redux
 import { useDispatch } from "react-redux";
@@ -40,13 +41,16 @@ const ChatBox = ({
   code,
   step,
   data,
-  chatImage,
+  chatImage: initialChatImage,
   setUpdateData,
 }) => {
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [chatImage, setChatImage] = useState(
+    initialChatImage || { images: [], userChoices: [] }
+  );
   const [image, setImage] = useState(null);
   const chatBoxRef = useRef(null); // Ref to access the chat container
   const [editIndex, setEditIndex] = useState(null);
@@ -58,6 +62,7 @@ const ChatBox = ({
   const [userChoiseImage, setUserChoiseImage] = useState(null);
   const [ConvertedImage, setConvertedImage] = useState([]);
   const [loadingImageSend, setLoadingImageSend] = useState(false);
+  const [loadingFinalPatConfirm, setLoadingFinalPatConfirm] = useState(false);
 
   // modal state
   const [openModal, setOpenModal] = useState(false);
@@ -71,11 +76,6 @@ const ChatBox = ({
     setOpenModal2(fileObj);
   };
 
-  // modal part state and function
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const areYouShureFunction = (index) => {
     setMessageToDeleteIndex(index);
     setOpenModal(true);
@@ -88,12 +88,25 @@ const ChatBox = ({
       return;
     }
 
+    socket.emit("joinRoom", { code });
+
     setMessages(Array.isArray(chatData) ? chatData : []);
 
     // Listen for chat updates
     socket.on("message", (data) => {
       if (data.code === code) {
         setMessages(Array.isArray(data.chat) ? data.chat : []);
+      }
+      if (data.chatImage) {
+        setChatImage(data.chatImage);
+      }
+    });
+
+    socket.on("chatImageUpdate", (data) => {
+      if (data.code === code) {
+        if (data.chatImage) {
+          setChatImage(data.chatImage);
+        }
       }
     });
 
@@ -105,6 +118,8 @@ const ChatBox = ({
     // Clean up the listener on unmount
     return () => {
       socket.off("message");
+      socket.off("chatImageUpdate");
+      socket.emit("leaveRoom", { code });
     };
   }, [code, chatData]);
 
@@ -112,7 +127,7 @@ const ChatBox = ({
     if (chatImage && chatImage.images) {
       // Fetch each image one by one
       const fetchImages = async () => {
-        const allImages = []; // This will hold all fetched image data
+        const allImages = [];
 
         for (const filename of chatImage.images) {
           try {
@@ -125,7 +140,7 @@ const ChatBox = ({
           }
         }
 
-        if (chatImage?.userChoices) {
+        if (chatImage?.userChoices && chatImage.userChoices.length > 0) {
           try {
             const imageData = await dispatch(
               fetchPrivateImage({ filename: chatImage?.userChoices[0] })
@@ -139,13 +154,13 @@ const ChatBox = ({
         // After all images are fetched, update the state once
         setConvertedImage((prevCache) => ({
           ...prevCache,
-          allImages, // Append all new images to the existing ones
+          allImages,
         }));
       };
 
       fetchImages(); // Call the async function
     }
-  }, [chatImage]);
+  }, [chatImage, code]);
 
   const handleEditMessage = (index) => {
     setEditIndex(index);
@@ -284,7 +299,6 @@ const ChatBox = ({
   }, [step]);
 
   const handleUserChoice = async (index) => {
-    // Clone the current state of ConvertedImage
     const finalUserChose = {
       ...chatImage,
       userChoices: [...(chatImage.userChoices || []), chatImage?.images[index]], // Append the new item
@@ -298,12 +312,15 @@ const ChatBox = ({
     const increseingStep = dispatch(increaseStep({ code, step: 4 }));
 
     try {
+      setLoadingFinalPatConfirm(true);
       await fetchUserChoiceImage;
       await increseingStep;
       setUpdateData(true);
       // handleNextStep();
     } catch (error) {
       console.error("Failed to dispatch user choice image:", error);
+    } finally {
+      setLoadingFinalPatConfirm(false);
     }
   };
 
@@ -446,25 +463,11 @@ const ChatBox = ({
                     <>
                       {imageCache[msg.imageUrl] ? (
                         <>
-                          {/* modal */}
-                          <Modal
-                            open={open}
-                            onClose={handleClose}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                          >
-                            <Box
-                              component="img"
-                              src={imageCache[msg.imageUrl]}
-                              alt="uploaded"
-                              className={style.modalStyleclass}
-                              sx={ModalStyle}
-                            ></Box>
-                          </Modal>
-
                           <div className={style.allTextStyle}>
                             <Box
-                              onClick={handleOpen}
+                              onClick={() =>
+                                handleZoomFinalPattern(imageCache[msg.imageUrl])
+                              }
                               className={`${style.imageChatStyle}`}
                               component="img"
                               src={imageCache[msg.imageUrl]}
@@ -484,27 +487,11 @@ const ChatBox = ({
                                 <p
                                   style={{ cursor: "pointer" }}
                                   onClick={() => {
-                                    const link = document.createElement("a");
-
-                                    // Check if imageCache[msg.imageUrl] is a blob or a base64 URL
-                                    let filename = "finalPayment.png"; // Default filename
-                                    if (
-                                      imageCache[msg.imageUrl].includes(
-                                        "data:image/png"
-                                      )
-                                    ) {
-                                      filename = "finalPayment.png";
-                                    } else if (
-                                      imageCache[msg.imageUrl].includes(
-                                        "data:image/svg+xml"
-                                      )
-                                    ) {
-                                      filename = "finalPayment.svg";
-                                    }
-
-                                    link.href = imageCache[msg.imageUrl];
-                                    link.download = filename; // Set filename with correct extension
-                                    link.click(); // Trigger the download
+                                    const date = new Date();
+                                    downloadImage(
+                                      imageCache[msg.imageUrl],
+                                      `${date}.png`
+                                    );
                                   }}
                                 >
                                   <FileDownloadIcon />
@@ -595,7 +582,19 @@ const ChatBox = ({
                       alt="uploaded"
                     />
                   </div>
-                  <p className="VodeoDisSizing me-2">طرح مورد تایید</p>
+                  <div className="d-flex flex-column gap-3">
+                    <p className="VodeoDisSizing me-2">طرح مورد تایید</p>
+                    <p
+                      onClick={() => {
+                        const date = new Date();
+                        downloadImage(userChoiseImage, `${date}.png`);
+                      }}
+                      className={`me-2 text-center ${style.donsloadFinalUserStyle} NormalTextSizing`}
+                    >
+                      دانلود طرح
+                    </p>
+                  </div>
+                 
                 </div>
               ) : (
                 <>
@@ -619,15 +618,27 @@ const ChatBox = ({
                         </div>
                         <div className={`d-flex flex-row gap-2 mt-1 me-1`}>
                           <button
+                            disabled={loadingFinalPatConfirm}
                             onClick={() => handleUserChoice(index)}
+                            style={{
+                              cursor: "pointer",
+                              backgroundColor: loadingFinalPatConfirm
+                                ? "#5F5F5F"
+                                : "",
+                            }}
                             className={`${style.confirmFirstButton} smallest`}
                           >
                             بله، مورد تایید است
                           </button>
                           <button
                             className={`${style.confirmSecondButton} smallest`}
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              const date = new Date();
+                              downloadImage(item, `${date}.png`);
+                            }}
                           >
-                            نه، نیاز به تغییر دارد
+                            دانلود طرح
                           </button>
                         </div>
                       </div>
@@ -647,7 +658,7 @@ const ChatBox = ({
               >
                 {loadingImageSend ? (
                   <div className="w-100 justify-content-center p-3 d-flex">
-                   <LoadingCss/>
+                    <LoadingCss />
                   </div>
                 ) : (
                   <>
