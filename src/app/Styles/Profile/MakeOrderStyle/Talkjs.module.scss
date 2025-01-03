@@ -78,6 +78,9 @@
 .userDateStyle{
   justify-content: space-between;
 }
+.disableInputStyleImage{
+  cursor: not-allowed;
+}
 
 .imageChatStyle {
   width: 230px;
@@ -105,6 +108,7 @@
 }
 
 .mainDivSelectedImage{
+  width: 100% !important;
   background-color: #E7ECF0;
 }
 
