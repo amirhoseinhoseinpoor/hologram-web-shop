@@ -100,6 +100,13 @@ const ChatBox = ({
     setOpenModal(true);
   }, []);
 
+  useEffect(() => {
+    if (step > 3) {
+      setMoveForward(true);
+    }
+  }, [step]);
+
+
   // Initialize socket connection
   useEffect(() => {
     if (!socket) {
@@ -112,31 +119,32 @@ const ChatBox = ({
     setMessages(Array.isArray(chatData) ? chatData : []);
 
     // Listen for chat updates
-    const handleMessage = (data) => {
+    socket.on("message", (data) => {
       if (data.code === code) {
         setMessages(Array.isArray(data.chat) ? data.chat : []);
       }
       if (data.chatImage) {
         setChatImage(data.chatImage);
       }
-    };
+    });
 
-    const handleChatImageUpdate = (data) => {
-      if (data.code === code && data.chatImage) {
-        setChatImage(data.chatImage);
+    socket.on("chatImageUpdate", (data) => {
+      if (data.code === code) {
+        if (data.chatImage) {
+          setChatImage(data.chatImage);
+        }
       }
-    };
+    });
 
-    socket.on("message", handleMessage);
-    socket.on("chatImageUpdate", handleChatImageUpdate);
+    // Handle connection errors
     socket.on("connect_error", (err) => {
       console.error("Chat Socket Connection Error:", err.message);
     });
 
     // Clean up the listener on unmount
     return () => {
-      socket.off("message", handleMessage);
-      socket.off("chatImageUpdate", handleChatImageUpdate);
+      socket.off("message");
+      socket.off("chatImageUpdate");
       socket.emit("leaveRoom", { code });
     };
   }, [code, chatData]);

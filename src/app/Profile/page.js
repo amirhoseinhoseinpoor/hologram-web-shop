@@ -305,6 +305,7 @@ const Profile = () => {
             )}
             {activeTab === "SeeOrder" && (
               <SeeOrder
+                setUpdateData={setUpdateData}
                 newFinalData={newFinalData}
                 setActiveTab={setActiveTab}
                 setCurrentorder={setCurrentorder}

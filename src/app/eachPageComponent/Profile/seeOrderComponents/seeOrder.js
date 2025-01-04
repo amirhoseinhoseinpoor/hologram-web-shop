@@ -10,6 +10,7 @@ export default function SeeOrder({
   setActiveTab,
   setCurrentorder,
   newFinalData,
+  setUpdateData,
 }) {
   const copyUrlToClipboard = async (code) => {
     try {
@@ -21,6 +22,7 @@ export default function SeeOrder({
   };
 
   const handelOrderClick = (item) => {
+    setUpdateData(true);
     setActiveTab("makeOrder");
     setCurrentorder(item);
   };
