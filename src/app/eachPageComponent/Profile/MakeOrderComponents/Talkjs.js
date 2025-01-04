@@ -239,7 +239,7 @@ const ChatBox = ({
     } else {
       // Sending a new message
       const newMessageObject = {
-        isAdmin: true,
+        isAdmin: false,
         date: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -294,6 +294,32 @@ const ChatBox = ({
     },
     [dispatch, code]
   );
+
+  const handleUserChoice = async (index) => {
+    const finalUserChose = {
+      ...chatImage,
+      userChoices: [...(chatImage.userChoices || []), chatImage?.images[index]], // Append the new item
+    };
+
+    // Dispatch the new object with the appended user choices
+    const fetchUserChoiceImage = dispatch(
+      chatImageSend({ code, chatImage: finalUserChose })
+    );
+
+    const increseingStep = dispatch(increaseStep({ code, step: 4 }));
+
+    try {
+      setLoadingFinalPatConfirm(true);
+      await fetchUserChoiceImage;
+      await increseingStep;
+      setUpdateData(true);
+      // handleNextStep();
+    } catch (error) {
+      console.error("Failed to dispatch user choice image:", error);
+    } finally {
+      setLoadingFinalPatConfirm(false);
+    }
+  };
 
   // Scroll to bottom when messages are updated
   useEffect(() => {
@@ -450,7 +476,7 @@ const ChatBox = ({
                 </div>
               </div>
             ) : (
-              <div className={`d-flex flex-row mb-2 mt-2 align-items-center`}>
+              <div className={`d-flex flex-column mb-2 text-center mt-2 `}>
                 {ConvertedImage?.allImages?.length === 0 ? (
                   <div
                     className={style.downloadButtonStyle}

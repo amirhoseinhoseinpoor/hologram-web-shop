@@ -18,6 +18,7 @@ const MessageItem = React.memo(
     fetchPrivateImage,
     handleZoomFinalPattern,
   }) => {
+    
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
     const [loadingImage, setLoadingImage] = useState(false);
@@ -52,7 +53,7 @@ const MessageItem = React.memo(
               } d-flex flex-row `}
             >
               <p className={`${style.TimeStyle} smallest`}>{msg.date}</p>
-              {msg.isAdmin === true && (
+              {msg.isAdmin === false && (
                 <div className="d-flex flex-row">
                   {/* Edit Icon */}
                   <svg
