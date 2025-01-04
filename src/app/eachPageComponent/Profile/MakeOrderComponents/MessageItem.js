@@ -14,30 +14,30 @@ const MessageItem = React.memo(
     index,
     handleEditMessage,
     areYouShureFunction,
-    fetchImage, // Function to fetch image on demand
-    handleZoomFinalPattern, // Function to handle ZoomModal (will not be called on image click)
+    dispatch,
+    fetchPrivateImage,
+    handleZoomFinalPattern,
   }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
     const [loadingImage, setLoadingImage] = useState(false);
-    const [errorLoading, setErrorLoading] = useState(false);
 
     const loadImage = useCallback(async () => {
-      if (msg.imageUrl && !imageUrl && !loadingImage) {
+      if (msg.imageUrl && !imageUrl) {
         setLoadingImage(true);
-        setErrorLoading(false);
         try {
-          const fetchedImage = await fetchImage(msg.imageUrl);
-          setImageUrl(fetchedImage);
+          const imageData = await dispatch(
+            fetchPrivateImage({ filename: msg.imageUrl })
+          ).unwrap();
+          setImageUrl(imageData);
           setImageLoaded(true);
         } catch (error) {
           console.error("Failed to fetch image:", error);
-          setErrorLoading(true);
         } finally {
           setLoadingImage(false);
         }
       }
-    }, [msg.imageUrl, fetchImage, imageUrl, loadingImage]);
+    }, [msg.imageUrl, dispatch, fetchPrivateImage, imageUrl]);
 
     return (
       <div
@@ -49,10 +49,10 @@ const MessageItem = React.memo(
             <div
               className={`${
                 msg.isAdmin ? style.adminDateStyle : style.userDateStyle
-              } d-flex flex-row`}
+              } d-flex flex-row `}
             >
               <p className={`${style.TimeStyle} smallest`}>{msg.date}</p>
-              {msg.isAdmin === false && (
+              {msg.isAdmin === true && (
                 <div className="d-flex flex-row">
                   {/* Edit Icon */}
                   <svg
@@ -146,12 +146,12 @@ const MessageItem = React.memo(
           <div className={style.allTextStyle}>
             {imageLoaded ? (
               <Box
+                onClick={() => handleZoomFinalPattern(imageUrl)}
                 className={`${style.imageChatStyle}`}
                 component="img"
                 src={imageUrl}
                 alt="uploaded"
-                onClick={() => handleZoomFinalPattern(imageUrl)}
-                style={{ cursor: "default" }}
+                style={{ cursor: "pointer", objectFit: "cover" }}
               />
             ) : loadingImage ? (
               <Skeleton
@@ -161,21 +161,6 @@ const MessageItem = React.memo(
                 style={{ width: "31%" }}
                 height={150}
               />
-            ) : errorLoading ? (
-              <div
-                className={style.imagePlaceholder}
-                style={{
-                  width: "200px",
-                  height: "130px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#f0f0f0",
-                  cursor: "default",
-                }}
-              >
-                <p className="discription">خطا در بارگذاری تصویر</p>
-              </div>
             ) : (
               <div
                 className={style.imagePlaceholder}
@@ -187,6 +172,8 @@ const MessageItem = React.memo(
                   alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
+                  backgroundColor: "#e0e0e0",
+                  borderRadius: "8px",
                 }}
               >
                 <ArrowDownwardIcon />
@@ -203,15 +190,12 @@ const MessageItem = React.memo(
                 <div className="d-flex flex-row gap-2 align-items-center">
                   <p
                     style={{ cursor: "pointer" }}
-                    onClick={() =>
-                      downloadImage(imageUrl, `${new Date().toISOString()}.png`)
-                    }
+                    onClick={() => downloadImage(imageUrl, `${new Date().toISOString()}.png`)}
                   >
-                    <FileDownloadIcon style={{ color: "#333333" }} />
+                    <FileDownloadIcon />
                   </p>
                   {msg.isAdmin === false && (
                     <div className="d-flex flex-row">
-                      {/* Delete Icon */}
                       <svg
                         style={{ cursor: "pointer" }}
                         onClick={() => areYouShureFunction(index)}
