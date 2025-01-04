@@ -89,6 +89,19 @@
   cursor: not-allowed;
 }
 
+.downloadButtonStyle{
+  position: relative;
+  cursor: pointer;
+  width: fit-content;
+}
+.insideButtonDownload{
+  position: absolute;
+  transform: translate(-50% , -50%);
+  top: 50%;
+  left: 50%;
+}
+
+
 .imageChatStyle {
   width: 230px;
   height: 100%;
