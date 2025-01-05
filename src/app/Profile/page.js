@@ -63,7 +63,7 @@ import Tabs from "react-bootstrap/Tabs";
 import style from "../Styles/Profile/ProfileStyle.module.scss";
 
 // Component that uses useSearchParams
-const ProfileTabs = ({ setActiveTab, activeTab, storeLastVisitedPage }) => {
+const ProfileTabs = ({ setActiveTab, activeTab, storeLastVisitedPage , setUpdateData }) => {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
 
@@ -100,7 +100,10 @@ const ProfileTabs = ({ setActiveTab, activeTab, storeLastVisitedPage }) => {
           <Link
           className={style.DisableLinkStyle}
             href={`/Profile?type=${encodeURIComponent("SeeOrder")}`}
-            onClick={storeLastVisitedPage}
+            onClick={() => {
+              storeLastVisitedPage()
+              setUpdateData(true)
+            }}
           >
             <p className="VodeoDisSizing">پیگیری سفارش</p>
           </Link>
@@ -313,6 +316,7 @@ const Profile = () => {
             </div>
             <Suspense fallback={<div>Loading...</div>}>
               <ProfileTabs
+                setUpdateData={setUpdateData}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 storeLastVisitedPage={storeLastVisitedPage}

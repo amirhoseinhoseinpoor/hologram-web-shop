@@ -23,7 +23,7 @@ export default function StepFiveComponent({
   data,
 }) {
   const hasData = Object.keys(data).length > 0;
-  
+
   const dispatch = useDispatch();
 
   const gettingPhoneNumber = useSelector(phoneNumber);
@@ -93,15 +93,17 @@ export default function StepFiveComponent({
     setValue(event.target.value);
   };
 
-  // useEffect(() => {
-  //   if (value === "تحویل حضوری از مرکز آذر هولوگرام") {
-  //     setDisableButton(false);
-  //   } else if (PostAdress || PostAdress2.length > 0) {
-  //     setDisableButton(false);
-  //   } else {
-  //     setDisableButton(true);
-  //   }
-  // }, [value, PostAdress, PostAdress2]);
+  useEffect(() => {
+    if (!hasData) {
+      if (value === "تحویل حضوری از مرکز آذر هولوگرام") {
+        setDisableButton(false);
+      } else if (PostAdress.length > 0 || PostAdress2.length > 0) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+  }, [value, PostAdress, PostAdress2]);
 
   const handleAddAdress = async () => {
     // First, create the new address object
@@ -280,9 +282,8 @@ export default function StepFiveComponent({
       } else if (data?.type == "ارسال با باربری") {
         setPostAdress2([data]);
       }
-
-    } 
-  }, [data , hasData]);
+    }
+  }, [data, hasData]);
 
   useEffect(() => {
     if (value === "ارسال با پست") {
@@ -306,7 +307,10 @@ export default function StepFiveComponent({
         <p className="NormalTextSizing mb-3">
           بعد از آماده سازی و تولید، دوست دارید بسته خود را چگونه تحویل بگیرید.{" "}
         </p>
-        <FormControl disabled={disabelInputStep4} className="w-100">
+        <FormControl
+          disabled={disabelInputStep4}
+          className={`w-100 ${style.customStyleMui}`}
+        >
           <FormLabel
             className={style.resetfontLabel}
             id="demo-controlled-radio-buttons-group"

@@ -27,22 +27,30 @@ export default function MakeOrder({ currentOrder , setActiveTab , setUpdateData}
   const [disabelInput, setDisabelInput] = useState(false);
   const [disabelInputStep2, setDisabelInputStep2] = useState(false);
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
-  // const [orderState, setOrderState] = useState("");
+  const [shouldSetStep, setShouldSetStep] = useState(true);
+
+console.log(currentOrder);
+
 
   useEffect(() => {
-    if (currentOrder) {
+    if (currentOrder && shouldSetStep) {
       setStep(currentOrder.step);
+      setShouldSetStep(true);
     } 
   }, [currentOrder]);
   
 
   // Function to go to the next step
   const handleNextStep = () => {
+    setShouldSetStep(false);
+    setUpdateData(true)
     setStep((prevStep) => prevStep + 1);
   };
 
   // Function to go to the previous step
   const handlePreviousStep = () => {
+    setShouldSetStep(false);
+    setUpdateData(true)
     setStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
 

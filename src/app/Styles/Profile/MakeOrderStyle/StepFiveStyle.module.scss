@@ -16,6 +16,16 @@
   }
 }
 
+.customStyleMui :global {
+  .css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-disabled {
+    color: var.$social-media-color;
+  }
+  .css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label.Mui-disabled {
+    color: var.$social-media-color;
+  }
+}
+
+
 .butttonAddAdress {
   border: 1.5px solid #5695f6;
   border-radius: 6px;
