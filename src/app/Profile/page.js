@@ -18,10 +18,7 @@ import Link from "next/link";
 
 // Lazy load the components
 const MakeOrder = dynamic(
-  () =>
-    import(
-      "../eachPageComponent/Profile/MakeOrderComponents/MakeOrder"
-    ),
+  () => import("../eachPageComponent/Profile/MakeOrderComponents/MakeOrder"),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -29,10 +26,7 @@ const MakeOrder = dynamic(
 );
 
 const SeeOrder = dynamic(
-  () =>
-    import(
-      "../eachPageComponent/Profile/seeOrderComponents/seeOrder"
-    ),
+  () => import("../eachPageComponent/Profile/seeOrderComponents/seeOrder"),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -40,10 +34,7 @@ const SeeOrder = dynamic(
 );
 
 const UserInfo = dynamic(
-  () =>
-    import(
-      "../eachPageComponent/Profile/UserInfoComponents/userInfo"
-    ),
+  () => import("../eachPageComponent/Profile/UserInfoComponents/userInfo"),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -51,10 +42,7 @@ const UserInfo = dynamic(
 );
 
 const Message = dynamic(
-  () =>
-    import(
-      "../eachPageComponent/Profile/messageComponents/message"
-    ),
+  () => import("../eachPageComponent/Profile/messageComponents/message"),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -62,10 +50,7 @@ const Message = dynamic(
 );
 
 const Favorite = dynamic(
-  () =>
-    import(
-      "../eachPageComponent/Profile/FavoriteComponents/favorite"
-    ),
+  () => import("../eachPageComponent/Profile/FavoriteComponents/favorite"),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -78,7 +63,7 @@ import Tabs from "react-bootstrap/Tabs";
 import style from "../Styles/Profile/ProfileStyle.module.scss";
 
 // Component that uses useSearchParams
-const ProfileTabs = ({ setActiveTab, activeTab }) => {
+const ProfileTabs = ({ setActiveTab, activeTab, storeLastVisitedPage }) => {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
 
@@ -88,6 +73,8 @@ const ProfileTabs = ({ setActiveTab, activeTab }) => {
     }
   }, [type, setActiveTab]);
 
+
+
   return (
     <Tabs
       activeKey={activeTab}
@@ -95,11 +82,70 @@ const ProfileTabs = ({ setActiveTab, activeTab }) => {
       id="Profile-tabs"
       className={style.sidebarMain}
     >
-      <Tab eventKey="makeOrder" title="ثبت سفارش"></Tab>
-      <Tab eventKey="SeeOrder" title="پیگیری سفارش"></Tab>
-      <Tab eventKey="userInfo" title="اطلاعات کاربری"></Tab>
-      <Tab eventKey="message" title="پیغام ها"></Tab>
-      <Tab eventKey="favorite" title="لیست‌های مورد علاقه"></Tab>
+      <Tab
+        eventKey="makeOrder"
+        title={
+          <Link
+          className={style.DisableLinkStyle}
+            href={`/Profile?type=${encodeURIComponent("makeOrder")}`}
+            onClick={storeLastVisitedPage}
+          >
+            <p className="VodeoDisSizing">ثبت سفارش</p>
+          </Link>
+        }
+      ></Tab>
+      <Tab
+        eventKey="SeeOrder"
+        title={
+          <Link
+          className={style.DisableLinkStyle}
+            href={`/Profile?type=${encodeURIComponent("SeeOrder")}`}
+            onClick={storeLastVisitedPage}
+          >
+            <p className="VodeoDisSizing">پیگیری سفارش</p>
+          </Link>
+        }
+        
+      ></Tab>
+      <Tab
+        eventKey="userInfo"
+        title={
+          <Link
+          className={style.DisableLinkStyle}
+            href={`/Profile?type=${encodeURIComponent("userInfo")}`}
+            onClick={storeLastVisitedPage}
+          >
+            <p className="VodeoDisSizing">اطلاعات کاربری</p>
+          </Link>
+        }
+       
+      ></Tab>
+      <Tab
+        eventKey="message"
+        title={
+          <Link
+          className={style.DisableLinkStyle}
+            href={`/Profile?type=${encodeURIComponent("message")}`}
+            onClick={storeLastVisitedPage}
+          >
+            <p className="VodeoDisSizing">پیغام ها</p>
+          </Link>
+        }
+        
+      ></Tab>
+      <Tab
+        eventKey="favorite"
+        title={
+          <Link
+            className={style.DisableLinkStyle}
+            href={`/Profile?type=${encodeURIComponent("favorite")}`}
+            onClick={storeLastVisitedPage}
+          >
+            <p className="VodeoDisSizing">الیست‌های مورد علاقه</p>
+          </Link>
+        }
+       
+      ></Tab>
     </Tabs>
   );
 };
@@ -123,6 +169,13 @@ const Profile = () => {
   const products = useSelector(productListData);
 
   const [newFinalData, setNewFinalData] = useState([]);
+
+  const storeLastVisitedPage = () => {
+    const lastPage = window.location.pathname;
+    if (lastPage !== "/Profile") {
+      sessionStorage.setItem("lastPage", lastPage);
+    }
+  };
 
   // Consolidated useEffect for fetching data when updateData is true
   useEffect(() => {
@@ -259,7 +312,11 @@ const Profile = () => {
               </div>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
-              <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+              <ProfileTabs
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                storeLastVisitedPage={storeLastVisitedPage}
+              />
             </Suspense>
           </aside>
           <div className={style.content}>

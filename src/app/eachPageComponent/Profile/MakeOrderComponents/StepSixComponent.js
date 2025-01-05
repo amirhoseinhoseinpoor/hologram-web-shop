@@ -10,7 +10,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Link from "next/link";
 // import redux
 import { useDispatch } from "react-redux";
-import { fetchPrivateImage, logout } from "@/app/Store/thunks";
+import { fetchPrivateImage } from "@/app/Store/thunks";
 // improt base Modal
 import ZoomModal from "@/app/BaseComponent/ZoomModal";
 

@@ -28,7 +28,6 @@ export default function Product() {
   }, [pathname]);
 
 
-
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(list());
