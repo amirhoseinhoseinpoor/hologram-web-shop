@@ -646,7 +646,7 @@ export default function StepTwoComponent({
                   onClick={handleNextStep}
                   className={`${style.continueButton} mt-3`}
                 >
-                  رد کردن
+                 مرحله بعدی
                 </button>
               ) : (
                 <button

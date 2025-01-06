@@ -104,6 +104,10 @@ span {
 button{
   font-size: 14px;
 }
+.form-control:focus,
+.form-select:focus{
+  box-shadow: unset;
+}
 //end global sizing
 
 .navbar-toggler:focus {

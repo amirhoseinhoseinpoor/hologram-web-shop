@@ -685,7 +685,7 @@ const ChatBox = ({
             onClick={handleNextStep}
             className={`${style.continueButton}`}
           >
-            رد کردن
+           مرحله بعدی
           </button>
         )}
       </div>

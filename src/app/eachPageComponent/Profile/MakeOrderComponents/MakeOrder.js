@@ -29,8 +29,6 @@ export default function MakeOrder({ currentOrder , setActiveTab , setUpdateData}
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
   const [shouldSetStep, setShouldSetStep] = useState(true);
 
-console.log(currentOrder);
-
 
   useEffect(() => {
     if (currentOrder && shouldSetStep) {
