@@ -288,56 +288,73 @@ export default function ProductShow({ productData }) {
             <p>{data.subtitle}</p>
           </div>
           <div className="mt-3">
-            <div>
-              <span className="ms-2">رنگ:</span>
-              <span>{selectedColor}</span>
-            </div>
-            <div className="d-flex flex-row gap-2 mt-2">
-              {data.color.map((item, index) => (
-                <React.Fragment key={index}>
-                  <div
-                    className={style.coloredBoxStyle}
-                    style={{
-                      // backgroundColor: item.src,
-                      backgroundImage: `url(${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.src})`,
-                      border:
-                        selectedColor === item.name ? "3px solid #404756" : "",
+            <div className={`${style.gridPartShowDetail} mt-2`}>
+              {data.sections.map((item, index) =>
+                item?.type == "image" ? (
+                  <div key={index} className="d-flex flex-column gap-3">
+                    <div className="d-flex flex-row align-items-center gap-2">
+                      <span>{item?.sectionName}:</span>
+                      <span>{selectedColor}</span>
+                    </div>
+                    <div className="d-flex flex-row align-items-center gap-2">
+                      {item?.items?.map((iItem, Iindex) => (
+                        <div
+                          key={Iindex}
+                          className={style.coloredBoxStyle}
+                          style={{
+                            // backgroundColor: item.src,
+                            backgroundImage: `url(${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${iItem.src})`,
+                            border:
+                              selectedColor === iItem.name
+                                ? "3px solid #404756"
+                                : "",
 
-                      boxShadow:
-                        selectedColor === item.name
-                          ? "0 0 5px rgba(0, 0, 0, 0.2)"
-                          : "none",
-                    }}
-                    onClick={() => handleColorChange(item.name)}
-                  ></div>
-                </React.Fragment>
-              ))}
+                            boxShadow:
+                              selectedColor === iItem.name
+                                ? "0 0 5px rgba(0, 0, 0, 0.2)"
+                                : "none",
+                          }}
+                          onClick={() => handleColorChange(iItem.name)}
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
+                ) : item.type == "text" ? (
+                  <div className="w-100">
+                    <h3 className="mb-3 mt-3">{item?.sectionName}</h3>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      {item?.items?.map((size, index) => (
+                        <div
+                          className={style.SizezInput}
+                          key={index}
+                          style={{
+                            border: "1.5px solid #404756",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {size?.name}
+                        </div>
+
+
+                      ))}
+                    </div>
+                  </div>
+                ) : null
+              )}
             </div>
-            <h3 className="mb-3 mt-3">سایز</h3>
-            <div style={{ display: "flex", gap: "10px" }}>
-              {data.sizes.map((size, index) => (
-                <div
-                  className={style.SizezInput}
-                  key={index}
-                  style={{
-                    // border: selectedSize === size ? "1.5px solid #404756" : "",
-                    border: "1.5px solid #404756",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                  // onClick={() => handleSizeChange(size)}
-                >
-                  {size}
-                </div>
-              ))}
-            </div>
+
             <div
               className={`${style.resetJustifyInresponsiveFix} mt-4 d-flex flex-row gap-4`}
             >
               <div className={style.justAddMarginRespon}>
                 <Link
                   onClick={storeLastVisitedPage}
-                  href={comeToken ? `/Profile?type=makeOrder&name=${productData.name}&code=${productData.code}` : `/Login`}
+                  href={
+                    comeToken
+                      ? `/Profile?type=makeOrder&name=${productData.name}&code=${productData.code}`
+                      : `/Login`
+                  }
                   passHref
                 >
                   <button className={style.addProductPage} type="button">
