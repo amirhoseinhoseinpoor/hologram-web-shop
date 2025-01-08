@@ -88,9 +88,15 @@
   fill: currentColor;
 }  
 
+
+
 @media (max-width: 768px) {
   .MakeTheContentResponsive {
     flex-direction: column !important;
+  }
+  .tabImageStyle{
+    width: 100% !important;
+    max-height: 270px !important;
   }
   .situationSatus {
     top: 4%;

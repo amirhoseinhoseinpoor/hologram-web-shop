@@ -75,13 +75,14 @@ export default function SeeOrder({
                 {item.imageSrc ? (
                   <div>
                     <CardMedia
+                      className={style.tabImageStyle}
                       component="img"
                       src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${item.imageSrc}`}
                       alt={item.title || "Order Image"}
                       sx={{
                         borderRadius: "14px",
-                        maxHeight: "100%",
-                        maxWidth: "200px",
+                        height: "100%",
+                        width: "200px",
                         padding: "10px",
                       }}
                     />
@@ -90,13 +91,14 @@ export default function SeeOrder({
                   <>
                     <div>
                       <CardMedia
+                        className={style.tabImageStyle}
                         component="img"
                         src={`/HomeImages/coin.png`}
                         alt={item.title || "Order Image"}
                         sx={{
                           borderRadius: "14px",
                           height: "100%",
-                          maxWidth: "200px",
+                          width: "200px",
                           padding: "10px",
                         }}
                       />
