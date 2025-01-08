@@ -1,21 +1,7 @@
 @use "../../variable" as var;
 
-.fixMainSizeRight {
-  width: 60%;
-}
-
 .fixMainSizeleft {
-  width: 40%;
-}
-.swiperWrapergap :global {
-  .swiper-wrapper {
-    gap: 0px;
-    margin-top: 15px;
-  }
-}
-
-.gridPartShowDetail{
-  
+  width: 100%;
 }
 
 .posterIcon {
@@ -73,7 +59,6 @@
   align-items: center;
   cursor: pointer;
   position: relative;
-  
 }
 
 .SizezInput {
@@ -94,33 +79,62 @@
   border-radius: 4px;
   padding: 9px 15px;
 }
-.fixStyleSizeImgRe{
+.fixStyleSizeImgRe {
   width: 100px;
   height: 80px;
   border-radius: 5px;
 }
 
+@media (min-width: 980px) {
+  .fixMainContentResponsive {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .responsiveMainLeft {
+    width: 20%;
+  }
+  .responsiveMainRight {
+    width: 80%;
+  }
+  .swiperWrapergap :global {
+    height: 400px;
+    .swiper-wrapper {
+      gap: 10px;
+    }
+    .swiper-slide {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      height: 80px !important;
+    }
+  }
+  .buttonNextStyle, .buttonPrevStyle {
+    display: none; // Hide by default
+  }
+  .innerStyleDivForMain {
+    width: 80%;
+    
+  }
+}
+
 @media (max-width: 980px) {
-  .fixMainPlace {
-    flex-direction: column !important;
-  }
-  .fixMainSizeRight {
-    width: 100%;
-  }
-  .fixMainSizeleft {
-    width: 100%;
-  }
-  .resetJustifyInresponsiveFix{
+  .resetJustifyInresponsiveFix {
     justify-content: unset !important;
   }
-  .justAddMarginRespon{
+  .justAddMarginRespon {
     margin-left: 25px;
   }
- 
+  .swiperWrapergap :global {
+    .swiper-wrapper {
+      gap: 0px;
+      margin-top: 15px;
+    }
+  }
 }
 
 @media (max-width: 570px) {
-  .fixStyleSizeImgRe{
+  .fixStyleSizeImgRe {
     width: 70px !important;
     height: 60px !important;
   }

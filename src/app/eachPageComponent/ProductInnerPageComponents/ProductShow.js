@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "../../Styles/ProductPage/innerProductPage/DynamicProductShow.module.scss";
 import { Card, CardMedia, Box } from "@mui/material";
 import Link from "next/link";
@@ -27,10 +27,6 @@ export default function ProductShow({ productData }) {
     setSelectedColor(color);
   };
 
-  // const handleSizeChange = (size) => {
-  //   setSelectedSize(size);
-  // };
-
   // Function to handle the click event on thumbnails
   const handleThumbnailClick = (index) => {
     setCurrentMediaIndex(index);
@@ -44,9 +40,9 @@ export default function ProductShow({ productData }) {
 
   return (
     <div className="container">
-      <div className={`${style.fixMainPlace} d-flex flex-row mt-3 gap-3`}>
-        <div className={`${style.fixMainSizeRight} d-flex flex-column`}>
-          <div>
+      <div className={` d-flex flex-column mt-3 gap-3`}>
+        <div className={`${style.fixMainContentResponsive}`}>
+          <div className={style.responsiveMainRight}>
             <Card className="position-relative">
               {data.imgData[currentMediaIndex].type === "2" ? (
                 <CardMedia
@@ -55,7 +51,7 @@ export default function ProductShow({ productData }) {
                   // poster={data[currentMediaIndex].poster}
                   sx={{ borderRadius: "4px" }}
                   controls
-                  // ref={videoRef}
+                  loading="lazy"
                 />
               ) : (
                 <CardMedia
@@ -63,38 +59,29 @@ export default function ProductShow({ productData }) {
                   src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${data.imgData[currentMediaIndex].src}`}
                   sx={{ borderRadius: "4px" }}
                   style={{ maxHeight: "395px" }}
+                  loading="lazy"
                 />
               )}
-
-              {/* {!videoEnded && (
-            <>
-              <Box
-                className={`${style.posterIcon} d-none d-lg-block d-xl-block`}
-                component="img"
-                alt="image."
-                src="/HomeImages/Video icon.png"
-              />
-              <Box
-                className={`${style.posterIconArrow} d-none d-lg-block d-xl-block`}
-                component="img"
-                sx={{
-                  width: "60px",
-                  height: "25px",
-                  objectFit: "cover",
-                  aspectRatio: 1.48,
-                }}
-                alt="image."
-                src="/HomeImages/Video icon arrow.png"
-              />
-            </>
-          )} */}
             </Card>
           </div>
 
-          <div className={`position-relative d-flex justify-content-center`}>
+          <div
+            className={`position-relative d-flex justify-content-center ${style.responsiveMainLeft}`}
+          >
             <div className={`${style.innerStyleDivForMain}`}>
               <Swiper
                 loop={true}
+                observeParents={true}
+                observer={true}
+                observeSlideChildren={true}
+                breakpoints={{
+                  980: {
+                    direction: "vertical",
+                  },
+                  0: {
+                    direction: "horizontal",
+                  },
+                }}
                 slidesPerView={4}
                 navigation={{
                   nextEl: ".review-swiper-button-next2",
@@ -103,59 +90,60 @@ export default function ProductShow({ productData }) {
                 modules={[Navigation]}
                 className={`${style.swiperWrapergap} mySwiper`}
               >
-                <div className="d-flex mt-2">
-                  {data.imgData.map((media, index) => (
-                    <SwiperSlide key={index} className={`d-flex flex-column`}>
-                      <div
-                        onClick={() => handleThumbnailClick(index)}
-                        style={{
-                          cursor: "pointer",
-                        }}
-                      >
-                        {media.type === "2" ? (
-                          <div className="position-relative">
-                            <Box
-                              className={style.fixStyleSizeImgRe}
-                              component="img"
-                              // sx={{
-                              //   width: "100px",
-                              //   height: "80px",
-                              //   borderRadius: "5px",
-                              // }}
-                              src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.poster}`}
-                            />
-
-                            <div className={`${style.posterIcon}`}>
-                              <svg
-                                width={25}
-                                height={24}
-                                viewBox="0 0 25 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M4.5 12.0004V8.44038C4.5 4.02038 7.63 2.21038 11.46 4.42038L14.55 6.20038L17.64 7.98038C21.47 10.1904 21.47 13.8104 17.64 16.0204L14.55 17.8004L11.46 19.5804C7.63 21.7904 4.5 19.9804 4.5 15.5604V12.0004Z"
-                                  stroke="#333333"
-                                  strokeWidth="1.5"
-                                  strokeMiterlimit={10}
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            </div>
-                          </div>
-                        ) : (
+                {data.imgData.map((media, index) => (
+                  <SwiperSlide
+                    key={index}
+                    className={`d-flex flex-column align-items-center justify-content-center`}
+                  >
+                    <div
+                      onClick={() => handleThumbnailClick(index)}
+                      style={{
+                        cursor: "pointer",
+                      }}
+                    >
+                      {media.type === "2" ? (
+                        <div className="position-relative">
                           <Box
                             className={style.fixStyleSizeImgRe}
                             component="img"
-                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.src}`}
-                            alt={`Thumbnail ${index}`}
+                            // sx={{
+                            //   width: "100px",
+                            //   height: "80px",
+                            //   borderRadius: "5px",
+                            // }}
+                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.poster}`}
                           />
-                        )}
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </div>
+
+                          <div className={`${style.posterIcon}`}>
+                            <svg
+                              width={25}
+                              height={24}
+                              viewBox="0 0 25 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M4.5 12.0004V8.44038C4.5 4.02038 7.63 2.21038 11.46 4.42038L14.55 6.20038L17.64 7.98038C21.47 10.1904 21.47 13.8104 17.64 16.0204L14.55 17.8004L11.46 19.5804C7.63 21.7904 4.5 19.9804 4.5 15.5604V12.0004Z"
+                                stroke="#333333"
+                                strokeWidth="1.5"
+                                strokeMiterlimit={10}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      ) : (
+                        <Box
+                          className={style.fixStyleSizeImgRe}
+                          component="img"
+                          src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.src}`}
+                          alt={`Thumbnail ${index}`}
+                        />
+                      )}
+                    </div>
+                  </SwiperSlide>
+                ))}
               </Swiper>
               <div className={style.buttonNextStyle}>
                 <button
@@ -284,10 +272,10 @@ export default function ProductShow({ productData }) {
           <div className="mt-2">
             <p className="title">{data.title}</p>
           </div>
-          <div className="mt-3">
+          <div className="mt-2">
             <p>{data.subtitle}</p>
           </div>
-          <div className="mt-3">
+          <div className="mt-2">
             <div className={`${style.gridPartShowDetail} mt-2`}>
               {data.sections.map((item, index) =>
                 item?.type == "image" ? (
@@ -335,8 +323,6 @@ export default function ProductShow({ productData }) {
                         >
                           {size?.name}
                         </div>
-
-
                       ))}
                     </div>
                   </div>
