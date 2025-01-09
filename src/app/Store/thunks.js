@@ -17,7 +17,6 @@ export const login = createAsyncThunk(
       );
       const token = response.data.token;
 
-
       const response2 = await axios.post(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/users`,
         { username },
@@ -29,7 +28,6 @@ export const login = createAsyncThunk(
       );
 
       console.log(response2);
-      
 
       return {
         token,
@@ -37,7 +35,7 @@ export const login = createAsyncThunk(
         lastName: response2.data[0].lastName,
         phoneNumber: response2.data[0].username,
         code: response2.data[0].code,
-        email : response2.data[0].email,
+        email: response2.data[0].email,
         gender: response2.data[0].gender,
       };
     } catch (error) {
@@ -54,11 +52,7 @@ export const login = createAsyncThunk(
 
 export const editUser = createAsyncThunk(
   "auth/editUser",
-  async (
-    { code, firstName, lastName, gender, email , active },
-    thunkAPI
-  ) => {
-    
+  async ({ code, firstName, lastName, gender, email, active }, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token.token;
 
@@ -89,7 +83,6 @@ export const editUser = createAsyncThunk(
     }
   }
 );
-
 
 export const signUp = createAsyncThunk(
   "auth/signUp",
@@ -281,6 +274,28 @@ export const list = createAsyncThunk("product/list", async (thunkAPI) => {
   }
 });
 
+export const ProductGetByCode = createAsyncThunk(
+  "product/ProductGetByCode",
+  async (code, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/${code}`
+      );
+      const data = response.data;
+
+      return data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue("ارور سمت من");
+      } else {
+        return thunkAPI.rejectWithValue(
+          "مشکلی به وجود امده لطفا بعدا تلاش کنید"
+        );
+      }
+    }
+  }
+);
+
 // end product
 
 // start HomePage Video
@@ -417,7 +432,8 @@ export const sendNewMessage = createAsyncThunk(
       const response = await axios.patch(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/chat/${code}`,
         {
-          chat : newMessageSend},
+          chat: newMessageSend,
+        },
         {
           headers: {
             Authorization: token ? `Bearer ${token.token}` : "",
@@ -624,15 +640,12 @@ export const increaseStep = createAsyncThunk(
   }
 );
 
-
 export const deleteOrder = createAsyncThunk(
   "order/deleteOrder",
   async ({ code }, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token.token;
     try {
-      
-
       const secondResponse = await axios.patch(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/order/status/${code}/5`,
         {},
@@ -656,7 +669,7 @@ export const deleteOrder = createAsyncThunk(
       const secondDataCome = secondResponse.data;
 
       return {
-        firstData : data,
+        firstData: data,
         secondData: secondDataCome,
       };
     } catch (error) {

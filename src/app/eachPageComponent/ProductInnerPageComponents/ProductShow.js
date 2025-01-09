@@ -33,9 +33,25 @@ export default function ProductShow({ productData }) {
   };
 
   // store the url
-  const storeLastVisitedPage = () => {
+  const storeSessionData = (prodCode) => {
     const lastPage = window.location.pathname;
     sessionStorage.setItem("lastPage", lastPage);
+
+    const prodCodeInsideSession = sessionStorage.getItem("PRODCODE");
+    if (!prodCodeInsideSession) {
+      sessionStorage.setItem("PRODCODE", prodCode);
+    } else {
+      const prodCodeInsideSession = sessionStorage.getItem("PRODCODE");
+
+      const separatedData = prodCodeInsideSession.split(',');
+
+      if (!separatedData.includes(prodCode)) {
+        sessionStorage.setItem(
+          "PRODCODE",
+          prodCodeInsideSession + "," + prodCode
+        );
+      }
+    }
   };
 
   return (
@@ -335,7 +351,9 @@ export default function ProductShow({ productData }) {
             >
               <div className={style.justAddMarginRespon}>
                 <Link
-                  onClick={storeLastVisitedPage}
+                  onClick={() => {
+                    storeSessionData(productData.code);
+                  }}
                   href={
                     comeToken
                       ? `/Profile?type=makeOrder&name=${productData.name}&code=${productData.code}`
