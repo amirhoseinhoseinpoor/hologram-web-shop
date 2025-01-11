@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-
-// import redux
 import { useDispatch } from "react-redux";
 import { sendFirstStep, ProductGetByCode } from "@/app/Store/thunks";
-
 import style from "../../../Styles/Profile/MakeOrderStyle/StepOneStyle.module.scss";
 import ErrorModal from "@/app/BaseComponent/ErrorModal";
 
@@ -24,10 +21,10 @@ export default function SteponeComponent({
   const [selectedShape, setSelectedShape] = useState("");
   const [serialtype, setSerialtype] = useState(false);
   const [disablenextStep, setDisableNextStep] = useState(true);
+  const [disableremoveproduct, setDisableremoveproduct] = useState(false);
   const [statusTraking, setStatusTraking] = useState(false);
   const [moveForward, setMoveForward] = useState(false);
   const [prodFiled, setProdFiled] = useState([]);
-  console.log(prodFiled);
 
   const [formData, setFormData] = useState({
     feature: "",
@@ -45,28 +42,69 @@ export default function SteponeComponent({
     prodCode: code || "",
   });
 
+  // Initialize dynamicForm as an object where each key is the product code
+  const [dynamicForm, setDynamicForm] = useState({});
+
+  const [hasDynamicFields, setHasDynamicFields] = useState(false);
+
   useEffect(() => {
     if (step > 1) {
       setMoveForward(true);
     }
   }, [step]);
 
-  // modal state
   const [openModal3, setOpenModal3] = useState(false);
-  // Close modal
   const closeModal3 = () => setOpenModal3(false);
 
   useEffect(() => {
     if (data) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        ...data,
-      }));
-      setSelectedSize(data.selectedSize || "");
-      setSelectedShape(data.selectedShape || "");
-      setSerialtype(data.serialtype || false);
-      setDisabelInput(true);
-      setStatusTraking(true);
+      if (Array.isArray(data)) {
+        // Order has dynamic fields
+        setHasDynamicFields(true);
+        setDisabelInput(true);
+        setDisableremoveproduct(true);
+        setStatusTraking(true);
+
+        // Populate prodFiled with products from data
+        setProdFiled(
+          data.map((prod) => ({
+            code: prod.code,
+            name: prod.name,
+            filedOrder: prod.filedOrder?.map((field) => ({
+              name: field.name,
+              type: field.type,
+              dropDownOP:
+                field.type === "dropDown" ? field.dropDownOP : undefined,
+            })),
+          }))
+        );
+
+        // Populate dynamicForm with existing dynamic field values
+        const initialDynamicForm = {};
+        data.forEach((prod) => {
+          initialDynamicForm[prod.code] = {};
+          prod.filedOrder.forEach((field) => {
+            initialDynamicForm[prod.code][field.name] = field.value;
+          });
+        });
+        setDynamicForm(initialDynamicForm);
+      } else if (typeof data === "object" && data !== null) {
+        // Order has only static fields
+        setHasDynamicFields(false);
+        setDisabelInput(true);
+        setDisableremoveproduct(true);
+        setStatusTraking(true);
+
+        // Populate static form data
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...data,
+        }));
+
+        setSelectedSize(data.selectedSize || "");
+        setSelectedShape(data.selectedShape || "");
+        setSerialtype(data.serialtype || false);
+      }
     }
   }, [data, setDisabelInput]);
 
@@ -78,57 +116,118 @@ export default function SteponeComponent({
   const handleSizeChange = (size) => {
     setSelectedSize(size);
     setFormData((prev) => ({ ...prev, selectedSize: size }));
-    checkAllFieldsFilled();
   };
 
   const handleShapeChange = (shape) => {
     setSelectedShape(shape);
     setFormData((prev) => ({ ...prev, selectedShape: shape }));
-    checkAllFieldsFilled();
   };
 
   const handleRadioChange = (event) => {
     const value = event.target.value === "true";
     setSerialtype(value);
     setFormData((prev) => ({ ...prev, serialtype: value }));
-    checkAllFieldsFilled();
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    checkAllFieldsFilled();
+  };
+
+  // Updated to use product code as key
+  const handleInputDynamicChange = (code, event) => {
+    const { name, value } = event.target;
+    setDynamicForm((prev) => ({
+      ...prev,
+      [code]: {
+        ...prev[code],
+        [name]: value,
+      },
+    }));
   };
 
   const checkAllFieldsFilled = () => {
-    const isFilled =
-      formData.selectedSize !== "" &&
-      formData.feature !== "" &&
-      formData.color !== "" &&
-      formData.stick !== "" &&
-      formData.howItWork !== "" &&
-      formData.chosenEffect !== "" &&
-      formData.selectedShape !== "";
+    if (hasDynamicFields && prodFiled.length > 0) {
+      const dynamicFilled = prodFiled.every((prod) =>
+        prod.filedOrder.every(
+          (field) =>
+            dynamicForm[prod.code] &&
+            dynamicForm[prod.code][field.name]?.trim() !== ""
+        )
+      );
+      setDisableNextStep(!dynamicFilled);
+    } else {
+      const isFilled =
+        formData.selectedSize.trim() !== "" &&
+        formData.feature.trim() !== "" &&
+        formData.color.trim() !== "" &&
+        formData.stick.trim() !== "" &&
+        formData.howItWork.trim() !== "" &&
+        formData.chosenEffect.trim() !== "" &&
+        formData.selectedShape.trim() !== "";
 
-    setDisableNextStep(!isFilled);
+      setDisableNextStep(!isFilled);
+    }
+  };
+
+  useEffect(() => {
+    checkAllFieldsFilled();
+  }, [formData, dynamicForm, hasDynamicFields, prodFiled]);
+
+  const handleRemoveProduct = (index, code) => {
+    if (disableremoveproduct) return; // Prevent removal if disabled
+
+    const getCodeProduct = sessionStorage.getItem("PRODCODE");
+    const PGetCodeProduct = getCodeProduct ? getCodeProduct.split(",") : [];
+    if (PGetCodeProduct.length > 0) {
+      const updatedCodes = PGetCodeProduct.filter((item) => item !== code);
+      sessionStorage.setItem("PRODCODE", updatedCodes.join(","));
+    }
+
+    setProdFiled(prodFiled.filter((_, i) => i !== index));
+
+    setDynamicForm((prev) => {
+      const updated = { ...prev };
+      delete updated[code];
+      return updated;
+    });
+
+    setDisableNextStep(true);
   };
 
   const handleSubmit = async () => {
     setDisableNextStep(true);
     try {
-      const updatedData = { request: { ...formData } };
+      let dataToSend = {};
 
-      const resultAction = await dispatch(sendFirstStep(updatedData));
+      if (hasDynamicFields && prodFiled.length > 0) {
+        // Construct products data with name, code, and dynamic fields including type and options
+        const productsData = prodFiled.map((prod) => ({
+          name: prod.name,
+          code: prod.code,
+          filedOrder: prod.filedOrder.map((field) => ({
+            name: field.name,
+            type: field.type,
+            dropDownOP:
+              field.type === "dropDown" ? field.dropDownOP : undefined,
+            value: dynamicForm[prod.code]?.[field.name] || "",
+          })),
+        }));
+
+        dataToSend = { request: productsData };
+      } else {
+        // Only static form data
+        dataToSend = { request: { ...formData } };
+      }
+
+      const resultAction = await dispatch(sendFirstStep(dataToSend));
 
       if (sendFirstStep.fulfilled.match(resultAction)) {
-        console.log("Success:", resultAction.payload);
         setStatusTraking(true);
       } else {
-        console.error("Error:", resultAction.payload);
         alert(resultAction.payload);
       }
     } catch (error) {
-      console.error("Error:", error);
       setOpenModal3(true);
     }
   };
@@ -136,6 +235,8 @@ export default function SteponeComponent({
   const fetchRef = useRef(false);
 
   useEffect(() => {
+    if (data) return; // Skip fetching if data is present
+
     if (fetchRef.current) return;
     fetchRef.current = true;
 
@@ -144,83 +245,165 @@ export default function SteponeComponent({
 
     if (PGetCodeProduct.length > 0) {
       PGetCodeProduct.forEach(async (item) => {
-        console.log(item);
-
         try {
           const getApiResponse = await dispatch(
             ProductGetByCode(item)
           ).unwrap();
 
           if (getApiResponse?.filedOrder) {
-            // Include the name with the filedOrder
             setProdFiled((prev) => [
               ...prev,
               {
-                name: getApiResponse?.name || "Unknown Name",
-                filedOrder: getApiResponse.filedOrder,
+                code: getApiResponse.code || "Unknown code",
+                name: getApiResponse.name || "Unknown Name",
+                filedOrder: getApiResponse.filedOrder.map((field) => ({
+                  name: field.name,
+                  type: field.type,
+                  dropDownOP:
+                    field.type === "dropDown" ? field.dropDownOP : undefined,
+                })),
               },
             ]);
+
+            const initialFields = {};
+            getApiResponse?.filedOrder.forEach((field) => {
+              initialFields[field.name] = "";
+            });
+
+            // Initialize dynamicForm for this product using its code
+            setDynamicForm((prev) => ({
+              ...prev,
+              [getApiResponse.code]: initialFields,
+            }));
+
+            // Since a new product is added, set hasDynamicFields to true
+            setHasDynamicFields(true);
           }
         } catch (error) {
           console.error("Error fetching product by code:", error);
         }
       });
     }
-  }, [dispatch]);
+  }, [dispatch, data]);
+
+  // Initialize dynamicForm fields when prodFiled updates (only for new orders)
+  useEffect(() => {
+    if (data) return; // Skip if data is present
+
+    prodFiled.forEach((prod) => {
+      if (!dynamicForm[prod.code]) {
+        const initialFields = {};
+        prod.filedOrder.forEach((field) => {
+          initialFields[field.name] = "";
+        });
+        setDynamicForm((prev) => ({
+          ...prev,
+          [prod.code]: initialFields,
+        }));
+      }
+    });
+  }, [prodFiled, dynamicForm, data]);
 
   return (
     <>
-      {prodFiled && prodFiled?.length > 0 ? (
+      {hasDynamicFields && prodFiled.length > 0 ? (
         <div>
           {prodFiled.map((inProd, index) => (
-            <div key={index}>
-              <p>{inProd?.name}</p>
+            <div key={inProd.code}>
+              {/* Product Header */}
+              <div className="d-flex flex-row align-items-center justify-content-between">
+                <p className="VodeoDisSizing mb-2 mt-2 ">{inProd.name}</p>
+                <button
+                  type="button"
+                  disabled={disableremoveproduct}
+                  onClick={() => handleRemoveProduct(index, inProd.code)}
+                  className={`${style.ButtonRemoveProduct}`}
+                >
+                  حذف
+                </button>
+              </div>
 
-              {inProd?.filedOrder?.map((item, index) => (
-                <div key={index}>
-                  {item?.type == "text" && (
-                    <div className="d-flex flex-column">
-                      <label
-                        htmlFor={`text-${index}`}
-                        className="mt-1 mb-1 discription d-flex flex-row gap-2 align-items-center"
-                      >
-                        <span>{item?.name}</span>
-                        <span className={style.redStarStyle}>*</span>
-                      </label>
-                      <input
-                        type="text"
-                        className={`${style.formInputNumber} form-control discription`}
-                        id={`text-${index}`}
-                        name="feature"
-                        value={formData.feature}
-                        
-                        onChange={handleInputChange}
-                        disabled={disabelInput}
-                        required
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
+              {/* Dynamic Fields */}
+              <div className={`${style.stepOneDynamicInput}`}>
+                {inProd.filedOrder.map((item, idx) => (
+                  <div key={idx}>
+                    {item.type === "text" && (
+                      <div className="d-flex flex-column mt-1 mb-1">
+                        <label
+                          htmlFor={`text-${inProd.code}-${idx}`}
+                          className="mt-1 mb-1 description d-flex flex-row gap-2 align-items-center"
+                        >
+                          <span className="NormalTextSizing">{item.name}</span>
+                          <span className={`${style.redStarStyle} NormalTextSizing`}>*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className={`${style.formInputNumber} form-control description`}
+                          id={`text-${inProd.code}-${idx}`}
+                          name={item.name}
+                          value={dynamicForm[inProd.code]?.[item.name] || ""}
+                          onChange={(e) =>
+                            handleInputDynamicChange(inProd.code, e)
+                          }
+                          disabled={disabelInput}
+                          required
+                        />
+                      </div>
+                    )}
+                    {item.type === "dropDown" && (
+                      <div className="d-flex flex-column mt-1 mb-1">
+                        <label
+                          htmlFor={`dropDown-${inProd.code}-${idx}`}
+                          className="mt-1 mb-1 description d-flex flex-row gap-2 align-items-center"
+                        >
+                          <span className="NormalTextSizing">{item.name}</span>
+                          <span className={`${style.redStarStyle} NormalTextSizing`}>*</span>
+                        </label>
+                        <select
+                          id={`dropDown-${inProd.code}-${idx}`}
+                          name={item.name}
+                          value={dynamicForm[inProd.code]?.[item.name] || ""}
+                          onChange={(e) =>
+                            handleInputDynamicChange(inProd.code, e)
+                          }
+                          disabled={disabelInput}
+                          required
+                          className={`${style.formInputNumber} form-control description`}
+                        >
+                          <option value="" disabled>
+                            انتخاب کنید
+                          </option>
+                          {item?.dropDownOP?.map((POP, popIdx) => (
+                            <option key={popIdx} value={POP}>
+                              {POP}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
       ) : (
         <>
+          {/* Static Fields Rendering */}
           <div className={`${style.adjustPhoneSize} d-flex flex-row gap-4`}>
             <div className={`${style.adjustWidthRight} d-flex flex-column `}>
               <div className="d-flex flex-column">
                 <div className="d-flex flex-column">
                   <label
                     htmlFor="feature"
-                    className="mt-1 mb-1 discription d-flex flex-row gap-2 align-items-center"
+                    className="mt-1 mb-1 description d-flex flex-row gap-2 align-items-center"
                   >
                     <span>تعداد یا تیراژ</span>
                     <span className={style.redStarStyle}>*</span>
                   </label>
                   <input
                     type="text"
-                    className={`${style.formInputNumber} form-control discription`}
+                    className={`${style.formInputNumber} form-control description`}
                     id="feature"
                     name="feature"
                     value={formData.feature}
@@ -230,7 +413,7 @@ export default function SteponeComponent({
                     required
                   />
                 </div>
-                <h3 className="mb-3 mt-3 discription d-flex flex-row gap-2 align-items-center">
+                <h3 className="mb-3 mt-3 description d-flex flex-row gap-2 align-items-center">
                   <span>سایز</span>
                   <span className={style.redStarStyle}>*</span>
                 </h3>
@@ -256,14 +439,14 @@ export default function SteponeComponent({
                 <div className="d-flex flex-column">
                   <label
                     htmlFor="color"
-                    className="mt-3 mb-1 discription d-flex flex-row gap-2 align-items-center"
+                    className="mt-3 mb-1 description d-flex flex-row gap-2 align-items-center"
                   >
                     <span>رنگ</span>
                     <span className={style.redStarStyle}>*</span>
                   </label>
                   <input
                     type="text"
-                    className={`${style.formInputNumber} form-control discription`}
+                    className={`${style.formInputNumber} form-control description`}
                     id="color"
                     name="color"
                     value={formData.color}
@@ -275,37 +458,39 @@ export default function SteponeComponent({
                 <div className="d-flex flex-column">
                   <label
                     htmlFor="stick"
-                    className="mt-2 mb-2 discription d-flex flex-row gap-2 align-items-center"
+                    className="mt-2 mb-2 description d-flex flex-row gap-2 align-items-center"
                   >
                     <span>قالب برچسب</span>
                     <span className={style.redStarStyle}>*</span>
                   </label>
                   <input
                     type="text"
-                    className={`${style.formInputNumber} form-control discription`}
+                    className={`${style.formInputNumber} form-control description`}
                     id="stick"
                     name="stick"
                     value={formData.stick}
                     onChange={handleInputChange}
                     disabled={disabelInput}
+                    required
                   />
                 </div>
                 <div className="d-flex flex-column">
                   <label
                     htmlFor="howItWork"
-                    className="mt-2 mb-2 discription d-flex flex-row gap-2 align-items-center"
+                    className="mt-2 mb-2 description d-flex flex-row gap-2 align-items-center"
                   >
                     <span>نوع اثرگذاری</span>
                     <span className={style.redStarStyle}>*</span>
                   </label>
                   <input
                     type="text"
-                    className={`${style.formInputNumber} form-control discription`}
+                    className={`${style.formInputNumber} form-control description`}
                     id="howItWork"
                     name="howItWork"
                     value={formData.howItWork}
                     onChange={handleInputChange}
                     disabled={disabelInput}
+                    required
                   />
                 </div>
               </div>
@@ -314,23 +499,24 @@ export default function SteponeComponent({
               <div className="d-flex flex-column">
                 <label
                   htmlFor="chosenEffect"
-                  className="mt-1 mb-1 discription d-flex flex-row gap-2 align-items-center"
+                  className="mt-1 mb-1 description d-flex flex-row gap-2 align-items-center"
                 >
                   <span>افکت مورد نظر</span>
                   <span className={style.redStarStyle}>*</span>
                 </label>
                 <input
                   type="text"
-                  className={`${style.formInputNumber} form-control discription`}
+                  className={`${style.formInputNumber} form-control description`}
                   id="chosenEffect"
                   name="chosenEffect"
                   value={formData.chosenEffect}
                   disabled={disabelInput}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
 
-              <h3 className="mb-3 mt-3 discription d-flex flex-row gap-2 align-items-center">
+              <h3 className="mb-3 mt-3 description d-flex flex-row gap-2 align-items-center">
                 <span>شکل هولوگرام</span>
                 <span className={style.redStarStyle}>*</span>
               </h3>
@@ -382,21 +568,22 @@ export default function SteponeComponent({
               <div className="d-flex flex-column">
                 <label
                   htmlFor="useCase"
-                  className="mt-3 mb-1 discription d-flex flex-row gap-2 align-items-center"
+                  className="mt-3 mb-1 description d-flex flex-row gap-2 align-items-center"
                 >
                   <span>موارد مصرف</span>
                   <span className={style.redStarStyle}>*</span>
                 </label>
                 <input
                   type="text"
-                  className={`${style.formInputNumber} form-control discription`}
+                  className={`${style.formInputNumber} form-control description`}
                   id="useCase"
                   name="useCase"
                   value={formData.useCase}
                   disabled={disabelInput}
                   onChange={handleInputChange}
+                  required
                 />
-                <p className={`${style.discriptionStyle} discription`}>
+                <p className={`${style.descriptionStyle} description`}>
                   سطحی که قرار است روی ان چسبیده شود (پلاستیک . کاغذ)
                 </p>
               </div>
@@ -424,40 +611,40 @@ export default function SteponeComponent({
                 />
                 <label htmlFor="withSerial">باسریال</label>
               </div>
-              <div className="mt-1 mb-1">
-                {serialtype && (
-                  <div className="d-flex flex-column">
-                    <label htmlFor="serial" className=" mb-1 discription">
-                      نوع سریال
-                    </label>
-                    <input
-                      type="text"
-                      className={`${style.formInputNumber} form-control discription`}
-                      id="serial"
-                      name="serial"
-                      value={formData.serial}
-                      onChange={handleInputChange}
-                      disabled={disabelInput}
-                    />
-                  </div>
-                )}
-              </div>
+              {serialtype && (
+                <div className="d-flex flex-column mt-1 mb-1">
+                  <label htmlFor="serial" className=" mb-1 description">
+                    نوع سریال
+                  </label>
+                  <input
+                    type="text"
+                    className={`${style.formInputNumber} form-control description`}
+                    id="serial"
+                    name="serial"
+                    value={formData.serial}
+                    onChange={handleInputChange}
+                    disabled={disabelInput}
+                    required
+                  />
+                </div>
+              )}
               <div className="d-flex flex-column">
                 <label
                   htmlFor="information"
-                  className=" mb-1 discription d-flex flex-row gap-2 align-items-center"
+                  className=" mb-1 description d-flex flex-row gap-2 align-items-center"
                 >
                   <span>توضیحات</span>
                   <span className={style.redStarStyle}>*</span>
                 </label>
                 <textarea
-                  className={`${style.formInputNumber} form-control discription`}
+                  className={`${style.formInputNumber} form-control description`}
                   id="information"
                   name="information"
                   value={formData.information}
                   style={{ maxHeight: "200px" }}
                   onChange={handleInputChange}
                   disabled={disabelInput}
+                  required
                 />
               </div>
             </div>
@@ -465,17 +652,19 @@ export default function SteponeComponent({
         </>
       )}
 
+      {/* Status Message */}
       {!statusTraking ? (
-        <h4 className="VodeoDisSizing mt-3 mb-3">
+        <h4 className="VideoDisSizing mt-3 mb-3">
           پس از ثبت درخواست شما برسی و توسط کارشناسان ما با شما تماس حاصل میشود
         </h4>
       ) : (
-        <h4 className="VodeoDisSizing mt-3 mb-3">
+        <h4 className="VideoDisSizing mt-3 mb-3">
           درخواست شما با موفقیت ثبت شد کارشناسان ما در اولین فرصت با شما تماس
           میگیرند
         </h4>
       )}
 
+      {/* Contact Info */}
       <div className="d-flex flex-row align-items-center gap-2 mt-1 mb-1">
         <span className={`${style.numberColorForcall} NormalTextSizing`}>
           ۰۲۱-۶۶۹۷۱۴۰۲-۵
@@ -501,10 +690,14 @@ export default function SteponeComponent({
         <button
           type="button"
           onClick={handleDisabelInput}
-          disabled={disablenextStep}
+          disabled={disablenextStep || disableremoveproduct}
           style={{
-            cursor: disablenextStep ? "not-allowed" : "pointer",
-            backgroundColor: disablenextStep ? "#868686" : undefined,
+            cursor:
+              disablenextStep || disableremoveproduct
+                ? "not-allowed"
+                : "pointer",
+            backgroundColor:
+              disablenextStep || disableremoveproduct ? "#868686" : undefined,
           }}
           className={`${style.continueButton} mt-3 mb-2`}
         >
@@ -521,7 +714,7 @@ export default function SteponeComponent({
         )}
       </div>
 
-      {/* modals */}
+      {/* Error Modal */}
       <ErrorModal
         open={openModal3}
         onClose={closeModal3}

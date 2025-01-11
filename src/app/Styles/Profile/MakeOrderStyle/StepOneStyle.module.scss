@@ -27,6 +27,14 @@
   }
 }
 
+.ButtonRemoveProduct{
+  border: 1px solid #ff4f3f;
+  border-radius: 4px;
+  padding: 3px 10px;
+  color: #ff4f3f;
+  background-color: unset;
+}
+
 .redStarStyle{
   color: #ff4f3f;
 }
@@ -202,6 +210,12 @@
   padding: 7px 29px;
 }
 
+.stepOneDynamicInput{
+  display: grid;
+  grid-template-columns: repeat(2 , 1fr);
+  grid-gap: 10px;
+}
+
 @media (max-width: 980px) {
   .effectMainDivStyle {
     grid-template-columns: repeat(2, 1fr);
@@ -239,5 +253,9 @@
   .adjustPhoneSize{
     flex-direction: column !important;
     gap: 5px !important;
+  }
+  .stepOneDynamicInput{
+    grid-template-columns: repeat(1 , 1fr);
+    grid-gap: 7px;
   }
 }
