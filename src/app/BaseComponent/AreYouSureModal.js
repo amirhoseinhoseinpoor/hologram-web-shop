@@ -1,5 +1,6 @@
 import { Modal, Box, Button as MUIButton, Typography } from "@mui/material";
 import styled, { keyframes } from "styled-components";
+import LoadingCss from "./LoadingCss";
 
 const TYPOGRAPHY = styled(Typography)`
   font-family: unset !important;
@@ -116,7 +117,13 @@ const WarningDot = styled.span`
   animation: ${pulseWarningIns} 0.75s infinite alternate;
 `;
 
-export default function AreYouShureModal({ open, onClose, text, func }) {
+export default function AreYouShureModal({
+  open,
+  onClose,
+  text,
+  func,
+  loading = false,
+}) {
   return (
     <section>
       <Modal
@@ -139,6 +146,7 @@ export default function AreYouShureModal({ open, onClose, text, func }) {
               <MUIButton
                 variant="contained"
                 onClick={onClose}
+                color="error"
                 style={{
                   marginLeft: "10px",
                   fontFamily: "unset",
@@ -148,12 +156,21 @@ export default function AreYouShureModal({ open, onClose, text, func }) {
                 لغو
               </MUIButton>
               <MUIButton
-                style={{ fontFamily: "unset", marginTop: "20px" }}
+                style={{
+                  fontFamily: "unset",
+                  marginTop: "20px",
+                  backgroundColor: "#43A047",
+                }}
                 variant="contained"
-                color="error"
                 onClick={func}
               >
-                تایید
+                {loading ? (
+                  <>
+                    <LoadingCss />
+                  </>
+                ) : (
+                  <>تایید</>
+                )}
               </MUIButton>
             </div>
           </div>

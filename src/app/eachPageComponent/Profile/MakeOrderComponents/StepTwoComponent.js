@@ -18,6 +18,7 @@ import { sendingSecondStep } from "@/app/Store/thunks";
 import ErrorModal from "@/app/BaseComponent/ErrorModal";
 import ConfirmModal from "@/app/BaseComponent/ConfirmingModal";
 import ZoomModal from "@/app/BaseComponent/ZoomModal";
+import AreYouShureModal from "@/app/BaseComponent/AreYouSureModal";
 
 const ModalStyle = {
   position: "absolute",
@@ -43,13 +44,17 @@ export default function StepTwoComponent({
   setDisabelInputStep2,
   disabelInputStep2,
 }) {
-  var hasData = Object.keys(data).length > 0; 
+  var hasData = Object.keys(data).length > 0;
+
+  console.log(disabelInputStep2);
 
   const dispatch = useDispatch();
 
   const [value, setValue] = useState("خصوصی");
   const [paying, setPaying] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  console.log(uploadedFiles);
+
   const [logo, setLogo] = useState(null);
   const [FactorImage, setFactorImage] = useState(null);
   const [companyName, setCompanyName] = useState("");
@@ -57,9 +62,8 @@ export default function StepTwoComponent({
   const [statusTraking, setStatusTraking] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
   const [moveForward, setMoveForward] = useState(false);
-
-  // console.log(FactorImage);
-  
+  const [loadingDeleteOrder, setLoadingDeleteOrder] = useState(false);
+  const [newDisableInput, setNewDisableInput] = useState(false);
 
   useEffect(() => {
     if (step > 2) {
@@ -76,11 +80,19 @@ export default function StepTwoComponent({
     setZoomedImage(null);
   };
 
+  const [openmodal, setOpenmodal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
   const [openModal3, setOpenModal3] = useState(false);
+  const closeModal = () => setOpenmodal(false);
   const closeModal2 = () => setOpenModal2(false);
   const closeModal3 = () => setOpenModal3(false);
   const [disablenextStep, setDisableNextStep] = useState(true);
+  const [messageToDeleteIndex, setMessageToDeleteIndex] = useState(null);
+
+  const handleAreYouSureFunc = (code) => {
+    setOpenmodal(true);
+    setMessageToDeleteIndex(code);
+  };
 
   useEffect(() => {
     setIsButtonDisabled(paying === "" || paying === "آپلود فیش");
@@ -98,26 +110,27 @@ export default function StepTwoComponent({
       const fetchDocumentImages = async () => {
         if (data.preparedData && data.preparedData.length > 0) {
           const imageFetchPromises = data.preparedData.map(async (item) => {
-            // Fetch the image using the dispatch and await its resolution
             const fetchedImage = await dispatch(
               fetchPrivateImage({ filename: item.file })
             ).unwrap();
-
-            // Return an object combining the fetched image and the corresponding title
-            return { imageUrl: fetchedImage, title: item.title || "" }; // Assuming 'fetchedImage' corresponds to the filename
+  
+            return {
+              imageUrl: fetchedImage,
+              title: item.title || "",
+              file: item.file, // Ensure 'file' holds the file ID
+              isFixed: true,
+            };
           });
-
+  
           const fetchedDocuments = await Promise.all(imageFetchPromises);
-
-          // Set the uploaded files to the formatted structure
+  
           setUploadedFiles(fetchedDocuments);
         } else {
-          // Handle the case where there are no prepared images
-          setUploadedFiles([]); // or however else you'd like to initialize this
+          setUploadedFiles([]);
         }
       };
       fetchDocumentImages();
-
+  
       const fetchImage = async () => {
         if (data?.uploadLogo) {
           const gettingPrivatelogo = await dispatch(
@@ -129,7 +142,7 @@ export default function StepTwoComponent({
         }
       };
       fetchImage();
-
+  
       const fetchFactorImage = async () => {
         const gettingPrivateImageFactor = await dispatch(
           fetchPrivateImage({ filename: dataFactor.paymentImage })
@@ -137,7 +150,7 @@ export default function StepTwoComponent({
         setFactorImage({ imageUrl: gettingPrivateImageFactor || null });
       };
       fetchFactorImage();
-
+  
       setCompanyName(data.companyName || "");
       if (hasData) {
         setStatusTraking(true);
@@ -168,8 +181,9 @@ export default function StepTwoComponent({
       .filter((file) => validImageTypes.includes(file.type)) // Only accept PNG and JPG
       .map((file) => ({
         imageUrl: URL.createObjectURL(file),
-        file: file,
-        title: "", // initialize empty title
+        file: file, // New files have the File object
+        title: "",
+        isFixed: false, // New files are not fixed
       }));
 
     setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
@@ -189,7 +203,9 @@ export default function StepTwoComponent({
   };
 
   const handleDeleteImage = (index) => {
-    setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    if (!uploadedFiles[index].isFixed) {
+      setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    }
   };
 
   const handleTitleChange = (index, event) => {
@@ -216,6 +232,7 @@ export default function StepTwoComponent({
 
   const handleDelete = async (code) => {
     try {
+      setLoadingDeleteOrder(true);
       const fetchData = await dispatch(deleteOrder({ code })).unwrap();
       if (
         fetchData.firstData.statusCode == 200 &&
@@ -226,59 +243,84 @@ export default function StepTwoComponent({
       }
     } catch (error) {
       setOpenModal3(true);
+    } finally {
+      setLoadingDeleteOrder(false);
     }
   };
 
   useEffect(() => {
     if (!hasData) {
       checkAllFieldsFilled();
+    } else {
+      checkAllFieldsFilled();
     }
   }, [companyName, logo, value, uploadedFiles]);
 
   const checkAllFieldsFilled = () => {
+    const hasNewFiles = uploadedFiles.some((file) => !file.isFixed);
     const isFilled =
       companyName !== "" &&
       logo !== null &&
       uploadedFiles.length > 0 &&
-      value !== "";
+      value !== "" &&
+      hasNewFiles;
     setDisableNextStep(!isFilled);
   };
 
   const handleSubmit = async () => {
     setDisableNextStep(true);
     try {
-      const uploadLogo = await dispatch(
-        uploadFile({
-          file: logo.file,
-          tag: "لوگو کاربر",
-          type: 1,
-          isPublic: false,
-        })
-      ).unwrap();
-
+      let uploadLogo;
+      if (logo && logo.file) {
+        // Upload new logo if a new file is selected
+        uploadLogo = await dispatch(
+          uploadFile({
+            file: logo.file,
+            tag: "لوگو کاربر",
+            type: 1,
+            isPublic: false,
+          })
+        ).unwrap();
+      } else if (data?.uploadLogo) {
+        // Use existing logo ID if no new logo is uploaded
+        uploadLogo = data.uploadLogo;
+      } else {
+        // Handle case where no logo is present
+        throw new Error("لوگو الزامی است.");
+      }
+  
+      // Separate fixed and new files
+      const fixedFiles = uploadedFiles.filter((file) => file.isFixed);
+      const newFiles = uploadedFiles.filter((file) => !file.isFixed);
+  
+      // Upload new files
       const uploadDocumentimage = await Promise.all(
-        uploadedFiles.map(async (item) => {
-          let updated = { ...item };
-
-          const tag = "مدارک کاربر";
-          const type = 1;
-          const isPublic = false;
-          const file = item.file;
-
+        newFiles.map(async (item) => {
           const fileId = await dispatch(
-            uploadFile({ file, tag, type, isPublic })
+            uploadFile({
+              file: item.file,
+              tag: "مدارک کاربر",
+              type: 1,
+              isPublic: false,
+            })
           ).unwrap();
-
-          updated.file = fileId;
-
-          return updated;
+  
+          return {
+            file: fileId,
+            title: item.title,
+          };
         })
       );
-
-      const preparedData = uploadDocumentimage.map(
-        ({ imageUrl, ...rest }) => rest
-      );
-
+  
+      // Prepare existing fixed files
+      const existingPreparedData = fixedFiles.map((file) => ({
+        file: file.file, // existing file ID
+        title: file.title,
+      }));
+  
+      // Combine existing and new files
+      const preparedData = [...existingPreparedData, ...uploadDocumentimage];
+  
       const sendingFinalData = {
         uploadLogo,
         paying,
@@ -286,16 +328,26 @@ export default function StepTwoComponent({
         value,
         preparedData,
       };
-
+  
       const finalDataDispatch = await dispatch(
         sendingSecondStep({ code, sendingFinalData })
       ).unwrap();
-
-      if (finalDataDispatch.statusCode == 200) {
+  
+      if (finalDataDispatch.statusCode === 200) {
+        // **Replace local file objects with server file IDs and mark as fixed**
+        const updatedNewFiles = newFiles.map((file, idx) => ({
+          ...file,
+          file: uploadDocumentimage[idx].file, // Replace with server file ID
+          isFixed: true,
+        }));
+  
+        const allFiles = [...fixedFiles, ...updatedNewFiles];
+        setUploadedFiles(allFiles);
         setDisabelInputStep2(true);
         setStatusTraking(true);
       }
     } catch (error) {
+      console.error(error);
       setOpenModal3(true);
     }
   };
@@ -491,6 +543,7 @@ export default function StepTwoComponent({
                 <div>
                   <label
                     className={style.labelInsteadOfInput}
+                    style={{ cursor: "pointer" }}
                     htmlFor="fileUpload"
                   >
                     <div className="d-flex flex-column text-center p-1">
@@ -531,7 +584,7 @@ export default function StepTwoComponent({
                     accept={`${process.env.NEXT_PUBLIC_INPUT_IMAGE_FORMAT}`}
                     multiple
                     onChange={handleFileUpload}
-                    disabled={disabelInputStep2}
+                    // disabled={disabelInputStep2}
                   />
                 </div>
                 {uploadedFiles?.map((fileObj, index) => (
@@ -547,7 +600,8 @@ export default function StepTwoComponent({
                         alt={`uploaded ${index}`}
                         className={style.uploadedImage}
                       />
-                      {!disabelInputStep2 && (
+
+                      {!fileObj.isFixed && (
                         <button
                           onClick={() => handleDeleteImage(index)}
                           className={style.deleteButton}
@@ -600,7 +654,7 @@ export default function StepTwoComponent({
                       value={fileObj.title}
                       onChange={(e) => handleTitleChange(index, e)}
                       className={`${style.imageTitleInputForDocument} discription`}
-                      disabled={disabelInputStep2}
+                      disabled={fileObj.isFixed && disabelInputStep2}
                     />
                   </div>
                 ))}
@@ -646,12 +700,12 @@ export default function StepTwoComponent({
                   onClick={handleNextStep}
                   className={`${style.continueButton} mt-3`}
                 >
-                 مرحله بعدی
+                  مرحله بعدی
                 </button>
               ) : (
                 <button
                   type="button"
-                  onClick={() => handleDelete(code)}
+                  onClick={() => handleAreYouSureFunc(code)}
                   className={`${style.cancelOrder} mt-3`}
                 >
                   لغو سفارش
@@ -898,181 +952,24 @@ export default function StepTwoComponent({
             alt={zoomedImage.title || `uploaded image`}
           />
         )}
-
-        <ErrorModal
-          open={openModal3}
-          onClose={closeModal3}
-          text={"خطا لطفا بعدا دوباره تلاش فرمایید"}
-        />
-        <ConfirmModal
-          open={openModal2}
-          onClose={closeModal2}
-          text={"سفارش با موفقیت حذف شد"}
-        />
-
-        {/* <div
-          className={`${style.stepContent} ${style.resizingWebInResponsive}  ${style.newWebResizing}`}
-        >
-          <div className={`mt-2`}>
-            <div className="text-center mt-1 mb-3 fs-4">
-              <p>.لوگو</p>
-            </div>
-            <p
-              className={`${style.changingopacity} text-center VodeoDisSizing`}
-            >
-              پیش فاکتور
-            </p>
-            <div className="d-flex flex-column mt-2">
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex flex-row justify-content-between mt-3">
-                <div>
-                  <p>عنوان:</p>
-                </div>
-                <div>
-                  <span className="VodeoDisSizing">20.000.000.000</span>
-                  <span className="me-1 VodeoDisSizing">ریال</span>
-                </div>
-              </div>
-              <div className="d-flex justify-content-center mt-4">
-                <button
-                  type="button"
-                  className={`${style.downloadFactor} d-flex flex-row gap-2`}
-                  onClick={generatePDF}
-                >
-                  <svg
-                    width={21}
-                    height={20}
-                    viewBox="0 0 21 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M14.1997 7.41797C17.1997 7.6763 18.4247 9.21797 18.4247 12.593V12.7013C18.4247 16.4263 16.9331 17.918 13.2081 17.918H7.78307C4.05807 17.918 2.56641 16.4263 2.56641 12.7013V12.593C2.56641 9.24297 3.77474 7.7013 6.72474 7.4263"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M10.5 1.66797V12.4013"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M13.2913 10.543L10.4997 13.3346L7.70801 10.543"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  دانلود فاکتور
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
+      <ErrorModal
+        open={openModal3}
+        onClose={closeModal3}
+        text={"خطا لطفا بعدا دوباره تلاش فرمایید"}
+      />
+      <ConfirmModal
+        open={openModal2}
+        onClose={closeModal2}
+        text={"سفارش با موفقیت حذف شد"}
+      />
+      <AreYouShureModal
+        open={openmodal}
+        onClose={closeModal}
+        text={`از لغو سفارش مطمئن هستید؟`}
+        func={() => handleDelete(messageToDeleteIndex)}
+        loading={loadingDeleteOrder}
+      />
     </>
   );
 }
