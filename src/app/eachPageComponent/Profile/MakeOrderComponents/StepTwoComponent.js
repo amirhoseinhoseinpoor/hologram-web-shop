@@ -700,7 +700,7 @@ export default function StepTwoComponent({
                   onClick={handleNextStep}
                   className={`${style.continueButton} mt-3`}
                 >
-                  مرحله بعدی
+                  طراحی سفارش
                 </button>
               ) : (
                 <button

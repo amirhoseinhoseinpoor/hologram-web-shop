@@ -21,37 +21,39 @@ const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
 
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
 
-export default function MakeOrder({ currentOrder , setActiveTab , setUpdateData}) {
-
+export default function MakeOrder({
+  currentOrder,
+  setActiveTab,
+  setUpdateData,
+}) {
   const [step, setStep] = useState(1);
+  const [navStep, setNavStep] = useState(step || "");
   const [disabelInput, setDisabelInput] = useState(false);
   const [disabelInputStep2, setDisabelInputStep2] = useState(false);
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
   const [shouldSetStep, setShouldSetStep] = useState(true);
 
-
   useEffect(() => {
     if (currentOrder && shouldSetStep) {
       setStep(currentOrder.step);
+      setNavStep(currentOrder.step)
       setShouldSetStep(true);
-    } 
+    }
   }, [currentOrder]);
-  
 
   // Function to go to the next step
   const handleNextStep = () => {
     setShouldSetStep(false);
-    setUpdateData(true)
+    setUpdateData(true);
     setStep((prevStep) => prevStep + 1);
   };
 
   // Function to go to the previous step
   const handlePreviousStep = () => {
     setShouldSetStep(false);
-    setUpdateData(true)
+    setUpdateData(true);
     setStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
-
 
   // Function to render the content based on the current step
   const renderStepContent = () => {
@@ -89,6 +91,7 @@ export default function MakeOrder({ currentOrder , setActiveTab , setUpdateData}
             chatData={currentOrder.chat}
             code={currentOrder.code}
             step={currentOrder.step}
+            setNavStep={setNavStep}
             chatImage={currentOrder.chatImage}
             setUpdateData={setUpdateData}
             handleNextStep={handleNextStep}
@@ -97,35 +100,42 @@ export default function MakeOrder({ currentOrder , setActiveTab , setUpdateData}
         );
       case 4:
         return (
+          <StepSixComponent
+            finalFactor={currentOrder.payment}
+            handleNextStep={handleNextStep}
+            setNavStep={setNavStep}
+            handlePreviousStep={handlePreviousStep}
+          />
+        );
+      case 5:
+        return (
           <div className={style.stepContent}>
             <StepFiveComponent
               data={currentOrder.delivery}
               code={currentOrder.code}
               step={currentOrder.step}
               handleNextStep={handleNextStep}
+              setNavStep={setNavStep}
               handlePreviousStep={handlePreviousStep}
               setDisabelInputStep4={setDisabelInputStep4}
               disabelInputStep4={disabelInputStep4}
             />
           </div>
         );
-      case 5:
+      case 6:
         return (
-          <StepSixComponent
-            finalFactor={currentOrder.payment}
+          <StepSeven
             handleNextStep={handleNextStep}
-            handlePreviousStep={handlePreviousStep}
+            currentOrder={currentOrder}
           />
         );
-      case 6:
-        return <StepSeven handleNextStep={handleNextStep} currentOrder={currentOrder}/>;
       default:
         return null;
     }
   };
   return (
     <section>
-      <ProcessTracker currentStep={step} />
+      <ProcessTracker currentStep={step} setStep={setStep} navStep={navStep}/>
       {renderStepContent()}
     </section>
   );

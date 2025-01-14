@@ -8,6 +8,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Modal from "react-bootstrap/Modal";
 import { Card, CardContent } from "@mui/material";
 import style from "../../../Styles/Profile/MakeOrderStyle/StepFiveStyle.module.scss";
+import LoadingCss from "@/app/BaseComponent/LoadingCss";
 // import redux
 import { useDispatch, useSelector } from "react-redux";
 import { sendingAdressStep, increaseStep } from "@/app/Store/thunks";
@@ -15,6 +16,7 @@ import { phoneNumber } from "@/app/Store/slice";
 
 export default function StepFiveComponent({
   handleNextStep,
+  setNavStep,
   handlePreviousStep,
   disabelInputStep4,
   setDisabelInputStep4,
@@ -72,6 +74,7 @@ export default function StepFiveComponent({
   const [editIndex, setEditIndex] = useState(null);
   const [trackactiveAdress, setTrackActiveAdress] = useState(0);
   const [trackactiveAdress2, setTrackActiveAdress2] = useState(0);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
 
   const handleModalClick = () => {
     if (!disabelInputStep4) {
@@ -154,6 +157,7 @@ export default function StepFiveComponent({
 
   const handleSubmit = async () => {
     try {
+      setLoadingSubmit(true);
       const response = await dispatch(
         sendingAdressStep({ code: code, finalData: finalData })
       );
@@ -163,10 +167,13 @@ export default function StepFiveComponent({
         if (increseingStep.payload.message == "Success") {
           setDisabelInputStep4(true);
           handleNextStep();
+          setNavStep(6);
         }
       }
     } catch (error) {
       alert("خطا در ارسال دیتا");
+    }finally {
+      setLoadingSubmit(false);
     }
   };
 
@@ -880,7 +887,7 @@ export default function StepFiveComponent({
               cursor: disableButton ? "not-allowed" : "pointer",
             }}
           >
-            تایید
+            {loadingSubmit ? (<><LoadingCss/></>) : (<>تایید</>)}
           </button>
           <button
             className={style.SeeLastStepButton}
@@ -896,7 +903,7 @@ export default function StepFiveComponent({
               onClick={handleNextStep}
               className={`${style.continueButton}`}
             >
-             مرحله بعدی
+             رسید نهایی
             </button>
           )}
         </div>

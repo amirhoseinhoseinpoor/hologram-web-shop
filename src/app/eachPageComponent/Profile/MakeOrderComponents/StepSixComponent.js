@@ -20,6 +20,7 @@ export default function StepSixComponent({
   finalFactor,
   handleNextStep,
   handlePreviousStep,
+  setNavStep
 }) {
   const dispatch = useDispatch();
 
@@ -71,6 +72,16 @@ export default function StepSixComponent({
     const file = event.target.files[0];
     setSelectedFile(file);
   };
+
+  const handleSubmit = () => {
+    try {
+      handleNextStep();
+      setNavStep(5);
+
+    } catch (error) {
+      console.error(error || "errorFetching")
+    }
+  }
 
   return (
     <section>
@@ -257,7 +268,7 @@ export default function StepSixComponent({
           <div className="d-flex flex-row justify-content-between mt-3 align-items-start">
             <div className="d-flex flex-column  gap-2 align-items-start">
               <button
-                onClick={handleNextStep}
+                onClick={handleSubmit}
                 className={style.continueButton}
                 disabled={isButtonDisabled}
                 style={{

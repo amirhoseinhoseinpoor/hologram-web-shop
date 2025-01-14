@@ -46,6 +46,7 @@ const ChatBox = ({
   data,
   chatImage: initialChatImage,
   setUpdateData,
+  setNavStep
 }) => {
   const dispatch = useDispatch();
 
@@ -320,7 +321,7 @@ const ChatBox = ({
       setLoadingFinalPatConfirm(true);
       await fetchUserChoiceImage;
       await increseingStep;
-      // setUpdateData(true);
+      setNavStep(4);
       handleNextStep();
     } catch (error) {
       console.error("Failed to dispatch user choice image:", error);
