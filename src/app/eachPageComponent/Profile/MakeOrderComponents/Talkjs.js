@@ -46,7 +46,8 @@ const ChatBox = ({
   data,
   chatImage: initialChatImage,
   setUpdateData,
-  setNavStep
+  setNavStep,
+  modalChat,
 }) => {
   const dispatch = useDispatch();
 
@@ -78,7 +79,10 @@ const ChatBox = ({
   // Close modal functions
   const closeModal = useCallback(() => setOpenModal(false), []);
   const closeModal2 = useCallback(() => setOpenModal2(false), []);
-  const closeFinalPaternModal = useCallback(() => setFinalPaternModal(false), []);
+  const closeFinalPaternModal = useCallback(
+    () => setFinalPaternModal(false),
+    []
+  );
   const closeZoomModal = useCallback(() => {
     setIsZoomModalOpen(false);
     setZoomImageSrc(null);
@@ -106,7 +110,6 @@ const ChatBox = ({
       setMoveForward(true);
     }
   }, [step]);
-
 
   // Initialize socket connection
   useEffect(() => {
@@ -351,19 +354,16 @@ const ChatBox = ({
     setSelectedImage(null);
   }, []);
 
-  const handleRemoveFinalPattern = useCallback(
-    (index) => {
-      setConvertedImage((prev) => ({
-        ...prev,
-        allImages: prev.allImages.filter((_, i) => i !== index),
-      }));
-      setFinalPaternModal((prev) => ({
-        ...prev,
-        allImages: prev.allImages.filter((_, i) => i !== index),
-      }));
-    },
-    []
-  );
+  const handleRemoveFinalPattern = useCallback((index) => {
+    setConvertedImage((prev) => ({
+      ...prev,
+      allImages: prev.allImages.filter((_, i) => i !== index),
+    }));
+    setFinalPaternModal((prev) => ({
+      ...prev,
+      allImages: prev.allImages.filter((_, i) => i !== index),
+    }));
+  }, []);
 
   const handleChatImageSendFunc = useCallback(async () => {
     try {
@@ -412,7 +412,7 @@ const ChatBox = ({
   }, [ConvertedImage.allImages, dispatch, code, closeModalOnTimeout]);
 
   return (
-    <div className="container">
+    <div className={!modalChat && "container"}>
       <div className={`${style.stepContent}`}>
         <div className={style.mainChatBox}>
           <div
@@ -427,7 +427,12 @@ const ChatBox = ({
           </div>
 
           {/* Scrollable chat area */}
-          <div className={`${style.chatContainer} container`} ref={chatBoxRef}>
+          <div
+            className={`${modalChat && style.chatContainerModal} ${
+              style.chatContainer
+            } container`}
+            ref={chatBoxRef}
+          >
             {messages.length === 0 && (
               <p
                 style={{ marginTop: "60px", marginBottom: "60px" }}
@@ -476,7 +481,10 @@ const ChatBox = ({
                   <p
                     onClick={() => {
                       const date = new Date();
-                      downloadImage(userChoiseImage, `${date.toISOString()}.png`);
+                      downloadImage(
+                        userChoiseImage,
+                        `${date.toISOString()}.png`
+                      );
                     }}
                     className={`me-2 text-center ${style.donsloadFinalUserStyle} NormalTextSizing`}
                   >
@@ -673,23 +681,27 @@ const ChatBox = ({
           )}
         </div>
       </div>
-      <div className="d-flex flex-row gap-2 mt-3">
-        <button
-          className={style.SeeLastStepButton}
-          onClick={handlePreviousStep}
-        >
-          مرحله‌ی قبلی
-        </button>
-        {moveForward && (
-          <button
-            type="button"
-            onClick={handleNextStep}
-            className={`${style.continueButton}`}
-          >
-           مرحله بعدی
-          </button>
-        )}
-      </div>
+      {!modalChat && (
+        <>
+          <div className="d-flex flex-row gap-2 mt-3">
+            <button
+              className={style.SeeLastStepButton}
+              onClick={handlePreviousStep}
+            >
+              مرحله‌ی قبلی
+            </button>
+            {moveForward && (
+              <button
+                type="button"
+                onClick={handleNextStep}
+                className={`${style.continueButton}`}
+              >
+                مرحله بعدی
+              </button>
+            )}
+          </div>
+        </>
+      )}
 
       {/* Final Pattern Modal */}
       {FinalPaternModal && (
@@ -776,9 +788,7 @@ const ChatBox = ({
                           fileObj.includes("data:image/jpeg")
                         ) {
                           filename = "finalPayment.png";
-                        } else if (
-                          fileObj.includes("data:image/svg+xml")
-                        ) {
+                        } else if (fileObj.includes("data:image/svg+xml")) {
                           filename = "finalPayment.svg";
                         }
 
@@ -830,7 +840,10 @@ const ChatBox = ({
                       }));
                       setConvertedImage((prev) => ({
                         ...prev,
-                        allImages: [...prev.allImages, ...fileArray.map((f) => f.imageUrl)],
+                        allImages: [
+                          ...prev.allImages,
+                          ...fileArray.map((f) => f.imageUrl),
+                        ],
                       }));
                     }
                   }}

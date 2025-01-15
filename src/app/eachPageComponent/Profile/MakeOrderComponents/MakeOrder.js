@@ -1,10 +1,9 @@
-"use client";
-
 import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import style from "../../../Styles/Profile/MakeOrderStyle/MakeOrder.module.scss";
 import ProcessTracker from "../ProcessTracker";
-import PusherChat from "./Talkjs";
+import Image from "next/image";
+import { Modal, Box } from "@mui/material";
 
 const SteponeComponent = dynamic(() => import("./StepOneComponent"));
 
@@ -20,6 +19,9 @@ const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
 });
 
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
+const PusherChat = dynamic(() => import("./Talkjs"), {
+  ssr: false,
+});
 
 export default function MakeOrder({
   currentOrder,
@@ -32,30 +34,42 @@ export default function MakeOrder({
   const [disabelInputStep2, setDisabelInputStep2] = useState(false);
   const [disabelInputStep4, setDisabelInputStep4] = useState(false);
   const [shouldSetStep, setShouldSetStep] = useState(true);
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     if (currentOrder && shouldSetStep) {
       setStep(currentOrder.step);
-      setNavStep(currentOrder.step)
+      setNavStep(currentOrder.step);
       setShouldSetStep(true);
     }
   }, [currentOrder]);
 
-  // Function to go to the next step
   const handleNextStep = () => {
     setShouldSetStep(false);
     setUpdateData(true);
     setStep((prevStep) => prevStep + 1);
   };
 
-  // Function to go to the previous step
+  const handleSetStep = (step) => {
+    setShouldSetStep(false);
+    setUpdateData(true)
+    setStep(step);
+  };
+
   const handlePreviousStep = () => {
     setShouldSetStep(false);
     setUpdateData(true);
     setStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
 
-  // Function to render the content based on the current step
+  const handleOpenChat = () => {
+    setChatOpen(true);
+  };
+
+  const handleCloseChat = () => {
+    setChatOpen(false);
+  };
+
   const renderStepContent = () => {
     switch (step) {
       case 1:
@@ -72,31 +86,35 @@ export default function MakeOrder({
         );
       case 2:
         return (
-          <StepTwoComponent
-            dataFactor={currentOrder.reqComment}
-            data={currentOrder.document}
-            code={currentOrder.code}
-            step={currentOrder.step}
-            setActiveTab={setActiveTab}
-            handleNextStep={handleNextStep}
-            handlePreviousStep={handlePreviousStep}
-            setDisabelInputStep2={setDisabelInputStep2}
-            disabelInputStep2={disabelInputStep2}
-          />
+          <div className={style.stepContent}>
+            <StepTwoComponent
+              dataFactor={currentOrder.reqComment}
+              data={currentOrder.document}
+              code={currentOrder.code}
+              step={currentOrder.step}
+              setActiveTab={setActiveTab}
+              handleNextStep={handleNextStep}
+              handlePreviousStep={handlePreviousStep}
+              setDisabelInputStep2={setDisabelInputStep2}
+              disabelInputStep2={disabelInputStep2}
+            />
+          </div>
         );
       case 3:
         return (
-          <PusherChat
-            data={currentOrder.request}
-            chatData={currentOrder.chat}
-            code={currentOrder.code}
-            step={currentOrder.step}
-            setNavStep={setNavStep}
-            chatImage={currentOrder.chatImage}
-            setUpdateData={setUpdateData}
-            handleNextStep={handleNextStep}
-            handlePreviousStep={handlePreviousStep}
-          />
+          <div>
+            <PusherChat
+              data={currentOrder.request}
+              chatData={currentOrder.chat}
+              code={currentOrder.code}
+              step={currentOrder.step}
+              setNavStep={setNavStep}
+              chatImage={currentOrder.chatImage}
+              setUpdateData={setUpdateData}
+              handleNextStep={handleNextStep}
+              handlePreviousStep={handlePreviousStep}
+            />
+          </div>
         );
       case 4:
         return (
@@ -133,10 +151,68 @@ export default function MakeOrder({
         return null;
     }
   };
+
+  // Define the chat step number
+  const chatStep = 3;
+  const finalStep = 6;
+
   return (
     <section>
-      <ProcessTracker currentStep={step} setStep={setStep} navStep={navStep}/>
+      <ProcessTracker
+        currentStep={step}
+        setStep={handleSetStep}
+        navStep={navStep}
+      />
       {renderStepContent()}
+      {step !== chatStep && step !== finalStep && currentOrder && (
+        <>
+          <div onClick={handleOpenChat} className="mt-2 d-flex justify-content-end" style={{ cursor: "pointer" }}>
+            <Image
+              className={style.chatIContStyle}
+              src="/gif/icons8-chat.gif"
+              alt="Chat Icon"
+              width={50}
+              height={50}
+              priority
+            />
+          </div>
+          <Modal
+            open={chatOpen}
+            onClose={handleCloseChat}
+            aria-labelledby="chat-modal-title"
+            aria-describedby="chat-modal-description"
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "80%",
+                height : "80%",
+                maxHeight : "fit-content",
+                borderRadius: "4px",
+                bgcolor: "background.paper",
+                boxShadow: 24,
+                padding : "10px",
+                overflow : "auto"
+              }}
+            >
+              <PusherChat
+                modalChat={true}
+                data={currentOrder.request}
+                chatData={currentOrder.chat}
+                code={currentOrder.code}
+                step={currentOrder.step}
+                setNavStep={setNavStep}
+                setUpdateData={setUpdateData}
+                handleNextStep={handleNextStep}
+                handlePreviousStep={handlePreviousStep}
+              />
+            </Box>
+          </Modal>
+        </>
+      )}
     </section>
   );
 }

@@ -196,6 +196,9 @@
   overflow-y: auto; /* Enable vertical scrolling */
   padding-right: 10px; /* Add padding to prevent scrollbar overlap */
 }
+.chatContainerModal{
+  max-height: 250px !important;
+}
 
 .stepContent {
   background-color: white;
