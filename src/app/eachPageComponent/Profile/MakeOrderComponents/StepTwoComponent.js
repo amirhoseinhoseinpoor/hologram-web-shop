@@ -357,7 +357,7 @@ export default function StepTwoComponent({
       <div className={`${style.resizeNewresponsive} d-flex flex-row gap-3`}>
         <div className={`${style.fixNewSizes} d-flex flex-column`}>
           <div className={style.stepContent}>
-            {dataFactor && <p className="discription">{dataFactor.docInfo}</p>}
+            {dataFactor && <p className={`${style.DocInfoMainStyle} NormalTextSizing`}>{dataFactor.docInfo}</p>}
 
             <div
               className={`${style.makeTheFormResponsive} d-flex flex-row gap-5 mt-3`}
@@ -700,7 +700,7 @@ export default function StepTwoComponent({
                   onClick={handleNextStep}
                   className={`${style.continueButton} mt-3`}
                 >
-                  طراحی سفارش
+                  مرحله بعد
                 </button>
               ) : (
                 <button

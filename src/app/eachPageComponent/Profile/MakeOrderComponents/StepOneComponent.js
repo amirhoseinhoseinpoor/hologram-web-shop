@@ -709,7 +709,7 @@ export default function SteponeComponent({
             onClick={handleNextStep}
             className={`${style.continueButton} mt-3 mb-2`}
           >
-            بارگذاری مدارک
+            مرحله بعد
           </button>
         )}
       </div>

@@ -36,6 +36,24 @@ export default function MakeOrder({
   const [shouldSetStep, setShouldSetStep] = useState(true);
   const [chatOpen, setChatOpen] = useState(false);
 
+  // Function to convert status number to text
+  const getStatusText = (status) => {
+    switch (status) {
+      case 1:
+        return "درحال برسی";
+      case 2:
+        return "درحال تولید";
+      case 3:
+        return "درحال ارسال";
+      case 4:
+        return "تحویل داده شده";
+      case 5:
+        return "لغو شده";
+      default:
+        return "Unknown Status";
+    }
+  };
+
   useEffect(() => {
     if (currentOrder && shouldSetStep) {
       setStep(currentOrder.step);
@@ -52,7 +70,7 @@ export default function MakeOrder({
 
   const handleSetStep = (step) => {
     setShouldSetStep(false);
-    setUpdateData(true)
+    setUpdateData(true);
     setStep(step);
   };
 
@@ -158,6 +176,17 @@ export default function MakeOrder({
 
   return (
     <section>
+      <div
+        className={`d-flex flex-row align-items-center justify-content-between container mb-3 ${style.mianDiVNvaBarOrder}`}
+      >
+        <div className="d-flex flex-row gap-2 align-items-center">
+          <p className="discription">شماره سفارش :</p>
+          <p className="discription">{currentOrder?.code}</p>
+        </div>
+        <div>
+          <p className="discription">{getStatusText(currentOrder?.status)}</p>
+        </div>
+      </div>
       <ProcessTracker
         currentStep={step}
         setStep={handleSetStep}
@@ -166,7 +195,7 @@ export default function MakeOrder({
       {renderStepContent()}
       {step !== chatStep && step !== finalStep && currentOrder && (
         <>
-          <div onClick={handleOpenChat} className="mt-2 d-flex justify-content-end" style={{ cursor: "pointer" }}>
+          <div onClick={handleOpenChat} className={style.DivChatIconMainDiv}>
             <Image
               className={style.chatIContStyle}
               src="/gif/icons8-chat.gif"
@@ -189,17 +218,18 @@ export default function MakeOrder({
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 width: "80%",
-                height : "80%",
-                maxHeight : "fit-content",
+                height: "80%",
+                maxHeight: "fit-content",
                 borderRadius: "4px",
                 bgcolor: "background.paper",
                 boxShadow: 24,
-                padding : "10px",
-                overflow : "auto"
+                padding: "10px",
+                overflow: "auto",
               }}
             >
               <PusherChat
                 modalChat={true}
+                handleCloseChat={handleCloseChat}
                 data={currentOrder.request}
                 chatData={currentOrder.chat}
                 code={currentOrder.code}

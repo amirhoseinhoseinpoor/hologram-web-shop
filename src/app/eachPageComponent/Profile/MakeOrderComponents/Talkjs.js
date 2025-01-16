@@ -24,7 +24,9 @@ import LoadingCss from "@/app/BaseComponent/LoadingCss";
 import socket from "@/app/utils/socket";
 // import utils
 import { downloadImage } from "@/app/utils/downloadImage";
-import MessageItem from "./MessageItem"; // Import the MessageItem component
+import MessageItem from "./MessageItem";
+// import base component
+import CustomCloseButton from "@/app/BaseComponent/CustomCloseButton";
 
 const ModalStyle = {
   position: "absolute",
@@ -48,8 +50,10 @@ const ChatBox = ({
   setUpdateData,
   setNavStep,
   modalChat,
+  handleCloseChat,
 }) => {
   const dispatch = useDispatch();
+  console.log(data);
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -416,14 +420,33 @@ const ChatBox = ({
       <div className={`${style.stepContent}`}>
         <div className={style.mainChatBox}>
           <div
-            className={`${style.headerChatBox} d-flex flex-row justify-content-between`}
+            className={`${style.headerChatBox} d-flex flex-row justify-content-between align-items-center`}
           >
-            <div>
-              <p className="discription">
-                {data?.prodName ? data.prodName : "محصول پایه"}
-              </p>
+            <div className="d-flex flex-row align-items-center gap-2">
+              {Array.isArray(data) ? (
+                data?.map((item, index) => (
+                  <div key={index}>
+                    <p className="discription">
+                      {item?.name ? item?.name : "محصول پایه"}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <p className="description">محصول پایه</p>
+                </>
+              )}
             </div>
             <div className="discription">{code}</div>
+
+            {modalChat && (
+              <div>
+                <CustomCloseButton
+                  color={"#e91e63"}
+                  onClick={handleCloseChat}
+                />
+              </div>
+            )}
           </div>
 
           {/* Scrollable chat area */}
@@ -696,7 +719,7 @@ const ChatBox = ({
                 onClick={handleNextStep}
                 className={`${style.continueButton}`}
               >
-                مرحله بعدی
+                مرحله بعد
               </button>
             )}
           </div>

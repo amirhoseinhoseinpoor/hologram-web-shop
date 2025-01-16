@@ -903,7 +903,7 @@ export default function StepFiveComponent({
               onClick={handleNextStep}
               className={`${style.continueButton}`}
             >
-             رسید نهایی
+             مرحله بعد
             </button>
           )}
         </div>

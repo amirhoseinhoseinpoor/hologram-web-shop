@@ -33,6 +33,17 @@
   border: none;
   box-shadow: none;
 }
+.DivChatIconMainDiv{
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  cursor: pointer;
+}
+.mianDiVNvaBarOrder{
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+}
 
 .resetPaddingMui {
   padding: 0 !important;
