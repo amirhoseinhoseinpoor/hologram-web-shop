@@ -50,7 +50,7 @@ export default function MakeOrder({
       case 5:
         return "لغو شده";
       default:
-        return "Unknown Status";
+        return "سفارشی ثبت نشده";
     }
   };
 
@@ -218,7 +218,6 @@ export default function MakeOrder({
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 width: "80%",
-                height: "80%",
                 maxHeight: "fit-content",
                 borderRadius: "4px",
                 bgcolor: "background.paper",

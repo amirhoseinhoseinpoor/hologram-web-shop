@@ -15,6 +15,46 @@
     font-family: unset;
   }
 }
+.imageTitleForDocument{
+  position: absolute;
+  // transform: translate(50% , -50%);
+  top: 7px;
+  left: 7px;
+  background-color: #e1f1ff;
+  border: 1px solid #5695f6;
+  color: #5695f6;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
+.pendingStatusStyle{
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  background-color: #f3802c;
+  color: white;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
+.rejectStatusStyle{
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  background-color: var.$redColor;
+  color: white;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
+
+.confirmStatusStyle{
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  background-color: #e1f1ff;
+  border: 1px solid #5695f6;
+  color: #5695f6;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
 
 .stepContent {
   background-color: white;
@@ -44,7 +84,7 @@
 
 .factorImageStyle{
   max-width: 250px;
-  // max-height: 250px;
+  border-radius: 4px;
 }
 .DocInfoMainStyle{
   // background-color: lightgray;
@@ -165,7 +205,7 @@
 }
 
 .uploadedImage {
-  width: 210px;
+  width: 220px;
   border-radius: 4px;
   // height: 140px;
   // aspect-ratio: 5/4;

@@ -50,6 +50,8 @@ export default function StepTwoComponent({
 
   const dispatch = useDispatch();
 
+  console.log(step);
+
   const [value, setValue] = useState("خصوصی");
   const [paying, setPaying] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -64,12 +66,6 @@ export default function StepTwoComponent({
   const [moveForward, setMoveForward] = useState(false);
   const [loadingDeleteOrder, setLoadingDeleteOrder] = useState(false);
   const [newDisableInput, setNewDisableInput] = useState(false);
-
-  useEffect(() => {
-    if (step > 2) {
-      setMoveForward(true);
-    }
-  }, [step]);
 
   // modal
   const handleOpen = (fileObj) => {
@@ -99,6 +95,13 @@ export default function StepTwoComponent({
   }, [paying]);
 
   useEffect(() => {
+    if (step > 2) {
+      setMoveForward(true);
+      setDisableNextStep(true);
+    }
+  }, [step]);
+
+  useEffect(() => {
     if (paying === "آپلود فیش") {
       setIsButtonDisabled(false);
     }
@@ -113,24 +116,25 @@ export default function StepTwoComponent({
             const fetchedImage = await dispatch(
               fetchPrivateImage({ filename: item.file })
             ).unwrap();
-  
+
             return {
               imageUrl: fetchedImage,
               title: item.title || "",
-              file: item.file, // Ensure 'file' holds the file ID
+              file: item.file,
+              status: item.status,
               isFixed: true,
             };
           });
-  
+
           const fetchedDocuments = await Promise.all(imageFetchPromises);
-  
+
           setUploadedFiles(fetchedDocuments);
         } else {
           setUploadedFiles([]);
         }
       };
       fetchDocumentImages();
-  
+
       const fetchImage = async () => {
         if (data?.uploadLogo) {
           const gettingPrivatelogo = await dispatch(
@@ -142,7 +146,7 @@ export default function StepTwoComponent({
         }
       };
       fetchImage();
-  
+
       const fetchFactorImage = async () => {
         const gettingPrivateImageFactor = await dispatch(
           fetchPrivateImage({ filename: dataFactor.paymentImage })
@@ -150,7 +154,7 @@ export default function StepTwoComponent({
         setFactorImage({ imageUrl: gettingPrivateImageFactor || null });
       };
       fetchFactorImage();
-  
+
       setCompanyName(data.companyName || "");
       if (hasData) {
         setStatusTraking(true);
@@ -183,6 +187,7 @@ export default function StepTwoComponent({
         imageUrl: URL.createObjectURL(file),
         file: file, // New files have the File object
         title: "",
+        status: 1,
         isFixed: false, // New files are not fixed
       }));
 
@@ -203,9 +208,7 @@ export default function StepTwoComponent({
   };
 
   const handleDeleteImage = (index) => {
-    if (!uploadedFiles[index].isFixed) {
-      setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    }
+    setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
   const handleTitleChange = (index, event) => {
@@ -249,21 +252,19 @@ export default function StepTwoComponent({
   };
 
   useEffect(() => {
-    if (!hasData) {
-      checkAllFieldsFilled();
+    if (step > 2) {
     } else {
       checkAllFieldsFilled();
     }
   }, [companyName, logo, value, uploadedFiles]);
 
   const checkAllFieldsFilled = () => {
-    const hasNewFiles = uploadedFiles.some((file) => !file.isFixed);
     const isFilled =
       companyName !== "" &&
       logo !== null &&
       uploadedFiles.length > 0 &&
-      value !== "" &&
-      hasNewFiles;
+      value !== "";
+
     setDisableNextStep(!isFilled);
   };
 
@@ -288,11 +289,11 @@ export default function StepTwoComponent({
         // Handle case where no logo is present
         throw new Error("لوگو الزامی است.");
       }
-  
+
       // Separate fixed and new files
       const fixedFiles = uploadedFiles.filter((file) => file.isFixed);
       const newFiles = uploadedFiles.filter((file) => !file.isFixed);
-  
+
       // Upload new files
       const uploadDocumentimage = await Promise.all(
         newFiles.map(async (item) => {
@@ -304,23 +305,25 @@ export default function StepTwoComponent({
               isPublic: false,
             })
           ).unwrap();
-  
+
           return {
             file: fileId,
             title: item.title,
+            status: item.status,
           };
         })
       );
-  
+
       // Prepare existing fixed files
       const existingPreparedData = fixedFiles.map((file) => ({
         file: file.file, // existing file ID
         title: file.title,
+        status: file.status,
       }));
-  
+
       // Combine existing and new files
       const preparedData = [...existingPreparedData, ...uploadDocumentimage];
-  
+
       const sendingFinalData = {
         uploadLogo,
         paying,
@@ -328,11 +331,11 @@ export default function StepTwoComponent({
         value,
         preparedData,
       };
-  
+
       const finalDataDispatch = await dispatch(
         sendingSecondStep({ code, sendingFinalData })
       ).unwrap();
-  
+
       if (finalDataDispatch.statusCode === 200) {
         // **Replace local file objects with server file IDs and mark as fixed**
         const updatedNewFiles = newFiles.map((file, idx) => ({
@@ -340,7 +343,7 @@ export default function StepTwoComponent({
           file: uploadDocumentimage[idx].file, // Replace with server file ID
           isFixed: true,
         }));
-  
+
         const allFiles = [...fixedFiles, ...updatedNewFiles];
         setUploadedFiles(allFiles);
         setDisabelInputStep2(true);
@@ -349,6 +352,34 @@ export default function StepTwoComponent({
     } catch (error) {
       console.error(error);
       setOpenModal3(true);
+    } finally {
+      setDisableNextStep(false);
+    }
+  };
+
+  const getDocStatus = (status) => {
+    switch (status) {
+      case 1:
+        return "درحال برسی";
+      case 2:
+        return "تایید شده";
+      case 3:
+        return "رد شده";
+      default:
+        return "Unknown Status";
+    }
+  };
+
+  const getStatusClass = (status) => {
+    switch (status) {
+      case 1:
+        return style.pendingStatusStyle;
+      case 2:
+        return style.confirmStatusStyle;
+      case 3:
+        return style.rejectStatusStyle;
+      default:
+        return style.rejectStatusStyle;
     }
   };
 
@@ -357,7 +388,11 @@ export default function StepTwoComponent({
       <div className={`${style.resizeNewresponsive} d-flex flex-row gap-3`}>
         <div className={`${style.fixNewSizes} d-flex flex-column`}>
           <div className={style.stepContent}>
-            {dataFactor && <p className={`${style.DocInfoMainStyle} NormalTextSizing`}>{dataFactor.docInfo}</p>}
+            {dataFactor && (
+              <p className={`${style.DocInfoMainStyle} NormalTextSizing`}>
+                {dataFactor.docInfo}
+              </p>
+            )}
 
             <div
               className={`${style.makeTheFormResponsive} d-flex flex-row gap-5 mt-3`}
@@ -601,7 +636,7 @@ export default function StepTwoComponent({
                         className={style.uploadedImage}
                       />
 
-                      {!fileObj.isFixed && (
+                      {fileObj?.status !== 2 && (
                         <button
                           onClick={() => handleDeleteImage(index)}
                           className={style.deleteButton}
@@ -646,6 +681,12 @@ export default function StepTwoComponent({
                           </svg>
                         </button>
                       )}
+
+                      <div className={`${getStatusClass(fileObj?.status)}`}>
+                        <p className="NormalTextSizing">
+                          {getDocStatus(fileObj?.status)}
+                        </p>
+                      </div>
                     </div>
 
                     <input
