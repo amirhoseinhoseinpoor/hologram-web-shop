@@ -19,6 +19,9 @@ import ErrorModal from "@/app/BaseComponent/ErrorModal";
 import ConfirmModal from "@/app/BaseComponent/ConfirmingModal";
 import ZoomModal from "@/app/BaseComponent/ZoomModal";
 import AreYouShureModal from "@/app/BaseComponent/AreYouSureModal";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+// import base component
+import LoadingCss from "@/app/BaseComponent/LoadingCss";
 
 const ModalStyle = {
   position: "absolute",
@@ -32,6 +35,7 @@ const ModalStyle = {
 };
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepTwoStyle.module.scss";
+import { type } from "jquery";
 
 export default function StepTwoComponent({
   dataFactor,
@@ -54,7 +58,7 @@ export default function StepTwoComponent({
 
   const [value, setValue] = useState("خصوصی");
   const [paying, setPaying] = useState("");
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState(data.preparedData || []);
   console.log(uploadedFiles);
 
   const [logo, setLogo] = useState(null);
@@ -65,8 +69,7 @@ export default function StepTwoComponent({
   const [zoomedImage, setZoomedImage] = useState(null);
   const [moveForward, setMoveForward] = useState(false);
   const [loadingDeleteOrder, setLoadingDeleteOrder] = useState(false);
-  const [newDisableInput, setNewDisableInput] = useState(false);
-
+  const [loadingImgDonwload, setLoadingImgDonwload] = useState([]);
   // modal
   const handleOpen = (fileObj) => {
     setZoomedImage(fileObj);
@@ -84,6 +87,7 @@ export default function StepTwoComponent({
   const closeModal3 = () => setOpenModal3(false);
   const [disablenextStep, setDisableNextStep] = useState(true);
   const [messageToDeleteIndex, setMessageToDeleteIndex] = useState(null);
+  const [imageUrls, setImageUrls] = useState({});
 
   const handleAreYouSureFunc = (code) => {
     setOpenmodal(true);
@@ -107,33 +111,62 @@ export default function StepTwoComponent({
     }
   }, [paying]);
 
+  const handleImageClick = async (index, filename) => {
+    try {
+      setLoadingImgDonwload((prev) => ({ ...prev, [index]: true }));
+      if (typeof filename === "string") {
+        const result = await dispatch(fetchPrivateImage({ filename })).unwrap();
+        setImageUrls((prev) => ({ ...prev, [index]: result }));
+      } else if (typeof filename === "object") {
+        const OBGURL = URL.createObjectURL(filename);
+        setImageUrls((prev) => ({ ...prev, [index]: OBGURL }));
+      }
+    } catch (error) {
+      console.error("Error fetching image:", error);
+    } finally {
+      setLoadingImgDonwload((prev) => ({ ...prev, [index]: false }));
+    }
+  };
+
+  useEffect(() => {
+    if (data.preparedData.length > 0) {
+      const updatedFiles = data.preparedData.map((file) => ({
+        ...file, // Retain all properties from the fetched file
+        isFixed: true, // Mark the file as fixed
+      }));
+
+      setUploadedFiles(updatedFiles);
+    }
+  }, [data.preparedData]);
+
   useEffect(() => {
     if (data) {
       setValue(data.value);
-      const fetchDocumentImages = async () => {
-        if (data.preparedData && data.preparedData.length > 0) {
-          const imageFetchPromises = data.preparedData.map(async (item) => {
-            const fetchedImage = await dispatch(
-              fetchPrivateImage({ filename: item.file })
-            ).unwrap();
 
-            return {
-              imageUrl: fetchedImage,
-              title: item.title || "",
-              file: item.file,
-              status: item.status,
-              isFixed: true,
-            };
-          });
+      // const fetchDocumentImages = async () => {
+      //   if (data.preparedData && data.preparedData.length > 0) {
+      //     const imageFetchPromises = data.preparedData.map(async (item) => {
+      //       const fetchedImage = await dispatch(
+      //         fetchPrivateImage({ filename: item.file })
+      //       ).unwrap();
 
-          const fetchedDocuments = await Promise.all(imageFetchPromises);
+      //       return {
+      //         imageUrl: fetchedImage,
+      //         title: item.title || "",
+      //         file: item.file,
+      //         status: item.status,
+      //         isFixed: true,
+      //       };
+      //     });
 
-          setUploadedFiles(fetchedDocuments);
-        } else {
-          setUploadedFiles([]);
-        }
-      };
-      fetchDocumentImages();
+      //     const fetchedDocuments = await Promise.all(imageFetchPromises);
+
+      //     setUploadedFiles(fetchedDocuments);
+      //   } else {
+      //     setUploadedFiles([]);
+      //   }
+      // };
+      // fetchDocumentImages();
 
       const fetchImage = async () => {
         if (data?.uploadLogo) {
@@ -628,58 +661,77 @@ export default function StepTwoComponent({
                     className={`${style.imagesContainerForDoucument}`}
                   >
                     <div className="position-relative">
-                      <Box
-                        onClick={() => handleOpen(fileObj)}
-                        component="img"
-                        src={fileObj.imageUrl}
-                        alt={`uploaded ${index}`}
-                        className={style.uploadedImage}
-                      />
+                      {imageUrls[index] ? (
+                        <>
+                          <Box
+                            onClick={() => handleOpen(fileObj)}
+                            component="img"
+                            src={imageUrls[index]}
+                            alt={`uploaded ${index}`}
+                            className={style.uploadedImage}
+                          />
 
-                      {fileObj?.status !== 2 && (
-                        <button
-                          onClick={() => handleDeleteImage(index)}
-                          className={style.deleteButton}
+                          {fileObj?.status !== 2 && (
+                            <button
+                              onClick={() => handleDeleteImage(index)}
+                              className={style.deleteButton}
+                            >
+                              <svg
+                                width={17}
+                                height={17}
+                                viewBox="0 0 12 12"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
+                                  stroke="#FF4F3F"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
+                                  stroke="#FF4F3F"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
+                                  stroke="#FF4F3F"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M5.16504 8.25H6.83004"
+                                  stroke="#FF4F3F"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M4.75 6.25H7.25"
+                                  stroke="#FF4F3F"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </button>
+                          )}
+                        </>
+                      ) : (
+                        <div
+                          onClick={() => handleImageClick(index, fileObj.file)}
+                          className={style.emptyBoxDonlowadDocument}
                         >
-                          <svg
-                            width={17}
-                            height={17}
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                              stroke="#FF4F3F"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                              stroke="#FF4F3F"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                              stroke="#FF4F3F"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M5.16504 8.25H6.83004"
-                              stroke="#FF4F3F"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M4.75 6.25H7.25"
-                              stroke="#FF4F3F"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </button>
+                          {loadingImgDonwload[index] ? (
+                            <>
+                              <LoadingCss />
+                            </>
+                          ) : (
+                            <>
+                              <ArrowDownwardIcon />
+                            </>
+                          )}
+                        </div>
                       )}
 
                       <div className={`${getStatusClass(fileObj?.status)}`}>
