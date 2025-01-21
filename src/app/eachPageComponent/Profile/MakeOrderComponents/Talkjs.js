@@ -19,6 +19,7 @@ import ConfirmingModal from "@/app/BaseComponent/ConfirmingModal";
 import ZoomModal from "@/app/BaseComponent/ZoomModal";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { Skeleton } from "@mui/material";
 import LoadingCss from "@/app/BaseComponent/LoadingCss";
 import socket from "@/app/utils/socket";
@@ -53,7 +54,6 @@ const ChatBox = ({
   handleCloseChat,
 }) => {
   const dispatch = useDispatch();
-  console.log(data);
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -72,6 +72,7 @@ const ChatBox = ({
   const [ConvertedImage, setConvertedImage] = useState([]);
   const [loadingImageSend, setLoadingImageSend] = useState(false);
   const [loadingFinalPatConfirm, setLoadingFinalPatConfirm] = useState(false);
+  const [dontShowPrevImage, setDontShowPrevImage] = useState(true);
 
   // Modal states
   const [FinalPaternModal, setFinalPaternModal] = useState(false);
@@ -277,7 +278,8 @@ const ChatBox = ({
             uploadFile({ file: image, tag, type, isPublic })
           ).unwrap();
 
-          newMessageObject.imageUrl = response; // filename returned from thunk
+          newMessageObject.imageUrl = response;
+          newMessageObject.type = image?.name.split(".").pop();
         } catch (error) {
           console.error("Image upload failed:", error);
           return;
@@ -348,6 +350,16 @@ const ChatBox = ({
     const file = event.target.files[0];
     if (file) {
       setImage(file);
+      console.log(file);
+
+      const fileType = file?.name?.split(".").pop();
+
+      if (fileType == "png" || fileType == "jpeg") {
+        setDontShowPrevImage(false);
+      } else {
+        setDontShowPrevImage(true);
+      }
+
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
     }
@@ -601,19 +613,27 @@ const ChatBox = ({
                 </div>
               ) : (
                 <>
-                  <Box
-                    onClick={() => handleZoomFinalPattern(selectedImage)}
-                    component="img"
-                    src={selectedImage}
-                    alt="uploaded"
-                    className={style.selectedImageForSend}
-                    style={{
-                      cursor: "pointer",
-                      objectFit: "cover",
-                      width: "100px",
-                      height: "100px",
-                    }}
-                  ></Box>
+                  {dontShowPrevImage ? (
+                    <>
+                      <InsertDriveFileIcon />
+                    </>
+                  ) : (
+                    <>
+                      <Box
+                        onClick={() => handleZoomFinalPattern(selectedImage)}
+                        component="img"
+                        src={selectedImage}
+                        alt="uploaded"
+                        className={style.selectedImageForSend}
+                        style={{
+                          cursor: "pointer",
+                          objectFit: "contain",
+                          width: "150px",
+                        }}
+                      ></Box>
+                    </>
+                  )}
+
                   <div className="d-flex flex-column gap-2 ms-3">
                     <button
                       onClick={sendMessage}
@@ -685,7 +705,7 @@ const ChatBox = ({
                     disabled={loadingImageSend}
                     type="file"
                     onChange={handleSelectImage}
-                    accept="image/*"
+                    accept="image/*,.zip,.pdf,.rar"
                     className={`d-none`}
                     id="fileInputChatBox"
                   />
@@ -871,7 +891,7 @@ const ChatBox = ({
                     }
                   }}
                   type="file"
-                  accept="image/png,image/jpeg,image/jpg"
+                  accept="image/png,image/jpeg,image/jpg,.zip,.pdf,.rar"
                   className={`d-none`}
                   id="fileFinalPattern"
                   multiple
