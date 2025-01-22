@@ -20,22 +20,15 @@ import ConfirmModal from "@/app/BaseComponent/ConfirmingModal";
 import ZoomModal from "@/app/BaseComponent/ZoomModal";
 import AreYouShureModal from "@/app/BaseComponent/AreYouSureModal";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import FolderZipIcon from "@mui/icons-material/FolderZip";
+import DoneIcon from "@mui/icons-material/Done";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 // import base component
 import LoadingCss from "@/app/BaseComponent/LoadingCss";
+import { downloadImage } from "@/app/utils/downloadImage";
 
-const ModalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
-  border: "1.5px solid #000",
-  boxShadow: 24,
-  p: 0,
-};
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepTwoStyle.module.scss";
-import { type } from "jquery";
 
 export default function StepTwoComponent({
   dataFactor,
@@ -70,9 +63,12 @@ export default function StepTwoComponent({
   const [moveForward, setMoveForward] = useState(false);
   const [loadingDeleteOrder, setLoadingDeleteOrder] = useState(false);
   const [loadingImgDonwload, setLoadingImgDonwload] = useState([]);
+
   // modal
-  const handleOpen = (fileObj) => {
-    setZoomedImage(fileObj);
+  const handleOpen = ({ imageUrl }) => {
+    console.log(imageUrl);
+
+    setZoomedImage(imageUrl);
   };
 
   const handleClose = () => {
@@ -129,7 +125,7 @@ export default function StepTwoComponent({
   };
 
   useEffect(() => {
-    if (data.preparedData.length > 0) {
+    if (data?.preparedData?.length > 0) {
       const updatedFiles = data.preparedData.map((file) => ({
         ...file, // Retain all properties from the fetched file
         isFixed: true, // Mark the file as fixed
@@ -212,17 +208,15 @@ export default function StepTwoComponent({
 
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
-    const validImageTypes = ["image/png", "image/jpeg"];
 
-    const newFiles = files
-      .filter((file) => validImageTypes.includes(file.type)) // Only accept PNG and JPG
-      .map((file) => ({
-        imageUrl: URL.createObjectURL(file),
-        file: file, // New files have the File object
-        title: "",
-        status: 1,
-        isFixed: false, // New files are not fixed
-      }));
+    const newFiles = files.map((file) => ({
+      imageUrl: URL.createObjectURL(file),
+      file: file, // New files have the File object
+      title: "",
+      status: 1,
+      type: file?.name.split(".").pop(),
+      isFixed: false, // New files are not fixed
+    }));
 
     setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
   };
@@ -343,6 +337,7 @@ export default function StepTwoComponent({
             file: fileId,
             title: item.title,
             status: item.status,
+            type: item.type,
           };
         })
       );
@@ -352,6 +347,7 @@ export default function StepTwoComponent({
         file: file.file, // existing file ID
         title: file.title,
         status: file.status,
+        type: file.type,
       }));
 
       // Combine existing and new files
@@ -441,7 +437,7 @@ export default function StepTwoComponent({
                       className={`${style.onlyFitContentWidth} position-relative`}
                     >
                       <Box
-                        onClick={() => handleOpen(logo)}
+                        onClick={() => handleOpen({ imageUrl: logo.imageUrl })}
                         component="img"
                         src={logo.imageUrl}
                         alt="UserLogo"
@@ -649,7 +645,7 @@ export default function StepTwoComponent({
                     className={style.displayNoneTheInput}
                     id="fileUpload"
                     type="file"
-                    accept={`${process.env.NEXT_PUBLIC_INPUT_IMAGE_FORMAT}`}
+                    accept={`${process.env.NEXT_PUBLIC_INPUT_IMAGE_FORMAT},.pdf,.zip,.rar`}
                     multiple
                     onChange={handleFileUpload}
                     // disabled={disabelInputStep2}
@@ -661,77 +657,237 @@ export default function StepTwoComponent({
                     className={`${style.imagesContainerForDoucument}`}
                   >
                     <div className="position-relative">
-                      {imageUrls[index] ? (
+                      {fileObj.type === "zip" || fileObj.type === "rar" ? (
                         <>
-                          <Box
-                            onClick={() => handleOpen(fileObj)}
-                            component="img"
-                            src={imageUrls[index]}
-                            alt={`uploaded ${index}`}
-                            className={style.uploadedImage}
-                          />
-
-                          {fileObj?.status !== 2 && (
-                            <button
-                              onClick={() => handleDeleteImage(index)}
-                              className={style.deleteButton}
-                            >
-                              <svg
-                                width={17}
-                                height={17}
-                                viewBox="0 0 12 12"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                                  stroke="#FF4F3F"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                                <path
-                                  d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                                  stroke="#FF4F3F"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                                <path
-                                  d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                                  stroke="#FF4F3F"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                                <path
-                                  d="M5.16504 8.25H6.83004"
-                                  stroke="#FF4F3F"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                                <path
-                                  d="M4.75 6.25H7.25"
-                                  stroke="#FF4F3F"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            </button>
-                          )}
+                          <div
+                            className={style.emptyBoxDonlowadDocument}
+                            onClick={() => {
+                              if (imageUrls[index]) {
+                                const date = new Date();
+                                downloadImage(
+                                  imageUrls[index],
+                                  `${date.toISOString()}.${fileObj.type}`
+                                );
+                              } else {
+                                handleImageClick(index, fileObj.file);
+                              }
+                            }}
+                           
+                          >
+                            {imageUrls[index] ? (
+                              <>
+                                <DoneIcon />
+                                {fileObj?.status !== 2 && (
+                                  <button
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      handleDeleteImage(index);
+                                    }}
+                                    className={style.deleteButton}
+                                  >
+                                    <svg
+                                      width={17}
+                                      height={17}
+                                      viewBox="0 0 12 12"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <path
+                                        d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <path
+                                        d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <path
+                                        d="M5.16504 8.25H6.83004"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <path
+                                        d="M4.75 6.25H7.25"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                    </svg>
+                                  </button>
+                                )}
+                              </>
+                            ) : (
+                              <>
+                                <FolderZipIcon />
+                              </>
+                            )}
+                          </div>
+                        </>
+                      ) : fileObj?.type === "pdf" ? (
+                        <>
+                          <div
+                            className={style.emptyBoxDonlowadDocument}
+                            onClick={() => {
+                              if (imageUrls[index]) {
+                                const date = new Date();
+                                downloadImage(
+                                  imageUrls[index],
+                                  `${date.toISOString()}.${fileObj.type}`
+                                );
+                              } else {
+                                handleImageClick(index, fileObj.file);
+                              }
+                            }}
+                           
+                          >
+                            {imageUrls[index] ? (
+                              <>
+                                <DoneIcon />
+                                {fileObj?.status !== 2 && (
+                                  <button
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      handleDeleteImage(index);
+                                    }}
+                                    className={style.deleteButton}
+                                  >
+                                    <svg
+                                      width={17}
+                                      height={17}
+                                      viewBox="0 0 12 12"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <path
+                                        d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <path
+                                        d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <path
+                                        d="M5.16504 8.25H6.83004"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <path
+                                        d="M4.75 6.25H7.25"
+                                        stroke="#FF4F3F"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                    </svg>
+                                  </button>
+                                )}
+                              </>
+                            ) : (
+                              <>
+                                <PictureAsPdfIcon />
+                              </>
+                            )}
+                          </div>
                         </>
                       ) : (
-                        <div
-                          onClick={() => handleImageClick(index, fileObj.file)}
-                          className={style.emptyBoxDonlowadDocument}
-                        >
-                          {loadingImgDonwload[index] ? (
+                        <>
+                          {imageUrls[index] ? (
                             <>
-                              <LoadingCss />
+                              <Box
+                                onClick={() =>
+                                  handleOpen({ imageUrl: imageUrls[index] })
+                                }
+                                component="img"
+                                src={imageUrls[index]}
+                                alt={`uploaded ${index}`}
+                                className={style.uploadedImage}
+                              />
+
+                              {fileObj?.status !== 2 && (
+                                <button
+                                  onClick={() => handleDeleteImage(index)}
+                                  className={style.deleteButton}
+                                >
+                                  <svg
+                                    width={17}
+                                    height={17}
+                                    viewBox="0 0 12 12"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
+                                      stroke="#FF4F3F"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    <path
+                                      d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
+                                      stroke="#FF4F3F"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    <path
+                                      d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
+                                      stroke="#FF4F3F"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    <path
+                                      d="M5.16504 8.25H6.83004"
+                                      stroke="#FF4F3F"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    <path
+                                      d="M4.75 6.25H7.25"
+                                      stroke="#FF4F3F"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                  </svg>
+                                </button>
+                              )}
                             </>
                           ) : (
-                            <>
-                              <ArrowDownwardIcon />
-                            </>
+                            <div
+                              onClick={() =>
+                                handleImageClick(index, fileObj.file)
+                              }
+                              className={style.emptyBoxDonlowadDocument}
+                            >
+                              {loadingImgDonwload[index] ? (
+                                <>
+                                  <LoadingCss />
+                                </>
+                              ) : (
+                                <>
+                                  <ArrowDownwardIcon />
+                                </>
+                              )}
+                            </div>
                           )}
-                        </div>
+                        </>
                       )}
 
                       <div className={`${getStatusClass(fileObj?.status)}`}>
@@ -1028,7 +1184,7 @@ export default function StepTwoComponent({
         <div>
           {dataFactor && (
             <Box
-              onClick={() => handleOpen(FactorImage)}
+              onClick={() => handleOpen({ imageUrl: FactorImage.imageUrl })}
               component="img"
               className={style.factorImageStyle}
               src={FactorImage?.imageUrl}
@@ -1041,7 +1197,7 @@ export default function StepTwoComponent({
           <ZoomModal
             open={!!zoomedImage}
             onClose={handleClose}
-            src={zoomedImage.imageUrl}
+            src={zoomedImage}
             alt={zoomedImage.title || `uploaded image`}
           />
         )}
