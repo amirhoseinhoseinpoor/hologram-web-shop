@@ -9,7 +9,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import style from "/src/app/Styles/Profile/MakeOrderStyle/Talkjs.module.scss";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import FolderZipIcon from "@mui/icons-material/FolderZip";
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 const MessageItem = React.memo(
   ({
@@ -48,6 +48,12 @@ const MessageItem = React.memo(
         }
       }
     }, [msg.imageUrl, dispatch, fetchPrivateImage, imageUrl]);
+
+
+    const isImageType = (type) => {
+      const normalizedType = type?.trim()?.toLowerCase();
+      return normalizedType === "png" || normalizedType === "jpeg" || normalizedType === "image/png" || normalizedType === "image/jpeg";
+    };
 
     return (
       <div
@@ -216,7 +222,7 @@ const MessageItem = React.memo(
               )}
             </div>
           </>
-        ) : (
+        ) : isImageType(msg?.type) && (
           <>
             <div className={style.allTextStyle}>
               {imageLoaded ? (
