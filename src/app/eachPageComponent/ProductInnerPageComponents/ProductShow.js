@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import style from "../../Styles/ProductPage/innerProductPage/DynamicProductShow.module.scss";
+// import mui
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Card, CardMedia, Box } from "@mui/material";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -43,7 +46,7 @@ export default function ProductShow({ productData }) {
     } else {
       const prodCodeInsideSession = sessionStorage.getItem("PRODCODE");
 
-      const separatedData = prodCodeInsideSession.split(',');
+      const separatedData = prodCodeInsideSession.split(",");
 
       if (!separatedData.includes(prodCode)) {
         sessionStorage.setItem(
@@ -161,7 +164,7 @@ export default function ProductShow({ productData }) {
                   </SwiperSlide>
                 ))}
               </Swiper>
-              <div className={style.buttonNextStyle}>
+              <div className={`${style.buttonNextStyle} d-lg-none`}>
                 <button
                   aria-label="Play video"
                   className="review-swiper-button-prev2"
@@ -184,7 +187,8 @@ export default function ProductShow({ productData }) {
                   </svg>
                 </button>
               </div>
-              <div className={style.buttonPrevStyle}>
+              
+              <div className={`${style.buttonPrevStyle} d-lg-none`}>
                 <button
                   aria-label="Play video"
                   className="review-swiper-button-next2"
@@ -205,8 +209,10 @@ export default function ProductShow({ productData }) {
                       strokeLinejoin="round"
                     />
                   </svg>
+                  
                 </button>
               </div>
+             
             </div>
           </div>
         </div>
@@ -295,36 +301,44 @@ export default function ProductShow({ productData }) {
             <div className={`${style.gridPartShowDetail} mt-2`}>
               {data.sections.map((item, index) =>
                 item?.type == "image" ? (
-                  <div key={index} className="d-flex flex-column gap-3">
+                  <div
+                    key={index}
+                    className="d-flex flex-row gap-3 align-items-center mt-2 mb-2"
+                  >
                     <div className="d-flex flex-row align-items-center gap-2">
                       <span>{item?.sectionName}:</span>
-                      <span>{selectedColor}</span>
+                      {/* <span>{selectedColor}</span> */}
                     </div>
                     <div className="d-flex flex-row align-items-center gap-2">
                       {item?.items?.map((iItem, Iindex) => (
-                        <div
-                          key={Iindex}
-                          className={style.coloredBoxStyle}
-                          style={{
-                            // backgroundColor: item.src,
-                            backgroundImage: `url(${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${iItem.src})`,
-                            border:
-                              selectedColor === iItem.name
-                                ? "3px solid #404756"
-                                : "",
+                        <>
+                          <div
+                            key={Iindex}
+                            className={style.coloredBoxStyle}
+                            style={{
+                              // backgroundColor: item.src,
+                              backgroundImage: `url(${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${iItem.src})`,
+                              border:
+                                selectedColor === iItem.name
+                                  ? "3px solid #404756"
+                                  : "",
 
-                            boxShadow:
-                              selectedColor === iItem.name
-                                ? "0 0 5px rgba(0, 0, 0, 0.2)"
-                                : "none",
-                          }}
-                          onClick={() => handleColorChange(iItem.name)}
-                        ></div>
+                              boxShadow:
+                                selectedColor === iItem.name
+                                  ? "0 0 5px rgba(0, 0, 0, 0.2)"
+                                  : "none",
+                            }}
+                            onClick={() => handleColorChange(iItem.name)}
+                          ></div>
+                          <div>
+                            <p className="NormalTextSizing">{iItem.name}</p>
+                          </div>
+                        </>
                       ))}
                     </div>
                   </div>
                 ) : item.type == "text" ? (
-                  <div className="w-100">
+                  <div className="w-100 mt-1 d-flex flex-row gap-3 align-items-center">
                     <h3 className="mb-3 mt-3">{item?.sectionName}</h3>
                     <div style={{ display: "flex", gap: "10px" }}>
                       {item?.items?.map((size, index) => (

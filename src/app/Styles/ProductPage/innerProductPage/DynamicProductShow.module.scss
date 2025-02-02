@@ -46,6 +46,37 @@
     padding: 1px;
   }
 }
+
+.buttonNextStylePC {
+  position: absolute;
+  right: 8%;
+  top: 60%;
+  transform: translate(50%, -50%);
+  z-index: 2;
+  height: 100%;
+
+  button {
+    border: none;
+    background-color: unset;
+    height: 100%;
+    padding: 1px;
+  }
+}
+.buttonPrevStylePC {
+  position: absolute;
+  left: 8%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  height: 100%;
+
+  button {
+    border: none;
+    background-color: unset;
+    height: 100%;
+    padding: 1px;
+  }
+}
 .innerStyleDivForMain {
   width: 80%;
 }
@@ -109,12 +140,17 @@
       height: 80px !important;
     }
   }
-  .buttonNextStyle, .buttonPrevStyle {
+  .buttonNextStyle,
+  .buttonPrevStyle {
     display: none; // Hide by default
   }
   .innerStyleDivForMain {
     width: 80%;
-    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid gray;
+    box-shadow: 1px 1px 5px gray;
+    border-radius: 4px;
   }
 }
 
@@ -128,8 +164,15 @@
   .swiperWrapergap :global {
     .swiper-wrapper {
       gap: 0px;
-      margin-top: 15px;
+      // margin-top: 15px;
     }
+  }
+  .innerStyleDivForMain {
+    margin-top: 10px !important;
+  }
+  .buttonNextStylePC,
+  .buttonPrevStylePC {
+    display: none; 
   }
 }
 
