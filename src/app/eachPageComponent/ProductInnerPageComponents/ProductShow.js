@@ -77,7 +77,7 @@ export default function ProductShow({ productData }) {
                   component="img"
                   src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${data.imgData[currentMediaIndex].src}`}
                   sx={{ borderRadius: "4px" }}
-                  style={{ maxHeight: "395px" }}
+                  style={{ maxHeight: "420px" }}
                   loading="lazy"
                 />
               )}
@@ -107,7 +107,7 @@ export default function ProductShow({ productData }) {
                   prevEl: ".review-swiper-button-prev2",
                 }}
                 modules={[Navigation]}
-                className={`${style.swiperWrapergap} mySwiper`}
+                className={`${style.swiperWrapergap} mySwiper d-lg-none`}
               >
                 {data.imgData.map((media, index) => (
                   <SwiperSlide
@@ -164,6 +164,58 @@ export default function ProductShow({ productData }) {
                   </SwiperSlide>
                 ))}
               </Swiper>
+              <div className={`${style.divMainLeftSideVideo} d-none d-lg-block`}>
+                {data.imgData.map((media, index) => (
+                  <div
+                    key={index}
+                    className={`d-flex flex-column align-items-center justify-content-center`}
+                  >
+                    <div
+                      onClick={() => handleThumbnailClick(index)}
+                      style={{
+                        cursor: "pointer",
+                      }}
+                    >
+                      {media.type === "2" ? (
+                        <div className="position-relative">
+                          <Box
+                            className={style.fixStyleSizeImgReDesctop}
+                            component="img"
+                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.poster}`}
+                          />
+
+                          <div className={`${style.posterIcon}`}>
+                            <svg
+                              width={25}
+                              height={24}
+                              viewBox="0 0 25 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M4.5 12.0004V8.44038C4.5 4.02038 7.63 2.21038 11.46 4.42038L14.55 6.20038L17.64 7.98038C21.47 10.1904 21.47 13.8104 17.64 16.0204L14.55 17.8004L11.46 19.5804C7.63 21.7904 4.5 19.9804 4.5 15.5604V12.0004Z"
+                                stroke="#333333"
+                                strokeWidth="1.5"
+                                strokeMiterlimit={10}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      ) : (
+                        <Box
+                          className={style.fixStyleSizeImgReDesctop}
+                          component="img"
+                          src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.src}`}
+                          alt={`Thumbnail ${index}`}
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               <div className={`${style.buttonNextStyle} d-lg-none`}>
                 <button
                   aria-label="Play video"
@@ -187,7 +239,7 @@ export default function ProductShow({ productData }) {
                   </svg>
                 </button>
               </div>
-              
+
               <div className={`${style.buttonPrevStyle} d-lg-none`}>
                 <button
                   aria-label="Play video"
@@ -209,10 +261,8 @@ export default function ProductShow({ productData }) {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  
                 </button>
               </div>
-             
             </div>
           </div>
         </div>

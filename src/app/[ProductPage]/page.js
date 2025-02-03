@@ -2,7 +2,6 @@ import React from "react";
 
 import MainLayout from "../layouts/MainLayout";
 import HoleProductAndSearch from "../eachPageComponent/ProductPageComponent/HoleProductAndSearch";
-
 import ShowRoute from "../Components/ShowRoute";
 // import { notFound } from "next/navigation";
 // import Link from "next/link";
