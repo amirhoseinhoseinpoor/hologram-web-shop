@@ -13,6 +13,12 @@ import { useDispatch } from "react-redux";
 import { fetchPrivateImage } from "@/app/Store/thunks";
 // improt base Modal
 import ZoomModal from "@/app/BaseComponent/ZoomModal";
+// import icons
+import FolderZipIcon from "@mui/icons-material/FolderZip";
+import DoneIcon from "@mui/icons-material/Done";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+// import base component
+import { downloadImage } from "@/app/utils/downloadImage";
 
 import style from "../../../Styles/Profile/MakeOrderStyle/StepSixStyle.module.scss";
 
@@ -20,7 +26,7 @@ export default function StepSixComponent({
   finalFactor,
   handleNextStep,
   handlePreviousStep,
-  setNavStep
+  setNavStep,
 }) {
   const dispatch = useDispatch();
 
@@ -33,6 +39,9 @@ export default function StepSixComponent({
   const [zoomModal, setZoomModal] = useState(false);
 
   const handleCloseZoomModal = () => setZoomModal(false);
+
+  console.log(finalFactor);
+  
 
   useEffect(() => {
     const fetchFinalPayment = async () => {
@@ -77,11 +86,10 @@ export default function StepSixComponent({
     try {
       handleNextStep();
       setNavStep(5);
-
     } catch (error) {
-      console.error(error || "errorFetching")
+      console.error(error || "errorFetching");
     }
-  }
+  };
 
   return (
     <section>
@@ -291,7 +299,6 @@ export default function StepSixComponent({
                 مرحله‌ی قبلی
               </button>
               <div className="d-flex justify-content-center">
-                
                 <button
                   type="button"
                   className={`${style.downloadFactor} d-flex fwlex-row gap-2`}
@@ -348,8 +355,48 @@ export default function StepSixComponent({
             </div>
           </div>
         </div>
-        <div>
-          {finalPaymentImage && (
+       
+
+          {(finalFactor && finalFactor?.finalPaymentType === "zip") ||
+          finalFactor?.finalPaymentType === "rar" ? (
+            <>
+              <div
+                className={`${style.emptyBoxDonlowadDocument} ${style.factorImageStyle} d-flex position-relative`}
+                onClick={() => {
+                  if (finalPaymentImage) {
+                    const date = new Date();
+                    downloadImage(
+                      finalPaymentImage,
+                      `${date.toISOString()}.${finalFactor?.finalPaymentType}`
+                    );
+                  }
+                }}
+              >
+                <>
+                  <FolderZipIcon />
+                </>
+              </div>
+            </>
+          ) : finalFactor && finalFactor?.finalPaymentType === "pdf" ? (
+            <>
+              <div
+                className={`${style.emptyBoxDonlowadDocument} ${style.factorImageStyle} d-flex position-relative`}
+                onClick={() => {
+                  if (finalPaymentImage) {
+                    const date = new Date();
+                    downloadImage(
+                      finalPaymentImage,
+                      `${date.toISOString()}.${finalFactor?.finalPaymentType}`
+                    );
+                  }
+                }}
+              >
+                <>
+                  <PictureAsPdfIcon />
+                </>
+              </div>
+            </>
+          ) : (
             <div className="w-100 h-100">
               <Box
                 onClick={() => setZoomModal(true)}
@@ -361,7 +408,20 @@ export default function StepSixComponent({
               />
             </div>
           )}
-        </div>
+
+          {/* {finalPaymentImage && (
+            <div className="w-100 h-100">
+              <Box
+                onClick={() => setZoomModal(true)}
+                component="img"
+                className={style.factorImageStyle}
+                sx={{ width: "100%", height: "100%", cursor: "pointer" }}
+                src={finalPaymentImage}
+                alt="Factorimage"
+              />
+            </div>
+          )} */}
+        
       </div>
       {/* modals */}
       {finalPaymentImage && (

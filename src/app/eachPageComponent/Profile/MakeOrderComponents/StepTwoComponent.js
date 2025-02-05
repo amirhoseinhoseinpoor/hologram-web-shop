@@ -27,7 +27,6 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import LoadingCss from "@/app/BaseComponent/LoadingCss";
 import { downloadImage } from "@/app/utils/downloadImage";
 
-
 import style from "../../../Styles/Profile/MakeOrderStyle/StepTwoStyle.module.scss";
 
 export default function StepTwoComponent({
@@ -63,6 +62,9 @@ export default function StepTwoComponent({
   const [moveForward, setMoveForward] = useState(false);
   const [loadingDeleteOrder, setLoadingDeleteOrder] = useState(false);
   const [loadingImgDonwload, setLoadingImgDonwload] = useState([]);
+
+  console.log(FactorImage);
+  console.log(dataFactor);
 
   // modal
   const handleOpen = ({ imageUrl }) => {
@@ -672,7 +674,6 @@ export default function StepTwoComponent({
                                 handleImageClick(index, fileObj.file);
                               }
                             }}
-                           
                           >
                             {imageUrls[index] ? (
                               <>
@@ -748,7 +749,6 @@ export default function StepTwoComponent({
                                 handleImageClick(index, fileObj.file);
                               }
                             }}
-                           
                           >
                             {imageUrls[index] ? (
                               <>
@@ -1142,13 +1142,6 @@ export default function StepTwoComponent({
                             </p>
                           </div>
                         </label>
-                        {/* <input
-                        onChange={handleFileChange}
-                        id="residopload"
-                        name="residopload"
-                        type="file"
-                        className={style.fileInputStyle}
-                      /> */}
                       </div>
                     </div>
                   </>
@@ -1181,17 +1174,58 @@ export default function StepTwoComponent({
           </div>
         </div>
 
-        <div>
-          {dataFactor && (
-            <Box
-              onClick={() => handleOpen({ imageUrl: FactorImage.imageUrl })}
-              component="img"
-              className={style.factorImageStyle}
-              src={FactorImage?.imageUrl}
-              alt="Factorimage"
-            />
+       
+          {(dataFactor && dataFactor?.paymentImageType === "zip") ||
+          dataFactor?.paymentImageType === "rar" ? (
+            <>
+              <div
+                className={`${style.emptyBoxDonlowadDocument} ${style.factorImageStyle} d-flex position-relative`}
+                onClick={() => {
+                  if (FactorImage?.imageUrl) {
+                    const date = new Date();
+                    downloadImage(
+                      FactorImage?.imageUrl,
+                      `${date.toISOString()}.${dataFactor?.paymentImageType}`
+                    );
+                  }
+                }}
+              >
+                <>
+                  <FolderZipIcon />
+                </>
+              </div>
+            </>
+          ) : dataFactor && dataFactor?.paymentImageType === "pdf" ? (
+            <>
+              <div
+                className={`${style.emptyBoxDonlowadDocument} ${style.factorImageStyle} d-flex position-relative`}
+                onClick={() => {
+                  if (FactorImage?.imageUrl) {
+                    const date = new Date();
+                    downloadImage(
+                      FactorImage?.imageUrl,
+                      `${date.toISOString()}.${dataFactor?.paymentImageType}`
+                    );
+                  }
+                }}
+              >
+                <>
+                  <PictureAsPdfIcon />
+                </>
+              </div>
+            </>
+          ) : (
+            <>
+              <Box
+                onClick={() => handleOpen({ imageUrl: FactorImage.imageUrl })}
+                component="img"
+                className={style.factorImageStyle}
+                src={FactorImage?.imageUrl}
+                alt="Factorimage"
+              />
+            </>
           )}
-        </div>
+        
         {/* modals */}
         {zoomedImage && (
           <ZoomModal
