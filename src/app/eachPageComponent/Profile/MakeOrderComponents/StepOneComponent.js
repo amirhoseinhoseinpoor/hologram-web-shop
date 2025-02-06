@@ -12,6 +12,10 @@ export default function SteponeComponent({
   setDisabelInput,
   disabelInput,
 }) {
+
+  console.log(data);
+  
+
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
@@ -76,6 +80,8 @@ export default function SteponeComponent({
             filedOrder: prod.filedOrder?.map((field) => ({
               name: field.name,
               type: field.type,
+              value: field.value,
+              dropVal: field.dropVal,
               dropDownOP:
                 field.type === "dropDown" ? field.dropDownOP : undefined,
               dropVal: field.type === "dropDown" ? field.dropVal : "",
@@ -264,6 +270,8 @@ export default function SteponeComponent({
                 filedOrder: getApiResponse.filedOrder.map((field) => ({
                   name: field.name,
                   type: field.type,
+                  value:field.value,
+                  dropVal:field.dropVal,
                   dropDownOP:
                     field.type === "dropDown" ? field.dropDownOP : undefined,
                 })),
@@ -481,7 +489,9 @@ export default function SteponeComponent({
                               value={
                                 dynamicForm[inProd.code]?.[
                                   `${item.name}_custom`
-                                ] || item?.dropVal || ""
+                                ] ||
+                                item?.dropVal ||
+                                ""
                               }
                               onChange={(e) =>
                                 handleInputChangeForOther(inProd.code, e)
