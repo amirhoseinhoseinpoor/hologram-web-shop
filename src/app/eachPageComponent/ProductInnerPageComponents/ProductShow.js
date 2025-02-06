@@ -9,6 +9,8 @@ import { Card, CardMedia, Box } from "@mui/material";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { token } from "@/app/Store/slice";
+// import base component
+import ZoomModal from "@/app/BaseComponent/ZoomModal";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,6 +27,14 @@ export default function ProductShow({ productData }) {
   const comeToken = useSelector(token);
 
   const [selectedColor, setSelectedColor] = useState("");
+
+  const [zoomModal, setZoomModal] = useState(null);
+
+  console.log(zoomModal);
+  
+
+  // handle close modal 
+  const handleCloseZoomModal = () => setZoomModal(null);
 
   const handleColorChange = (color) => {
     setSelectedColor(color);
@@ -345,7 +355,7 @@ export default function ProductShow({ productData }) {
             <p className="title">{data.title}</p>
           </div>
           <div className="mt-2">
-            <p>{data.subtitle}</p>
+            <p className="subtitle">{data.subtitle}</p>
           </div>
           <div className="mt-2">
             <div className={`${style.gridPartShowDetail} mt-2`}>
@@ -356,8 +366,7 @@ export default function ProductShow({ productData }) {
                     className="d-flex flex-row gap-3 align-items-center mt-2 mb-2"
                   >
                     <div className="d-flex flex-row align-items-center gap-2">
-                      <span>{item?.sectionName}:</span>
-                      {/* <span>{selectedColor}</span> */}
+                      <span className="subtitle">{item?.sectionName}:</span>
                     </div>
                     <div className="d-flex flex-row align-items-center gap-2">
                       {item?.items?.map((iItem, Iindex) => (
@@ -378,10 +387,13 @@ export default function ProductShow({ productData }) {
                                   ? "0 0 5px rgba(0, 0, 0, 0.2)"
                                   : "none",
                             }}
-                            onClick={() => handleColorChange(iItem.name)}
+                            onClick={() => {
+                              handleColorChange(iItem.name),
+                              setZoomModal(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${iItem.src}`)
+                            }}
                           ></div>
                           <div>
-                            <p className="NormalTextSizing">{iItem.name}</p>
+                            <p className="VodeoDisSizing">{iItem.name}</p>
                           </div>
                         </>
                       ))}
@@ -389,7 +401,7 @@ export default function ProductShow({ productData }) {
                   </div>
                 ) : item.type == "text" ? (
                   <div className="w-100 mt-1 d-flex flex-row gap-3 align-items-center">
-                    <h3 className="mb-3 mt-3">{item?.sectionName}</h3>
+                    <h3 className="mb-3 mt-3 subtitle">{item?.sectionName}</h3>
                     <div style={{ display: "flex", gap: "10px" }}>
                       {item?.items?.map((size, index) => (
                         <div
@@ -465,6 +477,7 @@ export default function ProductShow({ productData }) {
           </div>
         </div>
       </div>
+      <ZoomModal open={zoomModal} onClose={handleCloseZoomModal} src={zoomModal} alt={`zoomModal`}/>
     </div>
   );
 }

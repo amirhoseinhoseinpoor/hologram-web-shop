@@ -40,14 +40,15 @@ export default function Product() {
   const allProductData = useSelector(productListData);
 
   // Extract the desired part from the decoded pathname
-  const pathSegments = decodedPathname.split("/");
-  const targetName = pathSegments[pathSegments.length - 1];
+  const pathSegments = decodedPathname.split("/").filter(Boolean);
 
+  const dynamicPath = `محصولات / ${pathSegments.join(" / ")}`.trim(); 
+  
+  // Find the product data using the normalized dynamic path  
+  const productData = allProductData?.find((item) => item.name.trim() === dynamicPath);  
+  
+  console.log("Product Data:", productData);  
 
-
-  const productData = allProductData?.find((item) => item.name === targetName);
-
-  console.log(productData);
 
   // Handle loading state
   if (isLoading) {

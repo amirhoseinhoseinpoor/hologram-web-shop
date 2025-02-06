@@ -25,6 +25,7 @@ export default function SteponeComponent({
   const [statusTraking, setStatusTraking] = useState(false);
   const [moveForward, setMoveForward] = useState(false);
   const [prodFiled, setProdFiled] = useState([]);
+
   console.log(prodFiled);
 
   const [formData, setFormData] = useState({
@@ -202,7 +203,7 @@ export default function SteponeComponent({
     setDisableNextStep(true);
     try {
       let dataToSend = {};
-  
+
       if (hasDynamicFields && prodFiled.length > 0) {
         // Construct products data with name, code, and dynamic fields including type and options
         const productsData = prodFiled.map((prod) => ({
@@ -211,20 +212,21 @@ export default function SteponeComponent({
           filedOrder: prod.filedOrder.map((field) => ({
             name: field.name,
             type: field.type,
-            dropDownOP: field.type === "dropDown" ? field.dropDownOP : undefined,
+            dropDownOP:
+              field.type === "dropDown" ? field.dropDownOP : undefined,
             value: dynamicForm[prod.code]?.[field.name] || "",
             dropVal: dynamicForm[prod.code]?.[`${field.name}_custom`] || "", // Include the custom value
           })),
         }));
-  
+
         dataToSend = { request: productsData };
       } else {
         // Only static form data
         dataToSend = { request: { ...formData } };
       }
-  
+
       const resultAction = await dispatch(sendFirstStep(dataToSend));
-  
+
       if (sendFirstStep.fulfilled.match(resultAction)) {
         setStatusTraking(true);
       } else {
@@ -234,7 +236,6 @@ export default function SteponeComponent({
       setOpenModal3(true);
     }
   };
-  
 
   const fetchRef = useRef(false);
 
@@ -311,25 +312,35 @@ export default function SteponeComponent({
   const handleDropdownChange = (code, event) => {
     const { name, value } = event.target;
 
-    // If "Other" is selected, make sure to update both the dropdown value and clear the custom value
-    if (value === "other") {
-      setDynamicForm((prev) => ({
-        ...prev,
-        [code]: {
-          ...prev[code],
-          [name]: value, // Set dropdown value to "other"
-          [`${name}_custom`]: "", // Clear the custom value
-        },
-      }));
-    } else {
-      // If not "Other", update the value normally
-      setDynamicForm((prev) => ({
-        ...prev,
-        [code]: {
-          ...prev[code],
-          [name]: value,
-        },
-      }));
+    // Ensure inProd is used in the right scope inside the map loop
+    const selectedProduct = prodFiled.find((prod) => prod.code === code);
+    if (selectedProduct) {
+      const selectedOption = selectedProduct.filedOrder.find(
+        (field) =>
+          field.name === name &&
+          field.dropDownOP.some((op) => op.text === value)
+      );
+
+      // If the option has isChecked = true, show the related input field
+      if (selectedOption && selectedOption.isChecked) {
+        setDynamicForm((prev) => ({
+          ...prev,
+          [code]: {
+            ...prev[code],
+            [name]: value,
+            [`${name}_custom`]: "", // Clear any previous custom value (if needed)
+          },
+        }));
+      } else {
+        // Update dynamicForm with the selected value
+        setDynamicForm((prev) => ({
+          ...prev,
+          [code]: {
+            ...prev[code],
+            [name]: value,
+          },
+        }));
+      }
     }
   };
 
@@ -355,10 +366,11 @@ export default function SteponeComponent({
           initialDynamicForm[prod.code] = {};
           prod.filedOrder.forEach((field) => {
             initialDynamicForm[prod.code][field.name] = field.value;
-  
+
             // If the field is "Other", also prefill the custom value
             if (field.value === "other") {
-              initialDynamicForm[prod.code][`${field.name}_custom`] = field.dropVal || "";
+              initialDynamicForm[prod.code][`${field.name}_custom`] =
+                field.dropVal || "";
             }
           });
         });
@@ -447,26 +459,29 @@ export default function SteponeComponent({
                               انتخاب کنید
                             </option>
                             {item?.dropDownOP?.map((POP, popIdx) => (
-                              <option key={popIdx} value={POP}>
-                                {POP}
+                              <option
+                                key={popIdx}
+                                value={POP.text}
+                                isCheckedData={POP.isChecked}
+                              >
+                                {POP.text}
                               </option>
                             ))}
-                            <option value="other">غیره</option>
                           </select>
 
-                          {/* Input Field shown when "Other" is selected */}
-                          {dynamicForm[inProd.code]?.[item.name] ===
-                            "other" && (
+                          {/* Only show the input when the selected option has isChecked = true */}
+                          {item?.dropDownOP?.some(
+                            (op) =>
+                              op.isChecked &&
+                              dynamicForm[inProd.code]?.[item.name] === op.text
+                          ) && (
                             <input
                               type="text"
                               name={item.name}
                               value={
-                                dynamicForm[inProd.code]?.[item.name] ===
-                                "other"
-                                  ? dynamicForm[inProd.code]?.[
-                                      `${item.name}_custom`
-                                    ] || ""
-                                  : ""
+                                dynamicForm[inProd.code]?.[
+                                  `${item.name}_custom`
+                                ] || item?.dropVal || ""
                               }
                               onChange={(e) =>
                                 handleInputChangeForOther(inProd.code, e)
