@@ -94,6 +94,7 @@
   cursor: pointer;
   position: relative;
   background-position: center;
+  background-size: cover;
 }
 
 .SizezInput {
@@ -115,8 +116,8 @@
   padding: 9px 15px;
 }
 .fixStyleSizeImgReDesctop{
-  width: 150px;
-  height: 110px;
+  width: 100%;
+  max-height: 200px;
   border-radius: 5px;
 }
 .fixStyleSizeImgRe {
@@ -155,7 +156,7 @@
     display: none; // Hide by default
   }
   .innerStyleDivForMain {
-    width: 100%;
+    width: 60%;
     padding-top: 10px;
     padding-bottom: 10px;
     border: none;

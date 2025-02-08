@@ -128,6 +128,7 @@ export default function ProductShow({ productData }) {
                       onClick={() => handleThumbnailClick(index)}
                       style={{
                         cursor: "pointer",
+                        
                       }}
                     >
                       {media.type === "2" ? (
@@ -184,6 +185,7 @@ export default function ProductShow({ productData }) {
                       onClick={() => handleThumbnailClick(index)}
                       style={{
                         cursor: "pointer",
+                        width: "75%",
                       }}
                     >
                       {media.type === "2" ? (
