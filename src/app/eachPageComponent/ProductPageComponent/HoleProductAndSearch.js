@@ -96,7 +96,7 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
               <Card className={`${style.mainCardStyle}`}>
                 <Link
                   className="text-decoration-none d-flex flex-row"
-                  href={`/${matchedTitle}/${item.name}`}
+                  href={`/${matchedTitle.trim()}/${item.name.split('/').pop().trim()}`}
                   passHref
                 >
                   <CardMedia

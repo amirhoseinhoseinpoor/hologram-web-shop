@@ -1,4 +1,3 @@
-
 import style from "../Styles/MainStyle/Footer.module.scss";
 import Box from "@mui/material/Box";
 
@@ -16,7 +15,7 @@ export default function Footer() {
     <section className={`${style.mainColor} position-relative`}>
       {/* upward arrow */}
       <div className={`text-center ${style.alignUpwardArrow}`}>
-        <a href="#" className="border-0" >
+        <a href="#" className="border-0">
           <div className={style.upwardArrowInner}>
             <Box sx={{ width: 25, height: 25 }}>
               <svg
@@ -80,7 +79,6 @@ export default function Footer() {
                 <a href="#">
                   <div className={style.phonecallfooterdiv}>
                     <div>
-                      
                       <Box>
                         <svg
                           width={22}
@@ -125,7 +123,19 @@ export default function Footer() {
             <div
               className={`bg-light mb-3 w-50 ${style.responsivetext} ${style.footerlogo}`}
             >
-              <p className="NormalTextSizing">لوگو</p>
+              <p className="NormalTextSizing">
+                <Box
+                  component="img"
+                  sx={{
+                    width: "60px",
+                    height: "100%",
+                    objectFit: "cover",
+                    
+                  }}
+                  alt="image."
+                  src="/LOGO/cropped-com.chakavak.adv_512x512.png"
+                />
+              </p>
             </div>
             <div className={`p-1 mb-2 w-50  ${style.responsivetext}`}>
               <p className="NormalTextSizing">
@@ -142,27 +152,42 @@ export default function Footer() {
               className={`d-flex flex-row justify-content-around w-50 ${style.responsivetext} ${style.productmobilers} `}
             >
               <div>
-                
                 <p className="mb-2 QASize">محصولات</p>
-                <Link href="/هولوگرام" passHref style={{textDecoration:"none" , color:"#333333"}}>
+                <Link
+                  href="/هولوگرام"
+                  passHref
+                  style={{ textDecoration: "none", color: "#333333" }}
+                >
                   <p className="mb-2 NormalTextSizing">هولوگرام</p>
                 </Link>
-                <Link href="/لیبل‌های امنیتی" passHref style={{textDecoration:"none" , color:"#333333"}}>  
-                 <p className="mb-2 NormalTextSizing">لیبل‌های امنیتی</p>
+                <Link
+                  href="/لیبل‌های امنیتی"
+                  passHref
+                  style={{ textDecoration: "none", color: "#333333" }}
+                >
+                  <p className="mb-2 NormalTextSizing">لیبل‌های امنیتی</p>
                 </Link>
-                <Link href="/برچسب‌های پلمپ" passHref style={{textDecoration:"none" , color:"#333333"}}>
+                <Link
+                  href="/برچسب‌های پلمپ"
+                  passHref
+                  style={{ textDecoration: "none", color: "#333333" }}
+                >
                   <p className="mb-2 NormalTextSizing">برچسب‌های پلمپ</p>
                 </Link>
-                <Link href="/اسکرچ" passHref style={{textDecoration:"none" , color:"#333333"}}>
+                <Link
+                  href="/اسکرچ"
+                  passHref
+                  style={{ textDecoration: "none", color: "#333333" }}
+                >
                   <p className="mb-2 NormalTextSizing">اسکرچ</p>
                 </Link>
               </div>
               <div className={style.footerLinksstyle}>
                 <p className="mb-2 QASize">لینک‌های مفید</p>
 
-                <Link href="/">
+                {/* <Link href="/">
                   <p className="mb-2 NormalTextSizing">معرفی هولگرام‌ها</p>
-                </Link>
+                </Link> */}
                 <Link href="/AboutUs">
                   <p className="mb-2 NormalTextSizing">درباره‌ی ما</p>
                 </Link>
@@ -194,7 +219,9 @@ export default function Footer() {
               </div>
               <div className="p-1 mb-1">
                 <span className="NormalTextSizing">ایمیل : </span>
-                <span className="normalTextLowWeight">info@azarhologram.co</span>
+                <span className="normalTextLowWeight">
+                  info@azarhologram.co
+                </span>
               </div>
               <div className="p-1">
                 <span className="NormalTextSizing">فکس : </span>
@@ -206,13 +233,19 @@ export default function Footer() {
                   className={`${style.test} d-flex align-items-center flrx-row`}
                 >
                   <a href="#">
-                    <WhatsAppIcon className={style.footerIconSize}></WhatsAppIcon>
+                    <WhatsAppIcon
+                      className={style.footerIconSize}
+                    ></WhatsAppIcon>
                   </a>
                   <a href="#">
-                    <TelegramIcon className={style.footerIconSize}></TelegramIcon>
+                    <TelegramIcon
+                      className={style.footerIconSize}
+                    ></TelegramIcon>
                   </a>
                   <a href="#">
-                    <InstagramIcon className={style.footerIconSize}></InstagramIcon>
+                    <InstagramIcon
+                      className={style.footerIconSize}
+                    ></InstagramIcon>
                   </a>
                   <a href="#">
                     <Box
@@ -241,7 +274,9 @@ export default function Footer() {
             </div>
           </div>
           {/* trust-logo */}
-          <div className={`${style.responsiveTrustlogo} d-flex flex-row justify-content-around w-50 mt-2 mb-2`}>
+          <div
+            className={`${style.responsiveTrustlogo} d-flex flex-row justify-content-around w-50 mt-2 mb-2`}
+          >
             <Box
               component="img"
               sx={{

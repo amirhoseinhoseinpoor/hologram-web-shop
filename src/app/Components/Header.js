@@ -21,6 +21,7 @@ import { token, firstName, lastName, phoneNumber } from "../Store/slice";
 import { resetToken } from "../Store/slice";
 import { headerList } from "../Store/thunks";
 import { headerListData } from "../Store/slice";
+import { Box } from "@mui/material";
 
 const renderSubItems = (subItems, depth = 1) => {
   return subItems.map((subItem) => {
@@ -133,7 +134,19 @@ export default function Header() {
         <Container className={style.headerresponsivemain}>
           <div className="d-flex flex-row justify-content-between">
             <Navbar.Brand href="#">
-              <p className="ms-4">لوگو</p>
+              <p className="ms-4">
+                <Box
+                  component="img"
+                  sx={{
+                    width: "60px",
+                    height: "100%",
+                    objectFit: "cover",
+                    // aspectRatio: 1.7,
+                  }}
+                  alt="image."
+                  src="/LOGO/cropped-com.chakavak.adv_512x512.png"
+                />
+              </p>
             </Navbar.Brand>
             {/* phone number descktop div */}
             <div
@@ -402,7 +415,19 @@ export default function Header() {
                 className={`${style.offcanvasheader} ${style.nextoffcanvas}`}
                 closeButton
               >
-                <Offcanvas.Title>لوگو</Offcanvas.Title>
+                <Offcanvas.Title>
+                  <Box
+                    component="img"
+                    sx={{
+                      width: "50px",
+                      height: "100%",
+                      objectFit: "cover",
+                      
+                    }}
+                    alt="image."
+                    src="/LOGO/cropped-com.chakavak.adv_512x512.png"
+                  />
+                </Offcanvas.Title>
               </Offcanvas.Header>
 
               <Nav className="align-items-center me-2 gap-3">
