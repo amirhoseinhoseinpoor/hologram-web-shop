@@ -130,7 +130,6 @@ export default function Footer() {
                     width: "60px",
                     height: "100%",
                     objectFit: "cover",
-                    
                   }}
                   alt="image."
                   src="/LOGO/cropped-com.chakavak.adv_512x512.png"
@@ -306,10 +305,12 @@ export default function Footer() {
             />
           </div>
         </div>
-
-        <p className="text-center NormalTextSizing mt-2 mb-2">
-          تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است.
-        </p>
+        <div className="d-flex flex-row justify-content-center mt-3 mb-2 gap-3">
+          <p className="text-center NormalTextSizing ">
+            تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است
+          </p>
+          <p className="text-center NormalTextSizing">نسخه : {process.env.FRONT_END_VERSION}</p>
+        </div>
       </div>
     </section>
   );
