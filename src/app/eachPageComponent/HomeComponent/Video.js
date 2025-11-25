@@ -26,6 +26,7 @@ export default function Video() {
   const [videoData, setvideoData] = useState([]);
   const videoRef = useRef();
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +39,6 @@ export default function Video() {
 
     fetchData();
   }, [dispatch]);
-
 
   const handleThumbnailClick = (index) => {
     setCurrentVideoIndex(index);
@@ -60,23 +60,28 @@ export default function Video() {
     };
   }, [currentVideoIndex]);
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.onplaying = () => {
-        setVideoEnded(true);
-      };
-    }
+  const handlePlay = () => setVideoEnded(true);
+  const handlePause = () => setVideoEnded(false);
 
-    if (videoRef.current && userInteracted) {
-      // videoRef.current.load();
-      videoRef.current.play();
-    }
-  }, [currentVideoIndex]);
+  // useEffect(() => {
+  //   const video = videoRef.current;
+  //   if (video) {
+  //     video.onplaying = () => {
+  //       setVideoEnded(true);
+  //     };
+  //   }
+
+  //   if (videoRef.current && userInteracted) {
+  //     // videoRef.current.load();
+  //     videoRef.current.play();
+  //   }
+  // }, [currentVideoIndex]);
 
   return (
     <section
-      className={`mb-5 container ${style.responsiveSection} ${videoData.length === 0 ? style.hidden : ''}`}
+      className={`mb-5 container ${style.responsiveSection} ${
+        videoData.length === 0 ? style.hidden : ""
+      }`}
     >
       {videoData.length > 0 ? (
         <>
@@ -91,7 +96,7 @@ export default function Video() {
                     </span>
                   </div>
                   <p className="subtitle">
-                  {videoData[currentVideoIndex].media.description}
+                    {videoData[currentVideoIndex].media.description}
                   </p>
                 </div>
               </CardContent>
@@ -101,6 +106,9 @@ export default function Video() {
                 src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.src}`}
                 poster={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.poster}`}
                 sx={{ borderRadius: "4px" }}
+                onPlay={handlePlay}
+                onPause={handlePause}
+                onLoadedData={() => setVideoEnded(false)}
                 controls
                 ref={videoRef}
               />
@@ -171,7 +179,7 @@ export default function Video() {
                         <div className="position-relative">
                           <CardMedia
                             component="img"
-                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.poster}`}
+                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${video.media.poster}`}
                             alt={video.media.title}
                             sx={{ borderRadius: "4px" }}
                             controls

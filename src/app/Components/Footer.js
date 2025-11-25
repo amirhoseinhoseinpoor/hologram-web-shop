@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import ShowVersionServer from "./ShowVersionServer";
 
 import Link from "next/link";
 export default function Footer() {
@@ -309,7 +310,9 @@ export default function Footer() {
           <p className="text-center NormalTextSizing ">
             تمام حقوق اين وب‌سايت نیز برای شرکت آذر هولوگرام است
           </p>
-          <p className="text-center NormalTextSizing">نسخه : {process.env.FRONT_END_VERSION}</p>
+          <p className="text-center NormalTextSizing">
+            <ShowVersionServer />
+          </p>
         </div>
       </div>
     </section>
