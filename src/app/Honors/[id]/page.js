@@ -12,7 +12,13 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
 async function fetchHonors() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`,
+      {
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       console.log('Failed to fetch data');
@@ -37,6 +43,9 @@ export default async function innerHonors({ params }) {
   }
 
   const decodedId = decodeURIComponent(params.id);
+
+  console.log(allHonors);
+  
 
   const honors = allHonors?.find((item) => 
     item.title.trim().toLowerCase() == decodedId.trim().toLowerCase()

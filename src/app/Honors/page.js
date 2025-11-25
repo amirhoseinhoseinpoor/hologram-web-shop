@@ -14,7 +14,13 @@ import MainLayout from "../layouts/MainLayout";
 
 async function fetchHonors() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`,
+      {
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       console.log('Failed to fetch data');

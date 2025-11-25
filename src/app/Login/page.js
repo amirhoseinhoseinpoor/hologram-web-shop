@@ -11,6 +11,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import style from "../Styles/Login/LoginStyle.module.scss";
 // import captcha for the login
 import ReCAPTCHA from "react-google-recaptcha";
+import { Box } from "@mui/material";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -221,7 +222,16 @@ export default function Login() {
               >
                 <div className="d-flex flex-row justify-content-center mt-3 mb-4">
                   <div>
-                    <p className="Banner-title">Logo</p>
+                    <Box
+                      component="img"
+                      sx={{
+                        width: "105px",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                      alt="image."
+                      src="/LOGO/cropped-com.chakavak.adv_512x512.png"
+                    />
                   </div>
                 </div>
                 <p className="mb-3 me-2 mt-3 discription">ورود</p>
@@ -244,7 +254,18 @@ export default function Login() {
                     id="phoneNumber"
                     value={username}
                     ref={numberRef}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^[0-9]*$/.test(value)) {
+                        setPhoneNumber(value);
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
+                        e.preventDefault();
+                      }
+                    }}
+                    inputMode="numeric"
                     required
                   />
                 </div>
@@ -260,7 +281,17 @@ export default function Login() {
                     id="password"
                     value={password}
                     ref={passwordRef}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^[0-9]*$/.test(value)) {
+                        setPassword(value);
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
+                        e.preventDefault();
+                      }
+                    }}
                     required
                   />
                   <div className="mt-2">

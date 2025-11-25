@@ -12,7 +12,12 @@ import parse from "html-react-parser";
 async function fetchBlogs() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`,
+      {
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
     );
 
     if (!response.ok) {
@@ -37,7 +42,11 @@ export default async function BlogPostPage({ params }) {
     );
   }
 
-  const decodedId = decodeURIComponent(params.id);
+
+  
+
+  const decodedId = decodeURIComponent(params.id); 
+  
 
   const blogPost = allBlogs.find(
     (item) =>

@@ -10,7 +10,13 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
 async function fetchExhibition() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`,
+      {
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       console.log('Failed to fetch data');

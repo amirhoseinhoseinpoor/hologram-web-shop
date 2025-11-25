@@ -8,7 +8,13 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
 async function fetchBlogs() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`,
+      {
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       console.log('Failed to fetch data');

@@ -6,7 +6,14 @@ import React from "react";
 
 async function fetchBlogs() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`,
+      {
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       console.log("Failed to fetch data");
@@ -14,6 +21,7 @@ async function fetchBlogs() {
     }
 
     const honors = await response.json();
+
     return Array.isArray(honors) ? honors : [];
   } catch (error) {
     console.error("Fetch failed:", error);
@@ -21,23 +29,23 @@ async function fetchBlogs() {
   }
 }
 
-
 export default async function Magazine() {
   const honors = await fetchBlogs();
 
+  console.log(honors);
+
   if (honors.length === 0) {
-    return <p>No honors data available at the moment. Please try again later.</p>;
+    return (
+      <p>No blogs data available at the moment. Please try again later.</p>
+    );
   }
 
   const dataFillterd = honors.filter((item) => item.content.priority === true);
 
   const findData = dataFillterd.slice(0, 3);
 
-
   return (
-    <section
-      className={`container ${style.mainSection}`}
-    >
+    <section className={`container ${style.mainSection}`}>
       <div className="d-flex flex-row justify-content-between">
         <div>
           <span className="title">مجله آذر هولگرام </span>
@@ -58,7 +66,11 @@ export default async function Magazine() {
         {findData &&
           findData.map((item, index) => (
             <React.Fragment key={index}>
-              <Link style={{textDecoration: "none" , color: "unset"}} passHref href={`/Blog/${item.content.title}`}>
+              <Link
+                style={{ textDecoration: "none", color: "unset" }}
+                passHref
+                href={`/Blog/${item.content.title}`}
+              >
                 <div
                   className={`${style.boxBackgroundMain} d-flex flex-column justify-content-center`}
                 >

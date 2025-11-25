@@ -7,7 +7,12 @@ import ShowRoute from "../Components/ShowRoute";
 async function fetchProduct() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/list`
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/list`,
+      {
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
     );
 
     if (!response.ok) {
@@ -28,7 +33,12 @@ async function fetchProduct() {
 async function fetchHeader() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/header/find`
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/header/find`,
+      {
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
     );
 
     if (!response.ok) {
