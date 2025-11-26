@@ -47,7 +47,7 @@ export default function Product() {
   // Find the product data using the normalized dynamic path  
   const productData = allProductData?.find((item) => item.name.trim() === dynamicPath);  
   
-  console.log("Product Data:", productData);  
+
 
 
   // Handle loading state

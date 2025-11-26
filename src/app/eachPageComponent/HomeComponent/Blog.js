@@ -1,3 +1,4 @@
+export const revalidate = 60; // ISR every 60 second
 import Link from "next/link";
 import style from "../../Styles/HomeStyle/Blog.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -9,6 +10,8 @@ async function fetchBlogs() {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`,
       {
+        // Ensures fresh data every 60 seconds
+        next: { revalidate: 60 },
         headers: {
           Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
         },

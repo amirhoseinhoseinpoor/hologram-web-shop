@@ -10,7 +10,7 @@ const LogVisit = () => {
         await axios.post(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/analytics/visit`, {
           userAgent: navigator.userAgent,
         });
-        console.log("done");
+
         
       } catch (error) {
         console.error('Error logging visit:', error);

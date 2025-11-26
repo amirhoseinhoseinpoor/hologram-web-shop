@@ -1,3 +1,5 @@
+export const revalidate = 60; // ISR every 60 seconds
+
 import style from "../../Styles/BlogStyle/BlogCard.module.scss";
 import Link from "next/link";
 import Card from "@mui/material/Card";
@@ -8,8 +10,11 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
 async function fetchBlogs() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`,
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`,
       {
+        // Ensures fresh data every 60 seconds
+        next: { revalidate: 60 },
         headers: {
           Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
         },
@@ -17,7 +22,7 @@ async function fetchBlogs() {
     );
 
     if (!response.ok) {
-      console.log('Failed to fetch data');
+      console.log("Failed to fetch data");
       return [];
     }
 
@@ -30,11 +35,12 @@ async function fetchBlogs() {
 }
 
 export default async function BlogCard() {
-  
   const honors = await fetchBlogs();
 
   if (honors.length === 0) {
-    return <p>No honors data available at the moment. Please try again later.</p>;
+    return (
+      <p>No honors data available at the moment. Please try again later.</p>
+    );
   }
 
   const dataFillterd = honors.filter((item) => item.content.priority === true);
@@ -44,7 +50,6 @@ export default async function BlogCard() {
   const findSecontImportant = dataFillterd.slice(2, 5);
 
   // console.log(findSecontImportant);
-  
 
   function fixTitleSize(text) {
     var shortTitle;

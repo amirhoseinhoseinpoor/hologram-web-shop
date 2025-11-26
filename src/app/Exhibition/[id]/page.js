@@ -1,3 +1,4 @@
+export const revalidate = 60; // ISR every 60 second
 import style from "../../Styles/ExhibitionPageStyle/ExhibitionDynamicContent.module.scss";
 import HeaderSeo from "../../Components/HeaderSeo";
 import Box from "@mui/material/Box";
@@ -10,8 +11,11 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
 async function fetchExhibition() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`,
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`,
       {
+        // Ensures fresh data every 60 seconds
+        next: { revalidate: 60 },
         headers: {
           Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
         },
@@ -19,7 +23,7 @@ async function fetchExhibition() {
     );
 
     if (!response.ok) {
-      console.log('Failed to fetch data');
+      console.log("Failed to fetch data");
       return [];
     }
 
@@ -31,13 +35,13 @@ async function fetchExhibition() {
   }
 }
 
-
 export default async function innerExhibition({ params }) {
-
   const allHonors = await fetchExhibition();
 
   if (allHonors.length === 0) {
-    return <p>No honors data available at the moment. Please try again later.</p>;
+    return (
+      <p>No honors data available at the moment. Please try again later.</p>
+    );
   }
 
   const decodedId = decodeURIComponent(params.id);
