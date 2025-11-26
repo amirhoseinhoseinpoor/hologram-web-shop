@@ -1,12 +1,17 @@
 
 
 .LayOutMainDiv{
-    padding-top: 68px !important;
+    padding-top: 80px !important;
 }
 
 @media (max-width: 980px) {
     .LayOutMainDiv{
-        padding-top: 120px !important;
+        padding-top: 150px !important;
     }
-    
+}
+
+@media (max-width: 768px) {
+    .LayOutMainDiv{
+        padding-top: 150px !important;
+    }
 }
