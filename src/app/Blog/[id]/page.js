@@ -1,3 +1,5 @@
+export const revalidate = 60; // ISR every 60 seconds
+
 import style from "../../Styles/BlogStyle/BlogDynamicContent.module.scss";
 import Box from "@mui/material/Box";
 import CopyLinkButton from "../../Components/CopyLinkButton";
@@ -14,6 +16,8 @@ async function fetchBlogs() {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`,
       {
+        // Ensures fresh data every 60 seconds
+        next: { revalidate: 60 },
         headers: {
           Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
         },
@@ -42,11 +46,7 @@ export default async function BlogPostPage({ params }) {
     );
   }
 
-
-  
-
-  const decodedId = decodeURIComponent(params.id); 
-  
+  const decodedId = decodeURIComponent(params.id);
 
   const blogPost = allBlogs.find(
     (item) =>
@@ -373,7 +373,10 @@ export default async function BlogPostPage({ params }) {
                                   aspectRatio: 1.48,
                                 }}
                                 alt={blog.title}
-                                src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.imageSrc}` || "/default-image.jpg"} // Use blog's image
+                                src={
+                                  `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.imageSrc}` ||
+                                  "/default-image.jpg"
+                                } // Use blog's image
                               />
                             </div>
                             <div>
@@ -408,7 +411,10 @@ export default async function BlogPostPage({ params }) {
                                   aspectRatio: 1.48,
                                 }}
                                 alt={blog.title}
-                                src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.imageSrc}` || "/default-image.jpg"} // Use blog's image
+                                src={
+                                  `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blog.imageSrc}` ||
+                                  "/default-image.jpg"
+                                } // Use blog's image
                               />
                             </div>
                             <div>
