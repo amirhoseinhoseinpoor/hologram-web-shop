@@ -1,0 +1,96 @@
+@use "../variable" as var;
+.otpContainer {
+  // text-align: center;
+  padding: 20px;
+  // border: 1px solid #ddd;
+  // border-radius: 10px;
+  // max-width: 400px;
+  // margin: auto;
+  // background-color: #fff;
+}
+
+.otpForm {
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+}
+
+.otpInputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  direction: ltr;
+}
+.otpInputs ::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  margin: 0;
+}
+
+.otpInput {
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  text-align: center;
+  border: 1px solid #aeaaaa;
+  border-radius: 5px;
+  margin: 0 15px;
+  outline: none;
+  transition: border-color 0.3s;
+  background-color: transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.otpInput:focus {
+  border-color: #5695f6;
+}
+
+// .timer {
+//   font-size: 18px;
+//   margin-bottom: 20px;
+//   color: #333;
+// }
+
+.verifyButton {
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+.resendButton {
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+  color: #f3802c;
+  text-decoration: underline;
+}
+
+.verifyButton:hover {
+  background-color: #357ab7;
+}
+
+// .resendButton:disabled {
+//   background-color: #ccc;
+//   cursor: not-allowed;
+// }
+
+.numberFalse {
+  border-bottom: 1.3px solid lightgray;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+@media (max-width: 768px) {
+  .otpInput {
+    width: 38px;
+    height: 38px;
+   margin: 0 4px;
+
+  }
+}

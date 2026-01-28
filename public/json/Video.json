@@ -1,0 +1,59 @@
+[
+    {
+      
+      "title": "عنوان ویدیو",
+      "discription" :"اینجاست",
+      "src": "/HomeVideo/SampleVideo_1280x720_1mb.mp4",
+      "poster": "/HomeImages/Video image.png"
+      
+    },
+    {
+      
+      "title": "Video 2",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "src": "/HomeVideo/sampleVideo2.mp4",
+      "poster": "/HomeImages/Video image.png"
+      
+    },
+    {
+      
+      "title": "Video 3",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "src": "/HomeVideo/sampleVideo2.mp4",
+      "poster": "/HomeImages/Video image.png"
+      
+    },
+    {
+     
+      "title": "Video 3",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "src": "/HomeVideo/sampleVideo2.mp4",
+      "poster": "/HomeImages/Video image.png"
+      
+    },
+    {
+      
+      "title": "Video 3",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "src": "/HomeVideo/sampleVideo2.mp4",
+      "poster": "/HomeImages/Video image.png"
+      
+    },
+    {
+      
+      "title": "Video 3",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "src": "/HomeVideo/sampleVideo2.mp4",
+      "poster": "/HomeImages/Video image.png"
+      
+    },
+    {
+      
+      "title": "Video 3",
+      "discription" :"عنوان ویدئو اینجا قرار میگیره که میتونه تا دو خط هم باشه",
+      "src": "/HomeVideo/sampleVideo2.mp4",
+      "poster": "/HomeImages/Video image.png"
+      
+    }
+  ]
+  

@@ -1,0 +1,40 @@
+@use "../../variable" as var;
+
+.MainSectionBackground{
+    background-color: white;
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.ringIcon{
+    background-color: #F3802C;
+    border-radius: 4px;
+    width: 27px;
+    height: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.DateStyle{
+    color: #5F5F5F;
+}
+
+.coloredDiscription{
+    color: #333333;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .makeItResponsive{
+        flex-direction: column !important;
+        gap: 4px !important;
+    }
+    .DateStyle{
+        margin-right: 30px;
+    }
+    .MainSectionBackground{
+        padding: 9px;
+    }
+}
+

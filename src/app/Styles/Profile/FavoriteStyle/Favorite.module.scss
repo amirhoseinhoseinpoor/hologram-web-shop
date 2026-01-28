@@ -1,0 +1,68 @@
+@use "../../variable" as var;
+
+.mainSectionBackground {
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.eachCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 40px;
+}
+
+.mainCardStyle {
+  background-color: white;
+  border: none;
+  box-shadow: none;
+  border-radius: 4px;
+  position: relative;
+}
+.adjustContent {
+  padding: 0 !important;
+  margin-right: 8px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: var.$social-media-color;
+}
+
+.fixBoxSize {
+  border-radius: 14px;
+  padding: 8px;
+}
+
+.diveSaveButton {
+  position: absolute;
+  transform: translate(-50%, 50%);
+  top: 0%;
+  right: 0%;
+  background-color: white;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diveShareButton {
+  position: absolute;
+  transform: translate(-50%, 50%);
+  top: 1%;
+  right: 38px;
+  background-color: white;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .eachCardGrid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 7px;
+  }
+  .mainSectionBackground {
+    padding: 5px;
+  }
+}

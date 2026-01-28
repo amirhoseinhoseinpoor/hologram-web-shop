@@ -1,0 +1,40 @@
+[
+  {
+    "title": "هولوگرام اختصاصی با اثر گذاری باطل شد",
+    "subtitle": "یه معرفی اجمالی درباره این محصول که در حد دو خطه این جا میاد.",
+    "color": [
+      { "name": "آبی", "value": "blue" },
+      { "name": "سرمه ای", "value": "navy" },
+      { "name": "زرد", "value": "yellow" }
+    ],
+    "sizes": ["2:4", "2:5", "3:5", "3:11", "5:15"],
+
+    "imgData": [
+      {
+        "src": "/HomeImages/typeazar1.jpg",
+        "type": "image"
+      },
+      {
+        "src": "/HomeImages/coin.png",
+        "type": "image"
+      },
+      {
+        "src": "/HomeImages/coin.png",
+        "type": "image"
+      },
+      {
+        "src": "/HomeImages/coin.png",
+        "type": "image"
+      },
+      {
+        "src": "/HomeImages/cube-coin.png",
+        "type": "image"
+      },
+      {
+        "src": "/HomeVideo/sampleVideo2.mp4",
+        "poster": "/HomeImages/cube-coin.png",
+        "type": "video"
+      }
+    ]
+  }
+]

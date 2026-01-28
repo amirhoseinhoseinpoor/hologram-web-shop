@@ -1,4 +1,325 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
-body{
-    overflow-x: hidden;
+.row {
+  margin-right: 0 !important; /* Removes the negative margin on the right */
+  margin-left: 0 !important; /* Removes the negative margin on the left */
+  /* Add any other styles you want to reset or override */
+}
+
+body {
+  // overflow-x: hidden;
+  background-color: white;
+  -moz-font-feature-settings: "ss02";
+  -webkit-font-feature-settings: "ss02";
+  font-feature-settings: "ss02";
+}
+html {
+  position: relative;
+  height: 100%;
+}
+body {
+  position: relative;
+  height: 100%;
+  line-height: normal;
+  overflow-x: hidden;
+}
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+video::-moz-media-controls-play-button {
+  display: none !important;
+}
+video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
+input {
+  -moz-appearance: textfield !important;
+}
+
+//global sizing
+.sometext {
+  font-size: 20px;
+  font-weight: 600;
+}
+.title {
+  font-size: 20px;
+  font-weight: 600;
+}
+.QASize {
+  font-size: 16px;
+  font-weight: 600;
+}
+.seeOrderFont {
+  font-size: 14px;
+  font-weight: 600;
+}
+.VodeoDisSizing {
+  font-size: 16px;
+  font-weight: 500;
+}
+.purchesSize {
+  font-size: 17px;
+  font-weight: 500;
+}
+.subtitle {
+  font-weight: 500;
+  font-size: 18px;
+}
+.subitem {
+  font-size: 17px;
+  font-weight: 500;
+}
+.discription {
+  font-size: 14px;
+  font-weight: 500;
+}
+.smallest {
+  font-size: 13px;
+  font-weight: 400;
+}
+.anavigation {
+  font-size: 14px;
+  font-weight: 500;
+}
+.NormalTextSizing {
+  font-size: 15px;
+  font-weight: 500;
+}
+.normalTextLowWeight {
+  font-weight: 400;
+  font-size: 16px;
+}
+.Banner-title {
+  font-weight: 500;
+  font-size: 30px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span {
+  line-height: normal;
+  margin-bottom: 0;
+}
+button {
+  font-size: 14px;
+}
+.form-control:focus,
+.form-select:focus {
+  box-shadow: unset;
+}
+//end global sizing
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+.basic-navbar-nav {
+  border: none;
+}
+.basic-navbar-nav:focus {
+  outline: none !important;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: hsl(211, 89%, 59%);
+  border: 1px solid #3892f3 !important;
+}
+
+//acoordion
+
+.accordion-button.collapsed {
+  justify-content: space-between !important;
+}
+.accordion-button:focus {
+  outline: none;
+  box-shadow: none;
+  background-color: unset;
+  color: unset;
+}
+.accordion-item:last-of-type > .accordion-header .accordion-button.collapsed {
+  border-radius: unset;
+}
+
+.accordion-button.collapsed::after {
+  background-image: url(/HomeImages/acoordion.png);
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url(/HomeImages/acoordion-collapse.png);
+}
+
+//swiper
+
+#app {
+  height: 100%;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  p {
+    margin-right: 10px;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60% !important;
+  align-self: center;
+}
+
+.swiper-slide img {
+  object-fit: cover;
+}
+
+.swiper .swiper-pagination {
+  background-color: white;
+  padding: 10px 0;
+  bottom: -1% !important;
+  border-radius: 6px;
+}
+
+@media (max-width: 980px) {
+  .seeOrderFont {
+    font-size: 14px;
+  }
+  .normalTextLowWeight {
+    font-size: 15px;
+  }
+  .sometext {
+    font-size: 19px;
+  }
+  .QASize {
+    font-size: 15px;
+  }
+  .NormalTextSizing {
+    font-size: 14px;
+  }
+  .VodeoDisSizing {
+    font-size: 15px;
+  }
+  .purchesSize {
+    font-size: 16px;
+  }
+  button {
+    font-size: 13px;
+  }
+  .smallest {
+    font-size: 12px;
+  }
+  p {
+    font-size: 18px;
+  }
+  span {
+    font-size: 18px;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .Banner-title {
+    font-size: 27px;
+  }
+  .subtitle {
+    font-weight: unset;
+  }
+  .subitem {
+    font-size: 15px;
+  }
+}
+@media (max-width: 768px) {
+  // global sizing
+  .seeOrderFont {
+    font-size: 13px;
+  }
+  .normalTextLowWeight {
+    font-size: 14px;
+  }
+  .NormalTextSizing {
+    font-size: 13px;
+  }
+  .sometext {
+    font-size: 18px;
+  }
+  .smallest {
+    font-size: 11px;
+  }
+  .VodeoDisSizing {
+    font-size: 14px;
+  }
+  .purchesSize {
+    font-size: 15px;
+  }
+  .subitem {
+    font-size: 14px;
+  }
+  p {
+    font-size: 16.5px;
+  }
+  span {
+    font-size: 16.5px;
+  }
+  .title {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+  }
+  .discription {
+    font-size: 13px !important;
+  }
+  .Banner-title {
+    font-size: 18px;
+  }
+  .subAdvantages {
+    font-size: 14px !important;
+  }
+
+  .accordion-button.collapsed::after {
+    display: none;
+  }
+
+  .accordion-button:not(.collapsed)::after {
+    display: none;
+  }
+  .accordion-button.collapsed::before {
+    content: "";
+    background-image: url(/HomeImages/acoordion.png);
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-size: 1.2rem;
+    transition: 0.2s ease-in-out;
+    margin-left: 17px;
+  }
+
+  .accordion-button:not(.collapsed)::before {
+    content: "";
+    background-image: url(/HomeImages/acoordion-collapse.png);
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-size: 1.2rem;
+    transition: 0.2s ease-in-out;
+    transform: rotate(-180deg);
+    margin-left: 17px;
+  }
+  .accordion-button.collapsed {
+    justify-content: unset !important;
+  }
+  .FAQ_accordionStyle__rCscI div h2 button {
+    justify-content: unset !important;
+  }
 }

@@ -1,0 +1,154 @@
+@use '../variable' as var;
+
+.MainDiv{
+    gap: 15px;
+}
+
+.textContent{
+    width: 70%;
+}
+.inputContent{
+    width: 30%;
+    margin-top: 70px;
+}
+.discriptionColor{
+    a{
+        color: var.$tabbed;
+        text-decoration: none;
+    }
+    a:hover{
+      text-decoration: underline !important;
+    }
+    
+}
+.seasonMaindiv{
+    border: 1px solid lightgray;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+
+
+.boldContentStyle{
+    border-right: 2px solid var.$footer-top-person;
+    p{
+        margin-right: 10px;
+    }
+}
+.posetivestyle{
+    color: #71BC1C;
+    border-bottom: 2.5px solid #71BC1C;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+.negetive{
+    color: #FF4F3F;
+    border-bottom: 2.5px solid #FF4F3F;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+.positiveMaindiv{
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 10px;
+    width: 50%;
+}
+.imageDiscription{
+    color: var.$tabbed;
+}
+.advertismentBox{
+    border: 1.5px solid var.$footer-top-person;
+    border-radius: 4px;
+    padding: 10px;
+    gap: 30px;
+}
+.contenttextButton{
+    width: 70%;
+    justify-content: center;
+   
+    button{
+        width: fit-content;
+        border: none;
+        background-color: var.$footer-top-person;
+        border-radius: 4px;
+        color: white;
+        padding: 5px 13px; 
+        margin-top: 15px;
+    }
+}
+.socialMediaIcon a{
+    color: var.$social-media-color;
+    padding: 4px;
+        
+}
+.socialMediaIcon{
+    align-items: center;
+}
+
+
+.firstIcontStyle{
+    font-size: 28px;
+}
+// tags part
+.tagsStyle{
+  li{
+    padding: 5px 14px;
+    border: 1.5px solid lightgray;
+    border-radius: 4px;
+    color: var.$tabbed;
+  }
+}
+
+// recomend blog part
+
+.studingtimetext{
+    color : #5F5F5F !important;
+}
+.boxBackgroundMain{
+    border-radius: 5px;
+    padding: 10px;
+    background-color: var.$footer-background;
+}
+
+
+
+
+@media (max-width: 980px) {
+    .MainDiv{
+        flex-direction: column !important;
+    }
+    .textContent{
+        width: 100%;
+    }
+    .inputContent{
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+@media (max-width: 768px) {
+    .mobilePictureResponsiveBlog{
+        img{
+            max-height: 198px;
+            border-radius: 5px;
+        }
+    }
+    .responsiveFirstBox{
+        display: block !important;
+    }
+    .restylethePositiveNegetive{
+        flex-direction: column !important;
+        margin-top: 10px;
+        div{
+            width: 100%;
+        }
+    }
+    .advertismentBox{
+        flex-direction: column !important;
+        gap: 20px;
+        img{
+            width: 100%;
+        }
+    }
+
+}
+

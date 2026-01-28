@@ -1,0 +1,200 @@
+@use "../variable" as var;
+
+
+
+
+.upwardArrowInner{
+    background-color: var.$arrow-background;
+    display: inline-block;
+    padding: 11px 13px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    transform: translate(50% , -50%);
+}
+
+
+
+//first column
+.mainColor{
+    background-color: var.$footer-background;
+    margin-top: 50px;
+}
+
+.footertopperson{
+    display: flex;
+    background-color: var.$footer-top-person;
+    color: white;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    height: 40%;
+}
+.FCB{
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+}
+.imagefooterrsb{
+    height: 60% ;
+   
+}
+
+//second coulumn
+.footerlogo{
+    padding: 25px;
+    p{
+        text-align: center;
+    }
+}
+
+
+.test > a{
+    color: var.$social-media-color;
+    padding: 4px;
+    margin-right: 2px;
+    font-size: medium;
+}
+
+.phonecallfooterdiv{
+    padding: 5px;
+    background-color: rgba($color: #ffffff, $alpha: 0.5);
+    border-radius: 50%;
+    position: absolute;
+    left: 10%;
+    top: 84%;
+    
+    div{
+        padding: 6px;
+        background-color: white;
+        border-radius: 50%;
+    }
+    
+    svg{
+        stroke: black;
+        fill: none;
+    }
+}
+.responsivepictureperson{
+    max-width: 300px;
+    max-height: 450px;
+}
+
+.footerLinksstyle{
+    a{
+        text-decoration: none;
+        color: unset;
+    }
+}
+.footerIconSize{
+    font-size: 24px;
+}
+.footerLinkedinIcon{
+    width: 37px;
+    height: 37px;
+}
+
+@media (max-width :980px) {
+    .responsiveRow{
+        display: block !important;
+        width: 100% !important;
+    }
+    .responsivelogo{
+      width: 100%;
+    }
+    .responsivepictureperson{
+        max-width: none;
+        flex-direction: row !important;
+        width: 100%;
+    }
+    .imagefooterrsb{
+        height: 100%;
+        width: 36%;
+        margin-left: 15px;
+        img{
+            border-radius: 5px;
+            height: 100%;
+            max-width: 239px;
+        }
+    }
+    .footertopperson{
+       border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+
+    }
+    .textFooter{
+        width: 50%;
+    }
+    .footertopperson{
+        width: 100%; 
+        display: flex;
+        flex-direction: row;
+        height: unset;
+    }
+    .responsivelogo{
+        width: 100%;
+        margin-top: 20px;
+    }
+    .phonecallfooterdiv{
+        position: unset;
+        padding: 4px;
+        div{
+            padding: 5px;
+        }
+    }
+    .footernumberflexrp{
+        align-items: center;
+        p{
+            margin-left: 10px;
+        }
+    }
+    .footerIconSize{
+        font-size: 22px;
+    }
+    .footerLinkedinIcon{
+        width: 35px;
+        height: 35px;
+    }
+    
+}
+
+@media (max-width :768px) {
+    
+    .responsivetext{
+        width: 100% !important;
+    }
+    .responsivelogo{
+        width: 100%;
+        display: block !important;
+    }
+    .alignUpwardArrow{
+        text-align: unset !important;
+        margin-right: 50px;
+    }
+   
+    .imagefooterrsb{
+        margin-left: 10px;
+    }
+    .css-13nx2ny{
+        aspect-ratio: 1;
+        border-radius: 5px !important;
+    }
+    .productmobilers{
+        justify-content: space-around  !important;
+        width: 83% !important;
+    }
+    .footerIconSize{
+        font-size: 20px;
+    }
+    .responsiveTrustlogo{
+        width: 75% !important;
+        img{
+            width: 75px !important;
+        }
+    }
+}
+@media (max-width :580px) {
+    .imagefooterrsb{
+        width: 100%;
+    }
+}

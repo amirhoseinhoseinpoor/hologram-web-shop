@@ -1,0 +1,309 @@
+@use "../../variable" as var;
+
+.StarFixReq {
+  color: #ff4f3f;
+}
+.numberColorForcall {
+  color: #f3802c;
+}
+
+.resetfontLabel {
+  font-family: unset;
+  color: var.$social-media-color;
+  margin: 0;
+  span {
+    font-family: unset;
+  }
+}
+.imageTitleForDocument{
+  position: absolute;
+  // transform: translate(50% , -50%);
+  top: 7px;
+  left: 7px;
+  background-color: #e1f1ff;
+  border: 1px solid #5695f6;
+  color: #5695f6;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
+.pendingStatusStyle{
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  background-color: #f3802c;
+  color: white;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
+.rejectStatusStyle{
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  background-color: var.$redColor;
+  color: white;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
+
+.confirmStatusStyle{
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  background-color: #e1f1ff;
+  border: 1px solid #5695f6;
+  color: #5695f6;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
+
+.stepContent {
+  background-color: white;
+  height: 100%;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.SectionStyle {
+  background-color: white;
+  height: 100%;
+  padding: 14px;
+  border-radius: 4px;
+}
+
+.changingopacityZ {
+  opacity: 0.8;
+}
+
+.downloadFactor {
+  border: none;
+  border-radius: 4px;
+  color: white;
+  background-color: #f3802c;
+  padding: 8px 10px;
+}
+.emptyBoxDonlowadDocument{
+  border: 1px dashed #c0c0c0;
+  border-radius: 4px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #c0c0c0;
+  font-size: 14px;
+  font-weight: 500;
+  height: 140px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px; 
+  cursor: pointer,
+}
+
+.factorImageStyle{
+  width: 100%;
+  max-width: 250px;
+  border-radius: 4px;
+  max-height: 400px;
+}
+.DocInfoMainStyle{
+  // background-color: lightgray;
+  color: var.$footer-top-person;
+  // padding: 10px;
+  // border-radius: 4px;
+}
+.continueButton {
+  border: none;
+  color: white;
+  background-color: #5695f6;
+  border-radius: 4px;
+  padding: 7px 29px;
+}
+
+.continueButtonpaying {
+  border: none;
+  background-color: #5695f6;
+  color: white;
+  padding: 7px 35px;
+  border-radius: 4px;
+}
+
+.labelInsteadOfInput {
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 10px;
+  width: 100%;
+  height: 77%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.colorTheInputFile {
+  color: #404040;
+}
+.displayNoneTheInput {
+  display: none;
+}
+.inputTextCompanyName {
+  width: 100%;
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 7px 15px;
+}
+
+.inputTextCompanyName:focus-visible {
+  outline: none;
+}
+.resetfontLabel {
+  font-family: unset;
+  color: var.$social-media-color;
+  span {
+    font-family: unset;
+  }
+}
+.continueButton {
+  border: none;
+  color: white;
+  background-color: #5695f6;
+  border-radius: 4px;
+  padding: 6px 20px;
+}
+
+.SeeLastStepButton {
+  border: 1.5px solid #5695f6;
+  color: #5695f6;
+  background-color: white;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.cancelOrder {
+  border: none;
+  color: #ff4f3f;
+  background-color: white;
+  border-radius: 4px;
+  padding: 5px 18px;
+}
+
+.FormGroupForRaidio {
+  flex-direction: row;
+}
+
+.LogoReplaceStyle {
+  max-width: 117px;
+  max-height: 117px;
+  border-radius: 4px;
+}
+.deleteButton {
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  transform: translate(50%, -50%);
+  border: none;
+  border-radius: 4px;
+}
+
+.imagesContainerForDoucument {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageTitleInputForDocument {
+  // position: absolute;
+  top: -16%;
+  right: 0;
+  width: 100%;
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 4px 12px;
+}
+
+.imageTitleInputForDocument:focus-visible {
+  outline: none;
+}
+
+.uploadedImage {
+  width: 220px;
+  border-radius: 4px;
+  // height: 140px;
+  // aspect-ratio: 5/4;
+}
+
+.gridOfDocument {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: fit-content;
+  grid-gap: 25px;
+}
+
+.fixNewSizes {
+  width: 70%;
+}
+
+.newWebResizing {
+  width: 40%;
+}
+
+.modalStyleclass {
+  width: 600px;
+  border-radius: 3px;
+}
+
+@media (max-width: 1200px) {
+  .gridOfDocument {
+    grid-gap: 10px;
+  }
+  .uploadedImage {
+    width: 175px;
+    // height: 110px;
+  }
+}
+
+@media (max-width: 980px) {
+  .makeTheFormResponsive {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .modalStyleclass {
+    width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gridOfDocument {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .FactorReDesign {
+    flex-direction: column !important;
+  }
+  .resizingWebInResponsive {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
+  .resizeNewresponsive {
+    flex-direction: column !important;
+  }
+  .fixNewSizes {
+    width: 100%;
+  }
+  .newWebResizing {
+    width: 100%;
+  }
+  .uploadedImage {
+    width: 210px;
+    // height: 140px;
+  }
+  .onlyFitContentWidth {
+    width: fit-content;
+  }
+  .modalStyleclass {
+    width: 350px;
+  }
+  .factorImageStyle{
+    width: 100%;
+    height: 100%;
+    max-width: unset;
+    max-height: unset;
+    min-height: 120px;
+  }
+}

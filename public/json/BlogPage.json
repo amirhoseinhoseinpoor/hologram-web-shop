@@ -1,0 +1,109 @@
+[
+  
+    {
+        
+        "type" : "هولوگرام",
+        
+        "card" : [
+            {
+                "id": "1",
+                "priority": false,
+                "morpriority": true,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "هولوگرافی در ایران"
+            },
+            {
+                "id": "2",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "test"
+            },
+            {
+                "id": "3",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority"
+            },
+            {
+                "id": "4",
+                "priority": true,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority2"
+            },
+            {
+                "id": "5",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority3"
+            }
+        ]
+    },
+    {
+       
+        "type" : "لیبل هولوگرام",
+        "card" : [
+            {
+                "id": "6",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "lorem title for test"
+            },
+            {
+                "id": "7",
+                "priority": false,
+                "morpriority": true,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "test"
+            },
+            {
+                "id": "8",
+                "priority": true,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority"
+            },
+            {
+                "id": "9",
+                "priority": false,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority2"
+            },
+            {
+                "id": "10",
+                "priority": true,
+                "morpriority": false,
+                "imageSrc": "../../../HomeImages/text.png",
+                "time" : "زمان مطالعه: 6 دقیقه",
+                "date" :"5 اردیبهشت 1403",
+                "title": "testpriority3"
+            }
+        ]
+    }
+
+
+   
+]

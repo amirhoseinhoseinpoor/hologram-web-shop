@@ -1,0 +1,108 @@
+@use "../../variable" as var;
+
+.stepContent {
+  background-color: white;
+  height: 100%;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.numberColorForcall {
+  color: #f3802c;
+}
+
+.effectMainDivStyle {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+}
+
+.chatIContStyle{
+  border-radius: 50%;
+  background-color: lightgray;
+  padding: 8px;
+  cursor: pointer;
+}
+
+
+.MainBOXCardStyle {
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f8fc;
+  margin: 6px 0;
+  border: none;
+  box-shadow: none;
+}
+.DivChatIconMainDiv{
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  cursor: pointer;
+}
+.mianDiVNvaBarOrder{
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.resetPaddingMui {
+  padding: 0 !important;
+  margin-top: 10px;
+  p {
+    margin: 0;
+  }
+}
+
+.resetPaddingMuiBelowContent {
+  padding: 4px 12px !important;
+  p {
+    margin: 0;
+  }
+}
+
+.continueButton {
+  border: none;
+  color: white;
+  background-color: #5695f6;
+  border-radius: 4px;
+  padding: 7px 29px;
+}
+
+
+.StarFixReq {
+  color: #ff4f3f;
+}
+
+.displayNoneTheInput {
+  display: none;
+}
+
+.labelInsteadOfInput {
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 10px;
+}
+.colorTheInputFile {
+  color: #404040;
+}
+
+.inputTextCompanyName {
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  padding: 7px 15px;
+}
+
+.inputTextCompanyName:focus-visible {
+  outline: none;
+}
+.resetfontLabel {
+  font-family: unset;
+  color: var.$social-media-color;
+  span {
+    font-family: unset;
+  }
+}
+.FormGroupForRaidio {
+  flex-direction: row;
+}
+

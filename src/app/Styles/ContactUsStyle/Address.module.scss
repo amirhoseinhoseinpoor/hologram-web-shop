@@ -1,0 +1,49 @@
+@use '../variable' as var;
+
+.mainBackground{
+    background-color: var.$footer-background;
+}
+.responsiveMain{
+    width: 50%;
+}
+.CallIconDiv{
+    background-color: var.$footer-top-person;
+    align-items: center;
+    display: flex;
+    border-radius: 4px;
+    padding: 10px;
+    svg{
+        fill: none;
+        stroke: white;
+        stroke-width: 1.5px;
+        
+    }
+}
+.phoneNumberAD{
+    background-color: white;
+    border-radius: 4px;
+    padding: 7px;
+    width: 100%;
+}
+
+.phonecolorstyle{
+    color: var.$tabbed;
+
+}
+
+
+@media (max-width :980px) {
+    .mainBackground{
+        background-color: unset;
+    }
+    .responsiveMain{
+        width: 100%;
+        background-color: var.$footer-background;
+        padding: 20px 10px;
+    }
+    .responsiveBreak{
+        flex-direction: column !important;
+        grid-gap: 40px !important;
+    }
+
+}

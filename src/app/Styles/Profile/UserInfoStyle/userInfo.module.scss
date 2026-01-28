@@ -1,0 +1,65 @@
+@use "../../variable" as var;
+
+.mainSection{
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.LabelComapntInput{
+    border: 1.3px solid #C0C0C0;
+    border-radius: 6px;
+    padding: 11px;
+    margin: unset !important; 
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.colorForTheInput{
+    color: #404040;
+}
+
+
+.redStar{
+    color: #FF4F3F;
+}
+
+.inputStyleMain{
+    border-radius: 4px;
+    border: 1px solid #C0C0C0;
+    padding: 5px 14px;
+}
+
+.inputStyleMain:focus-visible{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.inputNimberSpecific::-webkit-outer-spin-button,
+.inputNimberSpecific::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+  -moz-appearance: textfield;
+}
+.forManagingSize{
+    width: 33%;
+}
+
+.submitButtonStyle{
+    color: white;
+    background-color: #5695F6;
+    border-radius: 4px;
+    border: none;
+    padding: 7px 13px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .mainDivMakeResponsive{
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    .forManagingSize{
+        width: 87%;
+    }
+}
