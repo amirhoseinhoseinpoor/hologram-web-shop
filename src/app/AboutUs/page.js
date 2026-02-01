@@ -7,6 +7,20 @@ import RedirectCall from "../eachPageComponent/AboutUsComponents/RedirectCall";
 
 import MainLayout from "../layouts/MainLayout";
 
+export const metadata = {
+  title: "درباره ما",
+  description:
+    "شرکت خانه چاپ چکاوک با نام تجاری آذرهولوگرام، تولیدکننده انواع هولوگرام با بالاترین سطح امنیتی و فناوری روز لیزر و هولوگرافی در ایران.",
+  alternates: {
+    canonical: "/AboutUs",
+  },
+  openGraph: {
+    title: "درباره ما | آذرهولوگرام",
+    description:
+      "آشنایی با شرکت آذرهولوگرام (خانه چاپ چکاوک)، پیشرو در تولید هولوگرام در ایران.",
+  },
+};
+
 const AboutUS = () => {
   return (
     <>

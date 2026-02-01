@@ -11,6 +11,20 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import MainLayout from "../layouts/MainLayout";
 
+export const metadata = {
+  title: "افتخارات",
+  description:
+    "افتخارات و دستاوردهای شرکت آذرهولوگرام در صنعت هولوگرام و چاپ امنیتی ایران.",
+  alternates: {
+    canonical: "/Honors",
+  },
+  openGraph: {
+    title: "افتخارات | آذرهولوگرام",
+    description:
+      "افتخارات و دستاوردهای شرکت آذرهولوگرام در صنعت هولوگرام و چاپ امنیتی.",
+  },
+};
+
 async function fetchHonors() {
   try {
     const response = await fetch(

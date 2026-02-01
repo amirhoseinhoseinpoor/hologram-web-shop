@@ -2,7 +2,6 @@ export const revalidate = 60; // ISR every 60 second
 import React from "react";
 import style from "../Styles/ExhibitionPageStyle/Exhibition.module.scss";
 import HeaderSeo from "../Components/HeaderSeo";
-// import exhibition from "../../../public/json/ExhibitionPage.json";
 import { formatPersianDate } from "../utils/persionDateUtils";
 
 import Link from "next/link";
@@ -11,6 +10,20 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import MainLayout from "../layouts/MainLayout";
+
+export const metadata = {
+  title: "نمایشگاه‌ها",
+  description:
+    "حضور آذرهولوگرام در نمایشگاه‌های داخلی و بین‌المللی. گزارش تصویری و اخبار نمایشگاه‌های مرتبط با صنعت هولوگرام و چاپ.",
+  alternates: {
+    canonical: "/Exhibition",
+  },
+  openGraph: {
+    title: "نمایشگاه‌ها | آذرهولوگرام",
+    description:
+      "حضور آذرهولوگرام در نمایشگاه‌های داخلی و بین‌المللی صنعت هولوگرام و چاپ.",
+  },
+};
 
 async function fetchExhibition() {
   try {

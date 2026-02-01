@@ -11,6 +11,56 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 import Link from "next/link";
 import parse from "html-react-parser";
 
+export async function generateMetadata({ params }) {
+  const allBlogs = await fetchBlogs();
+  const decodedId = decodeURIComponent(params.id);
+  const blogPost = allBlogs.find(
+    (item) =>
+      item.content.title?.trim().toLowerCase() === decodedId.trim().toLowerCase()
+  );
+
+  if (!blogPost) {
+    return {
+      title: "مقاله یافت نشد",
+      description: "مقاله مورد نظر یافت نشد.",
+    };
+  }
+
+  const description = blogPost.content.content
+    ? blogPost.content.content.replace(/<[^>]*>/g, "").slice(0, 160)
+    : `مقاله ${blogPost.content.title} در وبلاگ آذرهولوگرام`;
+
+  return {
+    title: blogPost.content.title,
+    description,
+    alternates: {
+      canonical: `/Blog/${encodeURIComponent(blogPost.content.title)}`,
+    },
+    openGraph: {
+      title: blogPost.content.title,
+      description,
+      type: "article",
+      publishedTime: blogPost.date,
+      images: blogPost.content.imageSrc
+        ? [
+            {
+              url: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blogPost.content.imageSrc}`,
+              alt: blogPost.content.title,
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blogPost.content.title,
+      description,
+      images: blogPost.content.imageSrc
+        ? [`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blogPost.content.imageSrc}`]
+        : [],
+    },
+  };
+}
+
 async function fetchBlogs() {
   try {
     const response = await fetch(
