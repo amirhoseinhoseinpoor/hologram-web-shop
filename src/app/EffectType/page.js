@@ -78,9 +78,11 @@ function EffectType() {
     item.subItems.flatMap((itemInner) => {
       if (itemInner.title) {
         // Filter the products from dataCome that match the title of itemInner
-        const matchingProducts = dataCome?.filter(
-          (product) => product.name === itemInner.title
-        );
+        const matchingProducts = dataCome?.filter((product) => {
+          const productPathSegments = product.name.split(" - "); // Split the product name into segments
+          const lastSegment = productPathSegments[productPathSegments.length - 1]; // Get the last segment
+          return lastSegment === itemInner.title; // Check if the last segment matches itemInner.title
+        });
         return matchingProducts;
       }
       return [];
