@@ -119,7 +119,7 @@ export default async function ProductPage({ params }) {
   }
 
   const filteredProducts = allProduct.filter((product) => {
-    const productPathSegments = product.name.split(" / "); // Split the product name into segments
+    const productPathSegments = product.name.split(" - "); // Split the product name into segments
     const lastSegment = productPathSegments[productPathSegments.length - 1]; // Get the last segment
     return subItemTitles.includes(lastSegment); // Check if the last segment matches any subItemTitles
   });
