@@ -27,7 +27,6 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
     const normalizedSearchTerm = normalizeString(searchTerm);
     return normalizedTitle.includes(normalizedSearchTerm);
   });
-  console.log(filteredProducts);
 
   function fixTitleSize(text) {
     if (text.length > 60) {
@@ -90,41 +89,54 @@ export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
           // Extract the image with type '1' from imgData
           const imageData = item.info.imgData.find((img) => img.type === "1");
           const imageSrc = imageData ? imageData.src : null;
+          // product.name = "محصولات - CategoryName - ProductName"
+          const nameParts = item.name.split(" - ");
+          const productTitle = nameParts[nameParts.length - 1].trim();
+          const categorySegment = nameParts.length >= 3 ? nameParts[nameParts.length - 2].trim() : matchedTitle.trim();
 
           return (
             <React.Fragment key={index}>
               <Card className={`${style.mainCardStyle}`}>
                 <Link
-                  className="text-decoration-none d-flex flex-row"
-                  href={`/${matchedTitle.trim()}/${item.name.split('/').pop().trim()}`}
+                  className="text-decoration-none"
+                  href={`/${encodeURIComponent(categorySegment)}/${encodeURIComponent(productTitle)}`}
+                  // href={`/${matchedTitle.trim()}/${item.name.split('/').pop().trim()}`}
                   passHref
                 >
-                  <CardMedia
-                    className={`${style.fixBoxSize} gap-3`}
-                    component="img"
-                    image={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${imageSrc}`}
-                    alt={item.name}
-                  />
-
-                  <CardContent className={style.adjustContent}>
-                    <Typography
-                      className={`${style.textResetColor} QASize`}
-                      gutterBottom
-                      variant="p"
-                      component="div"
-                    >
-                      {fixTitleSize(item.name)}
-                    </Typography>
-
-                    <Typography
-                      className="discription"
-                      gutterBottom
-                      variant="p"
-                      component="div"
-                    >
-                      {item.info.subtitleCompelete}
-                    </Typography>
-                  </CardContent>
+                  <div className={style.cardInner}>
+                    <div className={style.cardImageWrapper}>
+                      <CardMedia
+                        className={style.fixBoxSize}
+                        component="img"
+                        image={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${imageSrc}`}
+                        alt={productTitle}
+                      />
+                    </div>
+                    <CardContent className={style.adjustContent}>
+                      <Typography
+                        className={`${style.textResetColor} ${style.productTitle}`}
+                        gutterBottom
+                        variant="p"
+                        component="div"
+                      >
+                        {productTitle}
+                      </Typography>
+                      <Typography
+                        className={`discription ${style.productSubtitle}`}
+                        gutterBottom
+                        variant="p"
+                        component="div"
+                      >
+                        {item.info.subtitleCompelete}
+                      </Typography>
+                      <div className={style.cardArrow}>
+                        <svg width={16} height={16} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10.07 6.43L4 12.5L10.07 18.57" stroke="#F3802C" strokeWidth={2} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M21 12.5H4.17" stroke="#F3802C" strokeWidth={2} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </CardContent>
+                  </div>
                 </Link>
               </Card>
             </React.Fragment>

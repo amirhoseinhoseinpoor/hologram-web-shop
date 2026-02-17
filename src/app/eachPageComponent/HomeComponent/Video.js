@@ -23,6 +23,7 @@ export default function Video() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
   const [videoData, setvideoData] = useState([]);
   const videoRef = useRef();
 
@@ -42,6 +43,7 @@ export default function Video() {
 
   const handleThumbnailClick = (index) => {
     setCurrentVideoIndex(index);
+    setIsVideoLoading(true);
   };
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export default function Video() {
     };
   }, [currentVideoIndex]);
 
-  const handlePlay = () => setVideoEnded(true);
+  const handlePlay = () => { setVideoEnded(true); setIsVideoLoading(false); };
   const handlePause = () => setVideoEnded(false);
 
   // useEffect(() => {
@@ -100,21 +102,27 @@ export default function Video() {
                   </p>
                 </div>
               </CardContent>
-              <CardMedia
-                id="video"
-                component="video"
-                src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.src}`}
-                poster={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.poster}`}
-                sx={{ borderRadius: "4px" }}
-                onPlay={handlePlay}
-                onPause={handlePause}
-                onLoadedData={() => setVideoEnded(false)}
-                controls
-                ref={videoRef}
-              />
-
-              {!videoEnded && (
-                <Card>
+              <div className="position-relative">
+                <CardMedia
+                  id="video"
+                  component="video"
+                  src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.src}`}
+                  poster={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.poster}`}
+                  sx={{ borderRadius: "4px" }}
+                  onPlay={handlePlay}
+                  onPause={handlePause}
+                  onWaiting={() => setIsVideoLoading(true)}
+                  onCanPlay={() => setIsVideoLoading(false)}
+                  onLoadedData={() => setVideoEnded(false)}
+                  controls
+                  ref={videoRef}
+                />
+                {isVideoLoading && (
+                  <div className={style.videoLoadingOverlay}>
+                    <div className={style.spinner} />
+                  </div>
+                )}
+                {!videoEnded && !isVideoLoading && (
                   <svg
                     className={`${style.posterIcon} d-none d-lg-block d-xl-block`}
                     width={84}
@@ -142,8 +150,8 @@ export default function Video() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </Card>
-              )}
+                )}
+              </div>
             </Card>
 
             <div dir="ltr" className="position-relative mt-4">
@@ -173,7 +181,7 @@ export default function Video() {
                       key={index}
                     >
                       <Card
-                        className={style.MainBOXCardStyle}
+                        className={`${style.MainBOXCardStyle} ${currentVideoIndex === index ? style.activeCard : ""}`}
                         onClick={() => handleThumbnailClick(index)}
                       >
                         <div className="position-relative">

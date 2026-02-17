@@ -133,7 +133,7 @@ export default function Header() {
       >
         <Container className={style.headerresponsivemain}>
           <div className="d-flex flex-row justify-content-between">
-            <Navbar.Brand href="#">
+            <Navbar.Brand href="/">
               <p className="ms-4">
                 <Box
                   component="img"
