@@ -1,17 +1,22 @@
+export const revalidate = 60; // ISR every 60 seconds
+
 import React from "react";
 import MainLayout from "../layouts/MainLayout";
 import HoleProductAndSearch from "../eachPageComponent/ProductPageComponent/HoleProductAndSearch";
 import ShowRoute from "../Components/ShowRoute";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir";
-
 export async function generateMetadata({ params }) {
   const decodedId = decodeURIComponent(params.ProductPage);
+
   return {
-    title: `${decodedId} | آذرهولوگرام`,
-    description: `مشاهده محصولات دسته‌بندی ${decodedId} از آذرهولوگرام - تولیدکننده هولوگرام‌های امنیتی.`,
+    title: `${decodedId} | محصولات`,
+    description: `خرید و سفارش ${decodedId} از آذرهولوگرام. مشاهده انواع محصولات هولوگرامی در دسته‌بندی ${decodedId}.`,
     alternates: {
-      canonical: `${SITE_URL}/${encodeURIComponent(decodedId)}`,
+      canonical: `/${encodeURIComponent(params.ProductPage)}`,
+    },
+    openGraph: {
+      title: `${decodedId} | محصولات آذرهولوگرام`,
+      description: `خرید و سفارش ${decodedId} از آذرهولوگرام.`,
     },
   };
 }
@@ -20,7 +25,14 @@ export async function generateMetadata({ params }) {
 async function fetchProduct() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/list`
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/list`,
+      {
+        // Ensures fresh data every 60 seconds
+        next: { revalidate: 60 },
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
     );
 
     if (!response.ok) {
@@ -29,8 +41,7 @@ async function fetchProduct() {
     }
 
     const allProductCome = await response.json();
-    console.log(allProductCome);
-    
+
     return Array.isArray(allProductCome) ? allProductCome : [];
   } catch (error) {
     console.error("Fetch failed:", error);
@@ -41,7 +52,14 @@ async function fetchProduct() {
 async function fetchHeader() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/header/find`
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/header/find`,
+      {
+        // Ensures fresh data every 60 seconds
+        next: { revalidate: 60 },
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
     );
 
     if (!response.ok) {
@@ -81,8 +99,6 @@ export default async function ProductPage({ params }) {
   // Find the matched category from the header based on the decodedId
   const matchedItem = findItemByTitle(headerCome, decodedId);
 
-  
-
   if (!matchedItem) {
     return (
       <MainLayout>
@@ -94,7 +110,7 @@ export default async function ProductPage({ params }) {
     );
   }
 
-  // const dynamicPath = `محصولات / ${pathSegments.join(" / ")}`.trim(); 
+  // const dynamicPath = `محصولات / ${pathSegments.join(" / ")}`.trim();
 
   // Extract the titles of the sub-items under the matched category
   let subItemTitles = [];
@@ -103,16 +119,14 @@ export default async function ProductPage({ params }) {
   }
 
   const filteredProducts = allProduct.filter((product) => {
-    const productPathSegments = product.name.split(" / "); // Split the product name into segments
+    const productPathSegments = product.name.split(" - "); // Split the product name into segments
     const lastSegment = productPathSegments[productPathSegments.length - 1]; // Get the last segment
     return subItemTitles.includes(lastSegment); // Check if the last segment matches any subItemTitles
   });
 
   // console.log(allProduct);
 
-
   // console.log(filteredProducts);
-  
 
   if (filteredProducts.length === 0) {
     return (

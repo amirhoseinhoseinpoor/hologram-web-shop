@@ -42,12 +42,12 @@ export default function Product() {
   // Extract the desired part from the decoded pathname
   const pathSegments = decodedPathname.split("/").filter(Boolean);
 
-  const dynamicPath = `محصولات / ${pathSegments.join(" / ")}`.trim(); 
+  const dynamicPath = `محصولات - ${pathSegments.join(" - ")}`.trim(); 
   
   // Find the product data using the normalized dynamic path  
   const productData = allProductData?.find((item) => item.name.trim() === dynamicPath);  
   
-  console.log("Product Data:", productData);  
+
 
 
   // Handle loading state

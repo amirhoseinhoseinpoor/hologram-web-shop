@@ -1,3 +1,4 @@
+export const revalidate = 60; // ISR every 60 second
 import style from "../../Styles/ExhibitionPageStyle/ExhibitionDynamicContent.module.scss";
 import HeaderSeo from "../../Components/HeaderSeo";
 import Box from "@mui/material/Box";
@@ -8,15 +9,61 @@ import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir";
-const BACKEND = process.env.NEXT_PUBLIC_BACK_END_SERVER;
+export async function generateMetadata({ params }) {
+  const allExhibitions = await fetchExhibition();
+  const decodedId = decodeURIComponent(params.id);
+  const exhibition = allExhibitions.find(
+    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase()
+  );
+
+  if (!exhibition) {
+    return {
+      title: "نمایشگاه یافت نشد",
+      description: "نمایشگاه مورد نظر یافت نشد.",
+    };
+  }
+
+  const description = exhibition.content
+    ? exhibition.content.replace(/<[^>]*>/g, "").slice(0, 160)
+    : `نمایشگاه ${exhibition.title} - آذرهولوگرام`;
+
+  return {
+    title: exhibition.title,
+    description,
+    alternates: {
+      canonical: `/Exhibition/${encodeURIComponent(exhibition.title)}`,
+    },
+    openGraph: {
+      title: exhibition.title,
+      description,
+      type: "article",
+      images: exhibition.src
+        ? [
+            {
+              url: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${exhibition.src}`,
+              alt: exhibition.title,
+            },
+          ]
+        : [],
+    },
+  };
+}
 
 async function fetchExhibition() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`,
+      {
+        // Ensures fresh data every 60 seconds
+        next: { revalidate: 60 },
+        headers: {
+          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
+        },
+      }
+    );
 
     if (!response.ok) {
-      console.log('Failed to fetch data');
+      console.log("Failed to fetch data");
       return [];
     }
 
@@ -28,50 +75,13 @@ async function fetchExhibition() {
   }
 }
 
-
-export async function generateMetadata({ params }) {
-  const allExhibitions = await fetchExhibition();
-  const decodedId = decodeURIComponent(params.id);
-  const exhibition = allExhibitions.find(
-    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase()
-  );
-
-  if (!exhibition) return { title: "نمایشگاه یافت نشد" };
-
-  const title = exhibition.title;
-  const tags = exhibition.tags ? exhibition.tags.split(",").map((t) => t.trim()) : [];
-  const imageUrl = `${BACKEND}/system/download/${exhibition.src}`;
-  const pageUrl = `${SITE_URL}/Exhibition/${encodeURIComponent(title)}`;
-
-  return {
-    title,
-    description: title,
-    keywords: tags,
-    alternates: { canonical: pageUrl },
-    openGraph: {
-      type: "article",
-      url: pageUrl,
-      title,
-      description: title,
-      images: [{ url: imageUrl, alt: title }],
-      publishedTime: exhibition.date,
-      locale: "fa_IR",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description: title,
-      images: [imageUrl],
-    },
-  };
-}
-
 export default async function innerExhibition({ params }) {
-
   const allHonors = await fetchExhibition();
 
   if (allHonors.length === 0) {
-    return <p>No honors data available at the moment. Please try again later.</p>;
+    return (
+      <p>No honors data available at the moment. Please try again later.</p>
+    );
   }
 
   const decodedId = decodeURIComponent(params.id);

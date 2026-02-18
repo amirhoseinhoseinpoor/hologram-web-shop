@@ -4,8 +4,6 @@
   /* Add any other styles you want to reset or override */
 }
 
-
-
 body {
   // overflow-x: hidden;
   background-color: white;
@@ -28,12 +26,20 @@ input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+video::-moz-media-controls-play-button {
+  display: none !important;
+}
+video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
 input {
   -moz-appearance: textfield !important;
 }
 
 //global sizing
-.sometext{
+.sometext {
   font-size: 20px;
   font-weight: 600;
 }
@@ -41,19 +47,19 @@ input {
   font-size: 20px;
   font-weight: 600;
 }
-.QASize{
+.QASize {
   font-size: 16px;
   font-weight: 600;
 }
-.seeOrderFont{
+.seeOrderFont {
   font-size: 14px;
   font-weight: 600;
 }
-.VodeoDisSizing{
+.VodeoDisSizing {
   font-size: 16px;
   font-weight: 500;
 }
-.purchesSize{
+.purchesSize {
   font-size: 17px;
   font-weight: 500;
 }
@@ -61,7 +67,7 @@ input {
   font-weight: 500;
   font-size: 18px;
 }
-.subitem{
+.subitem {
   font-size: 17px;
   font-weight: 500;
 }
@@ -69,7 +75,7 @@ input {
   font-size: 14px;
   font-weight: 500;
 }
-.smallest{
+.smallest {
   font-size: 13px;
   font-weight: 400;
 }
@@ -77,11 +83,11 @@ input {
   font-size: 14px;
   font-weight: 500;
 }
-.NormalTextSizing{
+.NormalTextSizing {
   font-size: 15px;
   font-weight: 500;
 }
-.normalTextLowWeight{
+.normalTextLowWeight {
   font-weight: 400;
   font-size: 16px;
 }
@@ -101,11 +107,11 @@ span {
   line-height: normal;
   margin-bottom: 0;
 }
-button{
+button {
   font-size: 14px;
 }
 .form-control:focus,
-.form-select:focus{
+.form-select:focus {
   box-shadow: unset;
 }
 //end global sizing
@@ -186,31 +192,31 @@ button{
 }
 
 @media (max-width: 980px) {
-  .seeOrderFont{
+  .seeOrderFont {
     font-size: 14px;
   }
-  .normalTextLowWeight{
+  .normalTextLowWeight {
     font-size: 15px;
   }
-  .sometext{
+  .sometext {
     font-size: 19px;
   }
-  .QASize{
+  .QASize {
     font-size: 15px;
   }
-  .NormalTextSizing{
+  .NormalTextSizing {
     font-size: 14px;
   }
-  .VodeoDisSizing{
+  .VodeoDisSizing {
     font-size: 15px;
   }
-  .purchesSize{
+  .purchesSize {
     font-size: 16px;
   }
-  button{
+  button {
     font-size: 13px;
   }
-  .smallest{
+  .smallest {
     font-size: 12px;
   }
   p {
@@ -229,34 +235,34 @@ button{
   .subtitle {
     font-weight: unset;
   }
-  .subitem{
+  .subitem {
     font-size: 15px;
   }
 }
 @media (max-width: 768px) {
   // global sizing
-  .seeOrderFont{
+  .seeOrderFont {
     font-size: 13px;
   }
-  .normalTextLowWeight{
+  .normalTextLowWeight {
     font-size: 14px;
   }
-  .NormalTextSizing{
+  .NormalTextSizing {
     font-size: 13px;
   }
-  .sometext{
+  .sometext {
     font-size: 18px;
   }
-  .smallest{
+  .smallest {
     font-size: 11px;
   }
-  .VodeoDisSizing{
+  .VodeoDisSizing {
     font-size: 14px;
   }
-  .purchesSize{
+  .purchesSize {
     font-size: 15px;
   }
-  .subitem{
+  .subitem {
     font-size: 14px;
   }
   p {

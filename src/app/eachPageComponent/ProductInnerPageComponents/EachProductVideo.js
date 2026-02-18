@@ -18,18 +18,20 @@ export default function EachProductVideo({productData}) {
 
   const videoData = productData.media;
 
-  
+
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
   const [videoDurations, setVideoDurations] = useState(
     Array(videoData.length).fill("0:00")
-  ); 
+  );
   const videoRef = useRef();
 
   const handleThumbnailClick = (index) => {
     setCurrentVideoIndex(index);
+    setIsVideoLoading(true);
   };
 
   useEffect(() => {
@@ -129,109 +131,105 @@ export default function EachProductVideo({productData}) {
                 sx={{ borderRadius: "4px" }}
                 controls
                 ref={videoRef}
+                onWaiting={() => setIsVideoLoading(true)}
+                onCanPlay={() => setIsVideoLoading(false)}
+                onPlaying={() => { setIsVideoLoading(false); setVideoEnded(true); }}
+                onPause={() => setVideoEnded(false)}
               />
+              {isVideoLoading && (
+                <div className={style.videoLoadingOverlay}>
+                  <div className={style.spinner} />
+                </div>
+              )}
+              {!videoEnded && !isVideoLoading && (
+                <div className={style.BelowContentFixIcon}>
+                  <svg
+                    width={55}
+                    height={54}
+                    viewBox="0 0 84 84"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      opacity="0.6"
+                      d="M42 77C61.33 77 77 61.33 77 42C77 22.67 61.33 7 42 7C22.67 7 7 22.67 7 42C7 61.33 22.67 77 42 77Z"
+                      fill="white"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M31.8496 42.0002V36.8202C31.8496 30.1352 36.5746 27.4402 42.3496 30.7652L46.8296 33.3552L51.3096 35.9452C57.0846 39.2702 57.0846 44.7302 51.3096 48.0552L46.8296 50.6452L42.3496 53.2352C36.5746 56.5602 31.8496 53.8302 31.8496 47.1802V42.0002Z"
+                      fill="#333333"
+                      stroke="#333333"
+                      strokeWidth="1.5"
+                      strokeMiterlimit={10}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              )}
               <p className="purchesSize mt-2">
               {videoData[currentVideoIndex].title}
               </p>
               <p className="NormalTextSizing mt-2">
               {videoData[currentVideoIndex].description}
               </p>
-              {!videoEnded && (
-                <>
-                  <div className={style.BelowContentFixIcon}>
-                    <svg
-                      width={55}
-                      height={54}
-                      viewBox="0 0 84 84"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        opacity="0.6"
-                        d="M42 77C61.33 77 77 61.33 77 42C77 22.67 61.33 7 42 7C22.67 7 7 22.67 7 42C7 61.33 22.67 77 42 77Z"
-                        fill="white"
-                        stroke="white"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M31.8496 42.0002V36.8202C31.8496 30.1352 36.5746 27.4402 42.3496 30.7652L46.8296 33.3552L51.3096 35.9452C57.0846 39.2702 57.0846 44.7302 51.3096 48.0552L46.8296 50.6452L42.3496 53.2352C36.5746 56.5602 31.8496 53.8302 31.8496 47.1802V42.0002Z"
-                        fill="#333333"
-                        stroke="#333333"
-                        strokeWidth="1.5"
-                        strokeMiterlimit={10}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </>
-              )}
             </div>
 
             <div className={`${style.fixLeftSideVideo}`}>
               {videoData.map((video, index) => (
                 <Card
-                  key={index} // Added key prop
-                  className={style.MainBOXCardStyle}
+                  key={index}
+                  className={`${style.MainBOXCardStyle} ${currentVideoIndex === index ? style.activeCard : ""}`}
                   onClick={() => handleThumbnailClick(index)}
                 >
-                  <div className="d-flex flex-row gap-2">
-                    <div className="position-relative w-50">
-                      <CardMedia
-                        component="img"
-                        src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${video.poster}`} 
-                        alt={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${video.title}`}
-                        sx={{ borderRadius: "4px", height: "100%" }}
-                      />
-                      <div className={style.BelowContentFixIcon}>
-                        <div className={style.BelowContentFixIcon}>
-                          <svg
-                            width={43}
-                            height={42}
-                            viewBox="0 0 84 84"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              opacity="0.6"
-                              d="M42 77C61.33 77 77 61.33 77 42C77 22.67 61.33 7 42 7C22.67 7 7 22.67 7 42C7 61.33 22.67 77 42 77Z"
-                              fill="white"
-                              stroke="white"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M31.8496 42.0002V36.8202C31.8496 30.1352 36.5746 27.4402 42.3496 30.7652L46.8296 33.3552L51.3096 35.9452C57.0846 39.2702 57.0846 44.7302 51.3096 48.0552L46.8296 50.6452L42.3496 53.2352C36.5746 56.5602 31.8496 53.8302 31.8496 47.1802V42.0002Z"
-                              fill="#333333"
-                              stroke="#333333"
-                              strokeWidth="1.5"
-                              strokeMiterlimit={10}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                      {/* Display video duration */}
-                      <div className={style.duration}>
-                        {formatDuration(videoDurations[index])}
-                      </div>
-                    </div>
-                    <CardContent
-                      className={`${style.resetPaddingMui} w-50 m-auto`}
-                    >
-                      <div
-                        dir="rtl"
-                        className={`${style.titleStyle} description`}
+                  <div className="position-relative">
+                    <CardMedia
+                      component="img"
+                      src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${video.poster}`}
+                      alt={video.title}
+                      sx={{ width: "100%", aspectRatio: "16/9", objectFit: "cover" }}
+                    />
+                    <div className={style.BelowContentFixIcon}>
+                      <svg
+                        width={38}
+                        height={38}
+                        viewBox="0 0 84 84"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <span>{video.title}</span>
-                        
-                      </div>
-                    </CardContent>
+                        <path
+                          opacity="0.6"
+                          d="M42 77C61.33 77 77 61.33 77 42C77 22.67 61.33 7 42 7C22.67 7 7 22.67 7 42C7 61.33 22.67 77 42 77Z"
+                          fill="white"
+                          stroke="white"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M31.8496 42.0002V36.8202C31.8496 30.1352 36.5746 27.4402 42.3496 30.7652L46.8296 33.3552L51.3096 35.9452C57.0846 39.2702 57.0846 44.7302 51.3096 48.0552L46.8296 50.6452L42.3496 53.2352C36.5746 56.5602 31.8496 53.8302 31.8496 47.1802V42.0002Z"
+                          fill="#333333"
+                          stroke="#333333"
+                          strokeWidth="1.5"
+                          strokeMiterlimit={10}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className={style.duration}>
+                      {formatDuration(videoDurations[index])}
+                    </div>
                   </div>
+                  <CardContent className={`${style.resetPaddingMui}`}>
+                    <div dir="rtl" className={`${style.titleStyle} description`}>
+                      <span>{video.title}</span>
+                    </div>
+                  </CardContent>
                 </Card>
               ))}
             </div>

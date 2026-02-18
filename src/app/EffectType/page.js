@@ -47,6 +47,7 @@ function EffectType() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentVideoIndex, setCurrentVideoIndex] = useState(null);
   const [userInteracted, setUserInteracted] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
   // const [videoEnded, setVideoEnded] = useState(false);
   const [videoDurations, setVideoDurations] = useState([]);
   const [activeTab, setActiveTab] = useState(type || "");
@@ -75,12 +76,14 @@ function EffectType() {
   }, [activeTab, searchTerm, fillterdType]);
 
   const finalData = filteredContent.flatMap((item) =>
-    item.subItems.flatMap((itemInner) => {
+    (item.subItems || []).flatMap((itemInner) => {
       if (itemInner.title) {
         // Filter the products from dataCome that match the title of itemInner
-        const matchingProducts = dataCome?.filter(
-          (product) => product.name === itemInner.title
-        );
+        const matchingProducts = (dataCome || []).filter((product) => {
+          const productPathSegments = product.name.split(" - "); // Split the product name into segments
+          const lastSegment = productPathSegments[productPathSegments.length - 1]; // Get the last segment
+          return lastSegment === itemInner.title; // Check if the last segment matches itemInner.title
+        });
         return matchingProducts;
       }
       return [];
@@ -106,6 +109,7 @@ function EffectType() {
   const handleThumbnailClick = (index) => {
     setCurrentVideoIndex(index);
     setUserInteracted(true);
+    setIsVideoLoading(true);
   };
 
   const handleImageClick = (image) => {
@@ -332,7 +336,15 @@ function EffectType() {
                         sx={{ borderRadius: "4px", maxHeight: "500px" }}
                         controls
                         ref={videoRef}
+                        onWaiting={() => setIsVideoLoading(true)}
+                        onCanPlay={() => setIsVideoLoading(false)}
+                        onPlaying={() => setIsVideoLoading(false)}
                       />
+                      {isVideoLoading && (
+                        <div className={style.videoLoadingOverlay}>
+                          <div className={style.spinner} />
+                        </div>
+                      )}
                       <CardContent>
                         <div className="d-flex flex-column">
                           <div className={`${style.titleStyle} purchesSize`}>
@@ -388,7 +400,7 @@ function EffectType() {
                   itemF?.media?.map((video, index) => (
                     <Card
                       key={index}
-                      className={style.MainBOXCardStyle}
+                      className={`${style.MainBOXCardStyle} ${currentVideoIndex === index ? style.activeCard : ""}`}
                       onClick={() => handleThumbnailClick(index)}
                     >
                       <div className="d-flex flex-column gap-2 p-2">

@@ -22,6 +22,15 @@ import MainLayout from "./layouts/MainLayout";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 
+export const metadata = {
+  title: "آذرهولوگرام | تولید و چاپ هولوگرام در ایران",
+  description:
+    "شرکت آذرهولوگرام (خانه چاپ چکاوک) با خط کامل تولید هولوگرام در ایران. سفارش انواع لیبل هولوگرام، هولوگرام امنیتی و محصولات هولوگرافی با بالاترین کیفیت.",
+  alternates: {
+    canonical: "/",
+  },
+};
+
 export default function Home() {
   return (
     <main>

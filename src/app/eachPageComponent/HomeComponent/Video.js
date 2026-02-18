@@ -23,8 +23,10 @@ export default function Video() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
   const [videoData, setvideoData] = useState([]);
   const videoRef = useRef();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,9 +41,9 @@ export default function Video() {
     fetchData();
   }, [dispatch]);
 
-
   const handleThumbnailClick = (index) => {
     setCurrentVideoIndex(index);
+    setIsVideoLoading(true);
   };
 
   useEffect(() => {
@@ -60,23 +62,28 @@ export default function Video() {
     };
   }, [currentVideoIndex]);
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.onplaying = () => {
-        setVideoEnded(true);
-      };
-    }
+  const handlePlay = () => { setVideoEnded(true); setIsVideoLoading(false); };
+  const handlePause = () => setVideoEnded(false);
 
-    if (videoRef.current && userInteracted) {
-      // videoRef.current.load();
-      videoRef.current.play();
-    }
-  }, [currentVideoIndex]);
+  // useEffect(() => {
+  //   const video = videoRef.current;
+  //   if (video) {
+  //     video.onplaying = () => {
+  //       setVideoEnded(true);
+  //     };
+  //   }
+
+  //   if (videoRef.current && userInteracted) {
+  //     // videoRef.current.load();
+  //     videoRef.current.play();
+  //   }
+  // }, [currentVideoIndex]);
 
   return (
     <section
-      className={`mb-5 container ${style.responsiveSection} ${videoData.length === 0 ? style.hidden : ''}`}
+      className={`mb-5 container ${style.responsiveSection} ${
+        videoData.length === 0 ? style.hidden : ""
+      }`}
     >
       {videoData.length > 0 ? (
         <>
@@ -91,22 +98,31 @@ export default function Video() {
                     </span>
                   </div>
                   <p className="subtitle">
-                  {videoData[currentVideoIndex].media.description}
+                    {videoData[currentVideoIndex].media.description}
                   </p>
                 </div>
               </CardContent>
-              <CardMedia
-                id="video"
-                component="video"
-                src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.src}`}
-                poster={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.poster}`}
-                sx={{ borderRadius: "4px" }}
-                controls
-                ref={videoRef}
-              />
-
-              {!videoEnded && (
-                <Card>
+              <div className="position-relative">
+                <CardMedia
+                  id="video"
+                  component="video"
+                  src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.src}`}
+                  poster={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.poster}`}
+                  sx={{ borderRadius: "4px" }}
+                  onPlay={handlePlay}
+                  onPause={handlePause}
+                  onWaiting={() => setIsVideoLoading(true)}
+                  onCanPlay={() => setIsVideoLoading(false)}
+                  onLoadedData={() => setVideoEnded(false)}
+                  controls
+                  ref={videoRef}
+                />
+                {isVideoLoading && (
+                  <div className={style.videoLoadingOverlay}>
+                    <div className={style.spinner} />
+                  </div>
+                )}
+                {!videoEnded && !isVideoLoading && (
                   <svg
                     className={`${style.posterIcon} d-none d-lg-block d-xl-block`}
                     width={84}
@@ -134,8 +150,8 @@ export default function Video() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </Card>
-              )}
+                )}
+              </div>
             </Card>
 
             <div dir="ltr" className="position-relative mt-4">
@@ -165,13 +181,13 @@ export default function Video() {
                       key={index}
                     >
                       <Card
-                        className={style.MainBOXCardStyle}
+                        className={`${style.MainBOXCardStyle} ${currentVideoIndex === index ? style.activeCard : ""}`}
                         onClick={() => handleThumbnailClick(index)}
                       >
                         <div className="position-relative">
                           <CardMedia
                             component="img"
-                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${videoData[currentVideoIndex].media.poster}`}
+                            src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${video.media.poster}`}
                             alt={video.media.title}
                             sx={{ borderRadius: "4px" }}
                             controls

@@ -1,7 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wc:*)"
+      "Bash(npm run dev:*)",
+      "Bash(npm install:*)",
+      "Bash(taskkill:*)",
+      "Bash(rd /s /q .next)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(xargs -I {} cmd.exe /c \"taskkill /F /PID {}\")",
+      "Bash(powershell:*)",
+      "Bash(npm i)",
+      "Bash(npm ls:*)",
+      "Bash(dir:*)",
+      "Bash(npx next build)"
     ]
   }
 }

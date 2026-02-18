@@ -73,7 +73,7 @@ export default function BlogRegular() {
       acc[blogType].push({
         id: blog.id,
         title: blog.content?.title || "Untitled",
-        date: blog.date,
+        date: blog.createdAt,
         time: blog.content?.time || "No time provided",
         imageSrc: blog.content?.imageSrc || "/default-image.jpg",
       });
@@ -82,6 +82,7 @@ export default function BlogRegular() {
 
   // Get the keys (blog types) to create the tabs
   const blogTypes = Object.keys(groupedBlogs);
+  
 
   useEffect(() => {
     if (blogTypes.length > 0 && !activeTab) {
@@ -158,7 +159,7 @@ export default function BlogRegular() {
                             variant="span"
                             component="div"
                           >
-                            {blog.time} | {formatPersianDate(blog.date)}
+                            {blog.time} | {blog.date ? formatPersianDate(blog.date) : "بدون تاریخ"}
                           </Typography>
                           <Typography
                             className="subitem"
