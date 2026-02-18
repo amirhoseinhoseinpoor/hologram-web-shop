@@ -6,22 +6,6 @@ import "./Styles/globals.scss";
 
 import StoreProvider from "./Store/storeProvider";
 import LogVisit from "./Components/LogVisit";
-import JsonLd from "./Components/JsonLd";
-
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "آذرهولوگرام",
-  url: "https://azarhologram.ir",
-  logo: "https://azarhologram.ir/LOGO/logo.png",
-  description:
-    "آذرهولوگرام پیشرو در تولید و چاپ هولوگرام‌های امنیتی، برچسب‌های هولوگرامی و محصولات ضد جعل در ایران.",
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer service",
-    availableLanguage: "Persian",
-  },
-};
 
 const myFont = localFont({ src: "./Fonts/IRANSansXVF.ttf" });
 
@@ -124,7 +108,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${myFont.className} h-100`}>
-        <JsonLd data={organizationSchema} />
         <StoreProvider>
           <LogVisit />
           {children}

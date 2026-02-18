@@ -101,7 +101,7 @@ export default async function innerHonors({ params }) {
         <section className={style.customContainer}>
           <ShowRoute />
           <div>
-            <h3 className="title mt-3 mb-1">{honors?.title}</h3>
+            <h1 className="title mt-3 mb-1">{honors?.title}</h1>
           </div>
           <div>
             <p className={`${style.discriptionColor} discription mb-3`}>

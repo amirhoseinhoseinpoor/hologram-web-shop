@@ -1,10 +1,3 @@
-export const metadata = {
-  title: "آذرهولوگرام | چاپ و تولید هولوگرام امنیتی",
-  description:
-    "آذرهولوگرام پیشرو در تولید و چاپ هولوگرام‌های امنیتی، برچسب‌های هولوگرامی و محصولات ضد جعل در ایران. سفارش آنلاین با کیفیت بالا و تحویل سریع.",
-  alternates: { canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir" },
-};
-
 import React from "react";
 import Banner from "./eachPageComponent/HomeComponent/Banner";
 import PurchaseProcessSteps from "./eachPageComponent/HomeComponent/PurchaseProcessSteps";
@@ -16,6 +9,7 @@ import IntroHologram from "./eachPageComponent/HomeComponent/Intro-Hologram";
 import Video from "./eachPageComponent/HomeComponent/Video";
 import Honors from "./eachPageComponent/HomeComponent/Honors";
 import FAQ from "./Components/FAQ";
+import FAQJsonLd from "./Components/FAQJsonLd";
 
 import MainLayout from "./layouts/MainLayout";
 
@@ -45,6 +39,7 @@ export default function Home() {
             <Video />
             <Exhibition />
             <Advantages />
+            <FAQJsonLd />
             <FAQ />
             <Blog />
           </MainLayout>

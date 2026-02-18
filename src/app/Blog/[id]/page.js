@@ -88,50 +88,6 @@ async function fetchBlogs() {
   }
 }
 
-export async function generateMetadata({ params }) {
-  const allBlogs = await fetchBlogs();
-  const decodedId = decodeURIComponent(params.id);
-  const blogPost = allBlogs.find(
-    (item) =>
-      item.content.title?.trim().toLowerCase() === decodedId.trim().toLowerCase()
-  );
-
-  if (!blogPost) {
-    return { title: "مقاله یافت نشد" };
-  }
-
-  const title = blogPost.content.title;
-  const tags = blogPost.content.tags
-    ? blogPost.content.tags.split(",").map((t) => t.trim())
-    : [];
-  const imageUrl = `${BACKEND}/system/download/${blogPost.content.imageSrc}`;
-  const pageUrl = `${SITE_URL}/Blog/${encodeURIComponent(title)}`;
-
-  return {
-    title,
-    description: blogPost.content.time
-      ? `${title} - مطالعه: ${blogPost.content.time}`
-      : title,
-    keywords: tags,
-    alternates: { canonical: pageUrl },
-    openGraph: {
-      type: "article",
-      url: pageUrl,
-      title,
-      description: title,
-      images: [{ url: imageUrl, alt: title }],
-      publishedTime: blogPost.date,
-      locale: "fa_IR",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description: title,
-      images: [imageUrl],
-    },
-  };
-}
-
 export default async function BlogPostPage({ params }) {
   const allBlogs = await fetchBlogs();
 
@@ -193,19 +149,22 @@ export default async function BlogPostPage({ params }) {
     blogPost.content.content
   );
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.co";
+  const backendUrl = process.env.NEXT_PUBLIC_BACK_END_SERVER;
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: blogPost.content.title,
-    image: `${BACKEND}/system/download/${blogPost.content.imageSrc}`,
+    image: `${backendUrl}/system/download/${blogPost.content.imageSrc}`,
     datePublished: blogPost.date,
     author: { "@type": "Organization", name: "آذرهولوگرام" },
     publisher: {
       "@type": "Organization",
       name: "آذرهولوگرام",
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/LOGO/logo.png` },
+      logo: { "@type": "ImageObject", url: `${siteUrl}/LOGO/cropped-com.chakavak.adv_512x512.png` },
     },
-    url: `${SITE_URL}/Blog/${encodeURIComponent(blogPost.content.title)}`,
+    url: `${siteUrl}/Blog/${encodeURIComponent(blogPost.content.title)}`,
   };
 
   return (

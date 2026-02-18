@@ -114,5 +114,36 @@ export default async function sitemap() {
     console.error("Sitemap: Failed to fetch honors", error);
   }
 
-  return [...staticPages, ...blogPages, ...exhibitionPages, ...honorsPages];
+  // Fetch dynamic data for products
+  let productPages = [];
+  try {
+    const productsRes = await fetch(`${backendUrl}/product/list`, {
+      next: { revalidate: 3600 },
+      headers: { Origin: backendUrl },
+    });
+    if (productsRes.ok) {
+      const products = await productsRes.json();
+      if (Array.isArray(products)) {
+        productPages = products
+          .filter((p) => p.name)
+          .map((p) => {
+            // name format: "محصولات / CategoryName / ProductName"
+            const segments = p.name
+              .replace(/^محصولات\s*\/\s*/, "")
+              .split(/\s*\/\s*/)
+              .map((s) => encodeURIComponent(s.trim()));
+            return {
+              url: `${siteUrl}/${segments.join("/")}`,
+              lastModified: new Date(),
+              changeFrequency: "weekly",
+              priority: 0.85,
+            };
+          });
+      }
+    }
+  } catch (error) {
+    console.error("Sitemap: Failed to fetch products", error);
+  }
+
+  return [...staticPages, ...blogPages, ...exhibitionPages, ...honorsPages, ...productPages];
 }
