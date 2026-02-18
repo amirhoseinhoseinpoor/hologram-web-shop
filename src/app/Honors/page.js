@@ -1,3 +1,12 @@
+export const metadata = {
+  title: "افتخارات | آذرهولوگرام",
+  description:
+    "افتخارات و دستاوردهای آذرهولوگرام در صنعت تولید هولوگرام‌های امنیتی و برچسب‌های ضد جعل.",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir"}/Honors`,
+  },
+};
+
 import React from "react";
 
 import HeaderSeo from "../Components/HeaderSeo";

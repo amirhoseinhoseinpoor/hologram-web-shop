@@ -8,6 +8,9 @@ import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir";
+const BACKEND = process.env.NEXT_PUBLIC_BACK_END_SERVER;
+
 async function fetchExhibition() {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`);
@@ -25,6 +28,43 @@ async function fetchExhibition() {
   }
 }
 
+
+export async function generateMetadata({ params }) {
+  const allExhibitions = await fetchExhibition();
+  const decodedId = decodeURIComponent(params.id);
+  const exhibition = allExhibitions.find(
+    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase()
+  );
+
+  if (!exhibition) return { title: "نمایشگاه یافت نشد" };
+
+  const title = exhibition.title;
+  const tags = exhibition.tags ? exhibition.tags.split(",").map((t) => t.trim()) : [];
+  const imageUrl = `${BACKEND}/system/download/${exhibition.src}`;
+  const pageUrl = `${SITE_URL}/Exhibition/${encodeURIComponent(title)}`;
+
+  return {
+    title,
+    description: title,
+    keywords: tags,
+    alternates: { canonical: pageUrl },
+    openGraph: {
+      type: "article",
+      url: pageUrl,
+      title,
+      description: title,
+      images: [{ url: imageUrl, alt: title }],
+      publishedTime: exhibition.date,
+      locale: "fa_IR",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: title,
+      images: [imageUrl],
+    },
+  };
+}
 
 export default async function innerExhibition({ params }) {
 
@@ -52,7 +92,7 @@ export default async function innerExhibition({ params }) {
         <section className={style.customContainer}>
           <ShowRoute />
           <div>
-            <h3 className="title mt-3 mb-1">{honors.title}</h3>
+            <h1 className="title mt-3 mb-1">{honors.title}</h1>
           </div>
           <div>
             <p className={`${style.discriptionColor} discription mb-3`}>

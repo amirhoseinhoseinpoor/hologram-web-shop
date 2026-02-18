@@ -1,5 +1,3 @@
-
-
 import style from "../../Styles/HonorsPageStyle/HonorsDynamicContent.module.scss";
 import Box from "@mui/material/Box";
 import CopyLinkButton from "../../Components/CopyLinkButton";
@@ -9,6 +7,8 @@ import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir";
+const BACKEND = process.env.NEXT_PUBLIC_BACK_END_SERVER;
 
 async function fetchHonors() {
   try {
@@ -27,6 +27,43 @@ async function fetchHonors() {
   }
 }
 
+
+export async function generateMetadata({ params }) {
+  const allHonors = await fetchHonors();
+  const decodedId = decodeURIComponent(params.id);
+  const honor = allHonors.find(
+    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase()
+  );
+
+  if (!honor) return { title: "افتخار یافت نشد" };
+
+  const title = honor.title;
+  const tags = honor.tags ? honor.tags.split(",").map((t) => t.trim()) : [];
+  const imageUrl = `${BACKEND}/system/download/${honor.src}`;
+  const pageUrl = `${SITE_URL}/Honors/${encodeURIComponent(title)}`;
+
+  return {
+    title,
+    description: title,
+    keywords: tags,
+    alternates: { canonical: pageUrl },
+    openGraph: {
+      type: "article",
+      url: pageUrl,
+      title,
+      description: title,
+      images: [{ url: imageUrl, alt: title }],
+      publishedTime: honor.date,
+      locale: "fa_IR",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: title,
+      images: [imageUrl],
+    },
+  };
+}
 
 export default async function innerHonors({ params }) {
 
@@ -52,7 +89,7 @@ export default async function innerHonors({ params }) {
       <section className={style.customContainer}>
         <ShowRoute />
         <div>
-          <h3 className="title mt-3 mb-1">{honors?.title}</h3>
+          <h1 className="title mt-3 mb-1">{honors?.title}</h1>
         </div>
         <div>
           <p className={`${style.discriptionColor} discription mb-3`}>

@@ -1,3 +1,12 @@
+export const metadata = {
+  title: "نمایشگاه‌ها | آذرهولوگرام",
+  description:
+    "حضور آذرهولوگرام در نمایشگاه‌های تخصصی صنعت چاپ، بسته‌بندی و هولوگرام‌های امنیتی.",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir"}/Exhibition`,
+  },
+};
+
 import React from "react";
 
 import style from "../Styles/ExhibitionPageStyle/Exhibition.module.scss";

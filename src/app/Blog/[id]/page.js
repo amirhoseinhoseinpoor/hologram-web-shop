@@ -9,6 +9,9 @@ import { formatPersianDate } from "@/app/utils/persionDateUtils";
 import Link from "next/link";
 import parse from "html-react-parser";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir";
+const BACKEND = process.env.NEXT_PUBLIC_BACK_END_SERVER;
+
 async function fetchBlogs() {
   try {
     const response = await fetch(
@@ -26,6 +29,50 @@ async function fetchBlogs() {
     console.error("Fetch failed:", error);
     return []; // Return fallback data if fetch fails
   }
+}
+
+export async function generateMetadata({ params }) {
+  const allBlogs = await fetchBlogs();
+  const decodedId = decodeURIComponent(params.id);
+  const blogPost = allBlogs.find(
+    (item) =>
+      item.content.title?.trim().toLowerCase() === decodedId.trim().toLowerCase()
+  );
+
+  if (!blogPost) {
+    return { title: "مقاله یافت نشد" };
+  }
+
+  const title = blogPost.content.title;
+  const tags = blogPost.content.tags
+    ? blogPost.content.tags.split(",").map((t) => t.trim())
+    : [];
+  const imageUrl = `${BACKEND}/system/download/${blogPost.content.imageSrc}`;
+  const pageUrl = `${SITE_URL}/Blog/${encodeURIComponent(title)}`;
+
+  return {
+    title,
+    description: blogPost.content.time
+      ? `${title} - مطالعه: ${blogPost.content.time}`
+      : title,
+    keywords: tags,
+    alternates: { canonical: pageUrl },
+    openGraph: {
+      type: "article",
+      url: pageUrl,
+      title,
+      description: title,
+      images: [{ url: imageUrl, alt: title }],
+      publishedTime: blogPost.date,
+      locale: "fa_IR",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: title,
+      images: [imageUrl],
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }) {
@@ -96,7 +143,7 @@ export default async function BlogPostPage({ params }) {
           <ShowRoute />
           <div className={`${style.MainDiv} d-flex flex-row`}>
             <div className={`${style.textContent} d-flex flex-column`}>
-              <h3 className="title mt-3 mb-1">{blogPost.content.title}</h3>
+              <h1 className="title mt-3 mb-1">{blogPost.content.title}</h1>
               <p className={`${style.discriptionColor} discription mb-3`}>
                 {blogPost.content.time} | {formatPersianDate(blogPost.date)}
               </p>

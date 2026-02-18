@@ -3,6 +3,19 @@ import MainLayout from "../layouts/MainLayout";
 import HoleProductAndSearch from "../eachPageComponent/ProductPageComponent/HoleProductAndSearch";
 import ShowRoute from "../Components/ShowRoute";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir";
+
+export async function generateMetadata({ params }) {
+  const decodedId = decodeURIComponent(params.ProductPage);
+  return {
+    title: `${decodedId} | آذرهولوگرام`,
+    description: `مشاهده محصولات دسته‌بندی ${decodedId} از آذرهولوگرام - تولیدکننده هولوگرام‌های امنیتی.`,
+    alternates: {
+      canonical: `${SITE_URL}/${encodeURIComponent(decodedId)}`,
+    },
+  };
+}
+
 // Function to fetch products and header data
 async function fetchProduct() {
   try {
