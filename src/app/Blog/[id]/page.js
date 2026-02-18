@@ -4,6 +4,7 @@ import CopyLinkButton from "../../Components/CopyLinkButton";
 import ShowRoute from "@/app/Components/ShowRoute";
 import BlogInnerSearch from "@/app/eachPageComponent/BlogComponents/BlogInnerSearch";
 import MainLayout from "@/app/layouts/MainLayout";
+import JsonLd from "@/app/Components/JsonLd";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 import Link from "next/link";
@@ -136,8 +137,24 @@ export default async function BlogPostPage({ params }) {
     blogPost.content.content
   );
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: blogPost.content.title,
+    image: `${BACKEND}/system/download/${blogPost.content.imageSrc}`,
+    datePublished: blogPost.date,
+    author: { "@type": "Organization", name: "آذرهولوگرام" },
+    publisher: {
+      "@type": "Organization",
+      name: "آذرهولوگرام",
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/LOGO/logo.png` },
+    },
+    url: `${SITE_URL}/Blog/${encodeURIComponent(blogPost.content.title)}`,
+  };
+
   return (
     <>
+      <JsonLd data={articleSchema} />
       <MainLayout>
         <section className="container">
           <ShowRoute />
