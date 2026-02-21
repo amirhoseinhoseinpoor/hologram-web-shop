@@ -104,6 +104,89 @@
 .studingtimetext{
     color : #5F5F5F !important;
 }
+
+// ── TinyMCE blog body ──────────────────────────────────────────────────────
+// The global reset (reset.css + globals.scss) strips all heading sizes,
+// list styles, margins and line-height from every element.
+// This class re-applies sensible typographic defaults only inside the
+// rendered blog HTML so the rest of the site is unaffected.
+.blogContent {
+  direction: rtl;
+  line-height: 1.85;
+  color: #222;
+
+  // headings
+  h1 { font-size: 2rem;    font-weight: 700; margin: 1.4rem 0 0.6rem; }
+  h2 { font-size: 1.6rem;  font-weight: 700; margin: 1.3rem 0 0.5rem; }
+  h3 { font-size: 1.3rem;  font-weight: 600; margin: 1.2rem 0 0.45rem; }
+  h4 { font-size: 1.1rem;  font-weight: 600; margin: 1rem 0 0.4rem; }
+  h5 { font-size: 1rem;    font-weight: 600; margin: 0.9rem 0 0.35rem; }
+  h6 { font-size: 0.9rem;  font-weight: 600; margin: 0.8rem 0 0.3rem; }
+
+  // paragraphs
+  p {
+    font-size: 1rem;
+    margin-bottom: 0.9rem;
+    line-height: 1.85;
+    &:empty { display: none; } // hide the blank &nbsp; spacer paragraphs
+  }
+
+  // lists — restore bullets/numbers and indentation
+  ul {
+    list-style: disc;
+    padding-right: 1.6rem;
+    margin-bottom: 1rem;
+    li {
+      margin-bottom: 0.45rem;
+      line-height: 1.7;
+      &:empty { display: none; }
+    }
+  }
+  ol {
+    list-style: decimal;
+    padding-right: 1.6rem;
+    margin-bottom: 1rem;
+    li {
+      margin-bottom: 0.45rem;
+      line-height: 1.7;
+    }
+  }
+
+  // inline text
+  strong, b { font-weight: 700; }
+  em, i      { font-style: italic; }
+
+  // blockquote
+  blockquote {
+    border-right: 4px solid #1976d2;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    color: #555;
+    background: #f5f8ff;
+    border-radius: 4px;
+  }
+
+  // images inside content
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+  }
+
+  // links
+  a {
+    color: #1976d2;
+    text-decoration: underline;
+  }
+
+  // horizontal rule
+  hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 1.2rem 0;
+  }
+}
 .boxBackgroundMain{
     border-radius: 5px;
     padding: 10px;

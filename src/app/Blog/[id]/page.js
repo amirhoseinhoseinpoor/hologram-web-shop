@@ -270,7 +270,7 @@ export default async function BlogPostPage({ params }) {
                 </div>
               </div>
 
-              <div className="mt-4">{parse(contentWithIds)}</div>
+              <div className={`${style.blogContent} mt-4`}>{parse(contentWithIds)}</div>
 
               {/* <div className="d-flex flex-column mt-4">
                 <Box
