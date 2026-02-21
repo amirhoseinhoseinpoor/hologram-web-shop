@@ -24,16 +24,14 @@ export default function ProductShow({ productData }) {
   var data = productData.info;
 
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [isMediaLoading, setIsMediaLoading] = useState(false);
   const comeToken = useSelector(token);
 
   const [selectedColor, setSelectedColor] = useState("");
 
   const [zoomModal, setZoomModal] = useState(null);
 
-  console.log(zoomModal);
-  
-
-  // handle close modal 
+  // handle close modal
   const handleCloseZoomModal = () => setZoomModal(null);
 
   const handleColorChange = (color) => {
@@ -42,7 +40,10 @@ export default function ProductShow({ productData }) {
 
   // Function to handle the click event on thumbnails
   const handleThumbnailClick = (index) => {
-    setCurrentMediaIndex(index);
+    if (index !== currentMediaIndex) {
+      setIsMediaLoading(true);
+      setCurrentMediaIndex(index);
+    }
   };
 
   // store the url
@@ -72,30 +73,35 @@ export default function ProductShow({ productData }) {
       <div className={` d-flex flex-column mt-3 gap-3`}>
         <div className={`${style.fixMainContentResponsive}`}>
           <div className={style.responsiveMainRight}>
-            <Card className="position-relative">
+            <div className={`${style.mainMediaWrapper} position-relative`}>
               {data.imgData[currentMediaIndex].type === "2" ? (
                 <CardMedia
                   component="video"
                   src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${data.imgData[currentMediaIndex].src}`}
-                  // poster={data[currentMediaIndex].poster}
-                  sx={{ borderRadius: "4px" }}
+                  sx={{ borderRadius: "8px", width: "100%" }}
                   controls
-                  loading="lazy"
+                  onWaiting={() => setIsMediaLoading(true)}
+                  onCanPlay={() => setIsMediaLoading(false)}
                 />
               ) : (
                 <CardMedia
                   component="img"
                   src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${data.imgData[currentMediaIndex].src}`}
-                  sx={{ borderRadius: "4px" }}
-                  style={{ maxHeight: "420px" }}
-                  loading="lazy"
+                  sx={{ borderRadius: "8px" }}
+                  style={{ maxHeight: "460px", objectFit: "contain", width: "100%", backgroundColor: "#f7f8fc" }}
+                  onLoad={() => setIsMediaLoading(false)}
                 />
               )}
-            </Card>
+              {isMediaLoading && (
+                <div className={style.mediaLoadingOverlay}>
+                  <div className={style.spinner} />
+                </div>
+              )}
+            </div>
           </div>
 
           <div
-            className={`position-relative d-flex justify-content-center ${style.responsiveMainLeft}`}
+            className={`position-relative ${style.responsiveMainLeft}`}
           >
             <div className={`${style.innerStyleDivForMain}`}>
               <Swiper
@@ -126,47 +132,28 @@ export default function ProductShow({ productData }) {
                   >
                     <div
                       onClick={() => handleThumbnailClick(index)}
-                      style={{
-                        cursor: "pointer",
-                        
-                      }}
+                      className={`${style.thumbWrapper} ${currentMediaIndex === index ? style.thumbActive : ""}`}
                     >
                       {media.type === "2" ? (
                         <div className="position-relative">
                           <Box
-                            className={style.fixStyleSizeImgRe}
                             component="img"
-                            // sx={{
-                            //   width: "100px",
-                            //   height: "80px",
-                            //   borderRadius: "5px",
-                            // }}
+                            sx={{ width: "100%", height: "72px", objectFit: "cover", display: "block" }}
                             src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.poster}`}
                           />
-
                           <div className={`${style.posterIcon}`}>
-                            <svg
-                              width={25}
-                              height={24}
-                              viewBox="0 0 25 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                            <svg width={18} height={18} viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path
                                 d="M4.5 12.0004V8.44038C4.5 4.02038 7.63 2.21038 11.46 4.42038L14.55 6.20038L17.64 7.98038C21.47 10.1904 21.47 13.8104 17.64 16.0204L14.55 17.8004L11.46 19.5804C7.63 21.7904 4.5 19.9804 4.5 15.5604V12.0004Z"
-                                stroke="#333333"
-                                strokeWidth="1.5"
-                                strokeMiterlimit={10}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                                stroke="#333333" strokeWidth="1.5" strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round"
                               />
                             </svg>
                           </div>
                         </div>
                       ) : (
                         <Box
-                          className={style.fixStyleSizeImgRe}
                           component="img"
+                          sx={{ width: "100%", height: "72px", objectFit: "cover", display: "block" }}
                           src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.src}`}
                           alt={`Thumbnail ${index}`}
                         />
@@ -177,48 +164,31 @@ export default function ProductShow({ productData }) {
               </Swiper>
               <div className={`${style.divMainLeftSideVideo} d-none d-lg-block`}>
                 {data.imgData.map((media, index) => (
-                  <div
-                    key={index}
-                    className={`d-flex flex-column align-items-center justify-content-center`}
-                  >
+                  <div key={index}>
                     <div
                       onClick={() => handleThumbnailClick(index)}
-                      style={{
-                        cursor: "pointer",
-                        width: "75%",
-                      }}
+                      className={`${style.thumbWrapper} ${currentMediaIndex === index ? style.thumbActive : ""}`}
                     >
                       {media.type === "2" ? (
                         <div className="position-relative">
                           <Box
-                            className={style.fixStyleSizeImgReDesctop}
                             component="img"
+                            sx={{ width: "100%", height: "88px", objectFit: "cover", display: "block" }}
                             src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.poster}`}
                           />
-
                           <div className={`${style.posterIcon}`}>
-                            <svg
-                              width={25}
-                              height={24}
-                              viewBox="0 0 25 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                            <svg width={20} height={20} viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path
                                 d="M4.5 12.0004V8.44038C4.5 4.02038 7.63 2.21038 11.46 4.42038L14.55 6.20038L17.64 7.98038C21.47 10.1904 21.47 13.8104 17.64 16.0204L14.55 17.8004L11.46 19.5804C7.63 21.7904 4.5 19.9804 4.5 15.5604V12.0004Z"
-                                stroke="#333333"
-                                strokeWidth="1.5"
-                                strokeMiterlimit={10}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                                stroke="#333333" strokeWidth="1.5" strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round"
                               />
                             </svg>
                           </div>
                         </div>
                       ) : (
                         <Box
-                          className={style.fixStyleSizeImgReDesctop}
                           component="img"
+                          sx={{ width: "100%", height: "88px", objectFit: "cover", display: "block" }}
                           src={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${media.src}`}
                           alt={`Thumbnail ${index}`}
                         />

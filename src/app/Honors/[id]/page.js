@@ -8,6 +8,46 @@ import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
+export async function generateMetadata({ params }) {
+  const allHonors = await fetchHonors();
+  const decodedId = decodeURIComponent(params.id);
+  const honor = allHonors?.find(
+    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase()
+  );
+
+  if (!honor) {
+    return {
+      title: "افتخار یافت نشد",
+      description: "افتخار مورد نظر یافت نشد.",
+    };
+  }
+
+  const description = honor.content
+    ? honor.content.replace(/<[^>]*>/g, "").slice(0, 160)
+    : `${honor.title} - افتخارات آذرهولوگرام`;
+
+  return {
+    title: honor.title,
+    description,
+    alternates: {
+      canonical: `/Honors/${encodeURIComponent(honor.title)}`,
+    },
+    openGraph: {
+      title: honor.title,
+      description,
+      type: "article",
+      images: honor.src
+        ? [
+            {
+              url: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${honor.src}`,
+              alt: honor.title,
+            },
+          ]
+        : [],
+    },
+  };
+}
+
 async function fetchHonors() {
   try {
     const response = await fetch(
@@ -61,7 +101,7 @@ export default async function innerHonors({ params }) {
         <section className={style.customContainer}>
           <ShowRoute />
           <div>
-            <h3 className="title mt-3 mb-1">{honors?.title}</h3>
+            <h1 className="title mt-3 mb-1">{honors?.title}</h1>
           </div>
           <div>
             <p className={`${style.discriptionColor} discription mb-3`}>

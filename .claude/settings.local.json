@@ -9,7 +9,10 @@
       "Bash(findstr:*)",
       "Bash(xargs -I {} cmd.exe /c \"taskkill /F /PID {}\")",
       "Bash(powershell:*)",
-      "Bash(npm i)"
+      "Bash(npm i)",
+      "Bash(npm ls:*)",
+      "Bash(dir:*)",
+      "Bash(npx next build)"
     ]
   }
 }

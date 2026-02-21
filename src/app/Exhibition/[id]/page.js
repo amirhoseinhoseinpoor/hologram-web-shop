@@ -9,6 +9,46 @@ import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 
+export async function generateMetadata({ params }) {
+  const allExhibitions = await fetchExhibition();
+  const decodedId = decodeURIComponent(params.id);
+  const exhibition = allExhibitions.find(
+    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase()
+  );
+
+  if (!exhibition) {
+    return {
+      title: "نمایشگاه یافت نشد",
+      description: "نمایشگاه مورد نظر یافت نشد.",
+    };
+  }
+
+  const description = exhibition.content
+    ? exhibition.content.replace(/<[^>]*>/g, "").slice(0, 160)
+    : `نمایشگاه ${exhibition.title} - آذرهولوگرام`;
+
+  return {
+    title: exhibition.title,
+    description,
+    alternates: {
+      canonical: `/Exhibition/${encodeURIComponent(exhibition.title)}`,
+    },
+    openGraph: {
+      title: exhibition.title,
+      description,
+      type: "article",
+      images: exhibition.src
+        ? [
+            {
+              url: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${exhibition.src}`,
+              alt: exhibition.title,
+            },
+          ]
+        : [],
+    },
+  };
+}
+
 async function fetchExhibition() {
   try {
     const response = await fetch(
@@ -62,7 +102,7 @@ export default async function innerExhibition({ params }) {
         <section className={style.customContainer}>
           <ShowRoute />
           <div>
-            <h3 className="title mt-3 mb-1">{honors.title}</h3>
+            <h1 className="title mt-3 mb-1">{honors.title}</h1>
           </div>
           <div>
             <p className={`${style.discriptionColor} discription mb-3`}>

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /Login
+Disallow: /SignUp
+Disallow: /Profile
+Disallow: /ForgetPassword
+Disallow: /api/
+
+Sitemap: https://azarhologram.ir/sitemap.xml

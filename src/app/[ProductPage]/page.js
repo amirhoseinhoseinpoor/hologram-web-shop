@@ -5,6 +5,22 @@ import MainLayout from "../layouts/MainLayout";
 import HoleProductAndSearch from "../eachPageComponent/ProductPageComponent/HoleProductAndSearch";
 import ShowRoute from "../Components/ShowRoute";
 
+export async function generateMetadata({ params }) {
+  const decodedId = decodeURIComponent(params.ProductPage);
+
+  return {
+    title: `${decodedId} | محصولات`,
+    description: `خرید و سفارش ${decodedId} از آذرهولوگرام. مشاهده انواع محصولات هولوگرامی در دسته‌بندی ${decodedId}.`,
+    alternates: {
+      canonical: `/${encodeURIComponent(params.ProductPage)}`,
+    },
+    openGraph: {
+      title: `${decodedId} | محصولات آذرهولوگرام`,
+      description: `خرید و سفارش ${decodedId} از آذرهولوگرام.`,
+    },
+  };
+}
+
 // Function to fetch products and header data
 async function fetchProduct() {
   try {
@@ -103,7 +119,7 @@ export default async function ProductPage({ params }) {
   }
 
   const filteredProducts = allProduct.filter((product) => {
-    const productPathSegments = product.name.split(" / "); // Split the product name into segments
+    const productPathSegments = product.name.split(" - "); // Split the product name into segments
     const lastSegment = productPathSegments[productPathSegments.length - 1]; // Get the last segment
     return subItemTitles.includes(lastSegment); // Check if the last segment matches any subItemTitles
   });

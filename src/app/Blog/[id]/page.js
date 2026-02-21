@@ -6,10 +6,61 @@ import CopyLinkButton from "../../Components/CopyLinkButton";
 import ShowRoute from "@/app/Components/ShowRoute";
 import BlogInnerSearch from "@/app/eachPageComponent/BlogComponents/BlogInnerSearch";
 import MainLayout from "@/app/layouts/MainLayout";
+import JsonLd from "@/app/Components/JsonLd";
 import { notFound } from "next/navigation";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 import Link from "next/link";
 import parse from "html-react-parser";
+
+export async function generateMetadata({ params }) {
+  const allBlogs = await fetchBlogs();
+  const decodedId = decodeURIComponent(params.id);
+  const blogPost = allBlogs.find(
+    (item) =>
+      item.content.title?.trim().toLowerCase() === decodedId.trim().toLowerCase()
+  );
+
+  if (!blogPost) {
+    return {
+      title: "مقاله یافت نشد",
+      description: "مقاله مورد نظر یافت نشد.",
+    };
+  }
+
+  const description = blogPost.content.content
+    ? blogPost.content.content.replace(/<[^>]*>/g, "").slice(0, 160)
+    : `مقاله ${blogPost.content.title} در وبلاگ آذرهولوگرام`;
+
+  return {
+    title: blogPost.content.title,
+    description,
+    alternates: {
+      canonical: `/Blog/${encodeURIComponent(blogPost.content.title)}`,
+    },
+    openGraph: {
+      title: blogPost.content.title,
+      description,
+      type: "article",
+      publishedTime: blogPost.date,
+      images: blogPost.content.imageSrc
+        ? [
+            {
+              url: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blogPost.content.imageSrc}`,
+              alt: blogPost.content.title,
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blogPost.content.title,
+      description,
+      images: blogPost.content.imageSrc
+        ? [`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blogPost.content.imageSrc}`]
+        : [],
+    },
+  };
+}
 
 async function fetchBlogs() {
   try {
@@ -98,14 +149,33 @@ export default async function BlogPostPage({ params }) {
     blogPost.content.content
   );
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.co";
+  const backendUrl = process.env.NEXT_PUBLIC_BACK_END_SERVER;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: blogPost.content.title,
+    image: `${backendUrl}/system/download/${blogPost.content.imageSrc}`,
+    datePublished: blogPost.date,
+    author: { "@type": "Organization", name: "آذرهولوگرام" },
+    publisher: {
+      "@type": "Organization",
+      name: "آذرهولوگرام",
+      logo: { "@type": "ImageObject", url: `${siteUrl}/LOGO/cropped-com.chakavak.adv_512x512.png` },
+    },
+    url: `${siteUrl}/Blog/${encodeURIComponent(blogPost.content.title)}`,
+  };
+
   return (
     <>
+      <JsonLd data={articleSchema} />
       <MainLayout>
         <section className="container">
           <ShowRoute />
           <div className={`${style.MainDiv} d-flex flex-row`}>
             <div className={`${style.textContent} d-flex flex-column`}>
-              <h3 className="title mt-3 mb-1">{blogPost.content.title}</h3>
+              <h1 className="title mt-3 mb-1">{blogPost.content.title}</h1>
               <p className={`${style.discriptionColor} discription mb-3`}>
                 {blogPost.content.time} | {formatPersianDate(blogPost.date)}
               </p>
