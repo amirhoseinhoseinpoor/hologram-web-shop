@@ -210,11 +210,16 @@ export default async function innerExhibition({ params }) {
             </a>
           </div>
           <div className="mt-3">
-            <ul className={`${style.tagsStyle} d-flex flex-row gap-3`}>
-              {honors.tags.split(",").map((tag) => (
-                <>
-                  <li>{tag.trim()}</li>
-                </>
+            <ul className={style.tagsStyle}>
+              {honors.tags.split(",").map((tag, i) => (
+                <li key={i}>
+                  <a
+                    href={`/Exhibition?tag=${encodeURIComponent(tag.trim())}`}
+                    rel="tag"
+                  >
+                    {tag.trim()}
+                  </a>
+                </li>
               ))}
             </ul>
           </div>

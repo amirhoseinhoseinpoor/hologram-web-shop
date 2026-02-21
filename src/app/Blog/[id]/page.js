@@ -403,11 +403,16 @@ export default async function BlogPostPage({ params }) {
               </div>
 
               <div className="mt-3">
-                <ul className={`${style.tagsStyle} d-flex flex-row gap-3`}>
-                  {blogPost.content.tags.split(",").map((tag) => (
-                    <>
-                      <li>{tag.trim()}</li>
-                    </>
+                <ul className={style.tagsStyle}>
+                  {blogPost.content.tags.split(",").map((tag, i) => (
+                    <li key={i}>
+                      <a
+                        href={`/Blog?tag=${encodeURIComponent(tag.trim())}`}
+                        rel="tag"
+                      >
+                        {tag.trim()}
+                      </a>
+                    </li>
                   ))}
                 </ul>
               </div>

@@ -21,12 +21,27 @@
 }
 // tags part
 .tagsStyle {
+  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
   li {
-    padding: 5px 14px;
-    border: 1.5px solid lightgray;
-    border-radius: 4px;
-    color: var.$tabbed;
+    list-style: none;
+    a {
+      display: block;
+      padding: 5px 14px;
+      border: 1.5px solid lightgray;
+      border-radius: 4px;
+      color: var.$tabbed;
+      text-decoration: none;
+      font-size: 13px;
+      transition: border-color 140ms, color 140ms;
+      &:hover {
+        border-color: var.$tabbed;
+        color: var.$tabbed;
+      }
+    }
   }
 }
 // ── TinyMCE rich content ────────────────────────────────────────────────────
