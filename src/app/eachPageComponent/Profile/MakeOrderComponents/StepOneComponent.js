@@ -13,9 +13,6 @@ export default function SteponeComponent({
   disabelInput,
 }) {
 
-  console.log(data);
-  
-
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
@@ -29,8 +26,6 @@ export default function SteponeComponent({
   const [statusTraking, setStatusTraking] = useState(false);
   const [moveForward, setMoveForward] = useState(false);
   const [prodFiled, setProdFiled] = useState([]);
-
-  console.log(prodFiled);
 
   const [formData, setFormData] = useState({
     feature: "",
@@ -50,7 +45,6 @@ export default function SteponeComponent({
 
   // Initialize dynamicForm as an object where each key is the product code
   const [dynamicForm, setDynamicForm] = useState({});
-  console.log(dynamicForm);
 
   const [hasDynamicFields, setHasDynamicFields] = useState(false);
 

@@ -42,17 +42,12 @@ export default function StepTwoComponent({
 }) {
   var hasData = Object.keys(data).length > 0;
 
-  console.log(disabelInputStep2);
-
   const dispatch = useDispatch();
 
-  console.log(step);
 
   const [value, setValue] = useState("خصوصی");
   const [paying, setPaying] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState(data.preparedData || []);
-  console.log(uploadedFiles);
-
   const [logo, setLogo] = useState(null);
   const [FactorImage, setFactorImage] = useState(null);
   const [companyName, setCompanyName] = useState("");
@@ -63,13 +58,8 @@ export default function StepTwoComponent({
   const [loadingDeleteOrder, setLoadingDeleteOrder] = useState(false);
   const [loadingImgDonwload, setLoadingImgDonwload] = useState([]);
 
-  console.log(FactorImage);
-  console.log(dataFactor);
-
   // modal
   const handleOpen = ({ imageUrl }) => {
-    console.log(imageUrl);
-
     setZoomedImage(imageUrl);
   };
 

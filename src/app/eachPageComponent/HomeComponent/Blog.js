@@ -35,8 +35,6 @@ async function fetchBlogs() {
 export default async function Magazine() {
   const honors = await fetchBlogs();
 
-  console.log(honors);
-
   if (honors.length === 0) {
     return (
       <p>No blogs data available at the moment. Please try again later.</p>

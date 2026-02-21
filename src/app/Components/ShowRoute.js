@@ -69,7 +69,6 @@ const ShowRoute = () => {
     setDecodedPathname(decodeURIComponent(pathname));
   }, [pathname]);
 
-  // console.log(decodedPathname);
   const returnPath = decodedPathname.split("/").filter((value) => value);
 
   

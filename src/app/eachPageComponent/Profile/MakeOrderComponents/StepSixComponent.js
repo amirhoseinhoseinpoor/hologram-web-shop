@@ -34,14 +34,11 @@ export default function StepSixComponent({
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [finalPaymentImage, setFinalPaymentImage] = useState(null);
-  console.log(finalPaymentImage);
 
   const [zoomModal, setZoomModal] = useState(false);
 
   const handleCloseZoomModal = () => setZoomModal(false);
 
-  console.log(finalFactor);
-  
 
   useEffect(() => {
     const fetchFinalPayment = async () => {

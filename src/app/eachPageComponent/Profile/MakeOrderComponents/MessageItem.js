@@ -23,7 +23,6 @@ const MessageItem = React.memo(
   }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
-    console.log(imageUrl);
 
     const [loadingImage, setLoadingImage] = useState(false);
 
