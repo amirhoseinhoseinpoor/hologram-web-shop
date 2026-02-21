@@ -124,7 +124,7 @@ export default async function innerExhibition({ params }) {
             />
           </div>
 
-          <div dangerouslySetInnerHTML={{ __html: honors.content }} />
+          <div className={style.richContent} dangerouslySetInnerHTML={{ __html: honors.content }} />
 
           {/* <div>
           <p>{honors.content1}</p>

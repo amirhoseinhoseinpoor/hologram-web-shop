@@ -123,7 +123,7 @@ export default async function innerHonors({ params }) {
             />
           </div>
 
-          <div dangerouslySetInnerHTML={{ __html: honors.content }} />
+          <div className={style.richContent} dangerouslySetInnerHTML={{ __html: honors.content }} />
 
           <div
             className={`${style.socialMediaIcon} d-flex align-items-center flex-row mt-3 gap-3`}
