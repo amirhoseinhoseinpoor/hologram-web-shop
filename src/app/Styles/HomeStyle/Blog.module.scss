@@ -23,6 +23,15 @@
 .studingtimetext{
     color : #5F5F5F !important;
 }
+
+.titleTruncate{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .boxBackgroundMain{
     border-radius: 5px;
     padding: 10px;

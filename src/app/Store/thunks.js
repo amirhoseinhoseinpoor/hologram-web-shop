@@ -681,3 +681,28 @@ export const deleteOrder = createAsyncThunk(
 );
 
 // end order
+
+// start contact
+export const submitContactForm = createAsyncThunk(
+  "contact/submitContactForm",
+  async ({ name, phone, message }, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/contact`,
+        { name, phone, message }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return thunkAPI.rejectWithValue(
+          error.response.data?.message ||
+            "شما امروز بیش از حد مجاز پیام ارسال کرده‌اید. لطفاً فردا مجدداً تلاش کنید."
+        );
+      }
+      return thunkAPI.rejectWithValue(
+        "مشکلی پیش آمد، لطفاً دوباره تلاش کنید"
+      );
+    }
+  }
+);
+// end contact

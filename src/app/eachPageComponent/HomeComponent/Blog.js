@@ -97,7 +97,7 @@ export default async function Magazine() {
                     </p>
                   </div>
                   <div>
-                    <p className="VodeoDisSizing">{item.content.title}</p>
+                    <p className={`VodeoDisSizing ${style.titleTruncate}`}>{item.content.title}</p>
                   </div>
                 </div>
               </Link>

@@ -39,6 +39,34 @@
     color: white;
 
 }
+.successMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 20px;
+  text-align: center;
+
+  p {
+    font-size: 15px;
+    color: #2e7d32;
+    font-weight: 500;
+  }
+}
+
+.errorMessage {
+  color: #c62828;
+  font-size: 13px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.submitButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 @media (max-width :980px) {
     .adjustFormDirection{
         flex-direction: column !important;
