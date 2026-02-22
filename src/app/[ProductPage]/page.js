@@ -124,9 +124,6 @@ export default async function ProductPage({ params }) {
     return subItemTitles.includes(lastSegment); // Check if the last segment matches any subItemTitles
   });
 
-  // console.log(allProduct);
-
-  // console.log(filteredProducts);
 
   if (filteredProducts.length === 0) {
     return (

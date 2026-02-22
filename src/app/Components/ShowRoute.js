@@ -22,6 +22,8 @@ const List = styled.ul`
   padding: 0;
   margin: 10px 0 2px 0;
   list-style: none;
+  flex-wrap: nowrap;
+  overflow: hidden;
 `;
 
 const ListItem = styled.li`
@@ -29,11 +31,13 @@ const ListItem = styled.li`
   align-items: center;
   font-size: 15px;
   color: #404756;
+  min-width: 0;
   &:not(:first-child) {
     margin-right: 7px;
   }
   a {
     text-decoration: none;
+    min-width: 0;
   }
 `;
 
@@ -45,6 +49,18 @@ const StyledLink = styled.span`
   }
 `;
 
+const StyledLinkLast = styled(StyledLink)`
+  display: block;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 768px) {
+    max-width: 130px;
+  }
+`;
+
 const ShowRoute = () => {
   const pathname = usePathname();
   const [decodedPathname, setDecodedPathname] = useState("");
@@ -53,7 +69,6 @@ const ShowRoute = () => {
     setDecodedPathname(decodeURIComponent(pathname));
   }, [pathname]);
 
-  // console.log(decodedPathname);
   const returnPath = decodedPathname.split("/").filter((value) => value);
 
   
@@ -104,14 +119,21 @@ const ShowRoute = () => {
             />
           </svg>
         </Box>
-        {returnPath.map((segment, index) => (
-          <ListItem key={index}>
-            <Link href={generatePath(index)} passHref>
-              <StyledLink>{segment}</StyledLink>
-            </Link>
-            {index < returnPath.length - 1 && <Icon />}
-          </ListItem>
-        ))}
+        {returnPath.map((segment, index) => {
+          const isLast = index === returnPath.length - 1;
+          return (
+            <ListItem key={index}>
+              <Link href={generatePath(index)} passHref>
+                {isLast ? (
+                  <StyledLinkLast title={segment}>{segment}</StyledLinkLast>
+                ) : (
+                  <StyledLink>{segment}</StyledLink>
+                )}
+              </Link>
+              {!isLast && <Icon />}
+            </ListItem>
+          );
+        })}
       </List>
      
     </>

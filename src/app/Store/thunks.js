@@ -27,8 +27,6 @@ export const login = createAsyncThunk(
         }
       );
 
-      console.log(response2);
-
       return {
         token,
         firstName: response2.data[0].firstName,
@@ -100,7 +98,6 @@ export const signUp = createAsyncThunk(
         }
       );
       const signUpSattus = response.data.message;
-      console.log(signUpSattus);
       return signUpSattus;
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -130,7 +127,6 @@ export const forgetPassword = createAsyncThunk(
         }
       );
       const signUpSattus = response.data.message;
-      console.log(signUpSattus);
       return signUpSattus;
     } catch (error) {
       if (error.response && error.response.status === 400) {

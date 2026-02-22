@@ -85,8 +85,6 @@ export default async function innerHonors({ params }) {
 
   const decodedId = decodeURIComponent(params.id);
 
-  console.log(allHonors);
-
   const honors = allHonors?.find(
     (item) => item.title.trim().toLowerCase() == decodedId.trim().toLowerCase()
   );
@@ -123,7 +121,7 @@ export default async function innerHonors({ params }) {
             />
           </div>
 
-          <div dangerouslySetInnerHTML={{ __html: honors.content }} />
+          <div className={style.richContent} dangerouslySetInnerHTML={{ __html: honors.content }} />
 
           <div
             className={`${style.socialMediaIcon} d-flex align-items-center flex-row mt-3 gap-3`}
@@ -202,11 +200,16 @@ export default async function innerHonors({ params }) {
             </a>
           </div>
           <div className="mt-3">
-            <ul className={`${style.tagsStyle} d-flex flex-row gap-3`}>
-              {honors?.tags.split(",").map((tag) => (
-                <>
-                  <li>{tag.trim()}</li>
-                </>
+            <ul className={style.tagsStyle}>
+              {honors?.tags.split(",").map((tag, i) => (
+                <li key={i}>
+                  <a
+                    href={`/Honors?tag=${encodeURIComponent(tag.trim())}`}
+                    rel="tag"
+                  >
+                    {tag.trim()}
+                  </a>
+                </li>
               ))}
             </ul>
           </div>

@@ -21,14 +21,80 @@
 }
 // tags part
 .tagsStyle {
+  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
   li {
-    padding: 5px 14px;
-    border: 1.5px solid lightgray;
-    border-radius: 4px;
-    color: var.$tabbed;
+    list-style: none;
+    a {
+      display: block;
+      padding: 5px 14px;
+      border: 1.5px solid lightgray;
+      border-radius: 4px;
+      color: var.$tabbed;
+      text-decoration: none;
+      font-size: 13px;
+      transition: border-color 140ms, color 140ms;
+      &:hover {
+        border-color: var.$tabbed;
+        color: var.$tabbed;
+      }
+    }
   }
 }
+// ── TinyMCE rich content ────────────────────────────────────────────────────
+.richContent {
+  direction: rtl;
+  line-height: 1.85;
+  color: #222;
+  margin-top: 1.25rem;
+
+  h1 { font-size: 2rem;    font-weight: 700; margin: 1.4rem 0 0.6rem; }
+  h2 { font-size: 1.6rem;  font-weight: 700; margin: 1.3rem 0 0.5rem; }
+  h3 { font-size: 1.3rem;  font-weight: 600; margin: 1.2rem 0 0.45rem; }
+  h4 { font-size: 1.1rem;  font-weight: 600; margin: 1rem 0 0.4rem; }
+  h5 { font-size: 1rem;    font-weight: 600; margin: 0.9rem 0 0.35rem; }
+  h6 { font-size: 0.9rem;  font-weight: 600; margin: 0.8rem 0 0.3rem; }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 0.9rem;
+    line-height: 1.85;
+    &:empty { display: none; }
+  }
+
+  ul {
+    list-style: disc;
+    padding-right: 1.6rem;
+    margin-bottom: 1rem;
+    li { margin-bottom: 0.45rem; line-height: 1.7; &:empty { display: none; } }
+  }
+  ol {
+    list-style: decimal;
+    padding-right: 1.6rem;
+    margin-bottom: 1rem;
+    li { margin-bottom: 0.45rem; line-height: 1.7; }
+  }
+
+  strong, b { font-weight: 700; }
+  em, i      { font-style: italic; }
+
+  blockquote {
+    border-right: 4px solid #1976d2;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    color: #555;
+    background: #f5f8ff;
+    border-radius: 4px;
+  }
+
+  img { max-width: 100%; height: auto; border-radius: 4px; margin: 0.5rem 0; }
+  a   { color: #1976d2; text-decoration: underline; }
+  hr  { border: none; border-top: 1px solid #e0e0e0; margin: 1.2rem 0; }
+}
+
 @media (max-width: 980px) {
     .customContainer {
         padding: 0 8%;

@@ -350,7 +350,6 @@ const ChatBox = ({
     const file = event.target.files[0];
     if (file) {
       setImage(file);
-      console.log(file);
 
       const fileType = file?.name?.split(".").pop();
 

@@ -49,7 +49,6 @@ export default async function BlogCard() {
 
   const findSecontImportant = dataFillterd.slice(2, 5);
 
-  // console.log(findSecontImportant);
 
   function fixTitleSize(text) {
     var shortTitle;
