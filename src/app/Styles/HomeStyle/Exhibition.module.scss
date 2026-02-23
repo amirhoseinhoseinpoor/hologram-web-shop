@@ -13,21 +13,41 @@
 .arrowforward {
   padding: 5px;
   background-color: var.$arrow-link;
-  border-radius: 4px;
+  border-radius: 8px;
   color: white;
   border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+  box-shadow: 0 3px 8px rgba(56, 146, 243, 0.35);
+
   svg {
     font-size: 30px;
     padding: 5px;
+  }
+
+  &:hover {
+    background-color: #2478d4;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 }
 .arrowbackward {
   color: var.$arrow-link;
   border: none;
   background-color: transparent;
+  cursor: pointer;
+  transition: color 0.2s;
+
   svg {
     padding: 5px;
     font-size: 30px;
+  }
+
+  &:hover {
+    color: #2478d4;
   }
 }
 .slidernexttext {

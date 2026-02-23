@@ -1,93 +1,134 @@
 @use "../variable" as var;
 
-.mainSection{
-    display: flex;
-    justify-content: center;
-    max-height: 500px;
+.mainSection {
+  display: flex;
+  justify-content: center;
+  max-height: 500px;
 }
-.swiperslideHonors{
-    height: 100% !important ;
-    display: flex;
-  
-    img{
-      object-fit: cover;
-    }
-    
+
+.swiperslideHonors {
+  height: 100% !important;
+  display: flex;
+  position: relative;
+
+  img {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+  }
+
+  // dark gradient at the bottom for text readability
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.2) 45%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
 }
-.swiperMain :global{
-  .swiper-pagination{
+
+.swiperMain :global {
+  .swiper-pagination {
     padding: 7px !important;
     width: 110px !important;
     border-radius: 2px;
   }
-  .swiper-pagination span{
-    // margin-left: 28px !important;
-  }
-  .swiper-pagination-bullet{
+  .swiper-pagination-bullet {
     right: unset !important;
   }
 }
-.resizeWidth{
-    width: 100%;
-}
-// banner text style
-.BannerTextDiv{
-    position: absolute;
-    bottom: 6%;
-    right: 5%;
+
+.resizeWidth {
+  width: 100%;
 }
 
-.BannerTextDiv > div{
-    color: var.$social-media-color;
-   line-height: normal;
+// banner text — no box, just text on the gradient
+.BannerTextDiv {
+  position: absolute;
+  bottom: 7%;
+  right: 5%;
+  z-index: 1;
 }
 
-.buttonBanner button{
-    border: none;
-    border-radius: 4px;
-    padding: 7px 12px;
-    font-weight: 500;
+.BannerTextDiv > div {
+  color: white;
+  line-height: normal;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-// banner padination
-.feature-pagination{
-    background-color: black !important;
-    height: 2.5px !important;
-    border-radius: 3px !important;
-    width: 20px !important;
-}
-@media (max-width :980px) {
-    .BannerTextDiv{
-        bottom:9%;
-        right: 7%;
-    }
-}
-@media (max-width :768px) {
-    .BannerTextDiv{
-        bottom: 7%;
-        right: 3%;
-    }
-    .BannerTextDiv > div{
-        margin-bottom: 3px !important;
-    }
-    .buttonBanner button{
-        border-radius: 4px;
-        padding: 3px 8px;
-        font-weight: 500;
-    }
-    .feature-pagination{
-        width: 12px !important;
-    }
-}
-@media (max-width :433px) {
-    .BannerTextDiv{
-        bottom: 4%;
-        right: 2%;
-    }
-    .buttonBanner button{
-        font-size: 15px;
-        padding: 3px 8px;
-        
-    }
+.buttonBanner button {
+  border: none;
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: var.$arrow-background;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(243, 128, 44, 0.55);
+  letter-spacing: 0.3px;
+
+  &:hover {
+    background-color: #e06a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(243, 128, 44, 0.65);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
+// banner pagination dots — orange pill dots
+.feature-pagination {
+  background-color: var.$arrow-background !important;
+  height: 3px !important;
+  border-radius: 3px !important;
+  width: 20px !important;
+  opacity: 0.75 !important;
+}
+
+@media (max-width: 980px) {
+  .BannerTextDiv {
+    bottom: 9%;
+    right: 7%;
+  }
+}
+
+@media (max-width: 768px) {
+  .BannerTextDiv {
+    bottom: 7%;
+    right: 3%;
+  }
+  .BannerTextDiv > div {
+    margin-bottom: 3px !important;
+  }
+  .buttonBanner button {
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .feature-pagination {
+    width: 12px !important;
+  }
+}
+
+@media (max-width: 433px) {
+  .BannerTextDiv {
+    bottom: 4%;
+    right: 2%;
+  }
+  .buttonBanner button {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+}
