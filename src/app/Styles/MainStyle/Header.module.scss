@@ -5,6 +5,10 @@
 }
 .adjustNavPadding {
   padding: 0;
+  /* Override Bootstrap's bg-body-tertiary so the navbar itself carries
+     the background color. Fixes Firefox not expanding the fixed <section>
+     background when the navbar wraps to a second line. */
+  background-color: var.$footer-background !important;
 }
 .sectionheaderfix {
   position: fixed;
