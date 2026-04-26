@@ -186,10 +186,10 @@ export const uploadFile = createAsyncThunk(
     try {
       // Create a FormData object
       const formData = new FormData();
-      formData.append("files", file);
       formData.append("tag", tag);
       formData.append("type", type);
       formData.append("isPublic", isPublic);
+      formData.append("files", file);
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/upload`,
@@ -197,7 +197,6 @@ export const uploadFile = createAsyncThunk(
         {
           headers: {
             Authorization: token.token ? `Bearer ${token.token}` : "",
-            "Content-Type": "multipart/form-data",
           },
         }
       );
