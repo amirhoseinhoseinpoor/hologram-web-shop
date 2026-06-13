@@ -1,4 +1,4 @@
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.ir";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.net";
 const BACKEND = process.env.NEXT_PUBLIC_BACK_END_SERVER;
 
 async function fetchProducts() {
