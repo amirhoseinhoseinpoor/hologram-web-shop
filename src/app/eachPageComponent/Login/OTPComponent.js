@@ -9,8 +9,9 @@ export default function OTPInput({
   onVerifyOtp,
   resendOtp,
   setIsOtpSent,
+  error,
 }) {
-  const [otp, setOtp] = useState(["", "", "", ""]); // Array for 4-digit OTP
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timer, setTimer] = useState(120); // Timer set for 2 minutes (120 seconds)
   const inputRefs = useRef([]); // Array of refs for input elements
 
@@ -29,6 +30,14 @@ export default function OTPInput({
     }
   };
 
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, []);
+
   // Handle OTP verification
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,14 +53,14 @@ export default function OTPInput({
   };
 
   // Timer logic
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      setTimer((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
+  // useEffect(() => {
+  //   const countdown = setInterval(() => {
+  //     setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+  //   }, 1000);
 
-    // Clear interval on component unmount
-    return () => clearInterval(countdown);
-  }, []);
+  //   // Clear interval on component unmount
+  //   return () => clearInterval(countdown);
+  // }, []);
 
   // Convert timer seconds to minutes:seconds format
   const formatTime = (seconds) => {
@@ -76,6 +85,17 @@ export default function OTPInput({
           />
         </div>
       </div>
+      {error && (
+        <p
+          style={{
+            color: "#d32f2f",
+            textAlign: "center",
+            marginBottom: 10,
+          }}
+        >
+          {error}
+        </p>
+      )}
       <p className="discription">
         ما برای شماره {username} کد تایید ارسال کردیم.
       </p>
@@ -119,7 +139,10 @@ export default function OTPInput({
               <button
                 type="button"
                 className={`${style.resendButton} QASize`}
-                onClick={resendOtp}
+                onClick={async () => {
+                  await resendOtp();
+                  setTimer(120);
+                }}
               >
                 تلاش مجدد
               </button>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpSattus } from "../Store/slice";
-import { signUp } from "../Store/thunks";
+import { sendOtp, registerWithOtp } from "../Store/thunks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AuthLayout from "../layouts/AuthLayout";
@@ -10,58 +10,6 @@ import OTPInput from "../eachPageComponent/Login/OTPComponent";
 import style from "../Styles/SignUp/SignUpStyle.module.scss";
 
 export default function SignUp() {
-  // const dispatch = useDispatch();
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-
-  // const router = useRouter();
-
-  // const [errorMessage, setErrorMessage] = useState(null);
-
-  // const handleLogin = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const credentials = { username, password }; // Create credentials object from form data
-  //     await dispatch(login(credentials)); // Dispatch login thunk with credentials
-
-  //     // router.push('../page.js')
-  //   } catch (error) {
-  //     console.error("login error me:", error);
-  //   }
-
-  //   //
-  // };
-
-  // const handleLogi2n = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await dispatch(login({ username, password }));
-  //     alert("suc login");
-  //   } catch (error) {
-  //     console.error("login error me:", error); // Handle login errors gracefully (e.g., display error message)
-  //   }
-  // };
-
-  //handeling submit and fetch api
-  // const handleSubmit = async (e) => {
-  //     alert('hi');
-  //     e.preventDefault();
-  //     // const result = await signIn('credentials', {
-  //     //   redirect: false, // Prevent default redirection
-  //     //   username,
-  //     //   password,
-  //     // });
-  //     // if (result.error) {
-  //     //     console.error('Login error:', result.error); // Handle login errors
-  //     // } else {
-  //     //     // Successfully logged in
-  //     //     dispatch(setUser(result.user)); // If using Redux to update user state
-  //     // }
-  // };
-
-  ////      after
-
   const dispatch = useDispatch();
   const router = useRouter();
   const phoneNumberRegex = /((0?9)|(\+?989))\d{2}\W?\d{3}\W?\d{4}/g;
@@ -120,8 +68,16 @@ export default function SignUp() {
         setErrorMessage("فرمت شماره همراه اشتباه است");
         setLodaingStatus(false);
       } else {
-        const resultAction = await dispatch(signUp(credentials));
-        if (signUp.rejected.match(resultAction)) {
+        const resultAction = await dispatch(
+          sendOtp({
+            username,
+            type: "register",
+          }),
+        );
+
+        if (sendOtp.fulfilled.match(resultAction)) {
+          setIsOtpSent(true);
+        } else {
           setErrorMessage(resultAction.payload);
           setLodaingStatus(false);
         }
@@ -132,84 +88,56 @@ export default function SignUp() {
     }
   };
 
-  useEffect(() => {
-    if (comesignUpSattus == "Success") {
-      setIsOtpSent(true); // Set OTP sent flag when comesignUpSattus is available
-    } else if (comesignUpSattus === null && isOtpSent) {
-      setErrorMessage("Failed to send OTP. Please try again.");
-    }
-  }, [comesignUpSattus, isOtpSent]);
 
-  // const handleSendOtp = async (event) => {
-  //   event.preventDefault();
-  //   setErrorMessage(null);
-  //   try {
-  //     const response = await fetch("/api/send-otp", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ phoneNumber }),
-  //     });
 
-  //     if (response.ok) {
-  //       setIsOtpSent(true); // OTP sent successfully
-  //     } else {
-  //       setErrorMessage("Failed to send OTP. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sending OTP:", error);
-  //     setErrorMessage("An unexpected error occurred. Please try again.");
-  //   }
-  // };
-
-  // Verify OTP
   const handleVerifyOtp = async (otp) => {
     setErrorMessage(null);
+    setLodaingStatus(true);
+
     try {
-      alert("your OTP   " + otp);
-      // const lastPage = sessionStorage.getItem("lastPage") || "/";
-      router.push("/Login");
+      const resultAction = await dispatch(
+        registerWithOtp({
+          firstName,
+          lastName,
+          username,
+          password,
+          // roleIds: [1],
+          otp,
+        }),
+      );
 
-      // const response = await fetch("/api/verify-otp", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ phoneNumber, otp }),
-      // });
-
-      // if (response.ok) {
-      //   // Assuming your backend sends a token or some user data upon successful OTP verification
-      //   const data = await response.json();
-      //   dispatch(login(data)); // Dispatch login action with user data
-      //   router.push("/"); // Redirect to home page
-      // } else {
-      //   setErrorMessage("Invalid OTP. Please try again.");
-      // }
-    } catch (error) {
-      console.error("Error verifying OTP:", error);
-      setErrorMessage("An unexpected error occurred. Please try again.");
+      if (registerWithOtp.fulfilled.match(resultAction)) {
+        const lastPage = sessionStorage.getItem("lastPage") || "/";
+        router.push(lastPage);
+      } else {
+        setErrorMessage(resultAction.payload);
+      }
+    } catch {
+      setErrorMessage("کد تایید نامعتبر است");
     }
+
+    setLodaingStatus(false);
   };
 
   // Resend OTP
   const handleResendOtp = async () => {
-    // try {
-    //   const response = await fetch("/api/send-otp", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ phoneNumber }),
-    //   });
-    //   if (!response.ok) {
-    //     setErrorMessage("Failed to resend OTP. Please try again.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error resending OTP:", error);
-    //   setErrorMessage("An unexpected error occurred. Please try again.");
-    // }
+    setErrorMessage(null);
+
+    const resultAction = await dispatch(
+      sendOtp({
+        username,
+        type: "register",
+      }),
+    );
+
+    if (sendOtp.fulfilled.match(resultAction)) {
+    setErrorMessage(null);
+    setIsOtpSent(true);
+}
+
+    if (sendOtp.rejected.match(resultAction)) {
+      setErrorMessage(resultAction.payload);
+    }
   };
 
   function NavigateLastPage() {
@@ -333,9 +261,7 @@ export default function SignUp() {
                 className="form-border p-2 bg-white rounded container"
               >
                 <div className="d-flex flex-row justify-content-center mt-3 mb-4">
-                  <div>
-                    <p className="Banner-title">Logo</p>
-                  </div>
+                  <div></div>
                 </div>
                 <p className="mb-3 me-2 mt-3 discription">ثبت نام</p>
 
@@ -403,7 +329,17 @@ export default function SignUp() {
                     id="password"
                     value={password}
                     ref={passwordRef}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^[0-9]*$/.test(value)) {
+                        setPassword(value);
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
+                        e.preventDefault();
+                      }
+                    }}
                     required
                   />
                 </div>
@@ -531,7 +467,6 @@ export default function SignUp() {
                     ) : (
                       <div className={style.loader}></div>
                     )}
-                    
                   </div>
                 </button>
                 <Link href="/Login" className={style.SignUpLink}>
@@ -557,6 +492,7 @@ export default function SignUp() {
                 onVerifyOtp={handleVerifyOtp}
                 resendOtp={handleResendOtp}
                 setIsOtpSent={setIsOtpSent}
+                error={errorMessage}
               />
             )}
           </div>

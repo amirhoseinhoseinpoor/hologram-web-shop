@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { token } from "../Store/slice";
-import { login } from "../Store/thunks";
+import { login, sendOtp } from "../Store/thunks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import OTPInput from "../eachPageComponent/Login/OTPComponent";
@@ -67,57 +67,92 @@ export default function Login() {
 
   // Send OTP to the user's phone
 
-  const handleLogin = async (event) => {
+  const handleSendOtp = async (event) => {
     event.preventDefault();
+
     setLodaingStatus(true);
     setErrorMessage(null);
 
-    // If captcha is not verified, show error
-    if (isCaptchaRequired && !captchaValue) {
-      setErrorMessage("لطفا ربات نیستید را تایید کنید.");
+    if (!phoneNumberRegex.test(username)) {
+      setErrorMessage("فرمت شماره همراه اشتباه است");
       setLodaingStatus(false);
-      setIsButtonDisabled(true);
       return;
     }
 
     try {
-      const credentials = { username, password };
+      const resultAction = await dispatch(
+        sendOtp({
+          username,
+          type: "login",
+        }),
+      );
 
-      if (!phoneNumberRegex.test(username)) {
-        setErrorMessage("فرمت شماره همراه اشتباه است");
-        setLodaingStatus(false);
+      if (sendOtp.fulfilled.match(resultAction)) {
+        setIsOtpSent(true);
       } else {
-        const resultAction = await dispatch(login(credentials));
-        if (login.rejected.match(resultAction)) {
-          setErrorMessage(resultAction.payload || "ورود ناموفق");
-          setFailedAttempts((prevRequest) => prevRequest + 1);
-          // Check if CAPTCHA is required after failed login attempts
-          // if (resultAction.error.message == "Rejected" && failedAttempts > 1) {
-          //   setIsCaptchaRequired(true);
-          // }
-          // If CAPTCHA is required, reset the ReCAPTCHA widget and captchaValue
-          if (isCaptchaRequired) {
-            setCaptchaValue(null);
-            if (recaptchaRef.current) {
-              recaptchaRef.current.reset(); // Reset ReCAPTCHA widget
-            }
-          }
-          setLodaingStatus(false);
-        }
+        setErrorMessage(resultAction.payload);
       }
-    } catch (error) {
-      console.error("Login/page.js", error);
-      setLodaingStatus(false);
+    } catch {
+      setErrorMessage("خطا در ارسال کد تایید");
     }
+
+    setLodaingStatus(false);
   };
 
-  useEffect(() => {
-    if (comeToken) {
-      setIsOtpSent(true); // Set OTP sent flag when token is available
-    } else if (comeToken === null && isOtpSent) {
-      setErrorMessage("Failed to send OTP. Please try again.");
-    }
-  }, [comeToken, isOtpSent]);
+  // const handleSendOtp = async (event) => {
+  //   event.preventDefault();
+  //   setLodaingStatus(true);
+  //   setErrorMessage(null);
+
+  //   // If captcha is not verified, show error
+  //   if (isCaptchaRequired && !captchaValue) {
+  //     setErrorMessage("لطفا ربات نیستید را تایید کنید.");
+  //     setLodaingStatus(false);
+  //     setIsButtonDisabled(true);
+  //     return;
+  //   }
+
+  //   try {
+  //     if (!phoneNumberRegex.test(username)) {
+  //       setErrorMessage("فرمت شماره همراه اشتباه است");
+  //       setLodaingStatus(false);
+  //     } else {
+  //       const resultAction = await dispatch(sendOtp(username));
+
+  //       if (sendOtp.fulfilled.match(resultAction)) {
+  //         setIsOtpSent(true);
+  //         setLodaingStatus(false);
+  //         return;
+  //       } else {
+  //         setErrorMessage(resultAction.payload);
+  //         setLodaingStatus(false);
+  //       }
+  //       if (login.rejected.match(resultAction)) {
+  //         setErrorMessage(resultAction.payload || "ورود ناموفق");
+  //         setFailedAttempts((prevRequest) => prevRequest + 1);
+
+  //         if (isCaptchaRequired) {
+  //           setCaptchaValue(null);
+  //           if (recaptchaRef.current) {
+  //             recaptchaRef.current.reset(); // Reset ReCAPTCHA widget
+  //           }
+  //         }
+  //         setLodaingStatus(false);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Login/page.js", error);
+  //     setLodaingStatus(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (comeToken) {
+  //     setIsOtpSent(true); // Set OTP sent flag when token is available
+  //   } else if (comeToken === null && isOtpSent) {
+  //     setErrorMessage("Failed to send OTP. Please try again.");
+  //   }
+  // }, [comeToken, isOtpSent]);
 
   // const handleSendOtp = async (event) => {
   //   event.preventDefault();
@@ -145,32 +180,47 @@ export default function Login() {
   // Verify OTP
   const handleVerifyOtp = async (otp) => {
     setErrorMessage(null);
+    setLodaingStatus(true);
+
     try {
-      const lastPage = sessionStorage.getItem("lastPage") || "/";
-      router.push(lastPage);
-    } catch (error) {
-      console.error("Error verifying OTP:", error);
-      setErrorMessage("An unexpected error occurred. Please try again.");
+      const resultAction = await dispatch(
+        login({
+          username,
+          otp,
+        }),
+      );
+
+      if (login.fulfilled.match(resultAction)) {
+        const lastPage = sessionStorage.getItem("lastPage") || "/";
+        router.push(lastPage);
+      } else {
+        setErrorMessage(resultAction.payload);
+      }
+    } catch {
+      setErrorMessage("کد تایید اشتباه است");
     }
+
+    setLodaingStatus(false);
   };
 
-  // Resend OTP
   const handleResendOtp = async () => {
-    // try {
-    //   const response = await fetch("/api/send-otp", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ phoneNumber }),
-    //   });
-    //   if (!response.ok) {
-    //     setErrorMessage("Failed to resend OTP. Please try again.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error resending OTP:", error);
-    //   setErrorMessage("An unexpected error occurred. Please try again.");
-    // }
+    setErrorMessage(null);
+
+    const resultAction = await dispatch(
+      sendOtp({
+        username,
+        type: "login",
+      }),
+    );
+
+    if (sendOtp.fulfilled.match(resultAction)) {
+      setErrorMessage(null);
+      setIsOtpSent(true);
+    }
+
+    if (sendOtp.rejected.match(resultAction)) {
+      setErrorMessage(resultAction.payload);
+    }
   };
 
   function NavigateLastPage() {
@@ -217,7 +267,7 @@ export default function Login() {
 
             {!isOtpSent ? (
               <form
-                onSubmit={handleLogin}
+                onSubmit={handleSendOtp}
                 className="form-border p-2 bg-white rounded container"
               >
                 <div className="d-flex flex-row justify-content-center mt-3 mb-4">
@@ -401,6 +451,7 @@ export default function Login() {
                 onVerifyOtp={handleVerifyOtp}
                 resendOtp={handleResendOtp}
                 setIsOtpSent={setIsOtpSent}
+                error={errorMessage}
               />
             )}
           </div>

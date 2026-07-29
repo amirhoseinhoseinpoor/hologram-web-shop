@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   login,
-  signUp,
+  registerWithOtp,
   forgetPassword,
   logout,
   list,
@@ -58,15 +58,15 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(signUp.pending, (state) => {
+      .addCase(registerWithOtp.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(signUp.fulfilled, (state, action) => {
+      .addCase(registerWithOtp.fulfilled, (state, action) => {
         state.loading = false;
         state.signUpSattus = action.payload;
       })
-      .addCase(signUp.rejected, (state, action) => {
+      .addCase(registerWithOtp.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
