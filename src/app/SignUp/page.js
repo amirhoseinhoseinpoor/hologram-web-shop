@@ -101,7 +101,7 @@ export default function SignUp() {
           lastName,
           username,
           password,
-          // roleIds: [1],
+          roleIds: [1],
           otp,
         }),
       );
