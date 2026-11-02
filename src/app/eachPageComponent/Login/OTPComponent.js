@@ -52,16 +52,6 @@ export default function OTPInput({
     }
   };
 
-  // Timer logic
-  // useEffect(() => {
-  //   const countdown = setInterval(() => {
-  //     setTimer((prev) => (prev > 0 ? prev - 1 : 0));
-  //   }, 1000);
-
-  //   // Clear interval on component unmount
-  //   return () => clearInterval(countdown);
-  // }, []);
-
   // Convert timer seconds to minutes:seconds format
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);

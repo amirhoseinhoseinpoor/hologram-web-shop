@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   login,
   registerWithOtp,
-  forgetPassword,
-  logout,
+  refreshSession,
   list,
   homePageHonorsList,
   homePageExhibitionList,
@@ -12,6 +11,8 @@ import {
 } from "./thunks";
 
 const authinitialState = {
+  // false until the persisted session has been read from storage (client only)
+  authReady: false,
   token: null,
   firstName: null,
   lastName: null,
@@ -19,9 +20,18 @@ const authinitialState = {
   code: null,
   email: null,
   gender: null,
-  signUpSattus: null,
   loading: false,
   error: null,
+};
+
+const applySession = (state, session) => {
+  state.token = session.token;
+  state.firstName = session.firstName;
+  state.lastName = session.lastName;
+  state.phoneNumber = session.phoneNumber;
+  state.code = session.code;
+  state.email = session.email;
+  state.gender = session.gender;
 };
 
 const authSlice = createSlice({
@@ -34,9 +44,15 @@ const authSlice = createSlice({
       state.email = action.payload.email;
       state.gender = action.payload.gender;
     },
-    resetToken: (state) => {
-      state.token = null;
+    hydrateAuth: (state, action) => {
+      if (action.payload?.token) {
+        applySession(state, action.payload);
+      } else {
+        Object.assign(state, authinitialState);
+      }
+      state.authReady = true;
     },
+    resetToken: () => ({ ...authinitialState, authReady: true }),
   },
   extraReducers: (builder) => {
     builder
@@ -46,13 +62,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.token = action.payload;
-        state.firstName = action.payload.firstName;
-        state.lastName = action.payload.lastName;
-        state.phoneNumber = action.payload.phoneNumber;
-        state.code = action.payload.code;
-        state.gender = action.payload.gender;
-        state.email = action.payload.email;
+        applySession(state, action.payload);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -64,35 +74,14 @@ const authSlice = createSlice({
       })
       .addCase(registerWithOtp.fulfilled, (state, action) => {
         state.loading = false;
-        state.signUpSattus = action.payload;
+        applySession(state, action.payload);
       })
       .addCase(registerWithOtp.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(forgetPassword.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(forgetPassword.fulfilled, (state, action) => {
-        state.loading = false;
-        state.signUpSattus = action.payload;
-      })
-      .addCase(forgetPassword.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
-      .addCase(logout.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.loading = false;
-        state.token = null;
-      })
-      .addCase(logout.rejected, (state) => {
-        state.loading = false;
-        state.error = action.payload || "Login failed";
+      .addCase(refreshSession.fulfilled, (state, action) => {
+        if (state.token) applySession(state, { ...action.payload, token: state.token });
       });
   },
 });
@@ -100,15 +89,14 @@ const authSlice = createSlice({
 // export default authSlice.reducer;
 export const authSliceV = authSlice.reducer;
 export const token = (state) => state.auth.token;
+export const authReady = (state) => state.auth.authReady;
 export const firstName = (state) => state.auth.firstName;
 export const lastName = (state) => state.auth.lastName;
 export const phoneNumber = (state) => state.auth.phoneNumber;
 export const code = (state) => state.auth.code;
 export const email = (state) => state.auth.email;
 export const gender = (state) => state.auth.gender;
-export const { resetToken } = authSlice.actions;
-export const { setUserData } = authSlice.actions;
-export const signUpSattus = (state) => state.auth.signUpSattus;
+export const { resetToken, hydrateAuth, setUserData } = authSlice.actions;
 export const loading = (state) => state.auth.loading;
 export const error = (state) => state.auth.error;
 

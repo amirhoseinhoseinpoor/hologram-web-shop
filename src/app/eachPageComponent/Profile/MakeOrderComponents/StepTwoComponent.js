@@ -131,13 +131,6 @@ export default function StepTwoComponent({
     if (data) {
       setValue(data.value);
 
-      // const fetchDocumentImages = async () => {
-      //   if (data.preparedData && data.preparedData.length > 0) {
-      //     const imageFetchPromises = data.preparedData.map(async (item) => {
-      //       const fetchedImage = await dispatch(
-      //         fetchPrivateImage({ filename: item.file })
-      //       ).unwrap();
-
       //       return {
       //         imageUrl: fetchedImage,
       //         title: item.title || "",
@@ -148,13 +141,6 @@ export default function StepTwoComponent({
       //     });
 
       //     const fetchedDocuments = await Promise.all(imageFetchPromises);
-
-      //     setUploadedFiles(fetchedDocuments);
-      //   } else {
-      //     setUploadedFiles([]);
-      //   }
-      // };
-      // fetchDocumentImages();
 
       const fetchImage = async () => {
         if (data?.uploadLogo) {

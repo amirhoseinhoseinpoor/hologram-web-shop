@@ -65,20 +65,6 @@ export default function Video() {
   const handlePlay = () => { setVideoEnded(true); setIsVideoLoading(false); };
   const handlePause = () => setVideoEnded(false);
 
-  // useEffect(() => {
-  //   const video = videoRef.current;
-  //   if (video) {
-  //     video.onplaying = () => {
-  //       setVideoEnded(true);
-  //     };
-  //   }
-
-  //   if (videoRef.current && userInteracted) {
-  //     // videoRef.current.load();
-  //     videoRef.current.play();
-  //   }
-  // }, [currentVideoIndex]);
-
   return (
     <section
       className={`mb-5 container ${style.responsiveSection} ${

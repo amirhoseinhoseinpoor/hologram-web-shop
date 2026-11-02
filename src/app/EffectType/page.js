@@ -98,10 +98,6 @@ function EffectType() {
 
   useEffect(() => {
     if (finalData.length > 0 && currentVideoIndex === null) {
-      // const firstVideoIndex = finalData.findIndex(
-      //   (item) => item.type === "video"
-      // );
-      // if (firstVideoIndex !== -1) {  }
       setCurrentVideoIndex(0);
     }
   }, [finalData, currentVideoIndex]);
@@ -154,36 +150,6 @@ function EffectType() {
       video.play();
     }
   }, [currentVideoIndex, userInteracted]);
-
-  // useEffect(() => {
-  //   const preloadVideoDurations = () => {
-  //     finalData.forEach((video, index) => {
-  //       if (video.type === "video") {
-  //         const videoElement = document.createElement("video");
-  //         videoElement.src = video.src;
-  //         videoElement.preload = "metadata";
-  //         videoElement.onloadedmetadata = () => {
-  //           const duration = videoElement.duration;
-  //           setVideoDurations((prevDurations) => {
-  //             const newDurations = [...prevDurations];
-  //             newDurations[index] = duration;
-  //             return newDurations;
-  //           });
-  //         };
-  //       }
-  //     });
-  //   };
-  //   preloadVideoDurations();
-  // }, [finalData]);
-
-  // const formatDuration = (duration) => {
-  //   if (!duration) return "0:00";
-  //   const minutes = Math.floor(duration / 60);
-  //   const seconds = Math.floor(duration % 60)
-  //     .toString()
-  //     .padStart(2, "0");
-  //   return `${minutes}:${seconds}`;
-  // };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

@@ -22,7 +22,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { Skeleton } from "@mui/material";
 import LoadingCss from "@/app/BaseComponent/LoadingCss";
-import socket from "@/app/utils/socket";
+import { getSocket } from "@/app/utils/socket";
 // import utils
 import { downloadImage } from "@/app/utils/downloadImage";
 import MessageItem from "./MessageItem";
@@ -118,6 +118,7 @@ const ChatBox = ({
 
   // Initialize socket connection
   useEffect(() => {
+    const socket = getSocket();
     if (!socket) {
       console.error("Socket not initialized.");
       return;

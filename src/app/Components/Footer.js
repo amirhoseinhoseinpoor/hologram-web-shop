@@ -8,9 +8,6 @@ import ShowVersionServer from "./ShowVersionServer";
 
 import Link from "next/link";
 export default function Footer() {
-  // const scrollToTop = () => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // };
 
   return (
     <section className={`${style.mainColor} position-relative`}>

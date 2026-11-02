@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { signUpSattus } from "../Store/slice";
+import { useDispatch } from "react-redux";
 import { sendOtp, registerWithOtp } from "../Store/thunks";
+import { PHONE_NUMBER_REGEX, getLastPage } from "../utils/authForm";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AuthLayout from "../layouts/AuthLayout";
@@ -12,9 +12,6 @@ import style from "../Styles/SignUp/SignUpStyle.module.scss";
 export default function SignUp() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const phoneNumberRegex = /((0?9)|(\+?989))\d{2}\W?\d{3}\W?\d{4}/g;
-
-  const comesignUpSattus = useSelector(signUpSattus);
 
   // use effect for register
   const [firstName, setPersonName] = useState("");
@@ -62,9 +59,7 @@ export default function SignUp() {
     setLodaingStatus(true);
     setErrorMessage(null);
     try {
-      const credentials = { firstName, lastName, username, password };
-
-      if (!phoneNumberRegex.test(username)) {
+      if (!PHONE_NUMBER_REGEX.test(username)) {
         setErrorMessage("فرمت شماره همراه اشتباه است");
         setLodaingStatus(false);
       } else {
@@ -107,8 +102,7 @@ export default function SignUp() {
       );
 
       if (registerWithOtp.fulfilled.match(resultAction)) {
-        const lastPage = sessionStorage.getItem("lastPage") || "/";
-        router.push(lastPage);
+        router.push(getLastPage());
       } else {
         setErrorMessage(resultAction.payload);
       }
@@ -141,85 +135,11 @@ export default function SignUp() {
   };
 
   function NavigateLastPage() {
-    const lastPage = sessionStorage.getItem("lastPage") || "/";
-    router.push(lastPage);
+    router.push(getLastPage());
   }
 
   return (
     <AuthLayout>
-      {/* <section className="h-100">
-        <form
-          onSubmit={handleLogin}
-          className="form-border p-2 bg-white rounded container"
-        >
-          <div className="d-flex flex-row justify-content-center mt-3 mb-4">
-            <div>
-              <p className="fs-5 fw-medium">Sign in</p>
-            </div>
-          </div>
-
-          <div className="d-flex flex-row align-items-center mb-4">
-            <label htmlFor="username" className="ms-3">
-              Username
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          <div className="d-flex flex-row align-items-center">
-            <label htmlFor="password" className="ms-3">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div className="d-flex flex-row align-items-center mt-2">
-            <label
-              htmlFor="confirmPassword"
-              className="ms-3"
-              style={{ whiteSpace: "nowrap" }}
-            >
-              confirm password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button
-            disabled={!username || !password || password !== confirmPassword}
-            type="submit"
-            className="btn btn-primary w-100 mt-5"
-          >
-            signup
-          </button>
-          <Link href="/Login">
-            <button className="btn btn-primary w-100 mt-5">
-              have an account ? forgot password
-            </button>
-          </Link>
-
-          {errorMessage && (
-            <div className="alert alert-danger mt-3">{errorMessage}</div>
-          )}
-        </form>
-      </section> */}
       <section className={`${style.sectionSignUpStyle} d-flex w-100`}>
         <div className={`${style.outerLoginPage} container pt-3 pb-3`}>
           <div className={`${style.LoginMainDiv} position-relative`}>

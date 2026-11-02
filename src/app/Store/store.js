@@ -8,6 +8,7 @@ import {
   headerSliceV,
   userOrdersSliceV,
 } from "./slice";
+import { saveSession, clearSession } from "../utils/authStorage";
 
 const store = configureStore({
   reducer: {
@@ -20,5 +21,18 @@ const store = configureStore({
     userOrders: userOrdersSliceV,
   },
 });
+
+// Persist the auth slice (client only). Nothing is written before the saved
+// session has been restored, so a refresh can never wipe it.
+if (typeof window !== "undefined") {
+  let lastAuth;
+  store.subscribe(() => {
+    const auth = store.getState().auth;
+    if (auth === lastAuth || !auth.authReady) return;
+    lastAuth = auth;
+    if (auth.token) saveSession(auth);
+    else clearSession();
+  });
+}
 
 export default store;

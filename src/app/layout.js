@@ -6,6 +6,7 @@ import "./Styles/globals.scss";
 
 import StoreProvider from "./Store/storeProvider";
 import LogVisit from "./Components/LogVisit";
+import AuthBootstrap from "./Components/AuthBootstrap";
 
 const myFont = localFont({ src: "./Fonts/IRANSansXVF.ttf" });
 
@@ -109,6 +110,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${myFont.className} h-100`}>
         <StoreProvider>
+          <AuthBootstrap />
           <LogVisit />
           {children}
         </StoreProvider>

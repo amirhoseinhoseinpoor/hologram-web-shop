@@ -1,203 +1,116 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { token } from "../Store/slice";
-import { login, sendOtp } from "../Store/thunks";
+import { useDispatch, useSelector } from "react-redux";
+import { token, authReady } from "../Store/slice";
+import { login, sendLoginOtp } from "../Store/thunks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import OTPInput from "../eachPageComponent/Login/OTPComponent";
+import {
+  CloseIcon,
+  SubmitArrowIcon,
+} from "../eachPageComponent/Login/AuthIcons";
 import AuthLayout from "../layouts/AuthLayout";
 import style from "../Styles/Login/LoginStyle.module.scss";
+import { PHONE_NUMBER_REGEX, getLastPage } from "../utils/authForm";
 // import captcha for the login
 import ReCAPTCHA from "react-google-recaptcha";
 import { Box } from "@mui/material";
 
+const CAPTCHA_AFTER_FAILED_ATTEMPTS = 3;
+
 export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const phoneNumberRegex = /((0?9)|(\+?989))\d{2}\W?\d{3}\W?\d{4}/g;
 
   const comeToken = useSelector(token);
+  const isAuthReady = useSelector(authReady);
 
   const [username, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loadinStatus, setLodaingStatus] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
-  const [isCaptchaRequired, setIsCaptchaRequired] = useState(false);
   const [failedAttempts, setFailedAttempts] = useState(0);
+
   const hasError = Boolean(errorMessage);
+  const isCaptchaRequired = failedAttempts >= CAPTCHA_AFTER_FAILED_ATTEMPTS;
+  const isButtonDisabled =
+    username.length !== 11 ||
+    password.length < 4 ||
+    (isCaptchaRequired && !captchaValue);
 
   // ReCAPTCHA Ref
   const recaptchaRef = useRef(null);
   // focuse the number filed
   const numberRef = useRef(null);
-  // // input ref for moving to the next
+  // input ref for moving to the next
   const passwordRef = useRef(null);
 
+  // logged in (just now or restored session) → leave the login form
   useEffect(() => {
-    if (numberRef.current) {
-      numberRef.current.focus();
+    if (isAuthReady && comeToken) {
+      router.replace(getLastPage());
     }
-    if (numberRef && username.length == 11) {
-      passwordRef.current.focus();
-    }
-  }, [username]);
+  }, [isAuthReady, comeToken, router]);
 
   useEffect(() => {
-    if (username.length === 11 && password.length >= 4) {
-      if (isCaptchaRequired) {
-        setIsButtonDisabled(!captchaValue);
-      } else {
-        setIsButtonDisabled(false);
-      }
-    } else {
-      setIsButtonDisabled(true);
+    numberRef.current?.focus();
+  }, []);
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    if (/^[0-9]*$/.test(value)) {
+      setPhoneNumber(value);
+      if (value.length === 11) passwordRef.current?.focus();
     }
-  }, [username, password, captchaValue, isCaptchaRequired]);
+  };
 
-  useEffect(() => {
-    if (failedAttempts >= 3) {
-      setIsCaptchaRequired(true);
-    }
-  }, [failedAttempts]);
+  // Check the password and send the OTP to the user's phone
+  const requestOtp = async () => {
+    const resultAction = await dispatch(
+      sendLoginOtp({
+        username,
+        password,
+        captchaResponse: captchaValue,
+      }),
+    );
 
-  // Send OTP to the user's phone
-
-  const handleSendOtp = async (event) => {
-    event.preventDefault();
-
-    setLodaingStatus(true);
-    setErrorMessage(null);
-
-    if (!phoneNumberRegex.test(username)) {
-      setErrorMessage("فرمت شماره همراه اشتباه است");
-      setLodaingStatus(false);
+    if (sendLoginOtp.fulfilled.match(resultAction)) {
+      setIsOtpSent(true);
       return;
     }
 
-    try {
-      const resultAction = await dispatch(
-        sendOtp({
-          username,
-          type: "login",
-        }),
-      );
-
-      if (sendOtp.fulfilled.match(resultAction)) {
-        setIsOtpSent(true);
-      } else {
-        setErrorMessage(resultAction.payload);
-      }
-    } catch {
-      setErrorMessage("خطا در ارسال کد تایید");
-    }
-
-    setLodaingStatus(false);
+    setErrorMessage(resultAction.payload);
+    setFailedAttempts((prev) => prev + 1);
+    setCaptchaValue(null);
+    recaptchaRef.current?.reset();
   };
 
-  // const handleSendOtp = async (event) => {
-  //   event.preventDefault();
-  //   setLodaingStatus(true);
-  //   setErrorMessage(null);
+  const handleSendOtp = async (event) => {
+    event.preventDefault();
+    setErrorMessage(null);
 
-  //   // If captcha is not verified, show error
-  //   if (isCaptchaRequired && !captchaValue) {
-  //     setErrorMessage("لطفا ربات نیستید را تایید کنید.");
-  //     setLodaingStatus(false);
-  //     setIsButtonDisabled(true);
-  //     return;
-  //   }
+    if (!PHONE_NUMBER_REGEX.test(username)) {
+      setErrorMessage("فرمت شماره همراه اشتباه است");
+      return;
+    }
 
-  //   try {
-  //     if (!phoneNumberRegex.test(username)) {
-  //       setErrorMessage("فرمت شماره همراه اشتباه است");
-  //       setLodaingStatus(false);
-  //     } else {
-  //       const resultAction = await dispatch(sendOtp(username));
-
-  //       if (sendOtp.fulfilled.match(resultAction)) {
-  //         setIsOtpSent(true);
-  //         setLodaingStatus(false);
-  //         return;
-  //       } else {
-  //         setErrorMessage(resultAction.payload);
-  //         setLodaingStatus(false);
-  //       }
-  //       if (login.rejected.match(resultAction)) {
-  //         setErrorMessage(resultAction.payload || "ورود ناموفق");
-  //         setFailedAttempts((prevRequest) => prevRequest + 1);
-
-  //         if (isCaptchaRequired) {
-  //           setCaptchaValue(null);
-  //           if (recaptchaRef.current) {
-  //             recaptchaRef.current.reset(); // Reset ReCAPTCHA widget
-  //           }
-  //         }
-  //         setLodaingStatus(false);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Login/page.js", error);
-  //     setLodaingStatus(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (comeToken) {
-  //     setIsOtpSent(true); // Set OTP sent flag when token is available
-  //   } else if (comeToken === null && isOtpSent) {
-  //     setErrorMessage("Failed to send OTP. Please try again.");
-  //   }
-  // }, [comeToken, isOtpSent]);
-
-  // const handleSendOtp = async (event) => {
-  //   event.preventDefault();
-  //   setErrorMessage(null);
-  //   try {
-  //     const response = await fetch("/api/send-otp", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ phoneNumber }),
-  //     });
-
-  //     if (response.ok) {
-  //       setIsOtpSent(true); // OTP sent successfully
-  //     } else {
-  //       setErrorMessage("Failed to send OTP. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sending OTP:", error);
-  //     setErrorMessage("An unexpected error occurred. Please try again.");
-  //   }
-  // };
+    setLodaingStatus(true);
+    await requestOtp();
+    setLodaingStatus(false);
+  };
 
   // Verify OTP
   const handleVerifyOtp = async (otp) => {
     setErrorMessage(null);
     setLodaingStatus(true);
 
-    try {
-      const resultAction = await dispatch(
-        login({
-          username,
-          otp,
-        }),
-      );
+    const resultAction = await dispatch(login({ username, otp }));
 
-      if (login.fulfilled.match(resultAction)) {
-        const lastPage = sessionStorage.getItem("lastPage") || "/";
-        router.push(lastPage);
-      } else {
-        setErrorMessage(resultAction.payload);
-      }
-    } catch {
-      setErrorMessage("کد تایید اشتباه است");
+    if (login.rejected.match(resultAction)) {
+      setErrorMessage(resultAction.payload);
     }
 
     setLodaingStatus(false);
@@ -205,64 +118,19 @@ export default function Login() {
 
   const handleResendOtp = async () => {
     setErrorMessage(null);
-
-    const resultAction = await dispatch(
-      sendOtp({
-        username,
-        type: "login",
-      }),
-    );
-
-    if (sendOtp.fulfilled.match(resultAction)) {
-      setErrorMessage(null);
-      setIsOtpSent(true);
-    }
-
-    if (sendOtp.rejected.match(resultAction)) {
-      setErrorMessage(resultAction.payload);
-    }
+    await requestOtp();
   };
-
-  function NavigateLastPage() {
-    const lastPage = sessionStorage.getItem("lastPage") || "/";
-    router.push(lastPage);
-  }
 
   return (
     <AuthLayout>
       <section className={`${style.sectionLoginStyle}  d-flex w-100`}>
         <div className={`${style.outerLoginPage} container pt-3 pb-3`}>
           <div className={`${style.LoginMainDiv} position-relative`}>
-            <div onClick={NavigateLastPage} className={style.closeIconImg}>
-              <svg
-                width={24}
-                height={25}
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 22.4756C17.5 22.4756 22 17.9756 22 12.4756C22 6.97559 17.5 2.47559 12 2.47559C6.5 2.47559 2 6.97559 2 12.4756C2 17.9756 6.5 22.4756 12 22.4756Z"
-                  stroke="#333333"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M9.16992 15.3055L14.8299 9.64551"
-                  stroke="#333333"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M14.8299 15.3055L9.16992 9.64551"
-                  stroke="#333333"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <div
+              onClick={() => router.push(getLastPage())}
+              className={style.closeIconImg}
+            >
+              <CloseIcon />
             </div>
 
             {!isOtpSent ? (
@@ -298,24 +166,16 @@ export default function Login() {
                     شماره همراه
                   </label>
                   <input
-                    type="number"
+                    type="tel"
                     className={`${style.formInputNumber} form-control`}
                     style={{ border: hasError ? "1.2px solid #FF4F3F" : "" }}
                     id="phoneNumber"
                     value={username}
                     ref={numberRef}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (/^[0-9]*$/.test(value)) {
-                        setPhoneNumber(value);
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
-                        e.preventDefault();
-                      }
-                    }}
+                    onChange={handlePhoneChange}
                     inputMode="numeric"
+                    maxLength={11}
+                    autoComplete="username"
                     required
                   />
                 </div>
@@ -331,17 +191,8 @@ export default function Login() {
                     id="password"
                     value={password}
                     ref={passwordRef}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (/^[0-9]*$/.test(value)) {
-                        setPassword(value);
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
-                        e.preventDefault();
-                      }
-                    }}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
                     required
                   />
                   <div className="mt-2">
@@ -398,30 +249,7 @@ export default function Login() {
                     {!loadinStatus ? (
                       <>
                         <p className="ms-2 VodeoDisSizing">دریافت کد تایید</p>
-                        <svg
-                          width={21}
-                          height={21}
-                          viewBox="0 0 21 21"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M8.47533 5.91748L3.41699 10.9758L8.47533 16.0341"
-                            stroke="white"
-                            strokeWidth="1.5"
-                            strokeMiterlimit={10}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M17.5836 10.9756H3.55859"
-                            stroke="white"
-                            strokeWidth="1.5"
-                            strokeMiterlimit={10}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                        <SubmitArrowIcon />
                       </>
                     ) : (
                       <div className={style.loader}></div>
