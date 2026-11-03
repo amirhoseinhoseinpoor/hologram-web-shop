@@ -454,7 +454,7 @@ const ChatBox = ({
             {modalChat && (
               <div>
                 <CustomCloseButton
-                  color={"#e91e63"}
+                  color={"var(--danger)"}
                   onClick={handleCloseChat}
                 />
               </div>
@@ -575,7 +575,7 @@ const ChatBox = ({
                             style={{
                               cursor: "pointer",
                               backgroundColor: loadingFinalPatConfirm
-                                ? "#5F5F5F"
+                                ? "var(--text-muted)"
                                 : "",
                             }}
                             className={`${style.confirmFirstButton} smallest`}
@@ -680,21 +680,21 @@ const ChatBox = ({
                     >
                       <path
                         d="M14.5 7.5H15.7924C18.3773 7.5 20.5 9.52091 20.5 12C20.5 14.4709 18.3859 16.5 15.7924 16.5H14.5"
-                        stroke="#292D32"
+                        stroke="var(--text)"
                         strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M9.5 16.5H8.21429C5.61714 16.5 3.5 14.4791 3.5 12C3.5 9.52909 5.61714 7.5 8.21429 7.5H9.5"
-                        stroke="#292D32"
+                        stroke="var(--text)"
                         strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M8.5 12H15.5"
-                        stroke="#292D32"
+                        stroke="var(--text)"
                         strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -786,31 +786,31 @@ const ChatBox = ({
                     >
                       <path
                         d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                        stroke="#FF4F3F"
+                        stroke="var(--danger)"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                        stroke="#FF4F3F"
+                        stroke="var(--danger)"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                        stroke="#FF4F3F"
+                        stroke="var(--danger)"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M5.16504 8.25H6.83004"
-                        stroke="#FF4F3F"
+                        stroke="var(--danger)"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M4.75 6.25H7.25"
-                        stroke="#FF4F3F"
+                        stroke="var(--danger)"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />

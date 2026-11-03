@@ -1,64 +1,86 @@
-@use '../variable' as var;
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 28px clamp(32px, 5vw, 72px);
+  align-items: start;
 
-.mainPicture{
-    gap: 20px;
-    
+  @media (max-width: 992px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
-.imageOne{
-  background-image: url('../../../../public/AboutImages/aboutbluebackground.jpg');
-  width: 35%;
-  height: 300px;
-  background-size: cover;
- background-position: center;
- border-radius: 4px;
-  max-width: 560px;
-}
-.Imagetwo{
-  background-image: url('../../../../public/AboutImages/aboutImage-person.png');
- background-position: top;
- background-size: cover;
- width: 65%;
- height: 300px;
- border-radius: 4px;
- max-width: 560px;
 
-}
-.coloredText{
-    color: var.$arrow-background;
-}
-.ListStyle{
-    list-style: unset;
-    margin-right: 25px;
-    li{
-        margin: 2.5px 0;
+.images {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    border-radius: var(--radius);
+    background: var(--surface-3);
+    object-fit: cover;
+  }
+
+  @media (max-width: 992px) {
+    flex-direction: row;
+
+    img {
+      width: calc(50% - 6px);
     }
-}
-@media (max-width :980px) {
-    .imageOne{
-        width: 50%;
-
-    }
-    .Imagetwo{
-        width: 50%;
-        
-
-    }
+  }
 }
 
-
-@media (max-width :768px) {
-    .Imagetwo{
-        width: 100%;
-        
-
-    }
-}
-@media (max-width :580px) {
-    .Imagetwo{
-        
-       height: 260px;
-        
-
-    }
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
 }
 
+.strengths {
+  width: 100%;
+  margin: 6px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+
+  li {
+    display: flex;
+    gap: 12px;
+    padding-block: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: var(--accent-ink);
+  }
+
+  h3 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  p {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    line-height: 1.85;
+  }
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+
+  p {
+    margin-top: 6px;
+  }
+}

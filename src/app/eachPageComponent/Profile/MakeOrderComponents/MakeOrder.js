@@ -2,20 +2,20 @@ import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import style from "../../../Styles/Profile/MakeOrderStyle/MakeOrder.module.scss";
 import ProcessTracker from "../ProcessTracker";
-import Image from "next/image";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import { Modal, Box } from "@mui/material";
 
 const SteponeComponent = dynamic(() => import("./StepOneComponent"));
 
 const StepTwoComponent = dynamic(() => import("./StepTwoComponent"), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <div className="az-spinner" role="status" aria-label="در حال بارگذاری" />,
 });
 
 const StepFiveComponent = dynamic(() => import("./StepFiveComponent.js"));
 const StepSixComponent = dynamic(() => import("./StepSixComponent"), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <div className="az-spinner" role="status" aria-label="در حال بارگذاری" />,
 });
 
 const StepSeven = dynamic(() => import("./StepSevenComponent"));
@@ -40,7 +40,7 @@ export default function MakeOrder({
   const getStatusText = (status) => {
     switch (status) {
       case 1:
-        return "درحال برسی";
+        return "درحال بررسی";
       case 2:
         return "درحال تولید";
       case 3:
@@ -177,7 +177,7 @@ export default function MakeOrder({
   return (
     <section>
       <div
-        className={`d-flex flex-row align-items-center justify-content-between container mb-3 ${style.mianDiVNvaBarOrder}`}
+        className={style.mianDiVNvaBarOrder}
       >
         <div className="d-flex flex-row gap-2 align-items-center">
           <p className="discription">شماره سفارش :</p>
@@ -195,16 +195,14 @@ export default function MakeOrder({
       {renderStepContent()}
       {step !== chatStep && step !== finalStep && currentOrder && (
         <>
-          <div onClick={handleOpenChat} className={style.DivChatIconMainDiv}>
-            <Image
-              className={style.chatIContStyle}
-              src="/gif/icons8-chat.gif"
-              alt="Chat Icon"
-              width={50}
-              height={50}
-              priority
-            />
-          </div>
+          <button
+            type="button"
+            onClick={handleOpenChat}
+            className={style.DivChatIconMainDiv}
+          >
+            <ForumOutlinedIcon aria-hidden="true" />
+            گفت‌وگو با کارشناس
+          </button>
           <Modal
             open={chatOpen}
             onClose={handleCloseChat}

@@ -1,0 +1,176 @@
+// Shared look of the login, sign up and password reset cards.
+@mixin auth-form {
+  .sectionLoginStyle,
+  .sectionSignUpStyle {
+    width: 100%;
+  }
+
+  .outerLoginPage {
+    width: 100%;
+    max-width: 480px !important;
+    padding: 0 !important;
+    margin-inline: auto;
+  }
+
+  .LoginMainDiv {
+    position: relative;
+    padding: clamp(20px, 4vw, 32px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+
+    form {
+      padding: 0 !important;
+    }
+
+    label {
+      font-weight: 600;
+      margin-inline: 0 !important;
+    }
+
+    p:global(.discription) {
+      margin-inline: 0 !important;
+    }
+  }
+
+  .closeIconImg {
+    position: absolute;
+    top: 14px;
+    inset-inline-end: 14px;
+    z-index: 1;
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color var(--dur) var(--ease);
+
+    &:hover {
+      background: var(--surface-3);
+    }
+  }
+
+  .handelLoginError {
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    border: 1px solid rgba(185, 42, 35, 0.25);
+    border-radius: var(--radius-sm);
+    background: var(--danger-soft);
+    color: var(--danger);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    line-height: 1.7;
+  }
+
+  .formInputNumber,
+  .formInputCapcha {
+    direction: rtl;
+  }
+
+  .forgotPasswordStyle {
+    display: inline-block;
+    color: var(--accent-ink);
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    p {
+      color: inherit;
+    }
+  }
+
+  .submitButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 10px 18px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--ink-900);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+
+    &:hover:not(:disabled) {
+      background: var(--accent-hover);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    p {
+      color: inherit;
+      font-weight: 700;
+    }
+
+    // the shared arrow icon is drawn for dark backgrounds
+    svg path {
+      stroke: var(--ink-900);
+    }
+  }
+
+  .activeButton {
+    background: var(--accent);
+  }
+
+  .disabledButton {
+    background: var(--surface-3);
+    color: var(--text-subtle);
+
+    svg path {
+      stroke: var(--text-subtle);
+    }
+  }
+
+  .justPaddingButton {
+    min-height: 24px;
+  }
+
+  .loader {
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(11, 21, 36, 0.25);
+    border-top-color: var(--ink-900);
+    border-radius: 50%;
+    animation: authSpin 0.8s linear infinite;
+  }
+
+  @keyframes authSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .SignUpLink {
+    display: block;
+    text-align: center;
+  }
+
+  .colorForSignUpButton {
+    color: var(--accent-ink);
+    font-weight: 700;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  .decoreRole {
+    color: var(--accent-ink);
+  }
+
+  .captchaContainer {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}

@@ -1,3 +1,4 @@
+@use "../orderShared" as shared;
 @use "../../variable" as var;
 
 .stepContent {
@@ -8,7 +9,7 @@
 }
 
 .numberColorForcall {
-  color: #f3802c;
+  color: var(--accent);
 }
 
 .effectMainDivStyle {
@@ -28,7 +29,7 @@
 .MainBOXCardStyle {
   display: flex;
   flex-direction: column;
-  background-color: #f7f8fc;
+  background-color: var(--surface-2);
   margin: 6px 0;
   border: none;
   box-shadow: none;
@@ -63,14 +64,14 @@
 .continueButton {
   border: none;
   color: white;
-  background-color: #5695f6;
+  background-color: var(--accent-ink);
   border-radius: 4px;
   padding: 7px 29px;
 }
 
 
 .StarFixReq {
-  color: #ff4f3f;
+  color: var(--danger);
 }
 
 .displayNoneTheInput {
@@ -106,3 +107,44 @@
   flex-direction: row;
 }
 
+
+
+.DivChatIconMainDiv {
+  position: fixed;
+  inset-inline-start: auto;
+  bottom: 20px;
+  left: 20px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink-900);
+  color: var(--on-dark);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--ink-700);
+  }
+}
+
+.mianDiVNvaBarOrder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-bottom: 12px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+@include shared.order-shared;

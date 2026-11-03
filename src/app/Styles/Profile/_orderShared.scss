@@ -1,0 +1,188 @@
+// Common pieces of the order flow and account pages. Included last in each
+// module so these definitions win over the module's older rules.
+@mixin order-shared {
+  .stepContent {
+    padding: clamp(14px, 2.5vw, 24px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .SectionStyle {
+    padding: clamp(14px, 2.5vw, 24px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .continueButton,
+  .continueButtonpaying,
+  .submitButtonStyle,
+  .seeOrderButton,
+  .SubmitModalAdress,
+  .confirmFirstButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 22px !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--accent) !important;
+    color: var(--ink-900) !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+    transition: background-color var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+
+    &:hover:not(:disabled) {
+      background: var(--accent-hover) !important;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .SeeLastStepButton,
+  .downloadFactor,
+  .butttonAddAdress,
+  .buttonNavigatePeigiri,
+  .confirmSecondButton,
+  .downloadButtonStyle,
+  .insideButtonDownload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 18px !important;
+    border: 1px solid var(--line-strong) !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    font-size: var(--fs-sm) !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+    transition: border-color var(--dur) var(--ease);
+
+    &:hover:not(:disabled) {
+      border-color: var(--ink-900) !important;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .cancelOrder,
+  .deleteButton,
+  .ButtonRemoveProduct,
+  .cancelSendingImage {
+    border: 1px solid rgba(185, 42, 35, 0.35) !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--surface) !important;
+    color: var(--danger) !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: var(--danger-soft) !important;
+    }
+  }
+
+  .inputTextCompanyName,
+  .formInputNumber,
+  .SizezInputFirst,
+  .inputStyleMain,
+  .inputNimberSpecific,
+  .inputChatBoxStyle,
+  .resizingTheInputmodal {
+    min-height: 44px;
+    border: 1px solid var(--line-strong) !important;
+    border-radius: var(--radius-sm) !important;
+    background-color: var(--surface);
+    color: var(--text);
+    font-size: 0.95rem;
+    transition: border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
+
+    &:focus {
+      border-color: var(--ink-900) !important;
+      box-shadow: 0 0 0 3px rgba(243, 128, 44, 0.28);
+      outline: none;
+    }
+
+    &:disabled {
+      background-color: var(--surface-2);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+  }
+
+  .resetfontLabel,
+  .LabelComapntInput {
+    color: var(--text);
+    font-size: var(--fs-sm) !important;
+    font-weight: 600 !important;
+  }
+
+  .labelInsteadOfInput,
+  .LabelinputFile,
+  .LabelFileUpload {
+    border-color: var(--line-strong) !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color var(--dur) var(--ease);
+
+    &:hover {
+      border-color: var(--ink-900) !important;
+    }
+  }
+
+  .StarFixReq,
+  .redStarStyle,
+  .redStar {
+    color: var(--danger) !important;
+  }
+
+  .pendingStatusStyle {
+    color: var(--warning) !important;
+    background: var(--warning-soft) !important;
+  }
+  .confirmStatusStyle {
+    color: var(--success) !important;
+    background: var(--success-soft) !important;
+  }
+  .rejectStatusStyle {
+    color: var(--danger) !important;
+    background: var(--danger-soft) !important;
+  }
+
+  .numberColorForcall,
+  .ShabaColorNumber {
+    color: var(--accent-ink) !important;
+    font-weight: 700;
+  }
+
+  .MainBOXCardStyle,
+  .mainCardStyle {
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: none !important;
+    background: var(--surface);
+  }
+
+  .emptyBoxDonlowadDocument,
+  .backgroundForCheckAndPay {
+    border-color: var(--line) !important;
+    border-radius: var(--radius) !important;
+    background: var(--surface-2) !important;
+  }
+}

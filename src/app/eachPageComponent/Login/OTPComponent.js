@@ -78,7 +78,7 @@ export default function OTPInput({
       {error && (
         <p
           style={{
-            color: "#d32f2f",
+            color: "var(--danger)",
             textAlign: "center",
             marginBottom: 10,
           }}

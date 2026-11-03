@@ -12,6 +12,7 @@ import { productListData, userOrdersData } from "@/app/Store/slice";
 
 import { useSearchParams } from "next/navigation";
 import Header from "../Components/Header";
+import Footer from "../Components/Footer";
 import Hoc from "../Components/HOCcomponent";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -21,7 +22,7 @@ const MakeOrder = dynamic(
   () => import("../eachPageComponent/Profile/MakeOrderComponents/MakeOrder"),
   {
     ssr: false,
-    loading: () => <p>Loading...</p>,
+    loading: () => <div className="az-spinner" role="status" aria-label="در حال بارگذاری" />,
   }
 );
 
@@ -29,7 +30,7 @@ const SeeOrder = dynamic(
   () => import("../eachPageComponent/Profile/seeOrderComponents/seeOrder"),
   {
     ssr: false,
-    loading: () => <p>Loading...</p>,
+    loading: () => <div className="az-spinner" role="status" aria-label="در حال بارگذاری" />,
   }
 );
 
@@ -37,7 +38,7 @@ const UserInfo = dynamic(
   () => import("../eachPageComponent/Profile/UserInfoComponents/userInfo"),
   {
     ssr: false,
-    loading: () => <p>Loading...</p>,
+    loading: () => <div className="az-spinner" role="status" aria-label="در حال بارگذاری" />,
   }
 );
 
@@ -45,7 +46,7 @@ const Message = dynamic(
   () => import("../eachPageComponent/Profile/messageComponents/message"),
   {
     ssr: false,
-    loading: () => <p>Loading...</p>,
+    loading: () => <div className="az-spinner" role="status" aria-label="در حال بارگذاری" />,
   }
 );
 
@@ -53,7 +54,7 @@ const Favorite = dynamic(
   () => import("../eachPageComponent/Profile/FavoriteComponents/favorite"),
   {
     ssr: false,
-    loading: () => <p>Loading...</p>,
+    loading: () => <div className="az-spinner" role="status" aria-label="در حال بارگذاری" />,
   }
 );
 
@@ -144,7 +145,7 @@ const ProfileTabs = ({ setActiveTab, activeTab, storeLastVisitedPage , setUpdate
             href={`/Profile?type=${encodeURIComponent("favorite")}`}
             onClick={storeLastVisitedPage}
           >
-            <p className="VodeoDisSizing">الیست‌های مورد علاقه</p>
+            <p className="VodeoDisSizing">لیست‌های مورد علاقه</p>
           </Link>
         }
        
@@ -223,7 +224,9 @@ const Profile = () => {
 
     // Add the corresponding image src to each item in checkData
     const updatedCheckData = checkData?.map((item) => {
-      const productName = item?.request?.prodName?.trim().toLowerCase();
+      const productName = (item?.request?.prodName ?? item?.request?.[0]?.name)
+        ?.trim()
+        .toLowerCase();
       const imageSrc =
         productImageMap && productImageMap[productName]
           ? productImageMap[productName]
@@ -264,9 +267,9 @@ const Profile = () => {
   }, [newFinalData, currentOrder]);
 
   return (
-    <>
+    <div className={style.page}>
       <Header />
-      <section className={` ${style.adminPanel}`}>
+      <section className={style.adminPanel}>
         <div className={`${style.flexSideBarContent} container`}>
           <aside className={`${style.sidebar} h-100`}>
             <div className={style.userinfoInSidebar}>
@@ -314,7 +317,7 @@ const Profile = () => {
                 </svg>
               </div>
             </div>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div className="az-spinner" />}>
               <ProfileTabs
                 setUpdateData={setUpdateData}
                 activeTab={activeTab}
@@ -353,7 +356,7 @@ const Profile = () => {
                       />
                     </svg>
                   </div>
-                  <p className="QASize">بازگشت به پروفایل</p>
+                  <p className="QASize">بازگشت</p>
                 </div>
               </Link>
             </div>
@@ -378,7 +381,8 @@ const Profile = () => {
           </div>
         </div>
       </section>
-    </>
+      <Footer />
+    </div>
   );
 };
 

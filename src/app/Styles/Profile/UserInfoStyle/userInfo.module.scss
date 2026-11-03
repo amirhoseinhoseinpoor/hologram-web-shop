@@ -1,3 +1,4 @@
+@use "../orderShared" as shared;
 @use "../../variable" as var;
 
 .mainSection{
@@ -21,7 +22,7 @@
 
 
 .redStar{
-    color: #FF4F3F;
+    color: var(--danger);
 }
 
 .inputStyleMain{
@@ -47,7 +48,7 @@
 
 .submitButtonStyle{
     color: white;
-    background-color: #5695F6;
+    background-color: var(--accent-ink);
     border-radius: 4px;
     border: none;
     padding: 7px 13px;
@@ -63,3 +64,5 @@
         width: 87%;
     }
 }
+
+@include shared.order-shared;

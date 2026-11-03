@@ -81,7 +81,7 @@ const MessageItem = React.memo(
                   >
                     <path
                       d="M13.7599 3.59924L5.54985 12.2892C5.23985 12.6192 4.93985 13.2692 4.87985 13.7192L4.50985 16.9592C4.37985 18.1292 5.21985 18.9292 6.37985 18.7292L9.59985 18.1792C10.0499 18.0992 10.6799 17.7692 10.9899 17.4292L19.1999 8.73924C20.6199 7.23924 21.2599 5.52924 19.0499 3.43924C16.8499 1.36924 15.1799 2.09924 13.7599 3.59924Z"
-                      stroke="#292D32"
+                      stroke="var(--text)"
                       strokeWidth="1.5"
                       strokeMiterlimit={10}
                       strokeLinecap="round"
@@ -89,7 +89,7 @@ const MessageItem = React.memo(
                     />
                     <path
                       d="M12.3901 5.05078C12.8201 7.81078 15.0601 9.92078 17.8401 10.2008"
-                      stroke="#292D32"
+                      stroke="var(--text)"
                       strokeWidth="1.5"
                       strokeMiterlimit={10}
                       strokeLinecap="round"
@@ -97,7 +97,7 @@ const MessageItem = React.memo(
                     />
                     <path
                       d="M3.5 22H21.5"
-                      stroke="#292D32"
+                      stroke="var(--text)"
                       strokeWidth="1.5"
                       strokeMiterlimit={10}
                       strokeLinecap="round"
@@ -117,35 +117,35 @@ const MessageItem = React.memo(
                   >
                     <path
                       d="M21.5 5.98047C18.17 5.65047 14.82 5.48047 11.48 5.48047C9.5 5.48047 7.52 5.58047 5.54 5.78047L3.5 5.98047"
-                      stroke="#292D32"
+                      stroke="var(--text)"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M9 4.97L9.22 3.66C9.38 2.71 9.5 2 11.19 2H13.81C15.5 2 15.63 2.75 15.78 3.67L16 4.97"
-                      stroke="#292D32"
+                      stroke="var(--text)"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M19.3499 9.14062L18.6999 19.2106C18.5899 20.7806 18.4999 22.0006 15.7099 22.0006H9.2899C6.4999 22.0006 6.4099 20.7806 6.2999 19.2106L5.6499 9.14062"
-                      stroke="#292D32"
+                      stroke="var(--text)"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M10.8301 16.5H14.1601"
-                      stroke="#292D32"
+                      stroke="var(--text)"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M10 12.5H15"
-                      stroke="#292D32"
+                      stroke="var(--text)"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -176,7 +176,7 @@ const MessageItem = React.memo(
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                backgroundColor: "#e0e0e0",
+                backgroundColor: "var(--line)",
                 borderRadius: "8px",
               }}
             >
@@ -208,7 +208,7 @@ const MessageItem = React.memo(
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                backgroundColor: "#e0e0e0",
+                backgroundColor: "var(--line)",
                 borderRadius: "8px",
               }}
             >
@@ -252,7 +252,7 @@ const MessageItem = React.memo(
                     alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
-                    backgroundColor: "#e0e0e0",
+                    backgroundColor: "var(--line)",
                     borderRadius: "8px",
                   }}
                 >
@@ -292,35 +292,35 @@ const MessageItem = React.memo(
                         >
                           <path
                             d="M21.5 5.98047C18.17 5.65047 14.82 5.48047 11.48 5.48047C9.5 5.48047 7.52 5.58047 5.54 5.78047L3.5 5.98047"
-                            stroke="#292D32"
+                            stroke="var(--text)"
                             strokeWidth="1.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           />
                           <path
                             d="M9 4.97L9.22 3.66C9.38 2.71 9.5 2 11.19 2H13.81C15.5 2 15.63 2.75 15.78 3.67L16 4.97"
-                            stroke="#292D32"
+                            stroke="var(--text)"
                             strokeWidth="1.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           />
                           <path
                             d="M19.3499 9.14062L18.6999 19.2106C18.5899 20.7806 18.4999 22.0006 15.7099 22.0006H9.2899C6.4999 22.0006 6.4099 20.7806 6.2999 19.2106L5.6499 9.14062"
-                            stroke="#292D32"
+                            stroke="var(--text)"
                             strokeWidth="1.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           />
                           <path
                             d="M10.8301 16.5H14.1601"
-                            stroke="#292D32"
+                            stroke="var(--text)"
                             strokeWidth="1.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           />
                           <path
                             d="M10 12.5H15"
-                            stroke="#292D32"
+                            stroke="var(--text)"
                             strokeWidth="1.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"

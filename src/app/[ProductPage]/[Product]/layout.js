@@ -1,34 +1,28 @@
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.net";
-const BACKEND = process.env.NEXT_PUBLIC_BACK_END_SERVER;
+import {
+  findProductByPath,
+  toProductView,
+} from "@/app/utils/productContent";
+import { fetchProducts } from "@/app/utils/serverApi";
 
-async function fetchProducts() {
-  try {
-    const res = await fetch(`${BACKEND}/product/list`, {
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return Array.isArray(data) ? data : [];
-  } catch {
-    return [];
-  }
-}
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.net";
 
 export async function generateMetadata({ params }) {
-  const productPageDecoded = decodeURIComponent(params.ProductPage);
-  const productDecoded = decodeURIComponent(params.Product);
+  const category = decodeURIComponent(params.ProductPage);
+  const productName = decodeURIComponent(params.Product);
 
-  const allProducts = await fetchProducts();
-  const dynamicPath = `محصولات / ${productPageDecoded} / ${productDecoded}`;
-  const productData = allProducts.find(
-    (item) => item.name?.trim() === dynamicPath.trim()
+  const product = findProductByPath(
+    await fetchProducts(),
+    category,
+    productName,
   );
+  const view = product ? toProductView(product) : null;
 
-  const title = productData?.info?.title || productDecoded;
+  const title = view?.title || productName;
   const description =
-    productData?.info?.description ||
+    view?.intro ||
+    view?.details?.slice(0, 160) ||
     `${title} - هولوگرام امنیتی از آذرهولوگرام`;
-  const pageUrl = `${SITE_URL}/${encodeURIComponent(productPageDecoded)}/${encodeURIComponent(productDecoded)}`;
+  const pageUrl = `${SITE_URL}/${encodeURIComponent(category)}/${encodeURIComponent(productName)}`;
 
   return {
     title,
@@ -40,6 +34,7 @@ export async function generateMetadata({ params }) {
       title,
       description,
       locale: "fa_IR",
+      images: view?.cover ? [{ url: view.cover, alt: title }] : undefined,
     },
   };
 }

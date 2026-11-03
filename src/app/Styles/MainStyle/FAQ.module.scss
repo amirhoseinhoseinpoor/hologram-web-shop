@@ -1,77 +1,130 @@
-@use "../variable" as var;
-
-.coloerdTitle {
-  color: var.$arrow-background;
+.section {
+  background: var(--surface);
 }
 
-.mainSection {
-  margin-top: 95px;
-}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px clamp(24px, 5vw, 72px);
+  align-items: start;
 
-.buttonsTabbed {
-  border-bottom: none;
-  margin-bottom: 15px;
-}
-.buttonsTabbed li button {
-  background-color: unset !important;
-  color: var.$tabbed;
-  border: 1px solid var.$tabbed !important;
-  padding: 6px 12px;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 32px !important;
-}
-.buttonsTabbed li {
-  padding: 8px;
-}
-//acordion
-.accordionStyle div h2 {
-  background-color: var.$footer-background;
-}
-.accordionBody {
-  background-color: var.$footer-background;
-  margin: 0 !important;
-  line-height: normal;
-}
-.accordionItem {
-  margin: 10px 0;
-}
-
-.accordionStyle div {
-  border: none;
-}
-.accordionStyle div :focus {
-  outline: none !important;
-}
-.accordionStyle div h2 button {
-  background-color: var.$footer-background;
-  justify-content: space-between;
-}
-.accordionStyle div h2 button::after {
-  margin: 0;
-}
-@media (max-width: 980px) {
-  .mainSection {
-    margin-top: 55px;
+  @media (max-width: 992px) {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-@media (max-width: 768px) {
-  .accordionItem :global {
-    .accordion-header button {
-      padding: 17px 7px;
-      font-size: 15px;
-      text-align: right;
+.side {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+
+  @media (max-width: 992px) {
+    position: static;
+  }
+}
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  @media (max-width: 992px) {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: start;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+
+  span {
+    color: var(--text-subtle);
+    font-weight: 500;
+  }
+
+  &:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+}
+
+.tabActive {
+  background: var(--ink-900);
+  color: var(--on-dark);
+
+  span {
+    color: var(--on-dark-muted);
+  }
+
+  &:hover {
+    background: var(--ink-900);
+    color: var(--on-dark);
+  }
+}
+
+.list {
+  border-top: 1px solid var(--line);
+  min-width: 0;
+}
+
+.item {
+  border-bottom: 1px solid var(--line);
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 2px;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.7;
+    text-align: start;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--accent-ink);
+    }
+
+    svg {
+      flex-shrink: 0;
+      color: var(--text-subtle);
+      transition: transform var(--dur) var(--ease);
     }
   }
-  .buttonsTabbed li button {
-    padding: 5px 12px;
-    font-size: 15px;
+
+  p {
+    max-width: 72ch;
+    padding: 0 2px 18px;
+    color: var(--text-muted);
+    line-height: 1.95;
   }
-  .accordionStyle div h2 button {
-    justify-content: unset;
-  }
-  .mainSection {
-    margin-top: 35px;
-  }
+}
+
+.itemOpen button svg {
+  transform: rotate(180deg);
 }

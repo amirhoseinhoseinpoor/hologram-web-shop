@@ -1,13 +1,17 @@
+@use "../orderShared" as shared;
 @use "../../variable" as var;
 
 .continueButton {
   border: none;
   color: white;
-  background-color: #5695f6;
+  background-color: var(--accent-ink);
   border-radius: 4px;
   padding: 7px 29px;
 }
 
 .numberColorForcall {
-  color: #f3802c;
+  color: var(--accent);
 }
+
+
+@include shared.order-shared;

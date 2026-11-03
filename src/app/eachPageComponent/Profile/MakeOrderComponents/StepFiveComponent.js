@@ -387,17 +387,17 @@ export default function StepFiveComponent({
                         >
                           <path
                             d="M5.125 6H7.875"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                             strokeLinecap="round"
                           />
                           <path
                             d="M6.5 7.375V4.625"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                             strokeLinecap="round"
                           />
                           <path
                             d="M2.30985 4.745C3.29485 0.415001 9.70986 0.420001 10.6899 4.75C11.2649 7.29 9.68486 9.44 8.29986 10.77C7.29486 11.74 5.70486 11.74 4.69486 10.77C3.31485 9.44 1.73485 7.285 2.30985 4.745Z"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                           />
                         </svg>
                       </div>
@@ -473,17 +473,17 @@ export default function StepFiveComponent({
                         >
                           <path
                             d="M5.125 6H7.875"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                             strokeLinecap="round"
                           />
                           <path
                             d="M6.5 7.375V4.625"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                             strokeLinecap="round"
                           />
                           <path
                             d="M2.30985 4.745C3.29485 0.415001 9.70986 0.420001 10.6899 4.75C11.2649 7.29 9.68486 9.44 8.29986 10.77C7.29486 11.74 5.70486 11.74 4.69486 10.77C3.31485 9.44 1.73485 7.285 2.30985 4.745Z"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                           />
                         </svg>
                       </div>
@@ -501,7 +501,7 @@ export default function StepFiveComponent({
                       className={style.MainBOXCardStyle}
                       style={{
                         border:
-                          trackactiveAdress === index && "1px solid #5695F6",
+                          trackactiveAdress === index && "1px solid var(--accent-ink)",
                       }}
                       onClick={() => handleImageClick(index)}
                     >
@@ -516,7 +516,7 @@ export default function StepFiveComponent({
                           >
                             <path
                               d="M10.4445 2.70041L4.28702 9.21791C4.05452 9.46541 3.82952 9.95291 3.78452 10.2904L3.50702 12.7204C3.40952 13.5979 4.03952 14.1979 4.90952 14.0479L7.32452 13.6354C7.66202 13.5754 8.13452 13.3279 8.36702 13.0729L14.5245 6.55541C15.5895 5.43041 16.0695 4.14791 14.412 2.58041C12.762 1.02791 11.5095 1.57541 10.4445 2.70041Z"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeMiterlimit={10}
                               strokeLinecap="round"
@@ -524,7 +524,7 @@ export default function StepFiveComponent({
                             />
                             <path
                               d="M9.41797 3.78906C9.74047 5.85906 11.4205 7.44156 13.5055 7.65156"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeMiterlimit={10}
                               strokeLinecap="round"
@@ -532,7 +532,7 @@ export default function StepFiveComponent({
                             />
                             <path
                               d="M2.75 16.5H16.25"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeMiterlimit={10}
                               strokeLinecap="round"
@@ -550,35 +550,35 @@ export default function StepFiveComponent({
                           >
                             <path
                               d="M16.25 4.48438C13.7525 4.23687 11.24 4.10938 8.735 4.10938C7.25 4.10938 5.765 4.18438 4.28 4.33438L2.75 4.48438"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M6.875 3.7275L7.04 2.745C7.16 2.0325 7.25 1.5 8.5175 1.5H10.4825C11.75 1.5 11.8475 2.0625 11.96 2.7525L12.125 3.7275"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M14.6373 6.85547L14.1498 14.408C14.0673 15.5855 13.9998 16.5005 11.9073 16.5005H7.0923C4.9998 16.5005 4.9323 15.5855 4.8498 14.408L4.3623 6.85547"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M8.24707 12.375H10.7446"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M7.625 9.375H11.375"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -647,17 +647,17 @@ export default function StepFiveComponent({
                         >
                           <path
                             d="M5.125 6H7.875"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                             strokeLinecap="round"
                           />
                           <path
                             d="M6.5 7.375V4.625"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                             strokeLinecap="round"
                           />
                           <path
                             d="M2.30985 4.745C3.29485 0.415001 9.70986 0.420001 10.6899 4.75C11.2649 7.29 9.68486 9.44 8.29986 10.77C7.29486 11.74 5.70486 11.74 4.69486 10.77C3.31485 9.44 1.73485 7.285 2.30985 4.745Z"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                           />
                         </svg>
                       </div>
@@ -724,17 +724,17 @@ export default function StepFiveComponent({
                         >
                           <path
                             d="M5.125 6H7.875"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                             strokeLinecap="round"
                           />
                           <path
                             d="M6.5 7.375V4.625"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                             strokeLinecap="round"
                           />
                           <path
                             d="M2.30985 4.745C3.29485 0.415001 9.70986 0.420001 10.6899 4.75C11.2649 7.29 9.68486 9.44 8.29986 10.77C7.29486 11.74 5.70486 11.74 4.69486 10.77C3.31485 9.44 1.73485 7.285 2.30985 4.745Z"
-                            stroke="#5695F6"
+                            stroke="var(--accent-ink)"
                           />
                         </svg>
                       </div>
@@ -752,7 +752,7 @@ export default function StepFiveComponent({
                       className={style.MainBOXCardStyle}
                       style={{
                         border:
-                          trackactiveAdress2 === index && "1px solid #5695F6",
+                          trackactiveAdress2 === index && "1px solid var(--accent-ink)",
                       }}
                       onClick={() => handleImageClick2(index)}
                     >
@@ -767,7 +767,7 @@ export default function StepFiveComponent({
                           >
                             <path
                               d="M10.4445 2.70041L4.28702 9.21791C4.05452 9.46541 3.82952 9.95291 3.78452 10.2904L3.50702 12.7204C3.40952 13.5979 4.03952 14.1979 4.90952 14.0479L7.32452 13.6354C7.66202 13.5754 8.13452 13.3279 8.36702 13.0729L14.5245 6.55541C15.5895 5.43041 16.0695 4.14791 14.412 2.58041C12.762 1.02791 11.5095 1.57541 10.4445 2.70041Z"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeMiterlimit={10}
                               strokeLinecap="round"
@@ -775,7 +775,7 @@ export default function StepFiveComponent({
                             />
                             <path
                               d="M9.41797 3.78906C9.74047 5.85906 11.4205 7.44156 13.5055 7.65156"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeMiterlimit={10}
                               strokeLinecap="round"
@@ -783,7 +783,7 @@ export default function StepFiveComponent({
                             />
                             <path
                               d="M2.75 16.5H16.25"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeMiterlimit={10}
                               strokeLinecap="round"
@@ -801,35 +801,35 @@ export default function StepFiveComponent({
                           >
                             <path
                               d="M16.25 4.48438C13.7525 4.23687 11.24 4.10938 8.735 4.10938C7.25 4.10938 5.765 4.18438 4.28 4.33438L2.75 4.48438"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M6.875 3.7275L7.04 2.745C7.16 2.0325 7.25 1.5 8.5175 1.5H10.4825C11.75 1.5 11.8475 2.0625 11.96 2.7525L12.125 3.7275"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M14.6373 6.85547L14.1498 14.408C14.0673 15.5855 13.9998 16.5005 11.9073 16.5005H7.0923C4.9998 16.5005 4.9323 15.5855 4.8498 14.408L4.3623 6.85547"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M8.24707 12.375H10.7446"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M7.625 9.375H11.375"
-                              stroke="#333333"
+                              stroke="var(--text)"
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"

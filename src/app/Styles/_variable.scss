@@ -1,33 +1,11 @@
-
-
-// header sub item background
-
-$headerSubBackground:#FCFCFC;
-
-$redColor : #e91e63;
-
-// Intro
-
-$IntroImageBackground : #E1F1FF;
-
-
-//PurchaseProcessSteps
-
-$numbercolor : #3892F3;
-
-//FAQ
-
-$tabbed : #5F5F5F;
-
-
-// AzarMagazine
-$arrow-link : #3892F3;
-
-
-// Footer
-$arrow-background: #F3802C;
-$footer-background: #F7F8FC;
-
-$footer-top-person : #3892F3;
-
-$social-media-color : #333333;
+// Legacy names used by older modules; values come from the design tokens.
+$headerSubBackground: var(--surface-2);
+$redColor: var(--danger);
+$IntroImageBackground: var(--surface-2);
+$numbercolor: var(--accent-ink);
+$tabbed: var(--text-muted);
+$arrow-link: var(--accent-ink);
+$arrow-background: var(--accent);
+$footer-background: var(--surface-2);
+$footer-top-person: var(--ink-900);
+$social-media-color: var(--text);

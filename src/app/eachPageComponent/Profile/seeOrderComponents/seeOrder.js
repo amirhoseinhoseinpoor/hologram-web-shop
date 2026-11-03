@@ -31,7 +31,7 @@ export default function SeeOrder({
   const getStatusText = (status) => {
     switch (status) {
       case 1:
-        return "درحال برسی";
+        return "درحال بررسی";
       case 2:
         return "درحال تولید";
       case 3:
@@ -67,6 +67,14 @@ export default function SeeOrder({
     <section>
       <div>
         <div className={style.EachDivStyle}>
+          {newFinalData?.length === 0 && (
+            <div className="az-state">
+              <p>هنوز سفارشی ثبت نکرده‌اید.</p>
+              <p className="discription">
+                از صفحه هر محصول می‌توانید استعلام قیمت ثبت کنید.
+              </p>
+            </div>
+          )}
           {newFinalData?.map((item, index) => (
             <Card key={index} className={style.MainBOXCardStyle}>
               <div
@@ -109,7 +117,9 @@ export default function SeeOrder({
                 <CardContent className={`${style.resetPaddingMui}`}>
                   <div dir="rtl">
                     <p className="seeOrderFont">
-                      {item?.request?.prodName || "محصول پایه"}
+                      {item?.request?.prodName ||
+                        item?.request?.[0]?.name?.split(" - ").pop() ||
+                        "محصول پایه"}
                     </p>
 
                     <div className="d-flex flex-row gap-2">
@@ -143,11 +153,11 @@ export default function SeeOrder({
                           >
                             <path
                               d="M4 7.33203C4 5.44641 4 4.5036 4.58579 3.91782C5.17157 3.33203 6.11438 3.33203 8 3.33203H10C11.8856 3.33203 12.8284 3.33203 13.4142 3.91782C14 4.5036 14 5.44641 14 7.33203V10.6654C14 12.551 14 13.4938 13.4142 14.0796C12.8284 14.6654 11.8856 14.6654 10 14.6654H8C6.11438 14.6654 5.17157 14.6654 4.58579 14.0796C4 13.4938 4 12.551 4 10.6654V7.33203Z"
-                              stroke="#5695F6"
+                              stroke="var(--accent-ink)"
                             />
                             <path
                               d="M4 12.6654C2.89543 12.6654 2 11.7699 2 10.6654V6.66536C2 4.15121 2 2.89413 2.78105 2.11308C3.5621 1.33203 4.81918 1.33203 7.33333 1.33203H10C11.1046 1.33203 12 2.22746 12 3.33203"
-                              stroke="#5695F6"
+                              stroke="var(--accent-ink)"
                             />
                           </svg>
                         </span>
@@ -159,9 +169,9 @@ export default function SeeOrder({
                       >
                         نوع تحویل:
                       </p>
-                      {item.delivery.type ? (
+                      {item.delivery?.type ? (
                         <p className="discription mt-1 mb-1">
-                          {item.delivery.type}
+                          {item.delivery?.type}
                         </p>
                       ) : (
                         <p className="discription mt-1 mb-1">

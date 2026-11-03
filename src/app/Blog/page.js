@@ -4,6 +4,7 @@ import BlogCard from "../eachPageComponent/BlogComponents/BlogCard";
 import BlogRegular from "../eachPageComponent/BlogComponents/BlogRegular";
 
 import MainLayout from "../layouts/MainLayout";
+import PageIntro from "../Components/ui/PageIntro";
 
 export const metadata = {
   title: "وبلاگ",
@@ -21,13 +22,22 @@ export const metadata = {
 
 export default function Blog() {
   return (
-    <>
-      <MainLayout>
-        <BlogCard />
-        <Suspense fallback={<div>Loading...</div>}>
-          <BlogRegular />
-        </Suspense>
-      </MainLayout>
-    </>
+    <MainLayout>
+      <PageIntro
+        eyebrow="مجله آذرهولوگرام"
+        title="مقالات"
+        description="آخرین مقالات و راهنماها درباره هولوگرام، لیبل‌های امنیتی و فناوری هولوگرافی."
+      />
+      <BlogCard />
+      <Suspense
+        fallback={
+          <div className="container az-section">
+            <div className="az-spinner" />
+          </div>
+        }
+      >
+        <BlogRegular />
+      </Suspense>
+    </MainLayout>
   );
 }

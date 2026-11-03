@@ -1,9 +1,16 @@
-export const revalidate = 60; // ISR every 60 seconds
-
 import React from "react";
+import Link from "next/link";
 import MainLayout from "../layouts/MainLayout";
 import HoleProductAndSearch from "../eachPageComponent/ProductPageComponent/HoleProductAndSearch";
-import ShowRoute from "../Components/ShowRoute";
+import PageIntro from "../Components/ui/PageIntro";
+import { parseProductName, toProductView } from "../utils/productContent";
+import {
+  fetchHeaderItems,
+  fetchProducts,
+  getCategories,
+} from "../utils/serverApi";
+
+export const revalidate = 60; // ISR every 60 seconds
 
 export async function generateMetadata({ params }) {
   const decodedId = decodeURIComponent(params.ProductPage);
@@ -21,128 +28,69 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Function to fetch products and header data
-async function fetchProduct() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/product/list`,
-      {
-        // Ensures fresh data every 60 seconds
-        next: { revalidate: 60 },
-        headers: {
-          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
-      console.log("Failed to fetch data");
-      return [];
-    }
-
-    const allProductCome = await response.json();
-
-    return Array.isArray(allProductCome) ? allProductCome : [];
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    return [];
-  }
-}
-
-async function fetchHeader() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/header/find`,
-      {
-        // Ensures fresh data every 60 seconds
-        next: { revalidate: 60 },
-        headers: {
-          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
-      console.log("Failed to fetch data");
-      return [];
-    }
-
-    const header = await response.json();
-    return header?.content || [];
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    return [];
-  }
-}
-
 // Function to recursively find an item by title in the header data
 function findItemByTitle(items, title) {
-  for (let item of items) {
-    if (item.title === title) {
-      return item;
-    } else if (item.subItems && item.subItems.length > 0) {
-      let found = findItemByTitle(item.subItems, title);
+  for (const item of items) {
+    if (item.title === title) return item;
+    if (item.subItems?.length > 0) {
+      const found = findItemByTitle(item.subItems, title);
       if (found) return found;
     }
   }
   return null;
 }
 
-// Async component for fetching data and rendering
 export default async function ProductPage({ params }) {
-  const { ProductPage: id } = params;
-  const decodedId = decodeURIComponent(id); // Decode the category ID
+  const decodedId = decodeURIComponent(params.ProductPage);
 
-  const allProduct = await fetchProduct(); // Fetch all products
-  const headerCome = await fetchHeader(); // Fetch header data
+  const [allProducts, headerItems] = await Promise.all([
+    fetchProducts(),
+    fetchHeaderItems(),
+  ]);
 
-  // Find the matched category from the header based on the decodedId
-  const matchedItem = findItemByTitle(headerCome, decodedId);
+  const matchedItem = findItemByTitle(headerItems, decodedId);
+  const categories = getCategories(headerItems);
 
   if (!matchedItem) {
     return (
       <MainLayout>
-        <section className="container">
-          <ShowRoute />
-          <div>دسته‌بندی مورد نظر یافت نشد.</div>
+        <PageIntro title={decodedId} />
+        <section className="az-section container">
+          <div className="az-state">
+            <p>دسته‌بندی مورد نظر یافت نشد.</p>
+            <Link href="/" className="az-btn az-btn--outline az-btn--sm">
+              بازگشت به صفحه اصلی
+            </Link>
+          </div>
         </section>
       </MainLayout>
     );
   }
 
-  // const dynamicPath = `محصولات / ${pathSegments.join(" / ")}`.trim();
+  const subItemTitles = (matchedItem.subItems || []).map((sub) => sub.title);
 
-  // Extract the titles of the sub-items under the matched category
-  let subItemTitles = [];
-  if (matchedItem.subItems) {
-    subItemTitles = matchedItem.subItems.map((subItem) => subItem.title);
-  }
-
-  const filteredProducts = allProduct.filter((product) => {
-    const productPathSegments = product.name.split(" - "); // Split the product name into segments
-    const lastSegment = productPathSegments[productPathSegments.length - 1]; // Get the last segment
-    return subItemTitles.includes(lastSegment); // Check if the last segment matches any subItemTitles
-  });
-
-
-  if (filteredProducts.length === 0) {
-    return (
-      <MainLayout>
-        <section className="container">
-          <ShowRoute />
-          <div>محصولی برای این دسته‌بندی یافت نشد.</div>
-        </section>
-      </MainLayout>
-    );
-  }
+  const products = allProducts
+    .filter((product) =>
+      subItemTitles.includes(parseProductName(product.name).name),
+    )
+    .map(toProductView);
 
   return (
     <MainLayout>
-      <section className="container">
-        <ShowRoute />
+      <PageIntro
+        eyebrow="محصولات"
+        title={matchedItem.title}
+        description={
+          products.length > 0
+            ? `${products.length.toLocaleString("fa-IR")} محصول در این دسته`
+            : undefined
+        }
+      />
+      <section className="az-section container">
         <HoleProductAndSearch
-          itemsClick={filteredProducts}
-          matchedTitle={matchedItem.title}
+          products={products}
+          categories={categories}
+          activeCategory={matchedItem.title}
         />
       </section>
     </MainLayout>

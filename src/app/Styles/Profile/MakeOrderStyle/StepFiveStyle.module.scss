@@ -1,9 +1,10 @@
+@use "../orderShared" as shared;
 @use "../../variable" as var;
 
 .continueButton {
   border: none;
   color: white;
-  background-color: #5695f6;
+  background-color: var(--accent-ink);
   border-radius: 4px;
   padding: 7px 29px;
 }
@@ -27,14 +28,14 @@
 
 
 .butttonAddAdress {
-  border: 1.5px solid #5695f6;
+  border: 1.5px solid var(--accent-ink);
   border-radius: 6px;
   padding: 5px 10px;
   background-color: white;
   margin-top: 10px;
   div {
     p {
-      color: #5695f6;
+      color: var(--accent-ink);
     }
   }
 }
@@ -48,7 +49,7 @@
 }
 
 .StarFixReq {
-  color: #ff4f3f;
+  color: var(--danger);
 }
 
 .inputTextCompanyName {
@@ -69,7 +70,7 @@
 
 .SubmitModalAdress{
   border: none;
-  background-color: #5695f6;
+  background-color: var(--accent-ink);
   color: white;
   padding: 7px 35px;
   border-radius: 4px;
@@ -92,7 +93,7 @@
   width: 100%;
   border: none;
   box-shadow: none;
-  background-color: #F7F8FC;
+  background-color: var(--surface-2);
   border-radius: 4px;
   height: 100%;
   cursor: pointer;
@@ -114,8 +115,8 @@
 }
 
 .SeeLastStepButton{
-  border: 1.5px solid #5695F6;
-  color: #5695F6;
+  border: 1.5px solid var(--accent-ink);
+  color: var(--accent-ink);
   background-color: transparent;
   border-radius: 4px;
   padding: 2px 8px;
@@ -134,3 +135,6 @@
   }
 
 }
+
+
+@include shared.order-shared;

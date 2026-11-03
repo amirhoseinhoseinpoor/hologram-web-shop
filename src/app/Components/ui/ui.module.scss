@@ -1,0 +1,113 @@
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 32px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+.sectionHeadText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 68ch;
+}
+
+.pageIntro {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-900);
+  color: var(--on-dark);
+  padding-block: clamp(32px, 5vw, 56px);
+}
+
+.pageIntroMotif {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: -120px;
+  width: 560px;
+  height: 560px;
+  transform: translateY(-50%);
+  color: var(--on-dark);
+  opacity: 0.09;
+  pointer-events: none;
+
+  @media (max-width: 768px) {
+    width: 380px;
+    height: 380px;
+    inset-inline-end: -180px;
+  }
+}
+
+.pageIntroBody {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 72ch;
+}
+
+.pageIntroText {
+  color: var(--on-dark-muted);
+  line-height: 1.9;
+}
+
+.pageIntro nav a,
+.pageIntro nav span,
+.pageIntro nav li {
+  color: var(--on-dark-muted);
+}
+.pageIntro nav a:hover {
+  color: #fff;
+}
+
+.spectrumLine {
+  display: block;
+  height: 2px;
+  background: var(--spectrum);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  a:hover {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  svg {
+    font-size: 0.95rem;
+    opacity: 0.6;
+  }
+}
+
+.breadcrumbCurrent {
+  overflow: hidden;
+  max-width: 40ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: inherit;
+  font-weight: 600;
+
+  @media (max-width: 576px) {
+    max-width: 22ch;
+  }
+}

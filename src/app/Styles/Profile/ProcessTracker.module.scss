@@ -1,89 +1,160 @@
-@use "../variable" as var;
+.tracker {
+  margin-bottom: 16px;
+  padding: 16px clamp(12px, 2vw, 20px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
 
-.processTracker {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
+.steps {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (max-width: 860px) {
+    display: none;
+  }
 }
 
 .step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   position: relative;
+
+  // connector to the previous step
+  &:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    top: 16px;
+    inset-inline-end: 50%;
+    width: 100%;
+    height: 2px;
+    background: var(--line);
+  }
+
+  button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    color: var(--text-subtle);
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
+
+    &:not(:disabled):hover .label {
+      color: var(--text);
+    }
+  }
 }
 
-.circle {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 1.5px solid #c0c0c0;
-  display: flex;
-  justify-content: center;
+.marker {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
   align-items: center;
-  font-weight: bold;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text-subtle);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  transition: background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+
+  svg {
+    font-size: 1.15rem;
+  }
 }
 
 .label {
-  margin-top: 10px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 1.5;
   text-align: center;
 }
 
-.line {
-  width: 80px;
-  height: 1px;
-  background-color: rgba(54, 54, 54, 0.422);
-  // border-bottom: 1px dashed #5695F6;
-  position: absolute;
-  top: 15px;
-  left: 50%;
+.done {
+  &::before {
+    background: var(--ink-900) !important;
+  }
+
+  .marker {
+    border-color: var(--ink-900);
+    background: var(--ink-900);
+    color: var(--on-dark);
+  }
+
+  .label {
+    color: var(--text-muted);
+  }
+}
+
+.current {
+  &::before {
+    background: var(--ink-900) !important;
+  }
+
+  .marker {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--ink-900);
+  }
+
+  .label {
+    color: var(--text);
+    font-weight: 700;
+  }
+}
+
+.compact {
+  display: none;
+
+  @media (max-width: 860px) {
+    display: block;
+  }
+}
+
+.compactHead {
+  display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  transform: translate(50%, -50%);
-}
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  margin-bottom: 8px;
 
-.activeLine {
-  background-image: none;
-  background-color: #5695f6;
-}
+  p {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+  }
 
-.active .circle {
-  background-color: #e1f1ff;
-  color: var.$social-media-color;
-  border: none;
-  cursor: pointer;
-}
-
-.completed .circle {
-  background-color: #e1f1ff;
-  color: var.$social-media-color;
-  border: none;
-}
-
-@media (max-width: 1400px) {
-  .line {
-    width: 65px;
-    left: 56%;
+  span {
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
   }
 }
 
-@media (max-width: 1200px) {
-  .line {
-    width: 50px;
-    left: 54%;
-  }
-}
+.bar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--surface-3);
 
-@media (max-width: 980px) {
-  .processTracker {
-    display: none !important;
-  }
-  .stageColor {
-    color: var.$social-media-color;
-    opacity: 0.8;
-  }
-  .theProcesFlowTips {
-    background-color: white;
-    width: 100%;
-    height: 4px;
+  span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--accent);
+    transition: width 240ms var(--ease);
   }
 }

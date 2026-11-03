@@ -1,0 +1,127 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 520px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+
+  a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: var(--text);
+  }
+
+  &:hover {
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow);
+
+    img {
+      transform: scale(1.03);
+    }
+  }
+}
+
+.cardMedia {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface-3);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 320ms var(--ease);
+  }
+}
+
+.cardBody {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px 18px;
+
+  time {
+    color: var(--text-subtle);
+    font-size: var(--fs-xs);
+  }
+
+  h2 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    line-height: 1.7;
+  }
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+
+  svg {
+    font-size: 1.05rem;
+    color: var(--accent-ink);
+  }
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 28px clamp(28px, 5vw, 64px);
+  align-items: start;
+  padding-block: var(--section-y);
+
+  @media (max-width: 992px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.detailMedia {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 72vh;
+    object-fit: contain;
+  }
+
+  @media (max-width: 992px) {
+    position: static;
+  }
+}
+
+.detailBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  min-width: 0;
+}

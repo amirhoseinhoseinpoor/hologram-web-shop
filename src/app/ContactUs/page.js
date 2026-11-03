@@ -1,7 +1,8 @@
-import HeaderSeo from "../Components/HeaderSeo.js";
 import Form from "../eachPageComponent/ContactUsComponent/Form.js";
-import Address from "../eachPageComponent/ContactUsComponent/Address.js";
 import MainLayout from "../layouts/MainLayout.js";
+import PageIntro from "../Components/ui/PageIntro";
+import ContactDetails from "../eachPageComponent/ContactUsComponent/Address.js";
+import style from "../Styles/ContactUsStyle/Form.module.scss";
 
 export const metadata = {
   title: "تماس با ما",
@@ -19,12 +20,16 @@ export const metadata = {
 
 export default function ContactUs() {
   return (
-    <>
-     <MainLayout>
-      <HeaderSeo />
-      <Form />
-      <Address />     
-      </MainLayout>
-    </>
+    <MainLayout>
+      <PageIntro
+        eyebrow="تماس با ما"
+        title="با کارشناسان آذرهولوگرام در ارتباط باشید"
+        description="برای سفارش، مشاوره یا هر پرسشی پیام بگذارید؛ پشتیبان‌های ما در ساعت‌های اداری پاسخگو هستند."
+      />
+      <section className={`az-section container ${style.layout}`}>
+        <Form />
+        <ContactDetails />
+      </section>
+    </MainLayout>
   );
 }

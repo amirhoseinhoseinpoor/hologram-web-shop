@@ -1,7 +1,8 @@
+@use "../orderShared" as shared;
 @use "../../variable" as var;
 
 .numberColorForcall {
-  color: #f3802c;
+  color: var(--accent);
 }
 
 .effectMainDivStyle {
@@ -13,7 +14,7 @@
 .MainBOXCardStyle {
   display: flex;
   flex-direction: column;
-  background-color: #f7f8fc;
+  background-color: var(--surface-2);
   margin: 6px 0;
   border: none;
   box-shadow: none;
@@ -28,15 +29,15 @@
 }
 
 .ButtonRemoveProduct{
-  border: 1px solid #ff4f3f;
+  border: 1px solid var(--danger);
   border-radius: 4px;
   padding: 3px 10px;
-  color: #ff4f3f;
+  color: var(--danger);
   background-color: unset;
 }
 
 .redStarStyle{
-  color: #ff4f3f;
+  color: var(--danger);
 }
 
 .resetPaddingMuiBelowContent {
@@ -75,13 +76,13 @@
   height: 22px;
   width: 22px;
   background: #ffffff;
-  border: 1px solid #5695f6;
+  border: 1px solid var(--accent-ink);
   border-radius: 4px;
 }
 
 .formInputNumber:focus {
   box-shadow: unset !important;
-  border: 1.3px solid #5695f6;
+  border: 1.3px solid var(--accent-ink);
 }
 .formInputNumber {
   border-radius: 4px !important;
@@ -114,11 +115,11 @@
 }
 
 .control input:checked ~ .controlindicator {
-  background: #5695f6;
+  background: var(--accent-ink);
 }
 .control:hover input:not([disabled]):checked ~ .controlindicator,
 .control input:checked:focus ~ .controlindicator {
-  background: #5695f6;
+  background: var(--accent-ink);
 }
 .control input:disabled ~ .controlindicator {
   background: #e6e6e6;
@@ -205,7 +206,7 @@
 .continueButton {
   border: none;
   color: white;
-  background-color: #5695f6;
+  background-color: var(--accent-ink);
   border-radius: 4px;
   padding: 7px 29px;
 }
@@ -259,3 +260,5 @@
     grid-gap: 7px;
   }
 }
+
+@include shared.order-shared;

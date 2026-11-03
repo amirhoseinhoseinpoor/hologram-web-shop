@@ -1,3 +1,4 @@
+@use "../orderShared" as shared;
 @use "../../variable" as var;
 
 .EachDivStyle {
@@ -16,11 +17,11 @@
 }
 
 .coloredTitle {
-  color: #5f5f5f;
+  color: var(--text-muted);
 }
 
 .trackCode {
-  color: #5695f6;
+  color: var(--accent-ink);
 }
 
 .situationSatus {
@@ -31,8 +32,8 @@
 }
 
 // .dotText {
-//   fill: #5695f6;
-//   color: #5695f6;
+//   fill: var(--accent-ink);
+//   color: var(--accent-ink);
 // }
 
 .situationMainDiv {
@@ -46,42 +47,42 @@
   padding: 6px 10px;
   color: white;
   border-radius: 4px;
-  background-color: #5695F6;
+  background-color: var(--accent-ink);
   margin-top: 10px;
 }
 
 
 .pendingStatus {  
   background-color: #e1f1ff;
-  border: 1.4px solid #5695f6;
-  color: #5695f6;
+  border: 1.4px solid var(--accent-ink);
+  color: var(--accent-ink);
 }  
 
 .inProductionStatus {  
-  border: 1.4px solid #F3802C;  
-  color: #F3802C;
+  border: 1.4px solid var(--accent);  
+  color: var(--accent);
   background-color: #FFF8F3;
 }  
 
 .inDeliveryStatus {  
-  border: 1.4px solid #F3802C; /* Style for pending status */  
-  color: #F3802C;
+  border: 1.4px solid var(--accent); /* Style for pending status */  
+  color: var(--accent);
 }  
 
 .deliveredStatus {  
-  border: 1.4px solid #5695f6; /* Style for pending status */  
-  color: #5695f6;
+  border: 1.4px solid var(--accent-ink); /* Style for pending status */  
+  color: var(--accent-ink);
 }  
 
 .canceledStatus {  
-  border: 1.4px solid #FF4F3F; /* Style for pending status */  
-  color: #FF4F3F;
+  border: 1.4px solid var(--danger); /* Style for pending status */  
+  color: var(--danger);
   background-color: #FFF2F1;
 }  
 
 .defaultStatus {  
-  border: 1.4px solid #5695f6; /* Style for pending status */  
-  color: #5695f6;
+  border: 1.4px solid var(--accent-ink); /* Style for pending status */  
+  color: var(--accent-ink);
 }  
 
 .dotText {  
@@ -111,3 +112,6 @@
     padding-bottom: 8px !important;
   }
 }
+
+
+@include shared.order-shared;

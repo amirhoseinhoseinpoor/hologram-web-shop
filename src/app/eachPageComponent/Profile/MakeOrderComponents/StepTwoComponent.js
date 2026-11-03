@@ -435,31 +435,31 @@ export default function StepTwoComponent({
                           >
                             <path
                               d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                              stroke="#FF4F3F"
+                              stroke="var(--danger)"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                              stroke="#FF4F3F"
+                              stroke="var(--danger)"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                              stroke="#FF4F3F"
+                              stroke="var(--danger)"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M5.16504 8.25H6.83004"
-                              stroke="#FF4F3F"
+                              stroke="var(--danger)"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                             <path
                               d="M4.75 6.25H7.25"
-                              stroke="#FF4F3F"
+                              stroke="var(--danger)"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
@@ -671,31 +671,31 @@ export default function StepTwoComponent({
                                     >
                                       <path
                                         d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
                                       <path
                                         d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
                                       <path
                                         d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
                                       <path
                                         d="M5.16504 8.25H6.83004"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
                                       <path
                                         d="M4.75 6.25H7.25"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
@@ -746,31 +746,31 @@ export default function StepTwoComponent({
                                     >
                                       <path
                                         d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
                                       <path
                                         d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
                                       <path
                                         d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
                                       <path
                                         d="M5.16504 8.25H6.83004"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
                                       <path
                                         d="M4.75 6.25H7.25"
-                                        stroke="#FF4F3F"
+                                        stroke="var(--danger)"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       />
@@ -813,31 +813,31 @@ export default function StepTwoComponent({
                                   >
                                     <path
                                       d="M10.5 2.98828C8.835 2.82328 7.16 2.73828 5.49 2.73828C4.5 2.73828 3.51 2.78828 2.52 2.88828L1.5 2.98828"
-                                      stroke="#FF4F3F"
+                                      stroke="var(--danger)"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
                                     />
                                     <path
                                       d="M4.25 2.485L4.36 1.83C4.44 1.355 4.5 1 5.345 1H6.655C7.5 1 7.565 1.375 7.64 1.835L7.75 2.485"
-                                      stroke="#FF4F3F"
+                                      stroke="var(--danger)"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
                                     />
                                     <path
                                       d="M9.4252 4.57031L9.1002 9.60531C9.0452 10.3903 9.0002 11.0003 7.6052 11.0003H4.3952C3.0002 11.0003 2.9552 10.3903 2.9002 9.60531L2.5752 4.57031"
-                                      stroke="#FF4F3F"
+                                      stroke="var(--danger)"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
                                     />
                                     <path
                                       d="M5.16504 8.25H6.83004"
-                                      stroke="#FF4F3F"
+                                      stroke="var(--danger)"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
                                     />
                                     <path
                                       d="M4.75 6.25H7.25"
-                                      stroke="#FF4F3F"
+                                      stroke="var(--danger)"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
                                     />
@@ -959,7 +959,7 @@ export default function StepTwoComponent({
                 >
                   <path
                     d="M16.4775 13.7475C16.4775 14.0175 16.4175 14.295 16.29 14.565C16.1625 14.835 15.9975 15.09 15.78 15.33C15.4125 15.735 15.0075 16.0275 14.55 16.215C14.1 16.4025 13.6125 16.5 13.0875 16.5C12.3225 16.5 11.505 16.32 10.6425 15.9525C9.78 15.585 8.9175 15.09 8.0625 14.4675C7.2 13.8375 6.3825 13.14 5.6025 12.3675C4.83 11.5875 4.1325 10.77 3.51 9.915C2.895 9.06 2.4 8.205 2.04 7.3575C1.68 6.5025 1.5 5.685 1.5 4.905C1.5 4.395 1.59 3.9075 1.77 3.4575C1.95 3 2.235 2.58 2.6325 2.205C3.1125 1.7325 3.6375 1.5 4.1925 1.5C4.4025 1.5 4.6125 1.545 4.8 1.635C4.995 1.725 5.1675 1.86 5.3025 2.055L7.0425 4.5075C7.1775 4.695 7.275 4.8675 7.3425 5.0325C7.41 5.19 7.4475 5.3475 7.4475 5.49C7.4475 5.67 7.395 5.85 7.29 6.0225C7.1925 6.195 7.05 6.375 6.87 6.555L6.3 7.1475C6.2175 7.23 6.18 7.3275 6.18 7.4475C6.18 7.5075 6.1875 7.56 6.2025 7.62C6.225 7.68 6.2475 7.725 6.2625 7.77C6.3975 8.0175 6.63 8.34 6.96 8.73C7.2975 9.12 7.6575 9.5175 8.0475 9.915C8.4525 10.3125 8.8425 10.68 9.24 11.0175C9.63 11.3475 9.9525 11.5725 10.2075 11.7075C10.245 11.7225 10.29 11.745 10.3425 11.7675C10.4025 11.79 10.4625 11.7975 10.53 11.7975C10.6575 11.7975 10.755 11.7525 10.8375 11.67L11.4075 11.1075C11.595 10.92 11.775 10.7775 11.9475 10.6875C12.12 10.5825 12.2925 10.53 12.48 10.53C12.6225 10.53 12.7725 10.56 12.9375 10.6275C13.1025 10.695 13.275 10.7925 13.4625 10.92L15.945 12.6825C16.14 12.8175 16.275 12.975 16.3575 13.1625C16.4325 13.35 16.4775 13.5375 16.4775 13.7475Z"
-                    stroke="#F3802C"
+                    stroke="var(--accent)"
                     strokeWidth="1.5"
                     strokeMiterlimit={10}
                   />
@@ -1026,11 +1026,11 @@ export default function StepTwoComponent({
                               >
                                 <path
                                   d="M4 7.33203C4 5.44641 4 4.5036 4.58579 3.91782C5.17157 3.33203 6.11438 3.33203 8 3.33203H10C11.8856 3.33203 12.8284 3.33203 13.4142 3.91782C14 4.5036 14 5.44641 14 7.33203V10.6654C14 12.551 14 13.4938 13.4142 14.0796C12.8284 14.6654 11.8856 14.6654 10 14.6654H8C6.11438 14.6654 5.17157 14.6654 4.58579 14.0796C4 13.4938 4 12.551 4 10.6654V7.33203Z"
-                                  stroke="#5695F6"
+                                  stroke="var(--accent-ink)"
                                 />
                                 <path
                                   d="M4 12.6654C2.89543 12.6654 2 11.7699 2 10.6654V6.66536C2 4.15121 2 2.89413 2.78105 2.11308C3.5621 1.33203 4.81918 1.33203 7.33333 1.33203H10C11.1046 1.33203 12 2.22746 12 3.33203"
-                                  stroke="#5695F6"
+                                  stroke="var(--accent-ink)"
                                 />
                               </svg>
                             </span>
@@ -1065,11 +1065,11 @@ export default function StepTwoComponent({
                               >
                                 <path
                                   d="M4 7.33203C4 5.44641 4 4.5036 4.58579 3.91782C5.17157 3.33203 6.11438 3.33203 8 3.33203H10C11.8856 3.33203 12.8284 3.33203 13.4142 3.91782C14 4.5036 14 5.44641 14 7.33203V10.6654C14 12.551 14 13.4938 13.4142 14.0796C12.8284 14.6654 11.8856 14.6654 10 14.6654H8C6.11438 14.6654 5.17157 14.6654 4.58579 14.0796C4 13.4938 4 12.551 4 10.6654V7.33203Z"
-                                  stroke="#5695F6"
+                                  stroke="var(--accent-ink)"
                                 />
                                 <path
                                   d="M4 12.6654C2.89543 12.6654 2 11.7699 2 10.6654V6.66536C2 4.15121 2 2.89413 2.78105 2.11308C3.5621 1.33203 4.81918 1.33203 7.33333 1.33203H10C11.1046 1.33203 12 2.22746 12 3.33203"
-                                  stroke="#5695F6"
+                                  stroke="var(--accent-ink)"
                                 />
                               </svg>
                             </span>
@@ -1136,7 +1136,7 @@ export default function StepTwoComponent({
                 className={style.continueButtonpaying}
                 disabled={isButtonDisabled}
                 style={{
-                  backgroundColor: isButtonDisabled ? "#868686" : "#007bff",
+                  backgroundColor: isButtonDisabled ? "#868686" : "var(--accent-ink)",
                   cursor: isButtonDisabled ? "not-allowed" : "pointer",
                 }}
               >

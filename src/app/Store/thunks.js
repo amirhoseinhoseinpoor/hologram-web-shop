@@ -408,11 +408,11 @@ export const homePageExhibitionList = createAsyncThunk(
 // start blog
 export const homePageBlogList = createAsyncThunk(
   "blogs/homePageBlogList",
-  async (_, thunkAPI) => {
+  async ({ page = 1, limit = 10 } = {}, thunkAPI) => {
     try {
-      const response = await axios.get(
-        `${API_URL}/blogs/listPaginated`,
-      );
+      const response = await axios.get(`${API_URL}/blogs/listPaginated`, {
+        params: { page, limit },
+      });
       const data = response.data;
 
       return data;

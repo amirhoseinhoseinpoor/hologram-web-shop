@@ -2,153 +2,89 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import SearchIcon from "@mui/icons-material/Search";
 import style from "../../Styles/ProductPage/DynamicSearchAndItems.module.scss";
-import { Box } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
+import ProductCard from "@/app/Components/product/ProductCard";
+import cardStyle from "@/app/Components/product/ProductCard.module.scss";
 
-export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
+const normalizeString = (str = "") =>
+  str.replace(/\s+/g, " ").trim().toLowerCase();
+
+export default function HoleProductAndSearch({
+  products,
+  categories,
+  activeCategory,
+}) {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const normalizeString = (str) =>
-    str
-      .replace(/\s+/g, " ") // Replace multiple spaces with a single space
-      .trim() // Remove leading and trailing spaces
-      .toLowerCase();
-
-  const filteredProducts = itemsClick?.filter((item) => {
-    const normalizedTitle = item.name ? normalizeString(item.name) : "";
-    const normalizedSearchTerm = normalizeString(searchTerm);
-    return normalizedTitle.includes(normalizedSearchTerm);
-  });
-
-  function fixTitleSize(text) {
-    if (text.length > 60) {
-      return text.slice(0, 60) + "...";
-    } else {
-      return text;
-    }
-  }
+  const term = normalizeString(searchTerm);
+  const filteredProducts = products.filter((product) =>
+    [product.name, product.intro, product.details].some((text) =>
+      normalizeString(text).includes(term),
+    ),
+  );
 
   return (
-    <section className="mt-3">
-      <div className="d-flex flex-row justify-content-between align-items-center">
-        <div className={`${style.inputStyle}`}>
-          <div>
+    <>
+      <div className={style.toolbar}>
+        {categories.length > 0 && (
+          <nav className={style.categories} aria-label="دسته‌های محصول">
+            {categories.map((category) => (
+              <Link
+                key={category.link}
+                href={category.link}
+                className={`az-chip ${
+                  category.title === activeCategory ? "az-chip--active" : ""
+                }`}
+                aria-current={
+                  category.title === activeCategory ? "page" : undefined
+                }
+              >
+                {category.title}
+              </Link>
+            ))}
+          </nav>
+        )}
+        {products.length > 0 && (
+          <div className={style.search}>
+            <SearchIcon aria-hidden="true" />
             <input
-              type="text"
-              placeholder="جست و جو در محصولات زیر..."
+              type="search"
+              className="az-input"
+              aria-label="جست و جو در محصولات این دسته"
+              placeholder="جست و جو در محصولات این دسته"
               value={searchTerm}
-              onChange={handleSearchChange}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className={style.searchIconposition}>
-            <Box
-              sx={{
-                width: 37,
-                height: 37,
-                display: "flex",
-                alignItems: "center",
-                padding: 1,
-                marginRight: "-15px",
-              }}
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-                  stroke="#333333"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M22 22L20 20"
-                  stroke="#333333"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Box>
-          </div>
+        )}
+      </div>
+
+      {products.length === 0 ? (
+        <div className="az-state">
+          <p>محصولی برای این دسته‌بندی یافت نشد.</p>
+          <p className="discription">
+            می‌توانید از دسته‌های بالا محصول دیگری را انتخاب کنید.
+          </p>
         </div>
-      </div>
-
-      <div className={`${style.fixContentSizePlace} mt-2`}>
-        {filteredProducts?.map((item, index) => {
-          // Extract the image with type '1' from imgData
-          const imageData = item.info.imgData.find((img) => img.type === "1");
-          const imageSrc = imageData ? imageData.src : null;
-          // product.name = "محصولات - CategoryName - ProductName"
-          const nameParts = item.name.split(" - ");
-          const productTitle = nameParts[nameParts.length - 1].trim();
-          const categorySegment = nameParts.length >= 3 ? nameParts[nameParts.length - 2].trim() : matchedTitle.trim();
-
-          return (
-            <React.Fragment key={index}>
-              <Card className={`${style.mainCardStyle}`}>
-                <Link
-                  className="text-decoration-none"
-                  href={`/${encodeURIComponent(categorySegment)}/${encodeURIComponent(productTitle)}`}
-                  // href={`/${matchedTitle.trim()}/${item.name.split('/').pop().trim()}`}
-                  passHref
-                >
-                  <div className={style.cardInner}>
-                    <div className={style.cardImageWrapper}>
-                      <CardMedia
-                        className={style.fixBoxSize}
-                        component="img"
-                        image={`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${imageSrc}`}
-                        alt={productTitle}
-                      />
-                    </div>
-                    <CardContent className={style.adjustContent}>
-                      <Typography
-                        className={`${style.textResetColor} ${style.productTitle}`}
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                      >
-                        {productTitle}
-                      </Typography>
-                      <Typography
-                        className={`discription ${style.productSubtitle}`}
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                      >
-                        {item.info.subtitleCompelete}
-                      </Typography>
-                      <div className={style.cardArrow}>
-                        <svg width={16} height={16} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10.07 6.43L4 12.5L10.07 18.57" stroke="#F3802C" strokeWidth={2} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M21 12.5H4.17" stroke="#F3802C" strokeWidth={2} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </div>
-                    </CardContent>
-                  </div>
-                </Link>
-              </Card>
-            </React.Fragment>
-          );
-        })}
-      </div>
-    </section>
+      ) : filteredProducts.length === 0 ? (
+        <div className="az-state" role="status">
+          <p>نتیجه‌ای برای «{searchTerm}» پیدا نشد.</p>
+          <button
+            type="button"
+            className="az-btn az-btn--outline az-btn--sm"
+            onClick={() => setSearchTerm("")}
+          >
+            پاک کردن جست و جو
+          </button>
+        </div>
+      ) : (
+        <div className={cardStyle.grid}>
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.code} product={product} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
-
-// "use client";
-
-// export default function HoleProductAndSearch({ itemsClick, matchedTitle }) {
-
-//   const [searchTerm, setSearchTerm] = useState("");

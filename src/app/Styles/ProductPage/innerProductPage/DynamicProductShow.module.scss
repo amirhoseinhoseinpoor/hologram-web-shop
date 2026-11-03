@@ -1,332 +1,266 @@
-@use "../../variable" as var;
-
-.fixMainSizeleft {
-  width: 100%;
+.breadcrumbBar {
+  padding-top: 18px;
 }
 
-// Desktop: scrollable thumbnail sidebar
-.divMainLeftSideVideo {
-  max-height: 460px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
+.summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 28px clamp(28px, 4.5vw, 64px);
+  align-items: start;
+  padding-block: 18px clamp(40px, 6vw, 72px);
+
+  @media (max-width: 992px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.gallery {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 6px 4px;
+  gap: 12px;
+  min-width: 0;
 }
 
-// Main media viewer
-.mainMediaWrapper {
-  border-radius: 10px;
+.mainMedia {
   overflow: hidden;
-  background-color: #f0f2f7;
-  min-height: 240px;
-  border: 1.5px solid #e8ebf2;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--ink-950);
+    object-fit: contain;
+  }
 }
 
-// Loading overlay
-.mediaLoadingOverlay {
+.noMedia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  color: var(--text-subtle);
+  font-size: var(--fs-sm);
+}
+
+.zoomButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &:hover .zoomHint {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline-offset: -3px;
+  }
+}
+
+.zoomHint {
   position: absolute;
-  inset: 0;
-  background-color: rgba(240, 242, 247, 0.8);
-  border-radius: 10px;
+  inset-inline-end: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  background: rgba(11, 21, 36, 0.8);
+  color: #fff;
+  opacity: 0.7;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.thumbs {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 2px 2px 6px;
+  overflow-x: auto;
+  list-style: none;
+}
+
+.thumb {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(64, 71, 86, 0.18);
-  border-top-color: var.$arrow-background;
-  border-radius: 50%;
-  animation: spin 0.75s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-// ── Thumbnail wrapper ──────────────────────────────────────────────────────────
-.thumbWrapper {
-  cursor: pointer;
-  border-radius: 8px;
-  border: 2px solid #e8ebf2;
+  width: 84px;
+  aspect-ratio: 4 / 3;
+  padding: 0;
   overflow: hidden;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
-  width: 100%;
-  display: block;
-  background-color: #f0f2f7;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  color: #fff;
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease);
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  svg {
+    position: relative;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.7));
+  }
 
   &:hover {
-    border-color: #c0c8d8;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-color: var(--line-strong);
   }
 }
 
 .thumbActive {
-  border-color: var.$arrow-background !important;
-  box-shadow: 0 2px 12px rgba(243, 128, 44, 0.28) !important;
+  border-color: var(--ink-900);
+  box-shadow: 0 0 0 1px var(--ink-900);
 }
 
-// Thumbnail image fills properly
-.fixStyleSizeImgReDesctop {
-  width: 100%;
-  height: 90px;
-  object-fit: cover;
-  display: block;
-  border-radius: 6px;
-}
-
-// Mobile swiper thumbnail – bigger and cleaner
-.fixStyleSizeImgRe {
-  width: 100%;
-  height: 72px;
-  object-fit: cover;
-  display: block;
-  border-radius: 6px;
-}
-
-// Play icon overlay on thumbnail – properly centered, right size
-.posterIcon {
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
-  z-index: 2;
+.info {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.55);
-  border-radius: 50%;
-  padding: 5px;
-  pointer-events: none;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
 }
 
-// ── Navigation buttons (mobile swiper) ───────────────────────────────────────
-.buttonNextStyle {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-
-  button {
-    border: none;
-    background-color: rgba(247, 248, 252, 0.85);
-    padding: 6px 3px;
-    border-radius: 4px 0 0 4px;
-    display: flex;
-    align-items: center;
-  }
-}
-
-.buttonPrevStyle {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-
-  button {
-    border: none;
-    background-color: rgba(247, 248, 252, 0.85);
-    padding: 6px 3px;
-    border-radius: 0 4px 4px 0;
-    display: flex;
-    align-items: center;
-  }
-}
-
-.buttonNextStylePC {
-  position: absolute;
-  right: 8%;
-  top: 60%;
-  transform: translate(50%, -50%);
-  z-index: 2;
-  height: 100%;
-
-  button {
-    border: none;
-    background-color: unset;
-    height: 100%;
-    padding: 1px;
-  }
-}
-
-.buttonPrevStylePC {
-  position: absolute;
-  left: 8%;
-  top: 60%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  height: 100%;
-
-  button {
-    border: none;
-    background-color: unset;
-    height: 100%;
-    padding: 1px;
-  }
-}
-
-// ── Shared ────────────────────────────────────────────────────────────────────
-.innerStyleDivForMain {
-  width: 100%;
-}
-
-.coloredBoxStyle {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  position: relative;
-  background-position: center;
-  background-size: cover;
-  border: 2px solid transparent;
-  transition: border-color 0.15s ease;
+.categoryLink {
+  align-self: flex-start;
+  color: var(--accent-ink);
+  font-size: var(--fs-sm);
+  font-weight: 700;
 
   &:hover {
-    border-color: #c0c8d8;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 }
 
-.SizezInput {
-  padding: 4px 18px;
+.intro {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 
-.addProductPage {
-  padding: 10px 22px;
-  background-color: #5695f6;
-  cursor: pointer;
-  border-radius: 6px;
-  color: white;
-  border: none;
+.specs {
+  margin: 4px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) minmax(0, 2.4fr);
+  gap: 12px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--line);
+
+  dt {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+
+  dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+  }
+}
+
+.specValue {
+  font-size: var(--fs-sm);
   font-weight: 600;
-  transition: background-color 0.18s ease;
+}
 
-  &:hover {
-    background-color: #3a7de8;
+.specImage {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px 3px 3px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: zoom-in;
+
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    object-fit: cover;
   }
 }
 
-.buttonCanceler {
-  border: 1.5px solid #333333;
-  background-color: unset;
-  border-radius: 6px;
-  padding: 9px 15px;
-  transition: background-color 0.18s ease, color 0.18s ease;
+.actionBox {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
 
-  &:hover {
-    background-color: #333333;
-    color: white;
+  p {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    line-height: 1.9;
   }
 }
 
-// ── Desktop layout ────────────────────────────────────────────────────────────
-@media (min-width: 980px) {
-  .fixMainContentResponsive {
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  > * {
+    flex: 1 1 200px;
+  }
+}
+
+.detailsSection {
+  padding-block: var(--section-y);
+  background: var(--surface-2);
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  gap: 16px clamp(28px, 5vw, 72px);
+  align-items: start;
+
+  > div {
     display: flex;
-    flex-direction: row;
-    width: 100%;
-    gap: 20px;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
   }
 
-  .responsiveMainLeft {
-    width: 28%;
-  }
-
-  .responsiveMainRight {
-    width: 72%;
-  }
-
-  .swiperWrapergap :global {
-    height: 400px;
-    .swiper-wrapper {
-      gap: 10px;
-    }
-    .swiper-slide {
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      height: 80px !important;
-    }
-  }
-
-  .buttonNextStyle,
-  .buttonPrevStyle {
-    display: none;
-  }
-
-  .innerStyleDivForMain {
-    width: 100%;
-    padding: 8px 6px;
-    border: none;
-    box-shadow: none;
-    border-radius: 10px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #ccc transparent;
-    background-color: #f7f8fc;
-  }
-
-  .thumbWrapper {
-    width: 100%;
+  @media (max-width: 768px) {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-// ── Mobile layout ─────────────────────────────────────────────────────────────
-@media (max-width: 980px) {
-  .resetJustifyInresponsiveFix {
-    justify-content: unset !important;
-  }
-
-  .justAddMarginRespon {
-    margin-left: 25px;
-  }
-
-  .swiperWrapergap :global {
-    .swiper-wrapper {
-      gap: 8px;
-    }
-  }
-
-  .innerStyleDivForMain {
-    margin-top: 12px !important;
-    width: 100%;
-    background-color: #f7f8fc;
-    border-radius: 8px;
-    padding: 6px;
-  }
-
-  .buttonNextStylePC,
-  .buttonPrevStylePC {
-    display: none;
-  }
-
-  // Make swiper slides fill width correctly
-  .fixStyleSizeImgRe {
-    height: 76px;
-  }
-
-  .thumbWrapper {
-    width: 100%;
-  }
-}
-
-@media (max-width: 570px) {
-  .fixStyleSizeImgRe {
-    height: 64px;
-  }
-
-  .fixStyleSizeImgReDesctop {
-    height: 64px;
-  }
+.detailsText {
+  max-width: 76ch;
+  font-size: 1.02rem;
 }

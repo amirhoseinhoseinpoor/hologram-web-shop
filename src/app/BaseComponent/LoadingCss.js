@@ -13,8 +13,8 @@ const Loader = styled.div`
   padding: 8px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: ${(props) => props.backgroundColor || "#f3802c"} !important;
-  background-color: ${(props) => props.backgroundColor || "#f3802c"} !important;
+  background: ${(props) => props.backgroundColor || "var(--accent)"} !important;
+  background-color: ${(props) => props.backgroundColor || "var(--accent)"} !important;
   --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
   -webkit-mask: var(--_m);
   mask: var(--_m);

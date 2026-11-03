@@ -1,3 +1,4 @@
+@use "../orderShared" as shared;
 @use "../../variable" as var;
 
 .MainSectionBackground{
@@ -7,7 +8,7 @@
 }
 
 .ringIcon{
-    background-color: #F3802C;
+    background-color: var(--accent);
     border-radius: 4px;
     width: 27px;
     height: 27px;
@@ -17,11 +18,11 @@
 }
 
 .DateStyle{
-    color: #5F5F5F;
+    color: var(--text-muted);
 }
 
 .coloredDiscription{
-    color: #333333;
+    color: var(--text);
     opacity: 0.9;
 }
 
@@ -38,3 +39,6 @@
     }
 }
 
+
+
+@include shared.order-shared;

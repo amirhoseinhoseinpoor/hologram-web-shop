@@ -1,120 +1,77 @@
 import React from "react";
+import CheckIcon from "@mui/icons-material/Check";
 import style from "../../Styles/Profile/ProcessTracker.module.scss";
 
+const STEPS = [
+  { id: 1, label: "استعلام قیمت" },
+  { id: 2, label: "بارگذاری مدارک" },
+  { id: 3, label: "طراحی سفارش" },
+  { id: 4, label: "تسویه حساب" },
+  { id: 5, label: "انتخاب تحویل سفارش" },
+  { id: 6, label: "رسید نهایی" },
+];
+
+// currentStep: the step on screen. navStep: the furthest step reached;
+// steps up to it can be reopened, later ones aren't available yet.
 const ProcessTracker = ({ currentStep, setStep, navStep }) => {
-  const steps = [
-    { id: 1, label: "استعلام قیمت", key: "makeOrder", percentage: "28" },
-    { id: 2, label: "بارگذاری مدارک", key: "billing", percentage: "39" },
-    { id: 3, label: "طراحی سفارش", key: "confirmOrder", percentage: "50" },
-    { id: 4, label: "تسویه حساب", key: "reviewDocuments", percentage: "67" },
-    { id: 5, label: "انتخاب تحویل سفارش", key: "delivery", percentage: "82" },
-    { id: 6, label: "رسید نهایی", key: "selectEffect", percentage: "100" },
-  ];
+  const current = STEPS[currentStep - 1];
+  const next = STEPS[currentStep];
+  const progress = (Math.max(currentStep, 1) / STEPS.length) * 100;
+
   return (
-    <>
-      <div className={`${style.processTracker}`}>
-        {steps.map((step, index) => (
-          <div
-            key={step.id}
-            className={`${style.step} ${
-              index + 1 === navStep
-                ? style.active
-                : index + 1 < navStep
-                ? style.completed
-                : ""
-            }`}
-          >
-            <div className={style.circle}>
-              {index + 1 < navStep ? (
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setStep(step?.id)}
-                >
-                  <svg
-                    width={25}
-                    height={24}
-                    viewBox="0 0 25 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12.0703 22C17.5703 22 22.0703 17.5 22.0703 12C22.0703 6.5 17.5703 2 12.0703 2C6.57031 2 2.07031 6.5 2.07031 12C2.07031 17.5 6.57031 22 12.0703 22Z"
-                      stroke="#5695F6"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M7.82031 11.9999L10.6503 14.8299L16.3203 9.16992"
-                      stroke="#5695F6"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-              ) : index + 1 === navStep ? (
-                <span
-                  className="VodeoDisSizing"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setStep(step?.id)}
-                >
-                  {step.id}
+    <nav className={style.tracker} aria-label="مراحل سفارش">
+      <ol className={style.steps}>
+        {STEPS.map((step) => {
+          const isReached = step.id <= navStep;
+          const isDone = step.id < navStep;
+          const isCurrent = step.id === currentStep;
+          return (
+            <li
+              key={step.id}
+              className={`${style.step} ${isDone ? style.done : ""} ${
+                isCurrent ? style.current : ""
+              }`}
+            >
+              <button
+                type="button"
+                disabled={!isReached}
+                aria-current={isCurrent ? "step" : undefined}
+                onClick={() => setStep(step.id)}
+              >
+                <span className={style.marker}>
+                  {isDone ? (
+                    <CheckIcon aria-label="انجام شده" />
+                  ) : (
+                    step.id.toLocaleString("fa-IR")
+                  )}
                 </span>
-              ) : (
-                <span className="VodeoDisSizing">{step.id}</span>
-              )}
-            </div>
-            <div className={`${style.label} discription`}>{step.label}</div>
-            {/* {index > steps.length - 7  && <div className={style.line}></div>} */}
-            {index > steps.length - 6 && (
-              <div
-                className={`${style.line} ${
-                  index < navStep ? style.activeLine : ""
-                }`}
-              ></div>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="d-block d-lg-none me-2 mb-3 mt-2">
-        <div className="d-flex flex-row justify-content-between mb-2">
-          <p className="VodeoDisSizing">{steps[currentStep - 1]?.label}</p>
-          {currentStep !== 6 && (
-            <>
-              <div>
-                <span className={`${style.stageColor} ms-1 NormalTextSizing`}>
-                  مرحله بعد:
-                </span>
-                <span className={`${style.stageColor} ms-1 NormalTextSizing`}>
-                  {steps[currentStep]?.label}
-                </span>
-              </div>
-            </>
-          )}
+                <span className={style.label}>{step.label}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+
+      <div className={style.compact}>
+        <div className={style.compactHead}>
+          <p>
+            مرحله {currentStep.toLocaleString("fa-IR")} از{" "}
+            {STEPS.length.toLocaleString("fa-IR")}: {current?.label}
+          </p>
+          {next && <span>مرحله بعد: {next.label}</span>}
         </div>
         <div
-          className={style.theProcesFlowTips}
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "4px",
-            backgroundColor: "rgba(245, 246, 252, 0.52)",
-            borderRadius: "2px",
-            overflow: "hidden",
-          }}
+          className={style.bar}
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={STEPS.length}
+          aria-valuenow={currentStep}
+          aria-label="پیشرفت سفارش"
         >
-          <div
-            style={{
-              backgroundColor: "rgba(86, 149, 246, 1)", // Progress color
-              width: `${steps[currentStep - 1]?.percentage}%`,
-              height: "100%",
-              borderRadius: "4px 0 0 4px", // Rounded corners at the start and tip of the progress
-            }}
-          ></div>
+          <span style={{ width: `${progress}%` }} />
         </div>
       </div>
-    </>
+    </nav>
   );
 };
 
