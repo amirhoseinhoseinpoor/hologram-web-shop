@@ -25,7 +25,7 @@ const quote = (value) => `'${String(value).replace(/'/g, "''")}'`;
     for (const [field, value] of Object.entries(fields)) {
       if (product.info[field] === value) continue;
       lines.push(
-        `UPDATE "Products" SET info = jsonb_set(info, ${quote(`{${field}}`)}, to_jsonb(${quote(value)}::text))` +
+        `UPDATE "Products" SET "updatedAt" = now(), info = jsonb_set(info, ${quote(`{${field}}`)}, to_jsonb(${quote(value)}::text))` +
           ` WHERE code = ${quote(code)} AND info->>${quote(field)} = ${quote(product.info[field])};`,
       );
     }
