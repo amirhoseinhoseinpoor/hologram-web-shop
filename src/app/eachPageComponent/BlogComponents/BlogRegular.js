@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import SearchIcon from "@mui/icons-material/Search";
@@ -129,11 +130,11 @@ export default function BlogRegular() {
             <article key={blog.code} className={style.featuredItem}>
               <Link href={`/Blog/${blog.content.title}`}>
                 <div className={style.media}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={mediaUrl(blog.content.imageSrc)}
-                    alt=""
-                    loading="lazy"
+                    alt={blog.content.title}
+                    fill
+                    sizes="(max-width: 520px) 100vw, (max-width: 992px) 50vw, 33vw"
                   />
                 </div>
                 <div className={style.body}>

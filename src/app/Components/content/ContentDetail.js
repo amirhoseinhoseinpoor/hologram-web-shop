@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CopyLinkButton from "../CopyLinkButton";
 import PageIntro from "../ui/PageIntro";
 import style from "./Content.module.scss";
@@ -13,8 +14,14 @@ export default function ContentDetail({ item }) {
       />
       <section className={`container ${style.detail}`}>
         <div className={style.detailMedia}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={mediaUrl(item.src)} alt={item.title} />
+          <Image
+            src={mediaUrl(item.src)}
+            alt={item.title}
+            width={960}
+            height={720}
+            sizes="(max-width: 992px) 100vw, 40vw"
+            priority
+          />
         </div>
         <div className={style.detailBody}>
           <div

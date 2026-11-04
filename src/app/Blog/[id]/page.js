@@ -4,120 +4,74 @@ import MainLayout from "@/app/layouts/MainLayout";
 import JsonLd from "@/app/Components/JsonLd";
 import { notFound } from "next/navigation";
 import BlogArticle from "@/app/eachPageComponent/BlogComponents/BlogArticle";
+import { COMPANY } from "@/app/utils/company";
+import { mediaUrl } from "@/app/utils/productContent";
+import {
+  absoluteUrl,
+  breadcrumbLd,
+  encodePath,
+  pageMeta,
+  plainText,
+  SITE_URL,
+} from "@/app/utils/seo";
+import { fetchBlogs } from "@/app/utils/serverApi";
+
+const findPost = (blogs, id) => {
+  const title = decodeURIComponent(id).trim().toLowerCase();
+  return blogs.find((item) => item.content.title?.trim().toLowerCase() === title);
+};
 
 export async function generateMetadata({ params }) {
-  const allBlogs = await fetchBlogs();
-  const decodedId = decodeURIComponent(params.id);
-  const blogPost = allBlogs.find(
-    (item) =>
-      item.content.title?.trim().toLowerCase() === decodedId.trim().toLowerCase()
-  );
+  const blogPost = findPost(await fetchBlogs(), params.id);
 
   if (!blogPost) {
-    return {
-      title: "مقاله یافت نشد",
-      description: "مقاله مورد نظر یافت نشد.",
-    };
+    return { title: "مقاله یافت نشد", robots: { index: false } };
   }
 
-  const description = blogPost.content.content
-    ? blogPost.content.content.replace(/<[^>]*>/g, "").slice(0, 160)
-    : `مقاله ${blogPost.content.title} در وبلاگ آذرهولوگرام`;
-
-  return {
-    title: blogPost.content.title,
-    description,
-    alternates: {
-      canonical: `/Blog/${encodeURIComponent(blogPost.content.title)}`,
-    },
-    openGraph: {
-      title: blogPost.content.title,
-      description,
-      type: "article",
-      publishedTime: blogPost.date,
-      images: blogPost.content.imageSrc
-        ? [
-            {
-              url: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blogPost.content.imageSrc}`,
-              alt: blogPost.content.title,
-            },
-          ]
-        : [],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: blogPost.content.title,
-      description,
-      images: blogPost.content.imageSrc
-        ? [`${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${blogPost.content.imageSrc}`]
-        : [],
-    },
-  };
-}
-
-async function fetchBlogs() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/blogs/list`,
-      {
-        // Ensures fresh data every 60 seconds
-        next: { revalidate: 60 },
-        headers: {
-          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
-      console.log("Failed to fetch data");
-      return [];
-    }
-
-    const honors = await response.json();
-    return Array.isArray(honors) ? honors : [];
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    return []; // Return fallback data if fetch fails
-  }
+  const { title, content, imageSrc } = blogPost.content;
+  return pageMeta({
+    title,
+    description:
+      plainText(content) || `مقاله ${title} در وبلاگ آذرهولوگرام`,
+    path: encodePath("Blog", title),
+    image: mediaUrl(imageSrc),
+    imageAlt: title,
+    type: "article",
+    publishedTime: blogPost.date,
+  });
 }
 
 export default async function BlogPostPage({ params }) {
   const allBlogs = await fetchBlogs();
-  const decodedId = decodeURIComponent(params.id);
-
-  const blogPost = allBlogs.find(
-    (item) =>
-      item.content.title?.trim().toLowerCase() === decodedId.trim().toLowerCase(),
-  );
+  const blogPost = findPost(allBlogs, params.id);
 
   if (!blogPost) {
     notFound();
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.co";
-  const backendUrl = process.env.NEXT_PUBLIC_BACK_END_SERVER;
+  const path = encodePath("Blog", blogPost.content.title);
 
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: blogPost.content.title,
-    image: `${backendUrl}/system/download/${blogPost.content.imageSrc}`,
+    image: mediaUrl(blogPost.content.imageSrc),
     datePublished: blogPost.date,
-    author: { "@type": "Organization", name: "آذرهولوگرام" },
-    publisher: {
-      "@type": "Organization",
-      name: "آذرهولوگرام",
-      logo: {
-        "@type": "ImageObject",
-        url: `${siteUrl}/LOGO/azarhologram-icon.png`,
-      },
-    },
-    url: `${siteUrl}/Blog/${encodeURIComponent(blogPost.content.title)}`,
+    inLanguage: "fa-IR",
+    author: { "@type": "Organization", name: COMPANY.name, url: `${SITE_URL}/` },
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    mainEntityOfPage: absoluteUrl(path),
   };
 
   return (
     <>
       <JsonLd data={articleSchema} />
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "مقالات", path: "/Blog" },
+          { name: blogPost.content.title, path },
+        ])}
+      />
       <MainLayout>
         <BlogArticle post={blogPost} allBlogs={allBlogs} />
       </MainLayout>

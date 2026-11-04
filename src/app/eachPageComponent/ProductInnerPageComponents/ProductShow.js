@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -62,8 +63,13 @@ function Gallery({ gallery, title, onZoom }) {
             aria-label={`بزرگنمایی تصویر ${title}`}
             onClick={() => onZoom(active.src)}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={active.src} alt={title} />
+            <Image
+              src={active.src}
+              alt={current === 0 ? title : `${title}، تصویر ${current + 1}`}
+              fill
+              sizes="(max-width: 992px) 100vw, 50vw"
+              priority={current === 0}
+            />
             <span className={style.zoomHint} aria-hidden="true">
               <ZoomInIcon />
             </span>
@@ -83,11 +89,11 @@ function Gallery({ gallery, title, onZoom }) {
                 onClick={() => setCurrent(index)}
               >
                 {(media.isVideo ? media.poster : media.src) && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={media.isVideo ? media.poster : media.src}
                     alt=""
-                    loading="lazy"
+                    fill
+                    sizes="96px"
                   />
                 )}
                 {media.isVideo && <PlayArrowRoundedIcon aria-hidden="true" />}

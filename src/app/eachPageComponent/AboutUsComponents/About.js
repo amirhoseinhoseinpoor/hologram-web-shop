@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import style from "../../Styles/AboutUsStyle/About.module.scss";
@@ -30,13 +31,20 @@ export default function ImageText() {
     <>
       <section className={`az-section container ${style.layout}`}>
         <div className={style.images}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/AboutImages/aboytgroup.png" alt="تیم آذرهولوگرام" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
+            src="/AboutImages/aboytgroup.png"
+            alt="تیم آذرهولوگرام"
+            width={996}
+            height={664}
+            sizes="(max-width: 992px) 50vw, 40vw"
+            priority
+          />
+          <Image
             src="/AboutImages/aboutImage-person.png"
             alt="کارشناس آذرهولوگرام"
-            loading="lazy"
+            width={996}
+            height={664}
+            sizes="(max-width: 992px) 50vw, 40vw"
           />
         </div>
         <div className={style.text}>

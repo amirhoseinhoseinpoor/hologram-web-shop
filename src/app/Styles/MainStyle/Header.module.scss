@@ -133,6 +133,23 @@
   padding-block: 28px 32px;
 }
 
+.megaFoot {
+  padding-bottom: 20px;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent-ink);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+
+    svg {
+      font-size: 1.05rem;
+    }
+  }
+}
+
 .megaColumn {
   min-width: 0;
 

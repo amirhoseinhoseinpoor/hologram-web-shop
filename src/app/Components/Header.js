@@ -2,6 +2,7 @@
 
 import style from "../Styles/MainStyle/Header.module.scss";
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,6 +23,8 @@ import {
 } from "../Store/slice";
 import { headerList } from "../Store/thunks";
 import { COMPANY, orderHref } from "../utils/company";
+import { PRODUCTS_NAV_LINK } from "../utils/serverApi";
+import { useNavItems } from "./NavProvider";
 
 const PROFILE_LINKS = [
   { type: "makeOrder", label: "ثبت سفارش" },
@@ -113,38 +116,45 @@ function DesktopMenu({ item, pathname }) {
           aria-hidden="true"
         />
       </button>
-      {open && (
-        <div className={style.megaMenu}>
-          <div className={`container ${style.megaGrid}`}>
-            {item.subItems.map((sub) => (
-              <div key={sub.link} className={style.megaColumn}>
-                <Link href={sub.link} className={style.megaHeading}>
-                  {sub.title}
-                  <ArrowBackIcon aria-hidden="true" />
-                </Link>
-                {sub.subItems?.length > 0 && (
-                  <ul>
-                    {sub.subItems.map((leaf) => (
-                      <li key={leaf.link}>
-                        <Link
-                          href={leaf.link}
-                          className={
-                            isActiveLink(pathname, leaf.link)
-                              ? style.megaLinkActive
-                              : style.megaLink
-                          }
-                        >
-                          {leaf.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
+      {/* Stays in the DOM while closed so its links are part of the first HTML. */}
+      <div className={style.megaMenu} hidden={!open}>
+        <div className={`container ${style.megaGrid}`}>
+          {item.subItems.map((sub) => (
+            <div key={sub.link} className={style.megaColumn}>
+              <Link href={sub.link} className={style.megaHeading}>
+                {sub.title}
+                <ArrowBackIcon aria-hidden="true" />
+              </Link>
+              {sub.subItems?.length > 0 && (
+                <ul>
+                  {sub.subItems.map((leaf) => (
+                    <li key={leaf.link}>
+                      <Link
+                        href={leaf.link}
+                        className={
+                          isActiveLink(pathname, leaf.link)
+                            ? style.megaLinkActive
+                            : style.megaLink
+                        }
+                      >
+                        {leaf.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
         </div>
-      )}
+        {item.link === PRODUCTS_NAV_LINK && (
+          <div className={`container ${style.megaFoot}`}>
+            <Link href="/محصولات">
+              مشاهده همه محصولات
+              <ArrowBackIcon aria-hidden="true" />
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -278,16 +288,19 @@ export default function Header() {
   const lastNameU = useSelector(lastName);
   const phoneNumberU = useSelector(phoneNumber);
   const headerData = useSelector(headerListData);
+  const serverItems = useNavItems();
+  const hasServerItems = serverItems.length > 0;
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // Only needed when the server could not reach the API while rendering.
   useEffect(() => {
-    if (!headerData) {
+    if (!hasServerItems && !headerData) {
       dispatch(headerList());
     }
-  }, [dispatch, headerData]);
+  }, [dispatch, hasServerItems, headerData]);
 
-  const items = headerData?.content || [];
+  const items = hasServerItems ? serverItems : headerData?.content || [];
   const closeMobile = () => setMobileOpen(false);
   const handleLogout = () => {
     closeMobile();
@@ -299,8 +312,14 @@ export default function Header() {
       <span className={style.spectrum} aria-hidden="true" />
       <div className={`container ${style.bar}`}>
         <Link href="/" className={style.brand} aria-label={COMPANY.name}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={COMPANY.logo} alt="" width={202} height={40} />
+          <Image
+            src={COMPANY.logo}
+            alt=""
+            width={202}
+            height={40}
+            quality={90}
+            priority
+          />
         </Link>
 
         <nav className={style.nav} aria-label="منوی اصلی">
@@ -346,6 +365,7 @@ export default function Header() {
             <Link
               href="/Login"
               className={style.iconAction}
+              aria-label="ورود به حساب کاربری"
               onClick={storeLastVisitedPage}
             >
               <PersonOutlineIcon aria-hidden="true" />
@@ -381,8 +401,13 @@ export default function Header() {
       >
         <div className={style.drawerHead}>
           <Link href="/" className={style.brand} onClick={closeMobile}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={COMPANY.logo} alt={COMPANY.name} width={182} height={36} />
+            <Image
+              src={COMPANY.logo}
+              alt={COMPANY.name}
+              width={182}
+              height={36}
+              quality={90}
+            />
           </Link>
           <button
             type="button"

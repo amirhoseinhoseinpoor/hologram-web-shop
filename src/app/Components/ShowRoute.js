@@ -14,9 +14,11 @@ const SEGMENT_LABELS = {
   Honors: "افتخارات",
   Exhibition: "نمایشگاه‌ها",
   EffectType: "افکت‌ها",
+  Guide: "راهنما",
 };
 
-const ShowRoute = () => {
+// `currentLabel` names the current page when its URL segment is not readable as a label.
+const ShowRoute = ({ currentLabel }) => {
   const pathname = usePathname() || "/";
   const segments = decodeURIComponent(pathname).split("/").filter(Boolean);
 
@@ -28,8 +30,9 @@ const ShowRoute = () => {
           <ChevronLeftIcon aria-hidden="true" />
         </li>
         {segments.map((segment, index) => {
-          const label = SEGMENT_LABELS[segment] || segment;
           const isLast = index === segments.length - 1;
+          const label =
+            (isLast && currentLabel) || SEGMENT_LABELS[segment] || segment;
           return (
             <li key={segment}>
               {isLast ? (

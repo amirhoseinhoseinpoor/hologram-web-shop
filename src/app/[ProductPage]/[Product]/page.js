@@ -1,9 +1,10 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MainLayout from "@/app/layouts/MainLayout";
 import ShowRoute from "@/app/Components/ShowRoute";
-import FAQ from "@/app/Components/FAQ";
+import JsonLd from "@/app/Components/JsonLd";
+import EditorialSections from "@/app/Components/content/EditorialSections";
 import VideoShowcase from "@/app/Components/VideoShowcase";
 import SectionHeading from "@/app/Components/ui/SectionHeading";
 import ProductCard from "@/app/Components/product/ProductCard";
@@ -12,17 +13,40 @@ import ProductShow from "@/app/eachPageComponent/ProductInnerPageComponents/Prod
 import style from "@/app/Styles/ProductPage/innerProductPage/DynamicProductShow.module.scss";
 import {
   findProductByPath,
+  normalizeProductLink,
   toProductView,
 } from "@/app/utils/productContent";
+import {
+  breadcrumbLd,
+  decodeFully,
+  encodePath,
+  isEncodedMoreThanOnce,
+} from "@/app/utils/seo";
+import { CATEGORY_SEO, GUIDES, PRODUCTS_HUB } from "@/app/utils/seoContent";
 import { fetchProducts } from "@/app/utils/serverApi";
 
 export const revalidate = 60;
 
+const GUIDE_LINKS = GUIDES.map((guide) => ({
+  href: encodePath("Guide", guide.slug),
+  label: guide.heading,
+}));
+
 export default async function Product({ params }) {
-  const category = decodeURIComponent(params.ProductPage);
-  const name = decodeURIComponent(params.Product);
+  const category = decodeFully(params.ProductPage);
+  const name = decodeFully(params.Product);
+
+  // /محصولات/هولوگرام reads like a path to the category itself.
+  if (category === PRODUCTS_HUB && CATEGORY_SEO[name]) {
+    permanentRedirect(encodePath(name));
+  }
 
   const products = await fetchProducts();
+
+  if (category === "product" && products.some((item) => item.name === name)) {
+    permanentRedirect(normalizeProductLink(`/product/${name}`));
+  }
+
   const raw = findProductByPath(products, category, name);
 
   if (!raw) {
@@ -30,6 +54,14 @@ export default async function Product({ params }) {
   }
 
   const product = toProductView(raw);
+
+  if (
+    isEncodedMoreThanOnce(params.ProductPage) ||
+    isEncodedMoreThanOnce(params.Product)
+  ) {
+    permanentRedirect(product.href);
+  }
+
   const related = products
     .map(toProductView)
     .filter((item) => item.category === category && item.code !== product.code)
@@ -37,6 +69,12 @@ export default async function Product({ params }) {
 
   return (
     <MainLayout>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: category, path: encodePath(category) },
+          { name: product.title, path: product.href },
+        ])}
+      />
       <div className={`container ${style.breadcrumbBar}`}>
         <ShowRoute />
       </div>
@@ -50,7 +88,7 @@ export default async function Product({ params }) {
         >
           <div className={`container ${style.detailsGrid}`}>
             <div>
-              <span className="az-eyebrow">{product.name}</span>
+              <span className="az-eyebrow">{product.title}</span>
               <h2 id="product-details" className="az-h2">
                 توضیحات تکمیلی
               </h2>
@@ -65,8 +103,8 @@ export default async function Product({ params }) {
       {product.videos.length > 0 && (
         <section className="az-section">
           <div className="container">
-            <SectionHeading eyebrow="ویدیو" title={`${product.name} در عمل`} />
-            <VideoShowcase videos={product.videos} fallbackTitle={product.name} />
+            <SectionHeading eyebrow="ویدیو" title={`${product.title} در عمل`} />
+            <VideoShowcase videos={product.videos} fallbackTitle={product.title} />
           </div>
         </section>
       )}
@@ -79,7 +117,7 @@ export default async function Product({ params }) {
               title="محصولات مرتبط"
               action={
                 <Link
-                  href={`/${encodeURIComponent(category)}`}
+                  href={encodePath(category)}
                   className="az-btn az-btn--ghost"
                 >
                   همه محصولات {category}
@@ -96,7 +134,11 @@ export default async function Product({ params }) {
         </section>
       )}
 
-      <FAQ />
+      <section className="az-section">
+        <div className="container">
+          <EditorialSections links={GUIDE_LINKS} />
+        </div>
+      </section>
     </MainLayout>
   );
 }

@@ -1,9 +1,29 @@
 import React from "react";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MainLayout from "../layouts/MainLayout";
 import HoleProductAndSearch from "../eachPageComponent/ProductPageComponent/HoleProductAndSearch";
 import PageIntro from "../Components/ui/PageIntro";
-import { parseProductName, toProductView } from "../utils/productContent";
+import SectionHeading from "../Components/ui/SectionHeading";
+import JsonLd from "../Components/JsonLd";
+import EditorialSections from "../Components/content/EditorialSections";
+import ProductCard from "../Components/product/ProductCard";
+import cardStyle from "../Components/product/ProductCard.module.scss";
+import { toProductView } from "../utils/productContent";
+import {
+  breadcrumbLd,
+  decodeFully,
+  encodePath,
+  isEncodedMoreThanOnce,
+  pageMeta,
+} from "../utils/seo";
+import {
+  CATEGORY_SEO,
+  fallbackCategorySeo,
+  HUB_SEO,
+  PRODUCTS_HUB,
+} from "../utils/seoContent";
 import {
   fetchHeaderItems,
   fetchProducts,
@@ -12,87 +32,143 @@ import {
 
 export const revalidate = 60; // ISR every 60 seconds
 
-export async function generateMetadata({ params }) {
-  const decodedId = decodeURIComponent(params.ProductPage);
+const seoForCategory = (title) =>
+  CATEGORY_SEO[title] || fallbackCategorySeo(title);
 
-  return {
-    title: `${decodedId} | محصولات`,
-    description: `خرید و سفارش ${decodedId} از آذرهولوگرام. مشاهده انواع محصولات هولوگرامی در دسته‌بندی ${decodedId}.`,
-    alternates: {
-      canonical: `/${encodeURIComponent(params.ProductPage)}`,
-    },
-    openGraph: {
-      title: `${decodedId} | محصولات آذرهولوگرام`,
-      description: `خرید و سفارش ${decodedId} از آذرهولوگرام.`,
-    },
-  };
+export async function generateMetadata({ params }) {
+  const segment = decodeFully(params.ProductPage);
+
+  if (segment === PRODUCTS_HUB) {
+    return pageMeta({
+      title: HUB_SEO.title,
+      description: HUB_SEO.description,
+      path: encodePath(PRODUCTS_HUB),
+    });
+  }
+
+  const categories = getCategories(await fetchHeaderItems());
+  if (!categories.some((category) => category.title === segment)) {
+    return { title: "صفحه پیدا نشد", robots: { index: false } };
+  }
+
+  const seo = seoForCategory(segment);
+  return pageMeta({
+    title: seo.title,
+    description: seo.description,
+    path: encodePath(segment),
+  });
 }
 
-// Function to recursively find an item by title in the header data
-function findItemByTitle(items, title) {
-  for (const item of items) {
-    if (item.title === title) return item;
-    if (item.subItems?.length > 0) {
-      const found = findItemByTitle(item.subItems, title);
-      if (found) return found;
-    }
-  }
-  return null;
+function ProductsHub({ categories, views }) {
+  return (
+    <MainLayout>
+      <JsonLd data={breadcrumbLd([{ name: PRODUCTS_HUB, path: encodePath(PRODUCTS_HUB) }])} />
+      <PageIntro
+        eyebrow="محصولات"
+        title={HUB_SEO.heading}
+        description={HUB_SEO.lead}
+      />
+      {categories.map((category, index) => {
+        const items = views.filter((view) => view.category === category.title);
+        if (items.length === 0) return null;
+        return (
+          <section
+            key={category.title}
+            className={`az-section ${index % 2 ? "az-section--soft" : ""}`}
+          >
+            <div className="container">
+              <SectionHeading
+                title={category.title}
+                action={
+                  <Link
+                    href={encodePath(category.title)}
+                    className="az-btn az-btn--ghost"
+                  >
+                    همه محصولات {category.title}
+                    <ArrowBackIcon aria-hidden="true" />
+                  </Link>
+                }
+              />
+              <div className={cardStyle.grid}>
+                {items.map((item) => (
+                  <ProductCard key={item.code} product={item} />
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })}
+      <section className="az-section container">
+        <EditorialSections links={HUB_SEO.links} />
+      </section>
+    </MainLayout>
+  );
 }
 
 export default async function ProductPage({ params }) {
-  const decodedId = decodeURIComponent(params.ProductPage);
+  const segment = decodeFully(params.ProductPage);
 
   const [allProducts, headerItems] = await Promise.all([
     fetchProducts(),
     fetchHeaderItems(),
   ]);
-
-  const matchedItem = findItemByTitle(headerItems, decodedId);
+  const views = allProducts.map(toProductView);
   const categories = getCategories(headerItems);
 
-  if (!matchedItem) {
-    return (
-      <MainLayout>
-        <PageIntro title={decodedId} />
-        <section className="az-section container">
-          <div className="az-state">
-            <p>دسته‌بندی مورد نظر یافت نشد.</p>
-            <Link href="/" className="az-btn az-btn--outline az-btn--sm">
-              بازگشت به صفحه اصلی
-            </Link>
-          </div>
-        </section>
-      </MainLayout>
+  const isHub = segment === PRODUCTS_HUB;
+  const category = categories.find((item) => item.title === segment);
+
+  if (!isHub && !category) {
+    // The old sitemap listed products as /محصولات - Category - Product, and the
+    // navigation can expose a product by its name alone.
+    const moved = views.find(
+      (view) => view.rawName?.trim() === segment || view.name === segment,
     );
+    if (moved) permanentRedirect(moved.href);
+    notFound();
   }
 
-  const subItemTitles = (matchedItem.subItems || []).map((sub) => sub.title);
+  if (isEncodedMoreThanOnce(params.ProductPage)) {
+    permanentRedirect(encodePath(segment));
+  }
 
-  const products = allProducts
-    .filter((product) =>
-      subItemTitles.includes(parseProductName(product.name).name),
-    )
-    .map(toProductView);
+  if (isHub) return <ProductsHub categories={categories} views={views} />;
+
+  const seo = seoForCategory(category.title);
+  const subItemTitles = (category.subItems || []).map((sub) => sub.title);
+  const products = views.filter((view) => subItemTitles.includes(view.name));
 
   return (
     <MainLayout>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: category.title, path: encodePath(category.title) },
+        ])}
+      />
       <PageIntro
         eyebrow="محصولات"
-        title={matchedItem.title}
-        description={
-          products.length > 0
-            ? `${products.length.toLocaleString("fa-IR")} محصول در این دسته`
-            : undefined
-        }
+        title={seo.heading}
+        description={seo.lead}
       />
       <section className="az-section container">
+        <SectionHeading title={`انواع ${category.title}`} />
         <HoleProductAndSearch
           products={products}
           categories={categories}
-          activeCategory={matchedItem.title}
+          activeCategory={category.title}
         />
       </section>
+      {(seo.sections.length > 0 || seo.faq.length > 0) && (
+        <section className="az-section az-section--soft">
+          <div className="container">
+            <EditorialSections
+              sections={seo.sections}
+              faq={seo.faq}
+              links={[...seo.links, ...seo.readMore]}
+            />
+          </div>
+        </section>
+      )}
     </MainLayout>
   );
 }

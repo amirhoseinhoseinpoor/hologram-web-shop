@@ -3,20 +3,15 @@ import React from "react";
 
 import MainLayout from "../layouts/MainLayout";
 import ContentListing from "../Components/content/ContentListing";
+import JsonLd from "../Components/JsonLd";
+import { breadcrumbLd, pageMeta } from "../utils/seo";
 
-export const metadata = {
-  title: "افتخارات",
+export const metadata = pageMeta({
+  title: "افتخارات و دستاوردهای آذرهولوگرام",
   description:
     "افتخارات و دستاوردهای شرکت آذرهولوگرام در صنعت هولوگرام و چاپ امنیتی ایران.",
-  alternates: {
-    canonical: "/Honors",
-  },
-  openGraph: {
-    title: "افتخارات | آذرهولوگرام",
-    description:
-      "افتخارات و دستاوردهای شرکت آذرهولوگرام در صنعت هولوگرام و چاپ امنیتی.",
-  },
-};
+  path: "/Honors",
+});
 
 async function fetchHonors() {
   try {
@@ -49,6 +44,7 @@ export default async function Honors() {
 
   return (
     <MainLayout>
+      <JsonLd data={breadcrumbLd([{ name: "افتخارات", path: "/Honors" }])} />
       <ContentListing
         title="افتخارات"
         description="گواهینامه‌ها و دستاوردهای آذرهولوگرام در صنعت هولوگرام."

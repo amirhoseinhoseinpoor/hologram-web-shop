@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -9,6 +10,7 @@ import ShowVersionServer from "./ShowVersionServer";
 import { COMPANY } from "../utils/company";
 
 const PRODUCT_LINKS = [
+  { href: "/محصولات", label: "همه محصولات" },
   { href: "/هولوگرام", label: "هولوگرام" },
   { href: "/لیبل‌های امنیتی", label: "لیبل‌های امنیتی" },
   { href: "/برچسب‌های پلمپ", label: "برچسب‌های پلمپ" },
@@ -16,10 +18,12 @@ const PRODUCT_LINKS = [
 ];
 
 const COMPANY_LINKS = [
+  { href: "/Guide", label: "راهنمای انتخاب و سفارش" },
+  { href: "/EffectType", label: "افکت‌های هولوگرام" },
+  { href: "/Blog", label: "مقالات" },
   { href: "/AboutUs", label: "درباره ما" },
   { href: "/ContactUs", label: "تماس با ما" },
   { href: "/Honors", label: "افتخارات" },
-  { href: "/Blog", label: "مقالات" },
   { href: "/Exhibition", label: "نمایشگاه‌ها" },
 ];
 
@@ -29,8 +33,13 @@ export default function Footer() {
       <div className={`container ${style.grid}`}>
         <div className={style.brandColumn}>
           <div className={style.brand}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={COMPANY.logo} alt={COMPANY.name} width={232} height={46} />
+            <Image
+              src={COMPANY.logo}
+              alt={COMPANY.name}
+              width={232}
+              height={46}
+              quality={90}
+            />
           </div>
           <p className={style.intro}>{COMPANY.intro}</p>
         </div>

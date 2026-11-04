@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import parse from "html-react-parser";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -9,7 +10,7 @@ import BlogInnerSearch from "./BlogInnerSearch";
 import CopyLinkButton from "@/app/Components/CopyLinkButton";
 import PageIntro from "@/app/Components/ui/PageIntro";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
-import { mediaUrl } from "@/app/utils/productContent";
+import { mediaUrl, normalizeProductLink } from "@/app/utils/productContent";
 
 const splitList = (value) =>
   (value || "")
@@ -54,8 +55,14 @@ export default function BlogArticle({ post, allBlogs }) {
       <div className={`container ${style.article}`}>
         <article className={style.articleMain}>
           <div className={style.articleImage}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={mediaUrl(content.imageSrc)} alt={content.title} />
+            <Image
+              src={mediaUrl(content.imageSrc)}
+              alt={content.title}
+              width={1200}
+              height={675}
+              sizes="(max-width: 992px) 100vw, 66vw"
+              priority
+            />
           </div>
 
           {(positives.length > 0 || negatives.length > 0) && (
@@ -104,7 +111,7 @@ export default function BlogArticle({ post, allBlogs }) {
               <div>
                 <p className="az-h3">{content.product.title}</p>
                 <Link
-                  href={content.product.link}
+                  href={normalizeProductLink(content.product.link)}
                   className="az-btn az-btn--primary az-btn--sm"
                 >
                   ثبت سفارش
@@ -156,11 +163,11 @@ export default function BlogArticle({ post, allBlogs }) {
                 <article key={blog.code} className={style.featuredItem}>
                   <Link href={`/Blog/${blog.content.title}`}>
                     <div className={style.media}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         src={mediaUrl(blog.content.imageSrc)}
-                        alt=""
-                        loading="lazy"
+                        alt={blog.content.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     </div>
                     <div className={style.body}>

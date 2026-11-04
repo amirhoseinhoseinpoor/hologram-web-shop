@@ -80,8 +80,12 @@ export default function HoleProductAndSearch({
         </div>
       ) : (
         <div className={cardStyle.grid}>
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.code} product={product} />
+          {filteredProducts.map((product, index) => (
+            <ProductCard
+              key={product.code}
+              product={product}
+              priority={index === 0}
+            />
           ))}
         </div>
       )}

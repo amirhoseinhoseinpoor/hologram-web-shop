@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Guilloche from "../Components/ui/Guilloche";
 import { COMPANY } from "../utils/company";
@@ -16,11 +17,16 @@ export default function AuthLayout({ children }) {
       <aside className={style.brandPanel}>
         <Guilloche className={style.motif} />
         <Link href="/" className={style.brand}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={COMPANY.logo} alt={COMPANY.name} width={212} height={42} />
+          <Image
+            src={COMPANY.logo}
+            alt={COMPANY.name}
+            width={212}
+            height={42}
+            quality={90}
+          />
         </Link>
         <div className={style.brandBody}>
-          <h2 className="az-h1">حساب کاربری آذرهولوگرام</h2>
+          <h1 className="az-h1">حساب کاربری آذرهولوگرام</h1>
           <ul>
             {POINTS.map((point) => (
               <li key={point}>{point}</li>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -21,11 +22,12 @@ export default function BannerSlider({ banners }) {
     >
       {banners.map((banner, index) => {
         const image = (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={banner.url}
-            alt={banner.title || "آذرهولوگرام"}
-            loading={index === 0 ? "eager" : "lazy"}
+            alt={banner.title || `بنر معرفی آذرهولوگرام، شماره ${index + 1}`}
+            fill
+            sizes="(max-width: 992px) 100vw, 55vw"
+            priority={index === 0}
           />
         );
         return (

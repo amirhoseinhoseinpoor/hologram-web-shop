@@ -57,6 +57,7 @@
 }
 
 .media {
+  position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--surface-3);
@@ -178,6 +179,7 @@
   img {
     display: block;
     width: 100%;
+    height: auto;
     max-height: 520px;
     object-fit: cover;
   }

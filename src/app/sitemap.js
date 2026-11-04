@@ -1,149 +1,56 @@
+import { absoluteUrl, encodePath } from "./utils/seo";
+import { GUIDES, PRODUCTS_HUB } from "./utils/seoContent";
+import { toProductView } from "./utils/productContent";
+import {
+  fetchBlogs,
+  fetchExhibitions,
+  fetchHeaderItems,
+  fetchHonors,
+  fetchProducts,
+  getCategories,
+} from "./utils/serverApi";
+
+const STATIC_PATHS = [
+  "/",
+  encodePath(PRODUCTS_HUB),
+  "/EffectType",
+  "/Guide",
+  "/Blog",
+  "/Honors",
+  "/Exhibition",
+  "/AboutUs",
+  "/ContactUs",
+];
+
+const entry = (path, date) => ({
+  url: absoluteUrl(path),
+  // Only content that records its own date gets one; a made-up date would teach
+  // crawlers to ignore the field.
+  ...(date ? { lastModified: new Date(date) } : {}),
+});
+
 export default async function sitemap() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.co";
-  const backendUrl = process.env.NEXT_PUBLIC_BACK_END_SERVER;
+  const [products, headerItems, blogs, honors, exhibitions] = await Promise.all([
+    fetchProducts(),
+    fetchHeaderItems(),
+    fetchBlogs(),
+    fetchHonors(),
+    fetchExhibitions(),
+  ]);
 
-  // Static pages
-  const staticPages = [
-    {
-      url: siteUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${siteUrl}/AboutUs`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/ContactUs`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${siteUrl}/Blog`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/Exhibition`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/Honors`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/EffectType`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+  return [
+    ...STATIC_PATHS.map((path) => entry(path)),
+    ...getCategories(headerItems).map((category) =>
+      entry(encodePath(category.title)),
+    ),
+    ...products.map(toProductView).map((view) => entry(view.href)),
+    ...GUIDES.map((guide) => entry(encodePath("Guide", guide.slug))),
+    ...blogs
+      .filter((blog) => blog.content?.title)
+      .map((blog) => entry(encodePath("Blog", blog.content.title), blog.date)),
+    ...honors.map((item) => entry(encodePath("Honors", item.title), item.date)),
+    ...exhibitions.map((item) =>
+      entry(encodePath("Exhibition", item.title), item.date),
+    ),
   ];
-
-  // Fetch dynamic data for blog posts
-  let blogPages = [];
-  try {
-    const blogsRes = await fetch(`${backendUrl}/blogs/list`, {
-      next: { revalidate: 3600 },
-      headers: { Origin: backendUrl },
-    });
-    if (blogsRes.ok) {
-      const blogs = await blogsRes.json();
-      if (Array.isArray(blogs)) {
-        blogPages = blogs.map((blog) => ({
-          url: `${siteUrl}/Blog/${encodeURIComponent(blog.content?.title || "")}`,
-          lastModified: blog.date ? new Date(blog.date) : new Date(),
-          changeFrequency: "weekly",
-          priority: 0.7,
-        }));
-      }
-    }
-  } catch (error) {
-    console.error("Sitemap: Failed to fetch blogs", error);
-  }
-
-  // Fetch dynamic data for exhibitions
-  let exhibitionPages = [];
-  try {
-    const exhibitionRes = await fetch(`${backendUrl}/exhibition/list`, {
-      next: { revalidate: 3600 },
-      headers: { Origin: backendUrl },
-    });
-    if (exhibitionRes.ok) {
-      const exhibitions = await exhibitionRes.json();
-      if (Array.isArray(exhibitions)) {
-        exhibitionPages = exhibitions.map((item) => ({
-          url: `${siteUrl}/Exhibition/${encodeURIComponent(item.title || "")}`,
-          lastModified: item.date ? new Date(item.date) : new Date(),
-          changeFrequency: "monthly",
-          priority: 0.6,
-        }));
-      }
-    }
-  } catch (error) {
-    console.error("Sitemap: Failed to fetch exhibitions", error);
-  }
-
-  // Fetch dynamic data for honors
-  let honorsPages = [];
-  try {
-    const honorsRes = await fetch(`${backendUrl}/honors/list`, {
-      next: { revalidate: 3600 },
-      headers: { Origin: backendUrl },
-    });
-    if (honorsRes.ok) {
-      const honors = await honorsRes.json();
-      if (Array.isArray(honors)) {
-        honorsPages = honors.map((item) => ({
-          url: `${siteUrl}/Honors/${encodeURIComponent(item.title || "")}`,
-          lastModified: item.date ? new Date(item.date) : new Date(),
-          changeFrequency: "monthly",
-          priority: 0.6,
-        }));
-      }
-    }
-  } catch (error) {
-    console.error("Sitemap: Failed to fetch honors", error);
-  }
-
-  // Fetch dynamic data for products
-  let productPages = [];
-  try {
-    const productsRes = await fetch(`${backendUrl}/product/list`, {
-      next: { revalidate: 3600 },
-      headers: { Origin: backendUrl },
-    });
-    if (productsRes.ok) {
-      const products = await productsRes.json();
-      if (Array.isArray(products)) {
-        productPages = products
-          .filter((p) => p.name)
-          .map((p) => {
-            // name format: "محصولات / CategoryName / ProductName"
-            const segments = p.name
-              .replace(/^محصولات\s*\/\s*/, "")
-              .split(/\s*\/\s*/)
-              .map((s) => encodeURIComponent(s.trim()));
-            return {
-              url: `${siteUrl}/${segments.join("/")}`,
-              lastModified: new Date(),
-              changeFrequency: "weekly",
-              priority: 0.85,
-            };
-          });
-      }
-    }
-  } catch (error) {
-    console.error("Sitemap: Failed to fetch products", error);
-  }
-
-  return [...staticPages, ...blogPages, ...exhibitionPages, ...honorsPages, ...productPages];
 }

@@ -10,8 +10,6 @@ export default function FAQ() {
   const [activeKey, setActiveKey] = useState(FAQ_GROUPS[0].key);
   const [openQuestion, setOpenQuestion] = useState(null);
 
-  const group = FAQ_GROUPS.find((item) => item.key === activeKey);
-
   return (
     <section className={`az-section ${style.section}`}>
       <div className={`container ${style.layout}`}>
@@ -40,28 +38,38 @@ export default function FAQ() {
           </div>
         </div>
 
-        <div className={style.list} role="tabpanel">
-          {group.items.map((item) => {
-            const isOpen = openQuestion === item.q;
-            return (
-              <div
-                key={item.q}
-                className={`${style.item} ${isOpen ? style.itemOpen : ""}`}
-              >
-                <h3>
-                  <button
-                    type="button"
-                    aria-expanded={isOpen}
-                    onClick={() => setOpenQuestion(isOpen ? null : item.q)}
+        {/* Every answer stays in the DOM so the text is readable without clicking. */}
+        <div>
+          {FAQ_GROUPS.map((group) => (
+            <div
+              key={group.key}
+              className={style.list}
+              role="tabpanel"
+              hidden={group.key !== activeKey}
+            >
+              {group.items.map((item) => {
+                const isOpen = openQuestion === item.q;
+                return (
+                  <div
+                    key={item.q}
+                    className={`${style.item} ${isOpen ? style.itemOpen : ""}`}
                   >
-                    <span>{item.q}</span>
-                    <KeyboardArrowDownIcon aria-hidden="true" />
-                  </button>
-                </h3>
-                {isOpen && <p>{item.a}</p>}
-              </div>
-            );
-          })}
+                    <h3>
+                      <button
+                        type="button"
+                        aria-expanded={isOpen}
+                        onClick={() => setOpenQuestion(isOpen ? null : item.q)}
+                      >
+                        <span>{item.q}</span>
+                        <KeyboardArrowDownIcon aria-hidden="true" />
+                      </button>
+                    </h3>
+                    <p hidden={!isOpen}>{item.a}</p>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -3,80 +3,37 @@ export const revalidate = 60; // ISR every 60 second
 import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import ContentDetail from "@/app/Components/content/ContentDetail";
+import JsonLd from "@/app/Components/JsonLd";
+import { mediaUrl } from "@/app/utils/productContent";
+import { breadcrumbLd, encodePath, pageMeta, plainText } from "@/app/utils/seo";
+import { fetchExhibitions } from "@/app/utils/serverApi";
+
+const findExhibition = (exhibitions, id) => {
+  const title = decodeURIComponent(id).trim().toLowerCase();
+  return exhibitions.find((item) => item.title.trim().toLowerCase() === title);
+};
 
 export async function generateMetadata({ params }) {
-  const allExhibitions = await fetchExhibition();
-  const decodedId = decodeURIComponent(params.id);
-  const exhibition = allExhibitions.find(
-    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase()
-  );
+  const exhibition = findExhibition(await fetchExhibitions(), params.id);
 
   if (!exhibition) {
-    return {
-      title: "نمایشگاه یافت نشد",
-      description: "نمایشگاه مورد نظر یافت نشد.",
-    };
+    return { title: "نمایشگاه یافت نشد", robots: { index: false } };
   }
 
-  const description = exhibition.content
-    ? exhibition.content.replace(/<[^>]*>/g, "").slice(0, 160)
-    : `نمایشگاه ${exhibition.title} - آذرهولوگرام`;
-
-  return {
+  return pageMeta({
     title: exhibition.title,
-    description,
-    alternates: {
-      canonical: `/Exhibition/${encodeURIComponent(exhibition.title)}`,
-    },
-    openGraph: {
-      title: exhibition.title,
-      description,
-      type: "article",
-      images: exhibition.src
-        ? [
-            {
-              url: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${exhibition.src}`,
-              alt: exhibition.title,
-            },
-          ]
-        : [],
-    },
-  };
-}
-
-async function fetchExhibition() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/exhibition/list`,
-      {
-        // Ensures fresh data every 60 seconds
-        next: { revalidate: 60 },
-        headers: {
-          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
-      console.log("Failed to fetch data");
-      return [];
-    }
-
-    const allHonors = await response.json();
-    return Array.isArray(allHonors) ? allHonors : [];
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    return []; // Return fallback data if fetch fails
-  }
+    description:
+      plainText(exhibition.content) ||
+      `نمایشگاه ${exhibition.title} - آذرهولوگرام`,
+    path: encodePath("Exhibition", exhibition.title),
+    image: mediaUrl(exhibition.src),
+    imageAlt: exhibition.title,
+    type: "article",
+  });
 }
 
 export default async function innerExhibition({ params }) {
-  const allExhibitions = await fetchExhibition();
-  const decodedId = decodeURIComponent(params.id);
-
-  const exhibition = allExhibitions.find(
-    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase(),
-  );
+  const exhibition = findExhibition(await fetchExhibitions(), params.id);
 
   if (!exhibition) {
     notFound();
@@ -84,6 +41,15 @@ export default async function innerExhibition({ params }) {
 
   return (
     <MainLayout>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "نمایشگاه‌ها", path: "/Exhibition" },
+          {
+            name: exhibition.title,
+            path: encodePath("Exhibition", exhibition.title),
+          },
+        ])}
+      />
       <ContentDetail item={exhibition} />
     </MainLayout>
   );

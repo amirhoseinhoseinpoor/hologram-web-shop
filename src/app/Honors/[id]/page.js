@@ -3,80 +3,36 @@ export const revalidate = 60; // ISR every 60 second
 import MainLayout from "@/app/layouts/MainLayout";
 import { notFound } from "next/navigation";
 import ContentDetail from "@/app/Components/content/ContentDetail";
+import JsonLd from "@/app/Components/JsonLd";
+import { mediaUrl } from "@/app/utils/productContent";
+import { breadcrumbLd, encodePath, pageMeta, plainText } from "@/app/utils/seo";
+import { fetchHonors } from "@/app/utils/serverApi";
+
+const findHonor = (honors, id) => {
+  const title = decodeURIComponent(id).trim().toLowerCase();
+  return honors.find((item) => item.title.trim().toLowerCase() === title);
+};
 
 export async function generateMetadata({ params }) {
-  const allHonors = await fetchHonors();
-  const decodedId = decodeURIComponent(params.id);
-  const honor = allHonors?.find(
-    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase()
-  );
+  const honor = findHonor(await fetchHonors(), params.id);
 
   if (!honor) {
-    return {
-      title: "افتخار یافت نشد",
-      description: "افتخار مورد نظر یافت نشد.",
-    };
+    return { title: "افتخار یافت نشد", robots: { index: false } };
   }
 
-  const description = honor.content
-    ? honor.content.replace(/<[^>]*>/g, "").slice(0, 160)
-    : `${honor.title} - افتخارات آذرهولوگرام`;
-
-  return {
+  return pageMeta({
     title: honor.title,
-    description,
-    alternates: {
-      canonical: `/Honors/${encodeURIComponent(honor.title)}`,
-    },
-    openGraph: {
-      title: honor.title,
-      description,
-      type: "article",
-      images: honor.src
-        ? [
-            {
-              url: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/system/download/${honor.src}`,
-              alt: honor.title,
-            },
-          ]
-        : [],
-    },
-  };
-}
-
-async function fetchHonors() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_SERVER}/honors/list`,
-      {
-        // Ensures fresh data every 60 seconds
-        next: { revalidate: 60 },
-        headers: {
-          Origin: `${process.env.NEXT_PUBLIC_BACK_END_SERVER}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
-      console.log("Failed to fetch data");
-      return [];
-    }
-
-    const allHonors = await response.json();
-    return Array.isArray(allHonors) ? allHonors : [];
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    return []; // Return fallback data if fetch fails
-  }
+    description:
+      plainText(honor.content) || `${honor.title} - افتخارات آذرهولوگرام`,
+    path: encodePath("Honors", honor.title),
+    image: mediaUrl(honor.src),
+    imageAlt: honor.title,
+    type: "article",
+  });
 }
 
 export default async function innerHonors({ params }) {
-  const allHonors = await fetchHonors();
-  const decodedId = decodeURIComponent(params.id);
-
-  const honor = allHonors.find(
-    (item) => item.title.trim().toLowerCase() === decodedId.trim().toLowerCase(),
-  );
+  const honor = findHonor(await fetchHonors(), params.id);
 
   if (!honor) {
     notFound();
@@ -84,6 +40,12 @@ export default async function innerHonors({ params }) {
 
   return (
     <MainLayout>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "افتخارات", path: "/Honors" },
+          { name: honor.title, path: encodePath("Honors", honor.title) },
+        ])}
+      />
       <ContentDetail item={honor} />
     </MainLayout>
   );

@@ -7,46 +7,38 @@ import "./Styles/globals.scss";
 import StoreProvider from "./Store/storeProvider";
 import LogVisit from "./Components/LogVisit";
 import AuthBootstrap from "./Components/AuthBootstrap";
+import JsonLd from "./Components/JsonLd";
+import NavProvider from "./Components/NavProvider";
+import { organizationLd, SITE_URL } from "./utils/seo";
+import { fetchHeaderItems } from "./utils/serverApi";
 
-const myFont = localFont({ src: "./Fonts/IRANSansXVF.ttf" });
+const myFont = localFont({ src: "./Fonts/IRANSansXVF.woff2" });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.co";
+const DEFAULT_TITLE = "تولید و چاپ هولوگرام و لیبل امنیتی در ایران | آذرهولوگرام";
+const DEFAULT_DESCRIPTION =
+  "آذرهولوگرام (خانه چاپ چکاوک) با خط کامل تولید در داخل کشور، انواع هولوگرام امنیتی، لیبل هولوگرام، برچسب پلمپ و اسکرچ را با طرح اختصاصی تولید می‌کند.";
 
 export const metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "آذرهولوگرام | تولید و چاپ هولوگرام در ایران",
+    default: DEFAULT_TITLE,
     template: "%s | آذرهولوگرام",
   },
-  description:
-    "شرکت آذرهولوگرام (خانه چاپ چکاوک) تولیدکننده انواع هولوگرام، لیبل هولوگرام و محصولات امنیتی با بالاترین سطح کیفیت و فناوری روز در ایران.",
-  keywords: [
-    "هولوگرام",
-    "چاپ هولوگرام",
-    "لیبل هولوگرام",
-    "تولید هولوگرام",
-    "هولوگرام امنیتی",
-    "آذرهولوگرام",
-    "خانه چاپ چکاوک",
-    "هولوگرافی",
-    "برچسب هولوگرام",
-    "hologram",
-  ],
+  description: DEFAULT_DESCRIPTION,
   authors: [{ name: "آذرهولوگرام" }],
   creator: "آذرهولوگرام",
   publisher: "آذرهولوگرام",
   icons: {
-    icon: "/LOGO/azarhologram-icon.png",
-    apple: "/LOGO/azarhologram-icon.png",
+    icon: "/LOGO/azarhologram-favicon.png",
+    apple: "/LOGO/azarhologram-favicon.png",
   },
   openGraph: {
     type: "website",
     locale: "fa_IR",
-    url: siteUrl,
+    url: "/",
     siteName: "آذرهولوگرام",
-    title: "آذرهولوگرام | تولید و چاپ هولوگرام در ایران",
-    description:
-      "شرکت آذرهولوگرام تولیدکننده انواع هولوگرام، لیبل هولوگرام و محصولات امنیتی با بالاترین سطح کیفیت در ایران.",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     images: [
       {
         url: "/LOGO/azarhologram-icon.png",
@@ -57,11 +49,7 @@ export const metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "آذرهولوگرام | تولید و چاپ هولوگرام در ایران",
-    description:
-      "شرکت آذرهولوگرام تولیدکننده انواع هولوگرام، لیبل هولوگرام و محصولات امنیتی در ایران.",
-    images: ["/LOGO/azarhologram-icon.png"],
+    card: "summary",
   },
   robots: {
     index: true,
@@ -74,45 +62,21 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: siteUrl,
-  },
-  verification: {
-    // Add your Google Search Console verification code here when you have it
-    // google: "your-verification-code",
-  },
 };
 
-export default function RootLayout({ children }) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "آذرهولوگرام",
-    alternateName: "خانه چاپ چکاوک",
-    url: siteUrl,
-    logo: `${siteUrl}/LOGO/azarhologram-icon.png`,
-    description:
-      "شرکت آذرهولوگرام (خانه چاپ چکاوک) تولیدکننده انواع هولوگرام، لیبل هولوگرام و محصولات امنیتی با بالاترین سطح کیفیت و فناوری روز در ایران.",
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "customer service",
-      availableLanguage: "Persian",
-    },
-  };
+export default async function RootLayout({ children }) {
+  const navItems = await fetchHeaderItems();
 
   return (
     <html lang="fa" dir="rtl">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={organizationLd} />
       </head>
       <body className={`${myFont.className} h-100`}>
         <StoreProvider>
           <AuthBootstrap />
           <LogVisit />
-          {children}
+          <NavProvider items={navItems}>{children}</NavProvider>
         </StoreProvider>
       </body>
     </html>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import style from "../../Styles/BlogStyle/Blog.module.scss";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
@@ -24,11 +25,11 @@ export default async function BlogCard() {
           >
             <Link href={`/Blog/${blog.content.title}`}>
               <div className={style.media}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={mediaUrl(blog.content.imageSrc)}
-                  alt=""
-                  loading="lazy"
+                  alt={blog.content.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               <div className={style.body}>

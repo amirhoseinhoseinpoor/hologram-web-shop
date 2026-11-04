@@ -15,7 +15,7 @@
   // neutrals
   --text: #141c28;
   --text-muted: #4f5b6d;
-  --text-subtle: #6d7888;
+  --text-subtle: #697484;
   --surface: #ffffff;
   --surface-2: #f5f6f8;
   --surface-3: #eceef2;
@@ -599,6 +599,13 @@ textarea.az-input {
 .modal-content {
   border: 0;
   border-radius: var(--radius-lg);
+}
+
+.az-guilloche {
+  display: block;
+  background-color: currentColor;
+  -webkit-mask: url("/motif/guilloche.svg") center / contain no-repeat;
+  mask: url("/motif/guilloche.svg") center / contain no-repeat;
 }
 
 // HTML written in the admin panel's rich text editor (blogs, honors, exhibitions).

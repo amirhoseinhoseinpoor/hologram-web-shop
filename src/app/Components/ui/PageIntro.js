@@ -3,14 +3,20 @@ import Guilloche from "./Guilloche";
 import style from "./ui.module.scss";
 
 // Shared top band of inner pages: breadcrumb, title and optional summary.
-export default function PageIntro({ title, description, eyebrow, children }) {
+export default function PageIntro({
+  title,
+  description,
+  eyebrow,
+  crumbLabel,
+  children,
+}) {
   return (
     <>
       <section className={style.pageIntro}>
         <Guilloche className={style.pageIntroMotif} />
         <div className={`container ${style.pageIntroBody}`}>
-          <ShowRoute />
-          {eyebrow && <span className="az-eyebrow">{eyebrow}</span>}
+          <ShowRoute currentLabel={crumbLabel} />
+          {eyebrow &&<span className="az-eyebrow">{eyebrow}</span>}
           <h1 className="az-h1">{title}</h1>
           {description && <p className={style.pageIntroText}>{description}</p>}
           {children}

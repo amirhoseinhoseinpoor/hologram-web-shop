@@ -3,20 +3,15 @@ import React from "react";
 
 import MainLayout from "../layouts/MainLayout";
 import ContentListing from "../Components/content/ContentListing";
+import JsonLd from "../Components/JsonLd";
+import { breadcrumbLd, pageMeta } from "../utils/seo";
 
-export const metadata = {
-  title: "نمایشگاه‌ها",
+export const metadata = pageMeta({
+  title: "حضور آذرهولوگرام در نمایشگاه‌ها",
   description:
     "حضور آذرهولوگرام در نمایشگاه‌های داخلی و بین‌المللی. گزارش تصویری و اخبار نمایشگاه‌های مرتبط با صنعت هولوگرام و چاپ.",
-  alternates: {
-    canonical: "/Exhibition",
-  },
-  openGraph: {
-    title: "نمایشگاه‌ها | آذرهولوگرام",
-    description:
-      "حضور آذرهولوگرام در نمایشگاه‌های داخلی و بین‌المللی صنعت هولوگرام و چاپ.",
-  },
-};
+  path: "/Exhibition",
+});
 
 async function fetchExhibition() {
   try {
@@ -49,6 +44,7 @@ export default async function Exhibition() {
 
   return (
     <MainLayout>
+      <JsonLd data={breadcrumbLd([{ name: "نمایشگاه‌ها", path: "/Exhibition" }])} />
       <ContentListing
         title="نمایشگاه‌ها"
         description="حضور آذرهولوگرام در نمایشگاه‌های داخلی و بین‌المللی صنعت چاپ و بسته‌بندی."

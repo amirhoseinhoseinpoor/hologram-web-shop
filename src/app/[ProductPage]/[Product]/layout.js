@@ -2,41 +2,28 @@ import {
   findProductByPath,
   toProductView,
 } from "@/app/utils/productContent";
+import { decodeFully, pageMeta, plainText } from "@/app/utils/seo";
 import { fetchProducts } from "@/app/utils/serverApi";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://azarhologram.net";
-
 export async function generateMetadata({ params }) {
-  const category = decodeURIComponent(params.ProductPage);
-  const productName = decodeURIComponent(params.Product);
+  const category = decodeFully(params.ProductPage);
+  const name = decodeFully(params.Product);
 
-  const product = findProductByPath(
-    await fetchProducts(),
-    category,
-    productName,
-  );
-  const view = product ? toProductView(product) : null;
+  const product = findProductByPath(await fetchProducts(), category, name);
+  if (!product) {
+    return { title: "صفحه پیدا نشد", robots: { index: false } };
+  }
 
-  const title = view?.title || productName;
-  const description =
-    view?.intro ||
-    view?.details?.slice(0, 160) ||
-    `${title} - هولوگرام امنیتی از آذرهولوگرام`;
-  const pageUrl = `${SITE_URL}/${encodeURIComponent(category)}/${encodeURIComponent(productName)}`;
-
-  return {
-    title,
-    description,
-    alternates: { canonical: pageUrl },
-    openGraph: {
-      type: "website",
-      url: pageUrl,
-      title,
-      description,
-      locale: "fa_IR",
-      images: view?.cover ? [{ url: view.cover, alt: title }] : undefined,
-    },
-  };
+  const view = toProductView(product);
+  return pageMeta({
+    title: `تولید و چاپ ${view.title}`,
+    description:
+      plainText(`${view.intro} ${view.details}`) ||
+      `${view.title} از دسته ${category}: تولید با طرح اختصاصی در آذرهولوگرام و ثبت استعلام قیمت آنلاین.`,
+    path: view.href,
+    image: view.cover,
+    imageAlt: view.title,
+  });
 }
 
 export default function ProductLayout({ children }) {

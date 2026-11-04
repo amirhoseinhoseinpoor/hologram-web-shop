@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PageIntro from "../ui/PageIntro";
@@ -27,8 +28,12 @@ export default function ContentListing({
               <article key={item.code || item.title} className={style.card}>
                 <Link href={`${basePath}/${item.title}`}>
                   <div className={style.cardMedia}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={mediaUrl(item.src)} alt="" loading="lazy" />
+                    <Image
+                      src={mediaUrl(item.src)}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 520px) 100vw, (max-width: 992px) 50vw, 33vw"
+                    />
                   </div>
                   <div className={style.cardBody}>
                     <time dateTime={item.date}>

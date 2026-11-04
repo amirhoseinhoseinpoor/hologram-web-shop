@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import Image from "next/image";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import style from "./VideoShowcase.module.scss";
 
@@ -33,7 +34,8 @@ export default function VideoShowcase({ videos, fallbackTitle = "ویدیو" }) 
             poster={active.poster || undefined}
             controls
             playsInline
-            preload="metadata"
+            // A video with a poster downloads nothing until someone asks for it.
+            preload={active.poster && !shouldAutoPlay.current ? "none" : "metadata"}
             aria-label={active.title || fallbackTitle}
             onLoadedData={(e) => {
               setIsLoading(false);
@@ -71,8 +73,7 @@ export default function VideoShowcase({ videos, fallbackTitle = "ویدیو" }) 
               >
                 <span className={style.thumb}>
                   {video.poster && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={video.poster} alt="" loading="lazy" />
+                    <Image src={video.poster} alt="" fill sizes="96px" />
                   )}
                   <PlayArrowRoundedIcon aria-hidden="true" />
                 </span>

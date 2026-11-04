@@ -5,27 +5,23 @@ import BlogRegular from "../eachPageComponent/BlogComponents/BlogRegular";
 
 import MainLayout from "../layouts/MainLayout";
 import PageIntro from "../Components/ui/PageIntro";
+import JsonLd from "../Components/JsonLd";
+import { breadcrumbLd, pageMeta } from "../utils/seo";
 
-export const metadata = {
-  title: "وبلاگ",
+export const metadata = pageMeta({
+  title: "مقالات هولوگرام و برچسب‌های امنیتی",
   description:
-    "آخرین مقالات و اخبار درباره هولوگرام، لیبل هولوگرام، فناوری هولوگرافی و محصولات امنیتی در وبلاگ آذرهولوگرام.",
-  alternates: {
-    canonical: "/Blog",
-  },
-  openGraph: {
-    title: "وبلاگ آذرهولوگرام",
-    description:
-      "آخرین مقالات و اخبار درباره هولوگرام، لیبل هولوگرام و فناوری هولوگرافی.",
-  },
-};
+    "مقاله‌ها و راهنماهای آذرهولوگرام درباره هولوگرام، لیبل هولوگرام، برچسب پلمپ و فناوری هولوگرافی.",
+  path: "/Blog",
+});
 
 export default function Blog() {
   return (
     <MainLayout>
+      <JsonLd data={breadcrumbLd([{ name: "مقالات", path: "/Blog" }])} />
       <PageIntro
         eyebrow="مجله آذرهولوگرام"
-        title="مقالات"
+        title="مقالات هولوگرام و لیبل‌های امنیتی"
         description="آخرین مقالات و راهنماها درباره هولوگرام، لیبل‌های امنیتی و فناوری هولوگرافی."
       />
       <BlogCard />

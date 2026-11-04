@@ -3,24 +3,20 @@ import MainLayout from "../layouts/MainLayout.js";
 import PageIntro from "../Components/ui/PageIntro";
 import ContactDetails from "../eachPageComponent/ContactUsComponent/Address.js";
 import style from "../Styles/ContactUsStyle/Form.module.scss";
+import JsonLd from "../Components/JsonLd";
+import { breadcrumbLd, pageMeta } from "../utils/seo";
 
-export const metadata = {
-  title: "تماس با ما",
+export const metadata = pageMeta({
+  title: "تماس با آذرهولوگرام و سفارش هولوگرام",
   description:
-    "تماس با شرکت آذرهولوگرام. ارسال پیام، آدرس، شماره تماس و اطلاعات ارتباطی برای سفارش هولوگرام و مشاوره.",
-  alternates: {
-    canonical: "/ContactUs",
-  },
-  openGraph: {
-    title: "تماس با ما | آذرهولوگرام",
-    description:
-      "اطلاعات تماس شرکت آذرهولوگرام. سفارش هولوگرام و مشاوره رایگان.",
-  },
-};
+    "نشانی دفتر مرکزی آذرهولوگرام در تهران، شماره تماس، ایمیل و فرم ارسال پیام برای سفارش هولوگرام، لیبل امنیتی و مشاوره با کارشناسان.",
+  path: "/ContactUs",
+});
 
 export default function ContactUs() {
   return (
     <MainLayout>
+      <JsonLd data={breadcrumbLd([{ name: "تماس با ما", path: "/ContactUs" }])} />
       <PageIntro
         eyebrow="تماس با ما"
         title="با کارشناسان آذرهولوگرام در ارتباط باشید"

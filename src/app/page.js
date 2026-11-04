@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
@@ -10,7 +11,7 @@ import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import PrecisionManufacturingOutlinedIcon from "@mui/icons-material/PrecisionManufacturingOutlined";
 
 import FAQ from "./Components/FAQ";
-import FAQJsonLd from "./Components/FAQJsonLd";
+import JsonLd from "./Components/JsonLd";
 import VideoShowcase from "./Components/VideoShowcase";
 import BannerSlider from "./Components/home/BannerSlider";
 import ProductCard from "./Components/product/ProductCard";
@@ -25,6 +26,8 @@ import {
   mediaUrl,
   toProductView,
 } from "./utils/productContent";
+import { encodePath, websiteLd } from "./utils/seo";
+import { PRICE_GUIDE_SLUG, PRODUCTS_HUB } from "./utils/seoContent";
 import {
   fetchBanners,
   fetchBlogs,
@@ -38,10 +41,8 @@ import {
 
 export const revalidate = 60;
 
+// Title and description come from the root layout's defaults.
 export const metadata = {
-  title: "آذرهولوگرام | تولید و چاپ هولوگرام در ایران",
-  description:
-    "شرکت آذرهولوگرام (خانه چاپ چکاوک) با خط کامل تولید هولوگرام در ایران. سفارش انواع لیبل هولوگرام، هولوگرام امنیتی و محصولات هولوگرافی با بالاترین کیفیت.",
   alternates: {
     canonical: "/",
   },
@@ -102,7 +103,7 @@ export default async function Home() {
       link: category.link,
       count: items.length,
       cover: items.find((item) => item.cover)?.cover,
-      names: items.slice(0, 3).map((item) => item.name),
+      names: items.slice(0, 3).map((item) => item.title),
     };
   });
 
@@ -149,6 +150,7 @@ export default async function Home() {
 
   return (
     <MainLayout>
+      <JsonLd data={websiteLd} />
       <section className={style.hero}>
         <Guilloche className={style.heroMotif} />
         <div className={`container ${style.heroGrid}`}>
@@ -189,6 +191,15 @@ export default async function Home() {
             eyebrow="محصولات"
             title="محصولات متنوع آذرهولوگرام"
             description="از هولوگرام‌های امنیتی تا لیبل پلمپ و اسکرچ؛ هر دسته را با نمونه‌های واقعی تولید ببینید."
+            action={
+              <Link
+                href={encodePath(PRODUCTS_HUB)}
+                className="az-btn az-btn--ghost"
+              >
+                همه محصولات
+                <ArrowBackIcon aria-hidden="true" />
+              </Link>
+            }
           />
           <div className={style.categories}>
             {categories.map((category) => (
@@ -199,8 +210,12 @@ export default async function Home() {
               >
                 <div className={style.categoryMedia}>
                   {category.cover && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={category.cover} alt="" loading="lazy" />
+                    <Image
+                      src={category.cover}
+                      alt={`نمونه محصولات ${category.title}`}
+                      fill
+                      sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 25vw"
+                    />
                   )}
                 </div>
                 <div className={style.categoryBody}>
@@ -237,11 +252,11 @@ export default async function Home() {
       <section className="az-section">
         <div className={`container ${style.split}`}>
           <div className={style.splitMedia}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/HomeImages/Intro-image.png"
               alt="نمای نزدیک هولوگرام امنیتی"
-              loading="lazy"
+              fill
+              sizes="(max-width: 992px) 100vw, 50vw"
             />
           </div>
           <div className={style.splitText}>
@@ -300,6 +315,15 @@ export default async function Home() {
               </li>
             ))}
           </ol>
+          <div className={style.stepsAction}>
+            <Link
+              href={encodePath("Guide", PRICE_GUIDE_SLUG)}
+              className="az-btn az-btn--outline-dark"
+            >
+              راهنمای قیمت و سفارش هولوگرام
+              <ArrowBackIcon aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -335,8 +359,12 @@ export default async function Home() {
               {credentials.map((item) => (
                 <Link key={item.href} href={item.href} className={style.credential}>
                   <div className={style.credentialMedia}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={mediaUrl(item.src)} alt="" loading="lazy" />
+                    <Image
+                      src={mediaUrl(item.src)}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 25vw"
+                    />
                   </div>
                   <span>{item.kind}</span>
                   <h3>{item.title}</h3>
@@ -347,7 +375,6 @@ export default async function Home() {
         </section>
       )}
 
-      <FAQJsonLd />
       <FAQ />
 
       {latestBlogs.length > 0 && (
@@ -371,11 +398,11 @@ export default async function Home() {
                   className={style.blog}
                 >
                   <div className={style.blogMedia}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={mediaUrl(blog.content.imageSrc)}
-                      alt=""
-                      loading="lazy"
+                      alt={blog.content.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </div>
                   <span>{blog.content.time}</span>

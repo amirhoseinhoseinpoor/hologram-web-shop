@@ -39,6 +39,14 @@ export function parseProductName(name) {
 export const productHref = (category, name) =>
   `/${encodeURIComponent(category)}/${encodeURIComponent(name)}`;
 
+// Older records link to a product as /product/<full product name>.
+export function normalizeProductLink(link = "") {
+  const match = link.match(/^\/product\/(.+)$/);
+  if (!match) return link;
+  const { category, name } = parseProductName(match[1]);
+  return productHref(category, name);
+}
+
 export function getProductDescriptions(info = {}) {
   const intro = isMeaningfulText(info.subtitle) ? clean(info.subtitle) : "";
   const details = isMeaningfulText(info.subtitleCompelete)
