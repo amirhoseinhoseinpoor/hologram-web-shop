@@ -27,21 +27,13 @@
   color: var(--text);
 
   img {
-    width: 44px;
-    height: 44px;
-    object-fit: contain;
-  }
-}
+    display: block;
+    width: auto;
+    height: 40px;
 
-.brandName,
-.brandNameAlways {
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-
-.brandName {
-  @media (max-width: 400px) {
-    display: none;
+    @media (max-width: 400px) {
+      height: 32px;
+    }
   }
 }
 

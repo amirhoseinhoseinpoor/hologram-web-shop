@@ -17,8 +17,7 @@ export default function AuthLayout({ children }) {
         <Guilloche className={style.motif} />
         <Link href="/" className={style.brand}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={COMPANY.logo} alt="" width={48} height={48} />
-          {COMPANY.name}
+          <img src={COMPANY.logo} alt={COMPANY.name} width={212} height={42} />
         </Link>
         <div className={style.brandBody}>
           <h2 className="az-h1">حساب کاربری آذرهولوگرام</h2>

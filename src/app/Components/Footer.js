@@ -23,12 +23,6 @@ const COMPANY_LINKS = [
   { href: "/Exhibition", label: "نمایشگاه‌ها" },
 ];
 
-const TRUST_LOGOS = [
-  "/HomeImages/footer-brand-1.png",
-  "/HomeImages/footer-brand-2.png",
-  "/HomeImages/footer-brand-3.png",
-];
-
 export default function Footer() {
   return (
     <footer className={style.footer}>
@@ -36,16 +30,9 @@ export default function Footer() {
         <div className={style.brandColumn}>
           <div className={style.brand}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={COMPANY.logo} alt="" width={52} height={52} />
-            <p>{COMPANY.name}</p>
+            <img src={COMPANY.logo} alt={COMPANY.name} width={232} height={46} />
           </div>
           <p className={style.intro}>{COMPANY.intro}</p>
-          <div className={style.trust}>
-            {TRUST_LOGOS.map((src) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img key={src} src={src} alt="نشان اعتماد" loading="lazy" />
-            ))}
-          </div>
         </div>
 
         <nav aria-label="محصولات">

@@ -48,10 +48,13 @@
   font-weight: 800;
 
   img {
-    padding: 4px;
+    display: block;
+    width: auto;
+    height: 42px;
+    padding: 6px 10px;
     border-radius: var(--radius-sm);
     background: #fff;
-    object-fit: contain;
+    box-sizing: content-box;
   }
 }
 

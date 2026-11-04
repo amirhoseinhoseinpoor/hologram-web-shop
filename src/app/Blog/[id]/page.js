@@ -109,7 +109,7 @@ export default async function BlogPostPage({ params }) {
       name: "آذرهولوگرام",
       logo: {
         "@type": "ImageObject",
-        url: `${siteUrl}/LOGO/cropped-com.chakavak.adv_512x512.png`,
+        url: `${siteUrl}/LOGO/azarhologram-icon.png`,
       },
     },
     url: `${siteUrl}/Blog/${encodeURIComponent(blogPost.content.title)}`,

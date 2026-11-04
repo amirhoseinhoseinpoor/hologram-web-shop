@@ -36,8 +36,8 @@ export const metadata = {
   creator: "آذرهولوگرام",
   publisher: "آذرهولوگرام",
   icons: {
-    icon: "/LOGO/cropped-com.chakavak.adv_512x512.png",
-    apple: "/LOGO/cropped-com.chakavak.adv_512x512.png",
+    icon: "/LOGO/azarhologram-icon.png",
+    apple: "/LOGO/azarhologram-icon.png",
   },
   openGraph: {
     type: "website",
@@ -49,7 +49,7 @@ export const metadata = {
       "شرکت آذرهولوگرام تولیدکننده انواع هولوگرام، لیبل هولوگرام و محصولات امنیتی با بالاترین سطح کیفیت در ایران.",
     images: [
       {
-        url: "/LOGO/cropped-com.chakavak.adv_512x512.png",
+        url: "/LOGO/azarhologram-icon.png",
         width: 512,
         height: 512,
         alt: "آذرهولوگرام",
@@ -61,7 +61,7 @@ export const metadata = {
     title: "آذرهولوگرام | تولید و چاپ هولوگرام در ایران",
     description:
       "شرکت آذرهولوگرام تولیدکننده انواع هولوگرام، لیبل هولوگرام و محصولات امنیتی در ایران.",
-    images: ["/LOGO/cropped-com.chakavak.adv_512x512.png"],
+    images: ["/LOGO/azarhologram-icon.png"],
   },
   robots: {
     index: true,
@@ -90,7 +90,7 @@ export default function RootLayout({ children }) {
     name: "آذرهولوگرام",
     alternateName: "خانه چاپ چکاوک",
     url: siteUrl,
-    logo: `${siteUrl}/LOGO/cropped-com.chakavak.adv_512x512.png`,
+    logo: `${siteUrl}/LOGO/azarhologram-icon.png`,
     description:
       "شرکت آذرهولوگرام (خانه چاپ چکاوک) تولیدکننده انواع هولوگرام، لیبل هولوگرام و محصولات امنیتی با بالاترین سطح کیفیت و فناوری روز در ایران.",
     contactPoint: {

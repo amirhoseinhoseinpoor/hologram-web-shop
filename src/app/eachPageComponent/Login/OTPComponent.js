@@ -65,13 +65,9 @@ export default function OTPInput({
         <div>
           <Box
             component="img"
-            sx={{
-              width: "105px",
-              height: "100%",
-              objectFit: "cover",
-            }}
-            alt="image."
-            src="/LOGO/cropped-com.chakavak.adv_512x512.png"
+            sx={{ width: "220px", maxWidth: "100%", height: "auto", display: "block" }}
+                    alt="آذرهولوگرام"
+                    src="/LOGO/azarhologram-logo.png"
           />
         </div>
       </div>

@@ -32,18 +32,16 @@
   gap: 12px;
   margin-bottom: 14px;
 
+  // the logo artwork is drawn for a light background
   img {
-    width: 52px;
-    height: 52px;
-    padding: 4px;
+    display: block;
+    width: auto;
+    height: 46px;
+    max-width: 100%;
+    padding: 6px 10px;
     border-radius: var(--radius-sm);
     background: #fff;
-    object-fit: contain;
-  }
-
-  p {
-    font-size: 1.2rem;
-    font-weight: 800;
+    box-sizing: content-box;
   }
 }
 
@@ -55,22 +53,6 @@
 
 .support {
   margin-bottom: 14px;
-}
-
-.trust {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-
-  img {
-    width: 76px;
-    height: 76px;
-    padding: 6px;
-    border-radius: var(--radius-sm);
-    background: #fff;
-    object-fit: contain;
-  }
 }
 
 .heading {

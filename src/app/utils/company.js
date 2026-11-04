@@ -3,7 +3,8 @@
 export const COMPANY = {
   name: "آذرهولوگرام",
   legalName: "شرکت خانه چاپ چکاوک",
-  logo: "/LOGO/cropped-com.chakavak.adv_512x512.png",
+  logo: "/LOGO/azarhologram-logo.png",
+  icon: "/LOGO/azarhologram-icon.png",
   phoneLabel: "۰۲۱-۶۶۹۷۱۴۰۲ الی ۵",
   phoneHref: "tel:+982166971402",
   fax: "۶۶۹۷۱۴۰۵",

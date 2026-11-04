@@ -300,8 +300,7 @@ export default function Header() {
       <div className={`container ${style.bar}`}>
         <Link href="/" className={style.brand} aria-label={COMPANY.name}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={COMPANY.logo} alt="" width={44} height={44} />
-          <span className={style.brandName}>{COMPANY.name}</span>
+          <img src={COMPANY.logo} alt="" width={202} height={40} />
         </Link>
 
         <nav className={style.nav} aria-label="منوی اصلی">
@@ -383,8 +382,7 @@ export default function Header() {
         <div className={style.drawerHead}>
           <Link href="/" className={style.brand} onClick={closeMobile}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={COMPANY.logo} alt="" width={40} height={40} />
-            <span className={style.brandNameAlways}>{COMPANY.name}</span>
+            <img src={COMPANY.logo} alt={COMPANY.name} width={182} height={36} />
           </Link>
           <button
             type="button"
