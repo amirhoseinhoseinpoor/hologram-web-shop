@@ -38,6 +38,9 @@ const BLOG = {
     "هولوگرام سه‌بعدی چیست؟ تفاوت افکت دوبعدی و سه‌بعدی",
   ),
   install: encodePath("Blog", "روش نصب برچسب هولوگرام روی محصول"),
+  ready: encodePath("Blog", "هولوگرام آماده چیست؟ چاپ هولوگرام در تعداد کم"),
+  void: encodePath("Blog", "برچسب VOID چیست؟ کاربرد و انواع برچسب امنیتی وید"),
+  design: encodePath("Blog", "طراحی هولوگرام اختصاصی؛ از لوگو تا مستر"),
 };
 
 const ARTICLE = {
@@ -45,6 +48,73 @@ const ARTICLE = {
   warranty: { href: BLOG.warranty, label: "برچسب گارانتی هولوگرامی" },
   threeD: { href: BLOG.threeD, label: "هولوگرام سه‌بعدی چیست؟" },
   install: { href: BLOG.install, label: "روش نصب برچسب هولوگرام" },
+  ready: { href: BLOG.ready, label: "هولوگرام آماده و چاپ در تعداد کم" },
+  void: { href: BLOG.void, label: "برچسب VOID چیست؟" },
+  design: { href: BLOG.design, label: "طراحی هولوگرام اختصاصی" },
+};
+
+const HONOR = {
+  ihma: encodePath("Honors", "تقدیر در جوایز Excellence in Holography 2016 انجمن IHMA"),
+  festival: encodePath(
+    "Honors",
+    "برگزیده بخش خلاقیت و نوآوری شانزدهمین جشنواره صنعت چاپ",
+  ),
+  labelexpo: encodePath(
+    "Exhibition",
+    "حضور آذرهولوگرام در نمایشگاه Labelexpo Europe بروکسل (۲۰۱۷ و ۲۰۱۹)",
+  ),
+};
+
+// Facts behind the company, shown on commercial pages and the About page.
+export const COMPANY_RECORD = [
+  {
+    year: "۲۰۱۶",
+    label: "حضور در نمایشگاه drupa 2016 در دوسلدورف آلمان",
+  },
+  {
+    year: "۲۰۱۶",
+    label: "برگزیده بخش خلاقیت و نوآوری شانزدهمین جشنواره صنعت چاپ",
+    href: HONOR.festival,
+  },
+  {
+    year: "۲۰۱۶",
+    label: "تقدیر (Commended) در جوایز Excellence in Holography انجمن بین‌المللی تولیدکنندگان هولوگرام (IHMA)",
+    href: HONOR.ihma,
+  },
+  {
+    year: "۲۰۱۷",
+    label: "حضور در Labelexpo Europe بروکسل با نمایندگی Holo Welt GmbH آلمان",
+    href: HONOR.labelexpo,
+  },
+  {
+    year: "۲۰۱۹",
+    label: "دومین حضور در Labelexpo Europe بروکسل",
+    href: HONOR.labelexpo,
+  },
+];
+
+const WHY_US = {
+  heading: "چرا آذرهولوگرام؟",
+  items: [
+    {
+      label: "خط کامل تولید در داخل کشور",
+      text: "داشتن خط کامل تولید هولوگرام در داخل کشور، زمان چاپ و تحویل را کوتاه کرده است.",
+    },
+    {
+      label: "طراحی پیش از تولید",
+      text: "طراحی اولیه در حداقل دو طرح انجام می‌شود و تولید پس از تأیید شما آغاز می‌شود.",
+    },
+    {
+      label: "تقدیر در جوایز IHMA ۲۰۱۶",
+      href: HONOR.ihma,
+      text: "در بخش بهترین محصول کاربردی تزئینی و بسته‌بندی.",
+    },
+    {
+      label: "حضور در Labelexpo Europe",
+      href: HONOR.labelexpo,
+      text: "در دوره‌های ۲۰۱۷ و ۲۰۱۹ نمایشگاه بروکسل.",
+    },
+  ],
 };
 
 export const PRICE_GUIDE_SLUG = "قیمت-هولوگرام";
@@ -66,7 +136,13 @@ export const HUB_SEO = {
     "همه محصولات آذرهولوگرام در یک صفحه: انواع هولوگرام امنیتی، لیبل‌های امنیتی، برچسب‌های پلمپ و اسکرچ با امکان تولید طرح اختصاصی و استعلام قیمت آنلاین.",
   heading: "محصولات آذرهولوگرام",
   lead: "هر محصول برای نیاز مشخصی ساخته شده است: اثبات اصالت کالا، پلمپ بسته‌بندی، رهگیری با کد یا پنهان کردن اطلاعات تا زمان استفاده. دسته‌ها را مرور کنید یا راهنمای انتخاب را بخوانید.",
-  links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK, EFFECTS_LINK],
+  links: [
+    CHOOSE_GUIDE_LINK,
+    PRICE_GUIDE_LINK,
+    EFFECTS_LINK,
+    ARTICLE.ready,
+    ARTICLE.design,
+  ],
 };
 
 export const CATEGORY_SEO = {
@@ -130,6 +206,7 @@ export const CATEGORY_SEO = {
           "هولوگرام اختصاصی با طرح و لوگوی خود شما ساخته می‌شود و پیش از تولید باید مستر آن آماده شود. هولوگرام با طرح عمومی از پیش چاپ شده است، قیمت پایین‌تری دارد و در تیراژ کم هم قابل سفارش است. می‌توان روی آن چاپ مشکی انجام داد و شخصی‌سازی‌اش کرد، اما بیشتر برای مواردی مناسب است که به سطح امنیتی بالا نیاز ندارند.",
         ],
       },
+      WHY_US,
       {
         heading: "هولوگرام به چه شکلی تحویل می‌شود؟",
         items: [
@@ -167,6 +244,8 @@ export const CATEGORY_SEO = {
       { href: BLOG.whatIsHologram, label: "هولوگرام چیست؟" },
       { href: BLOG.securityHologram, label: "هولوگرام امنیتی چیست و چه کاربردی دارد؟" },
       ARTICLE.threeD,
+      ARTICLE.design,
+      ARTICLE.ready,
       ARTICLE.verify,
     ],
   },
@@ -238,7 +317,7 @@ export const CATEGORY_SEO = {
       },
     ],
     links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK, EFFECTS_LINK],
-    readMore: [ARTICLE.install, ARTICLE.verify],
+    readMore: [ARTICLE.design, ARTICLE.install, ARTICLE.verify],
   },
 
   [CATEGORY.seals]: {
@@ -293,6 +372,7 @@ export const CATEGORY_SEO = {
     links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK],
     readMore: [
       { href: BLOG.sealLabel, label: "برچسب پلمپ چیست؟ راهنمای کامل" },
+      ARTICLE.void,
       ARTICLE.warranty,
       ARTICLE.install,
     ],
@@ -537,6 +617,8 @@ export const GUIDES = [
     links: [
       CHOOSE_GUIDE_LINK,
       EFFECTS_LINK,
+      ARTICLE.ready,
+      ARTICLE.design,
       ARTICLE.threeD,
       { href: encodePath(CATEGORY.hologram), label: "چاپ و تولید هولوگرام امنیتی" },
       { href: encodePath(CATEGORY.labels), label: "لیبل هولوگرام و لیبل‌های امنیتی" },
@@ -666,6 +748,7 @@ export const GUIDES = [
     ],
     links: [
       PRICE_GUIDE_LINK,
+      ARTICLE.void,
       ARTICLE.warranty,
       ARTICLE.verify,
       { href: encodePath(CATEGORY.hologram), label: "چاپ و تولید هولوگرام امنیتی" },

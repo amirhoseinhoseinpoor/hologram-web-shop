@@ -43,7 +43,9 @@ export default async function sitemap() {
     ...getCategories(headerItems).map((category) =>
       entry(encodePath(category.title)),
     ),
-    ...products.map(toProductView).map((view) => entry(view.href)),
+    ...products.map((product) =>
+      entry(toProductView(product).href, product.updatedAt),
+    ),
     ...GUIDES.map((guide) => entry(encodePath("Guide", guide.slug))),
     ...blogs
       .filter((blog) => blog.content?.title)

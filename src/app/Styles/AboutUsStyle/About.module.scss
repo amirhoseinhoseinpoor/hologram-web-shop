@@ -85,3 +85,41 @@
     margin-top: 6px;
   }
 }
+
+.record {
+  display: flex;
+  flex-direction: column;
+  max-width: 72ch;
+  margin: 18px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-block: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  a,
+  p {
+    margin: 0;
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  a:hover {
+    color: var(--accent-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.recordYear {
+  flex-shrink: 0;
+  min-width: 3.5em;
+  color: var(--accent-ink);
+  font-weight: 800;
+}

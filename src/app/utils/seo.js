@@ -121,6 +121,10 @@ export const organizationLd = {
     addressLocality: COMPANY.city,
     addressCountry: "IR",
   },
+  award: [
+    "Excellence in Holography 2016 (IHMA), Commended: Best Applied Decorative/Packaging Product",
+    "برگزیده بخش خلاقیت و نوآوری شانزدهمین جشنواره صنعت چاپ",
+  ],
   contactPoint: {
     "@type": "ContactPoint",
     telephone: COMPANY.phoneE164,

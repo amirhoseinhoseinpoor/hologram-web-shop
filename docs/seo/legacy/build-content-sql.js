@@ -1,11 +1,11 @@
-// Writes the SQL and the image list that add the migrated honors, exhibition and new articles.
-//   node build-content-sql.js <out-dir>
+// Writes the SQL and the image list that add honors, exhibitions and articles from a content module.
+//   node build-content-sql.js <out-dir> [content-module, default ./content]
 // Every insert is skipped when a row with the same title already exists, so re-running is safe.
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const { honors, exhibitions, blogs, enc } = require("./content");
 
+const { honors, exhibitions, blogs, enc } = require(path.resolve(__dirname, process.argv[3] || "./content"));
 const out = process.argv[2] || ".";
 const q = (value) => `'${String(value).replace(/'/g, "''")}'`;
 const code = () => String(crypto.randomInt(100000, 999999));

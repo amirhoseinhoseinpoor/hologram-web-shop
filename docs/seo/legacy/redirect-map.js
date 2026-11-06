@@ -4,8 +4,10 @@
 // Unknown paths fall back to regexes in legacy-domains.conf, then to the home page.
 const fs = require("fs");
 const { honors, exhibitions, blogs, enc } = require("./content");
+const later = require("./articles-2");
 
-const blogPath = (key) => enc("Blog", blogs.find((b) => b.key === key).title);
+const allBlogs = [...blogs, ...later.blogs];
+const blogPath = (key) => enc("Blog", allBlogs.find((b) => b.key === key).title);
 const T = {
   home: "/",
   about: "/AboutUs",
@@ -36,6 +38,9 @@ const T = {
   warranty: blogPath("warranty"),
   threeD: blogPath("3d"),
   install: blogPath("install"),
+  ready: blogPath("ready"),
+  void: blogPath("void"),
+  design: blogPath("design"),
   ihma: enc("Honors", honors.find((h) => h.key === "ihma2016").title),
   festival: enc("Honors", honors.find((h) => h.key === "festival16").title),
   labelexpo: enc("Exhibition", exhibitions.find((e) => e.key === "labelexpo").title),
@@ -49,6 +54,9 @@ const RULES = [
   [/اكسپو|اکسپو|label-?expo|نمايشگاه-ليبل|نمایشگاه-لی|بزرگترين-نمايشگاه/i, T.labelexpo],
   [/افتخار/, T.honors],
   [/نمایشگاه|نمايشگاه|دروپا|drupa|دبی|دوبی|غرفه|بازديد|بازدید|استقبال|گزارش-زنده|exhibition/i, T.exhibitions],
+  [/^general$|هولوگرام-آماده|استوک|عمومی|تعداد-کم|در-این-صفحه-به-فروش/, T.ready],
+  [/وید-تخریبی|^void$/i, T.void],
+  [/طراحی.*هولوگرام|طراحی-هولوگرام|هوگرام|^هولوگرام-اختصاصی$|هویت-بصری|ایده-خلاقانه-برای-طراحی/, T.design],
   [/تشخیص|جعلی|غیر-قابل-جعل|جلوگیری-از-جعل|اسکناس|تقلبی|چرا-جعل/, T.verify],
   [/گارانتی|warranty/i, T.warranty],
   [/نصب/, T.install],

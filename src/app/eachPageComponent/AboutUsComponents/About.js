@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import style from "../../Styles/AboutUsStyle/About.module.scss";
+import { COMPANY_RECORD } from "../../utils/seoContent";
 
 const STRENGTHS = [
   {
@@ -73,6 +74,25 @@ export default function ImageText() {
             هولوگرام‌ها برای برند و محصولات خود استفاده کنید و خیالی آسوده از
             اصالت و امنیت آن‌ها داشته باشید.
           </p>
+        </div>
+      </section>
+
+      <section className="az-section az-section--soft">
+        <div className="container">
+          <span className="az-eyebrow">سوابق</span>
+          <h2 className="az-h2">افتخارات و حضور بین‌المللی</h2>
+          <ol className={style.record}>
+            {COMPANY_RECORD.map((item) => (
+              <li key={item.label}>
+                <span className={style.recordYear}>{item.year}</span>
+                {item.href ? (
+                  <Link href={item.href}>{item.label}</Link>
+                ) : (
+                  <p>{item.label}</p>
+                )}
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
