@@ -1,6 +1,6 @@
 // Builds the nginx map that sends every URL of the retired azarhologram.co and azarhologram.ir
 // to the closest page on azarhologram.net. The URL list comes from the Wayback Machine.
-//   node redirect-map.js <out-file>
+//   node redirect-map.js <out-file> [previous-map-to-keep-paths-from]
 // Unknown paths fall back to regexes in legacy-domains.conf, then to the home page.
 const fs = require("fs");
 const { honors, exhibitions, blogs, enc } = require("./content");
@@ -140,6 +140,11 @@ async function archived(host) {
 (async () => {
   const outFile = process.argv[2] || "azarhologram-legacy-map.conf";
   const all = new Set([...(await archived("azarhologram.co")), ...(await archived("azarhologram.ir"))]);
+  // The Wayback listing is not always complete; keep every path an earlier map already had.
+  const previous = process.argv[3];
+  if (previous && fs.existsSync(previous)) {
+    for (const m of fs.readFileSync(previous, "utf8").matchAll(/^"([^"]+)" /gm)) all.add(m[1]);
+  }
   const lines = [];
   const counts = {};
   for (const p of [...all].sort()) {
