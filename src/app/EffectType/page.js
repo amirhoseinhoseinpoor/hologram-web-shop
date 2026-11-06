@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import PageIntro from "../Components/ui/PageIntro";
 import JsonLd from "../Components/JsonLd";
 import EffectBrowser from "../eachPageComponent/EffectType/EffectBrowser";
+import EditorialSections from "../Components/content/EditorialSections";
 import style from "../Styles/EffectType/EffectType.module.scss";
 import { toProductView } from "../utils/productContent";
 import { breadcrumbLd } from "../utils/seo";
@@ -60,6 +61,11 @@ export default async function EffectTypePage({ searchParams }) {
         products={views}
         initialType={searchParams?.type}
       />
+      <section className="az-section az-section--soft">
+        <div className="container">
+          <EditorialSections links={EFFECTS_SEO.links} />
+        </div>
+      </section>
     </MainLayout>
   );
 }

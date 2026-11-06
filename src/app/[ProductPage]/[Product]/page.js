@@ -136,7 +136,9 @@ export default async function Product({ params }) {
 
       <section className="az-section">
         <div className="container">
-          <EditorialSections links={GUIDE_LINKS} />
+          <EditorialSections
+            links={[...GUIDE_LINKS, ...(CATEGORY_SEO[category]?.readMore || [])]}
+          />
         </div>
       </section>
     </MainLayout>

@@ -25,6 +25,26 @@ const BLOG = {
     "Blog",
     "برچسب پلمپ چیست؟ راهنمای کامل انتخاب لیبل پلمپ برای کسب‌وکار",
   ),
+  verify: encodePath(
+    "Blog",
+    "تشخیص هولوگرام اصل از تقلبی؛ راهنمای بررسی برچسب هولوگرامی",
+  ),
+  warranty: encodePath(
+    "Blog",
+    "برچسب گارانتی هولوگرامی؛ کاربرد، انواع و نکات سفارش",
+  ),
+  threeD: encodePath(
+    "Blog",
+    "هولوگرام سه‌بعدی چیست؟ تفاوت افکت دوبعدی و سه‌بعدی",
+  ),
+  install: encodePath("Blog", "روش نصب برچسب هولوگرام روی محصول"),
+};
+
+const ARTICLE = {
+  verify: { href: BLOG.verify, label: "تشخیص هولوگرام اصل از تقلبی" },
+  warranty: { href: BLOG.warranty, label: "برچسب گارانتی هولوگرامی" },
+  threeD: { href: BLOG.threeD, label: "هولوگرام سه‌بعدی چیست؟" },
+  install: { href: BLOG.install, label: "روش نصب برچسب هولوگرام" },
 };
 
 export const PRICE_GUIDE_SLUG = "قیمت-هولوگرام";
@@ -146,6 +166,8 @@ export const CATEGORY_SEO = {
     readMore: [
       { href: BLOG.whatIsHologram, label: "هولوگرام چیست؟" },
       { href: BLOG.securityHologram, label: "هولوگرام امنیتی چیست و چه کاربردی دارد؟" },
+      ARTICLE.threeD,
+      ARTICLE.verify,
     ],
   },
 
@@ -216,7 +238,7 @@ export const CATEGORY_SEO = {
       },
     ],
     links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK, EFFECTS_LINK],
-    readMore: [],
+    readMore: [ARTICLE.install, ARTICLE.verify],
   },
 
   [CATEGORY.seals]: {
@@ -269,7 +291,11 @@ export const CATEGORY_SEO = {
       },
     ],
     links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK],
-    readMore: [{ href: BLOG.sealLabel, label: "برچسب پلمپ چیست؟ راهنمای کامل" }],
+    readMore: [
+      { href: BLOG.sealLabel, label: "برچسب پلمپ چیست؟ راهنمای کامل" },
+      ARTICLE.warranty,
+      ARTICLE.install,
+    ],
   },
 
   [CATEGORY.scratch]: {
@@ -312,7 +338,7 @@ export const CATEGORY_SEO = {
       },
     ],
     links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK],
-    readMore: [],
+    readMore: [ARTICLE.verify],
   },
 };
 
@@ -327,6 +353,7 @@ export const fallbackCategorySeo = (title) => ({
 });
 
 export const EFFECTS_SEO = {
+  links: [ARTICLE.threeD, ARTICLE.verify, CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK],
   title: "انواع افکت هولوگرام: سه‌بعدی، تصویر مخفی، میکروتکست و گیلوچه",
   description:
     "با افکت‌های امنیتی هولوگرام آشنا شوید: دوبعدی و سه‌بعدی، فلزی، تصویر و کد مخفی، متن میکرونی، دات‌ماتریکس و گیلوچه؛ همراه با تصاویر و ویدیوی محصولات واقعی.",
@@ -510,6 +537,7 @@ export const GUIDES = [
     links: [
       CHOOSE_GUIDE_LINK,
       EFFECTS_LINK,
+      ARTICLE.threeD,
       { href: encodePath(CATEGORY.hologram), label: "چاپ و تولید هولوگرام امنیتی" },
       { href: encodePath(CATEGORY.labels), label: "لیبل هولوگرام و لیبل‌های امنیتی" },
     ],
@@ -638,6 +666,8 @@ export const GUIDES = [
     ],
     links: [
       PRICE_GUIDE_LINK,
+      ARTICLE.warranty,
+      ARTICLE.verify,
       { href: encodePath(CATEGORY.hologram), label: "چاپ و تولید هولوگرام امنیتی" },
       { href: encodePath(CATEGORY.seals), label: "برچسب پلمپ و لیبل پلمپ هولوگرامی" },
       { href: encodePath(CATEGORY.scratch), label: "هولو اسکرچ و برچسب اسکرچ" },
