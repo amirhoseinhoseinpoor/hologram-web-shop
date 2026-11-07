@@ -2,28 +2,40 @@ import Image from "next/image";
 import Link from "next/link";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import style from "../../Styles/AboutUsStyle/About.module.scss";
-import { COMPANY_RECORD } from "../../utils/seoContent";
+import { encodePath } from "../../utils/seo";
+import {
+  CHOOSE_GUIDE_SLUG,
+  ARTICLES,
+  COMPANY_RECORD,
+  PRODUCTS_HUB,
+} from "../../utils/seoContent";
 
+const CHOOSE_GUIDE_HREF = encodePath("Guide", CHOOSE_GUIDE_SLUG);
+const BLOG_PROCESS = ARTICLES.process.href;
+
+// Only what the company's own material states; see docs/seo/fact-check.md.
 const STRENGTHS = [
   {
-    title: "کاهش زمان",
-    text: "به دلیل دارا بودن خط تولید کامل در داخل کشور، زمان چاپ و فروش هولوگرام به حداقل ممکن رسیده است.",
+    title: "خط کامل تولید در داخل کشور",
+    text: "تولید هولوگرام از طراحی تا برش و بسته‌بندی در خط تولید آذرهولوگرام در ایران انجام می‌شود؛ همین زمان چاپ و تحویل را کوتاه کرده است.",
+    href: BLOG_PROCESS,
   },
   {
-    title: "امنیت بالا",
-    text: "با استفاده از پیشرفته‌ترین تکنولوژی‌های روز دنیا، هولوگرام‌های تولیدی آذرهولوگرام از بالاترین سطح امنیت برخوردارند.",
+    title: "طراحی پیش از تولید",
+    text: "طراحی اولیه در دست‌کم دو طرح ارائه می‌شود و تولید فقط پس از تأیید شما آغاز می‌شود.",
   },
   {
-    title: "کیفیت عالی",
-    text: "آذرهولوگرام با بهره‌گیری از مواد اولیه مرغوب و تجهیزات پیشرفته، هولوگرام‌هایی با کیفیت و ظاهری زیبا و چشم‌نواز ارائه می‌دهد.",
+    title: "حفاظت از برند شما",
+    text: "پیش از تولید هولوگرام اختصاصی، مدارک مالکیت برند بررسی می‌شود تا نام و نشان هیچ برندی بدون اجازه صاحب آن روی هولوگرام نرود.",
   },
   {
-    title: "تنوع محصولات",
-    text: "آذرهولوگرام طیف گسترده‌ای از محصولات هولوگرامی را به مشتریان خود عرضه می‌کند و می‌تواند نیازهای مختلف آن‌ها را برآورده سازد.",
+    title: "تنوع محصول و شکل تحویل",
+    text: "هولوگرام تخریب‌شونده، شفاف، رنگی و بارکددار، نوار هولوگرام، هات‌استمپ کارت، لیبل‌های امنیتی، برچسب پلمپ و اسکرچ؛ با تحویل به‌صورت شیت، رول یا نوار.",
+    href: encodePath(PRODUCTS_HUB),
   },
   {
-    title: "خدمات پس از فروش",
-    text: "آذرهولوگرام با ارائه خدمات پس از فروش به مشتریان خود، تجربه‌ای رضایت‌بخش را برای آن‌ها به ارمغان می‌آورد.",
+    title: "شماره‌گذاری و کد",
+    text: "شماره سریال چاپی برای تیراژ بالا و لیزری برای تیراژ پایین، به همراه بارکد و QR کد برای رهگیری و استعلام.",
   },
 ];
 
@@ -32,9 +44,10 @@ export default function ImageText() {
     <>
       <section className={`az-section container ${style.layout}`}>
         <div className={style.images}>
+          {/* Stock photos, not the company's staff: decorative only. */}
           <Image
             src="/AboutImages/aboytgroup.png"
-            alt="تیم آذرهولوگرام"
+            alt=""
             width={996}
             height={664}
             sizes="(max-width: 992px) 50vw, 40vw"
@@ -42,7 +55,7 @@ export default function ImageText() {
           />
           <Image
             src="/AboutImages/aboutImage-person.png"
-            alt="کارشناس آذرهولوگرام"
+            alt=""
             width={996}
             height={664}
             sizes="(max-width: 992px) 50vw, 40vw"
@@ -50,29 +63,38 @@ export default function ImageText() {
         </div>
         <div className={style.text}>
           <span className="az-eyebrow">چرا آذرهولوگرام</span>
-          <h2 className="az-h2">تجربه، تجهیزات و خط تولید کامل در داخل کشور</h2>
+          <h2 className="az-h2">
+            بیش از یک دهه تولید هولوگرام امنیتی در ایران
+          </h2>
           <p className="az-lead">
-            خانه چاپ چکاوک، با نام تجاری آذرهولوگرام، پیشرو در ارائه خدمات چاپ
-            هولوگرام، لیبل هولوگرام و محصولات مرتبط در ایران است. تجهیزات پیشرفته
-            و به‌روز، به همراه تخصص و تجربه کارکنان آذرهولوگرام، این شرکت را به
-            انتخابی ایده‌آل برای تمامی نیازهای شما در زمینه هولوگرام تبدیل کرده
-            است.
+            خانه چاپ چکاوک، با نام تجاری آذرهولوگرام، هولوگرام امنیتی، لیبل
+            هولوگرام و برچسب‌های امنیتی را با طرح اختصاصی تولید می‌کند. سایت
+            شرکت از سال ۱۳۹۲ فعال است و آذرهولوگرام در سال ۲۰۱۶ در جوایز
+            Excellence in Holography انجمن بین‌المللی تولیدکنندگان هولوگرام
+            (IHMA) تقدیر شده و در نمایشگاه‌های drupa، دبی و Labelexpo Europe حضور
+            داشته است.
           </p>
           <ul className={style.strengths}>
             {STRENGTHS.map((item) => (
               <li key={item.title}>
                 <CheckCircleOutlineIcon aria-hidden="true" />
                 <div>
-                  <h3>{item.title}</h3>
+                  <h3>
+                    {item.href ? (
+                      <Link href={item.href}>{item.title}</Link>
+                    ) : (
+                      item.title
+                    )}
+                  </h3>
                   <p>{item.text}</p>
                 </div>
               </li>
             ))}
           </ul>
           <p className="az-muted">
-            با انتخاب آذرهولوگرام، می‌توانید از امن‌ترین، باکیفیت‌ترین و زیباترین
-            هولوگرام‌ها برای برند و محصولات خود استفاده کنید و خیالی آسوده از
-            اصالت و امنیت آن‌ها داشته باشید.
+            اگر هنوز نمی‌دانید کدام برچسب برای محصول شما مناسب است،{" "}
+            <Link href={CHOOSE_GUIDE_HREF}>راهنمای انتخاب برچسب امنیتی</Link> را
+            بخوانید یا با ما تماس بگیرید.
           </p>
         </div>
       </section>

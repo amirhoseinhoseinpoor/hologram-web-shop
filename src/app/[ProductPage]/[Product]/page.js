@@ -8,6 +8,7 @@ import EditorialSections from "@/app/Components/content/EditorialSections";
 import VideoShowcase from "@/app/Components/VideoShowcase";
 import SectionHeading from "@/app/Components/ui/SectionHeading";
 import ProductCard from "@/app/Components/product/ProductCard";
+import ProductDetails from "@/app/Components/product/ProductDetails";
 import cardStyle from "@/app/Components/product/ProductCard.module.scss";
 import ProductShow from "@/app/eachPageComponent/ProductInnerPageComponents/ProductShow";
 import style from "@/app/Styles/ProductPage/innerProductPage/DynamicProductShow.module.scss";
@@ -22,7 +23,12 @@ import {
   encodePath,
   isEncodedMoreThanOnce,
 } from "@/app/utils/seo";
-import { CATEGORY_SEO, GUIDES, PRODUCTS_HUB } from "@/app/utils/seoContent";
+import {
+  CATEGORY_SEO,
+  GUIDES,
+  PRODUCT_READ_MORE,
+  PRODUCTS_HUB,
+} from "@/app/utils/seoContent";
 import { fetchProducts } from "@/app/utils/serverApi";
 
 export const revalidate = 60;
@@ -31,6 +37,18 @@ const GUIDE_LINKS = GUIDES.map((guide) => ({
   href: encodePath("Guide", guide.slug),
   label: guide.heading,
 }));
+
+// Articles about this product first, then the buying guides and the category's reading list.
+function readMore(code, category) {
+  const links = [
+    ...(PRODUCT_READ_MORE[code] || []),
+    ...GUIDE_LINKS,
+    ...(CATEGORY_SEO[category]?.readMore || []),
+  ];
+  return links
+    .filter((link, index) => links.findIndex((other) => other.href === link.href) === index)
+    .slice(0, 8);
+}
 
 export default async function Product({ params }) {
   const category = decodeFully(params.ProductPage);
@@ -88,14 +106,15 @@ export default async function Product({ params }) {
         >
           <div className={`container ${style.detailsGrid}`}>
             <div>
-              <span className="az-eyebrow">{product.title}</span>
+              <span className="az-eyebrow">توضیحات تکمیلی</span>
               <h2 id="product-details" className="az-h2">
-                توضیحات تکمیلی
+                درباره {product.title}
               </h2>
             </div>
-            <p className={`az-prose-text ${style.detailsText}`}>
-              {product.details}
-            </p>
+            <ProductDetails
+              text={product.details}
+              className={style.detailsText}
+            />
           </div>
         </section>
       )}
@@ -136,9 +155,7 @@ export default async function Product({ params }) {
 
       <section className="az-section">
         <div className="container">
-          <EditorialSections
-            links={[...GUIDE_LINKS, ...(CATEGORY_SEO[category]?.readMore || [])]}
-          />
+          <EditorialSections links={readMore(product.code, category)} />
         </div>
       </section>
     </MainLayout>

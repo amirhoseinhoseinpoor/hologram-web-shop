@@ -11,7 +11,7 @@ export default function ProductCard({
   showCategory = false,
   priority = false,
 }) {
-  const summary = product.intro || product.details;
+  const summary = product.intro || product.detailsText;
 
   return (
     <article className={style.card}>

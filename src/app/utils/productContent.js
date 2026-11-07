@@ -60,6 +60,41 @@ export function getProductDescriptions(info = {}) {
   return { intro, details };
 }
 
+// "توضیحات تکمیلی" is a plain textarea. Two line prefixes give it structure:
+// "### " starts a heading and "- " a list item. Other lines are paragraphs, so
+// text written before this convention still renders as it did.
+const HEADING_LINE = /^#{2,4}\s+(.+)$/;
+const LIST_LINE = /^[-•]\s+(.+)$/;
+
+export function parseDetails(text = "") {
+  const blocks = [];
+  let list = null;
+  for (const raw of clean(text).split(/\r?\n/)) {
+    const line = raw.trim();
+    const item = line.match(LIST_LINE);
+    if (item) {
+      if (!list) blocks.push((list = { type: "list", items: [] }));
+      list.items.push(item[1]);
+      continue;
+    }
+    list = null;
+    if (!line) continue;
+    const heading = line.match(HEADING_LINE);
+    blocks.push(
+      heading
+        ? { type: "heading", text: heading[1] }
+        : { type: "paragraph", text: line },
+    );
+  }
+  return blocks;
+}
+
+// The same text without the markers, for meta descriptions and card summaries.
+export const detailsToPlainText = (text = "") =>
+  parseDetails(text)
+    .map((block) => (block.type === "list" ? block.items.join("، ") : block.text))
+    .join(" ");
+
 function getProductSpecs(info = {}) {
   return (Array.isArray(info.sections) ? info.sections : [])
     .map((section) => ({
@@ -110,6 +145,7 @@ export function toProductView(product) {
     href: productHref(category, name),
     intro,
     details,
+    detailsText: detailsToPlainText(details),
     specs: getProductSpecs(info),
     gallery,
     videos: getProductVideos(product?.media),

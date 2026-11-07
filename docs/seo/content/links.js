@@ -1,0 +1,77 @@
+// URLs used inside article and exhibition HTML. Product paths use the URL names from the
+// admin panel, which must stay unchanged.
+const enc = (...segments) => `/${segments.map(encodeURIComponent).join("/")}`;
+
+const P = {
+  holoScratch: enc("اسکرچ", "هولو اسکرچ"),
+  zebra: enc("اسکرچ", "انواع اسکرچ زبرا"),
+  securityPrint: enc("لیبل‌های امنیتی", "لیبل با چاپ امنیتی و نوار هولوگرام"),
+  destructible: enc("هولوگرام", "هولوگرام های تخریب شونده"),
+  transparent: enc("هولوگرام", "هولوگرام‌های شفاف"),
+  pvc: enc("هولوگرام", "هولوگرام کارت‌ های پی وی سی"),
+  colors: enc("هولوگرام", "هولوگرام‌های رنگی"),
+  customDestruct: enc("هولوگرام", "هولوگرام با تخریب اختصاصی"),
+  tape: enc("هولوگرام", "نوار هولوگرام"),
+  stripeLabel: enc("لیبل‌های امنیتی", "لیبل با نوار هولوگرام"),
+  holographic: enc("لیبل‌های امنیتی", "لیبل‌های هولوگرافیک"),
+  sealGeneral: enc("برچسب‌های پلمپ", "لیبل پلمپ با تخریب عمومی"),
+  sealCustom: enc("برچسب‌های پلمپ", "لیبل پلمپ با تخریب اختصاصی"),
+  barcode: enc("هولوگرام", "بارکد هولوگرام"),
+  holometal: enc("لیبل‌های امنیتی", "لیبل هولومتال"),
+};
+
+const C = {
+  hologram: enc("هولوگرام"),
+  labels: enc("لیبل‌های امنیتی"),
+  seals: enc("برچسب‌های پلمپ"),
+  scratch: enc("اسکرچ"),
+  products: enc("محصولات"),
+};
+
+const TITLES = {
+  whatIs: "هولوگرام چیست؟ کاربردها، مزایا و انواع هولوگرام‌های امنیتی",
+  security: "هولوگرام امنیتی چیست و چه کاربردی دارد؟",
+  seal: "برچسب پلمپ چیست؟ راهنمای کامل انتخاب لیبل پلمپ برای کسب‌وکار",
+  verify: "تشخیص هولوگرام اصل از تقلبی؛ راهنمای بررسی برچسب هولوگرامی",
+  warranty: "برچسب گارانتی هولوگرامی؛ کاربرد، انواع و نکات سفارش",
+  threeD: "هولوگرام سه‌بعدی چیست؟ تفاوت افکت دوبعدی و سه‌بعدی",
+  install: "روش نصب برچسب هولوگرام روی محصول",
+  ready: "هولوگرام آماده چیست؟ چاپ هولوگرام در تعداد کم",
+  void: "برچسب VOID چیست؟ کاربرد و انواع برچسب امنیتی وید",
+  design: "طراحی هولوگرام اختصاصی؛ از لوگو تا مستر",
+  process: "مراحل تولید هولوگرام؛ از طراحی تا برچسب آماده نصب",
+  history: "تاریخچه هولوگرام؛ از ایده دنیس گابور تا برچسب امنیتی",
+  industries: "کاربرد هولوگرام در صنایع؛ از دارو تا قطعات یدکی",
+  quality: "کیفیت هولوگرام به چه عواملی بستگی دارد؟",
+  manufacturer: "انتخاب تولیدکننده هولوگرام؛ پیش از سفارش چه چیزهایی را بررسی کنیم؟",
+  levels: "سطوح امنیتی هولوگرام؛ ویژگی‌های آشکار، پنهان و فارنزیک",
+  hotstamp: "هولوگرام هات‌استمپ چیست؟ تفاوت فویل حرارتی و برچسب هولوگرام",
+  scratch: "برچسب اسکرچ چیست؟ کاربرد، انواع و نکات چاپ",
+};
+
+const B = Object.fromEntries(Object.entries(TITLES).map(([key, title]) => [key, enc("Blog", title)]));
+
+const EXHIBITIONS = {
+  drupa: "حضور آذرهولوگرام در نمایشگاه drupa 2016 دوسلدورف آلمان",
+  dubai: "حضور آذرهولوگرام در نمایشگاه چاپ و بسته‌بندی دبی ۲۰۱۷",
+  labelexpo: "حضور آذرهولوگرام در نمایشگاه Labelexpo Europe بروکسل (۲۰۱۷ و ۲۰۱۹)",
+};
+
+const G = {
+  price: enc("Guide", "قیمت-هولوگرام"),
+  choose: enc("Guide", "انتخاب-برچسب-امنیتی"),
+  effects: "/EffectType",
+  about: "/AboutUs",
+  contact: "/ContactUs",
+  honors: "/Honors",
+  exhibitions: "/Exhibition",
+  ihma: enc("Honors", "تقدیر در جوایز Excellence in Holography 2016 انجمن IHMA"),
+  festival: enc("Honors", "برگزیده بخش خلاقیت و نوآوری شانزدهمین جشنواره صنعت چاپ"),
+  drupa: enc("Exhibition", EXHIBITIONS.drupa),
+  dubai: enc("Exhibition", EXHIBITIONS.dubai),
+  labelexpo: enc("Exhibition", EXHIBITIONS.labelexpo),
+};
+
+const a = (href, text) => `<a href="${href}">${text}</a>`;
+
+module.exports = { enc, P, C, B, G, TITLES, EXHIBITIONS, a };

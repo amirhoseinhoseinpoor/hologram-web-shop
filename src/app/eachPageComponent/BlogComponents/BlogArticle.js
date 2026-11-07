@@ -18,16 +18,43 @@ const splitList = (value) =>
     .map((item) => item.trim())
     .filter(Boolean);
 
-// Gives every <h3> an id so the table of contents can link to it.
+// Gives every <h2> and <h3> an id so the table of contents can link to it. The contents
+// list the article's top level: its <h2>s, or its <h3>s when it has no <h2>.
 const withHeadingIds = (content = "") => {
   const headings = [];
-  const html = content.replace(/<h3>(.*?)<\/h3>/g, (_, text) => {
+  const html = content.replace(/<h([23])>(.*?)<\/h\1>/g, (_, level, text) => {
     const id = `heading-${headings.length}`;
-    headings.push({ id, text: text.replace(/<[^>]*>/g, "") });
-    return `<h3 id="${id}">${text}</h3>`;
+    headings.push({ id, level, text: text.replace(/<[^>]*>/g, "") });
+    return `<h${level} id="${id}">${text}</h${level}>`;
   });
-  return { html, headings };
+  const top = headings.some((heading) => heading.level === "2") ? "2" : "3";
+  return { html, headings: headings.filter((heading) => heading.level === top) };
 };
+
+// Words too common across the articles to say anything about relatedness.
+const COMMON_WORDS = new Set(["هولوگرام", "برچسب", "چیست", "و", "در", "از", "با", "به"]);
+const words = (text = "") =>
+  text
+    .split(/[\s,،؛؟?:()]+/)
+    .filter((word) => word.length > 1 && !COMMON_WORDS.has(word));
+
+// Ranks other articles by the tags and title words they share with this one.
+function relatedPosts(post, allBlogs, count = 3) {
+  const tags = new Set(splitList(post.content.tags));
+  const vocabulary = new Set(words(`${post.content.title} ${post.content.tags}`));
+  return allBlogs
+    .filter((blog) => blog.code !== post.code && blog.content?.title)
+    .map((blog) => {
+      const sharedTags = splitList(blog.content.tags).filter((tag) => tags.has(tag)).length;
+      const sharedWords = new Set(
+        words(`${blog.content.title} ${blog.content.tags}`).filter((word) => vocabulary.has(word)),
+      ).size;
+      return { blog, score: sharedTags * 3 + sharedWords };
+    })
+    .sort((a, b) => b.score - a.score || new Date(b.blog.date) - new Date(a.blog.date))
+    .slice(0, count)
+    .map(({ blog }) => blog);
+}
 
 export default function BlogArticle({ post, allBlogs }) {
   const { content, date } = post;
@@ -36,13 +63,7 @@ export default function BlogArticle({ post, allBlogs }) {
   const negatives = splitList(content.negetive);
   const tags = splitList(content.tags);
 
-  const related = allBlogs
-    .filter(
-      (blog) =>
-        blog.code !== post.code &&
-        (blog.content?.type || "غیره") === (content.type || "غیره"),
-    )
-    .slice(0, 3);
+  const related = relatedPosts(post, allBlogs);
 
   return (
     <>

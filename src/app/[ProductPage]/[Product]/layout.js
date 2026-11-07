@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
   return pageMeta({
     title: `تولید و چاپ ${view.title}`,
     description:
-      plainText(`${view.intro} ${view.details}`) ||
+      plainText(`${view.intro} ${view.detailsText}`) ||
       `${view.title} از دسته ${category}: تولید با طرح اختصاصی در آذرهولوگرام و ثبت استعلام قیمت آنلاین.`,
     path: view.href,
     image: view.cover,

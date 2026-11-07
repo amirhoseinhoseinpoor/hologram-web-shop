@@ -41,6 +41,23 @@ const BLOG = {
   ready: encodePath("Blog", "هولوگرام آماده چیست؟ چاپ هولوگرام در تعداد کم"),
   void: encodePath("Blog", "برچسب VOID چیست؟ کاربرد و انواع برچسب امنیتی وید"),
   design: encodePath("Blog", "طراحی هولوگرام اختصاصی؛ از لوگو تا مستر"),
+  process: encodePath("Blog", "مراحل تولید هولوگرام؛ از طراحی تا برچسب آماده نصب"),
+  history: encodePath("Blog", "تاریخچه هولوگرام؛ از ایده دنیس گابور تا برچسب امنیتی"),
+  industries: encodePath("Blog", "کاربرد هولوگرام در صنایع؛ از دارو تا قطعات یدکی"),
+  quality: encodePath("Blog", "کیفیت هولوگرام به چه عواملی بستگی دارد؟"),
+  manufacturer: encodePath(
+    "Blog",
+    "انتخاب تولیدکننده هولوگرام؛ پیش از سفارش چه چیزهایی را بررسی کنیم؟",
+  ),
+  levels: encodePath(
+    "Blog",
+    "سطوح امنیتی هولوگرام؛ ویژگی‌های آشکار، پنهان و فارنزیک",
+  ),
+  hotstamp: encodePath(
+    "Blog",
+    "هولوگرام هات‌استمپ چیست؟ تفاوت فویل حرارتی و برچسب هولوگرام",
+  ),
+  scratch: encodePath("Blog", "برچسب اسکرچ چیست؟ کاربرد، انواع و نکات چاپ"),
 };
 
 const ARTICLE = {
@@ -51,6 +68,38 @@ const ARTICLE = {
   ready: { href: BLOG.ready, label: "هولوگرام آماده و چاپ در تعداد کم" },
   void: { href: BLOG.void, label: "برچسب VOID چیست؟" },
   design: { href: BLOG.design, label: "طراحی هولوگرام اختصاصی" },
+  whatIs: { href: BLOG.whatIsHologram, label: "هولوگرام چیست؟" },
+  security: { href: BLOG.securityHologram, label: "هولوگرام امنیتی چیست و چه کاربردی دارد؟" },
+  seal: { href: BLOG.sealLabel, label: "برچسب پلمپ چیست؟ راهنمای کامل" },
+  process: { href: BLOG.process, label: "مراحل تولید هولوگرام" },
+  history: { href: BLOG.history, label: "تاریخچه هولوگرام" },
+  industries: { href: BLOG.industries, label: "کاربرد هولوگرام در صنایع" },
+  quality: { href: BLOG.quality, label: "کیفیت هولوگرام به چه عواملی بستگی دارد؟" },
+  manufacturer: { href: BLOG.manufacturer, label: "انتخاب تولیدکننده هولوگرام" },
+  levels: { href: BLOG.levels, label: "سطوح امنیتی هولوگرام: آشکار، پنهان و فارنزیک" },
+  hotstamp: { href: BLOG.hotstamp, label: "هولوگرام هات‌استمپ چیست؟" },
+  scratch: { href: BLOG.scratch, label: "برچسب اسکرچ چیست؟" },
+};
+
+export { ARTICLE as ARTICLES };
+
+// Articles shown first on each product page, by product code.
+export const PRODUCT_READ_MORE = {
+  731974: [ARTICLE.scratch, ARTICLE.levels, ARTICLE.verify],
+  805230: [ARTICLE.levels, ARTICLE.process, ARTICLE.verify],
+  472461: [ARTICLE.void, ARTICLE.seal, ARTICLE.install],
+  433041: [ARTICLE.hotstamp, ARTICLE.levels, ARTICLE.industries],
+  846362: [ARTICLE.hotstamp, ARTICLE.process, ARTICLE.industries],
+  297535: [ARTICLE.threeD, ARTICLE.design, ARTICLE.quality],
+  515344: [ARTICLE.void, ARTICLE.design, ARTICLE.levels],
+  634335: [ARTICLE.seal, ARTICLE.install, ARTICLE.industries],
+  378158: [ARTICLE.warranty, ARTICLE.install, ARTICLE.process],
+  398406: [ARTICLE.threeD, ARTICLE.process, ARTICLE.quality],
+  453821: [ARTICLE.seal, ARTICLE.void, ARTICLE.install],
+  848904: [ARTICLE.void, ARTICLE.seal, ARTICLE.warranty],
+  254494: [ARTICLE.scratch, ARTICLE.warranty],
+  900668: [ARTICLE.warranty, ARTICLE.verify, ARTICLE.levels],
+  881599: [ARTICLE.quality, ARTICLE.design, ARTICLE.manufacturer],
 };
 
 const HONOR = {
@@ -63,13 +112,22 @@ const HONOR = {
     "Exhibition",
     "حضور آذرهولوگرام در نمایشگاه Labelexpo Europe بروکسل (۲۰۱۷ و ۲۰۱۹)",
   ),
+  drupa: encodePath("Exhibition", "حضور آذرهولوگرام در نمایشگاه drupa 2016 دوسلدورف آلمان"),
+  dubai: encodePath("Exhibition", "حضور آذرهولوگرام در نمایشگاه چاپ و بسته‌بندی دبی ۲۰۱۷"),
+  decade: encodePath("Honors", "بیش از یک دهه تجربه در صنعت هولوگرام و خدمت به صنایع ایران"),
 };
 
 // Facts behind the company, shown on commercial pages and the About page.
 export const COMPANY_RECORD = [
   {
+    year: "۲۰۱۳ تاکنون",
+    label: "بیش از یک دهه فعالیت در صنعت هولوگرام",
+    href: HONOR.decade,
+  },
+  {
     year: "۲۰۱۶",
-    label: "حضور در نمایشگاه drupa 2016 در دوسلدورف آلمان",
+    label: "حضور در نمایشگاه drupa 2016 در دوسلدورف آلمان (سالن ۶، غرفه ۶۴)",
+    href: HONOR.drupa,
   },
   {
     year: "۲۰۱۶",
@@ -80,6 +138,11 @@ export const COMPANY_RECORD = [
     year: "۲۰۱۶",
     label: "تقدیر (Commended) در جوایز Excellence in Holography انجمن بین‌المللی تولیدکنندگان هولوگرام (IHMA)",
     href: HONOR.ihma,
+  },
+  {
+    year: "۲۰۱۷",
+    label: "حضور در نمایشگاه چاپ و بسته‌بندی دبی",
+    href: HONOR.dubai,
   },
   {
     year: "۲۰۱۷",
@@ -142,6 +205,8 @@ export const HUB_SEO = {
     EFFECTS_LINK,
     ARTICLE.ready,
     ARTICLE.design,
+    ARTICLE.industries,
+    ARTICLE.manufacturer,
   ],
 };
 
@@ -241,12 +306,16 @@ export const CATEGORY_SEO = {
     ],
     links: [PRICE_GUIDE_LINK, CHOOSE_GUIDE_LINK, EFFECTS_LINK],
     readMore: [
-      { href: BLOG.whatIsHologram, label: "هولوگرام چیست؟" },
-      { href: BLOG.securityHologram, label: "هولوگرام امنیتی چیست و چه کاربردی دارد؟" },
+      ARTICLE.whatIs,
+      ARTICLE.security,
+      ARTICLE.process,
+      ARTICLE.levels,
+      ARTICLE.hotstamp,
       ARTICLE.threeD,
       ARTICLE.design,
       ARTICLE.ready,
       ARTICLE.verify,
+      ARTICLE.history,
     ],
   },
 
@@ -317,7 +386,13 @@ export const CATEGORY_SEO = {
       },
     ],
     links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK, EFFECTS_LINK],
-    readMore: [ARTICLE.design, ARTICLE.install, ARTICLE.verify],
+    readMore: [
+      ARTICLE.design,
+      ARTICLE.quality,
+      ARTICLE.install,
+      ARTICLE.verify,
+      ARTICLE.industries,
+    ],
   },
 
   [CATEGORY.seals]: {
@@ -371,7 +446,7 @@ export const CATEGORY_SEO = {
     ],
     links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK],
     readMore: [
-      { href: BLOG.sealLabel, label: "برچسب پلمپ چیست؟ راهنمای کامل" },
+      ARTICLE.seal,
       ARTICLE.void,
       ARTICLE.warranty,
       ARTICLE.install,
@@ -402,7 +477,7 @@ export const CATEGORY_SEO = {
           {
             label: "انواع اسکرچ زبرا",
             href: product(CATEGORY.scratch, "انواع اسکرچ زبرا"),
-            text: "مدل‌های دیگر برچسب اسکرچ برای پوشاندن کد و اطلاعات.",
+            text: "پوشش خراشیدنی با طرح راه‌راه، شبیه پوست گورخر، که کد را تا لحظه خراشیدن پنهان نگه می‌دارد و کنار هولوگرام هم قابل اجراست.",
           },
         ],
       },
@@ -418,7 +493,7 @@ export const CATEGORY_SEO = {
       },
     ],
     links: [CHOOSE_GUIDE_LINK, PRICE_GUIDE_LINK],
-    readMore: [ARTICLE.verify],
+    readMore: [ARTICLE.scratch, ARTICLE.levels, ARTICLE.verify],
   },
 };
 
