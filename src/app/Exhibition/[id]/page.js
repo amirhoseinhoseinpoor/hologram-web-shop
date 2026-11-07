@@ -1,12 +1,13 @@
 export const revalidate = 60; // ISR every 60 second
 
 import MainLayout from "@/app/layouts/MainLayout";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import ContentDetail from "@/app/Components/content/ContentDetail";
 import JsonLd from "@/app/Components/JsonLd";
 import { mediaUrl } from "@/app/utils/productContent";
 import { breadcrumbLd, encodePath, pageMeta, plainText } from "@/app/utils/seo";
 import { fetchExhibitions } from "@/app/utils/serverApi";
+import { isRetired } from "@/app/utils/seoContent";
 
 const findExhibition = (exhibitions, id) => {
   const title = decodeURIComponent(id).trim().toLowerCase();
@@ -36,6 +37,7 @@ export default async function innerExhibition({ params }) {
   const exhibition = findExhibition(await fetchExhibitions(), params.id);
 
   if (!exhibition) {
+    if (isRetired("Exhibition", params.id)) permanentRedirect("/Exhibition");
     notFound();
   }
 

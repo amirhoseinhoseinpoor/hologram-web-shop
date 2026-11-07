@@ -1,12 +1,13 @@
 export const revalidate = 60; // ISR every 60 second
 
 import MainLayout from "@/app/layouts/MainLayout";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import ContentDetail from "@/app/Components/content/ContentDetail";
 import JsonLd from "@/app/Components/JsonLd";
 import { mediaUrl } from "@/app/utils/productContent";
 import { breadcrumbLd, encodePath, pageMeta, plainText } from "@/app/utils/seo";
 import { fetchHonors } from "@/app/utils/serverApi";
+import { isRetired } from "@/app/utils/seoContent";
 
 const findHonor = (honors, id) => {
   const title = decodeURIComponent(id).trim().toLowerCase();
@@ -35,6 +36,7 @@ export default async function innerHonors({ params }) {
   const honor = findHonor(await fetchHonors(), params.id);
 
   if (!honor) {
+    if (isRetired("Honors", params.id)) permanentRedirect("/Honors");
     notFound();
   }
 

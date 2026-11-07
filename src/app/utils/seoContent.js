@@ -83,6 +83,25 @@ const ARTICLE = {
 
 export { ARTICLE as ARTICLES };
 
+// Records hidden on 2026-11-07 because their claims could not be verified (see
+// docs/seo/fact-check.md). Their old URLs had search impressions, so they redirect to
+// the list instead of returning 404. A restored record renders normally again.
+const RETIRED = {
+  Honors: ["دارنده گواهینامه استاندارد ملی ایران در تولید هولوگرام امنیتی"],
+  Exhibition: [
+    "حضور آذر هولوگرام در نمایشگاه بین‌المللی چاپ و بسته‌بندی ایران",
+    "آذر هولوگرام در نمایشگاه بین‌المللی صنایع ایران؛ معرفی راهکارهای نوین ضدجعل",
+  ],
+};
+
+export const isRetired = (section, id) => {
+  let title = id;
+  try {
+    title = decodeURIComponent(id);
+  } catch {}
+  return (RETIRED[section] || []).includes(title.trim());
+};
+
 // Articles shown first on each product page, by product code.
 export const PRODUCT_READ_MORE = {
   731974: [ARTICLE.scratch, ARTICLE.levels, ARTICLE.verify],
