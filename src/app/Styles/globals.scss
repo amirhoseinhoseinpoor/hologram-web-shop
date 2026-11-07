@@ -646,8 +646,19 @@ textarea.az-input {
     margin-bottom: 1em;
     padding-inline-start: 1.4em;
   }
+  // reset.css removes list markers site-wide; written content needs them back.
+  ul {
+    list-style: disc;
+  }
+  ol {
+    list-style-type: decimal;
+    list-style-type: persian;
+  }
   li {
     margin-bottom: 0.4em;
+  }
+  li::marker {
+    color: var(--accent-ink);
   }
   a {
     color: var(--accent-ink);
