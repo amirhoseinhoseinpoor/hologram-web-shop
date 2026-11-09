@@ -1,5 +1,7 @@
 import style from "./ui.module.scss";
 
+// The action (usually "see all") sits beside the heading on larger screens. Phones
+// hide it there; pages repeat it after their list with <SectionMore>.
 export default function SectionHeading({
   eyebrow,
   title,
@@ -14,7 +16,12 @@ export default function SectionHeading({
         <Heading className="az-h2">{title}</Heading>
         {description && <p className="az-lead">{description}</p>}
       </div>
-      {action}
+      {action && <div className={style.sectionAction}>{action}</div>}
     </div>
   );
+}
+
+// The same action shown after a section's list, on phones only.
+export function SectionMore({ children }) {
+  return <div className={style.sectionMore}>{children}</div>;
 }

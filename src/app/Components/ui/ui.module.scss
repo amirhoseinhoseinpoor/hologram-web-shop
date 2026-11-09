@@ -111,3 +111,64 @@
     max-width: 22ch;
   }
 }
+
+.sectionAction {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.sectionMore {
+  display: none;
+}
+
+// Phones: headings and intros are centred; "see all" moves below the list as a
+// full-width button.
+@media (max-width: 576px) {
+  .sectionHead {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .sectionHeadText {
+    align-items: center;
+  }
+
+  .sectionAction {
+    display: none;
+  }
+
+  .sectionMore {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+
+    // several links in one wrapper sit side by side in equal columns
+    > div {
+      display: grid;
+      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-flow: column;
+      gap: 8px;
+    }
+
+    :global(.az-btn) {
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+    }
+  }
+
+  .pageIntroBody {
+    align-items: center;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .breadcrumb {
+    justify-content: center;
+  }
+}

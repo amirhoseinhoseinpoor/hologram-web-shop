@@ -692,31 +692,12 @@ textarea.az-input {
 // ---------------------------------------------------------------------------
 // Phone layout helpers
 
-// A card grid that becomes one swipeable row on phones: each card takes most of
-// the width and the next one peeks in, so long lists stop stacking into a tower.
-@media (max-width: 640px) {
-  .az-rail {
-    display: grid;
-    grid-template-columns: none !important;
-    grid-auto-flow: column;
-    grid-auto-columns: 78%;
-    gap: 12px !important;
-    margin-inline: calc(var(--gutter) * -1);
-    padding-inline: var(--gutter);
-    padding-bottom: 4px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--gutter);
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    > * {
-      scroll-snap-align: start;
-    }
+// Long card lists stay inside the page on phones: they show their first few cards
+// and the section's "see all" button (SectionMore) leads to the rest.
+@media (max-width: 576px) {
+  .az-mobile-max-2 > :nth-child(n + 3),
+  .az-mobile-max-4 > :nth-child(n + 5) {
+    display: none;
   }
 }
 

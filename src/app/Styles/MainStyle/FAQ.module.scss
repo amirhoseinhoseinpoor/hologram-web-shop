@@ -128,3 +128,18 @@
 .itemOpen button svg {
   transform: rotate(180deg);
 }
+
+// tabs wrap onto a second line instead of scrolling off the page
+@media (max-width: 992px) {
+  .tabs {
+    flex-wrap: wrap;
+    overflow: visible;
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .tabs {
+    justify-content: center;
+  }
+}

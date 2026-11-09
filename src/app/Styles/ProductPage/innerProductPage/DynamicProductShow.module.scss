@@ -322,3 +322,35 @@
   width: 46px;
   padding: 0 !important;
 }
+
+// Phones: photo thumbnails in a grid of four, and a centred product summary.
+@media (max-width: 576px) {
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .thumb {
+    width: 100%;
+  }
+
+  .info {
+    text-align: center;
+  }
+
+  .categoryLink {
+    align-self: center;
+  }
+
+  .actionBox {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .detailsGrid > div:first-child {
+    align-items: center;
+    text-align: center;
+  }
+}

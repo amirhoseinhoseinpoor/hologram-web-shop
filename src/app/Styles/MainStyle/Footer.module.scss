@@ -166,3 +166,25 @@
     }
   }
 }
+
+// phones: brand, link lists and the bottom line are centred
+@media (max-width: 576px) {
+  .brandColumn {
+    text-align: center;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .grid > div:nth-child(2),
+  .grid > div:nth-child(3) {
+    text-align: center;
+  }
+
+  .bottom {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+}

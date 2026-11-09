@@ -527,3 +527,112 @@
     color: var(--on-dark-muted);
   }
 }
+
+// ---------------------------------------------------------------------------
+// Phones: centred short texts, full-width buttons, lists that stay in the page.
+// Long paragraphs and list rows keep their right alignment for readability.
+@media (max-width: 576px) {
+  .heroText {
+    align-items: center;
+    text-align: center;
+  }
+
+  .heroFacts {
+    align-items: center;
+
+    li {
+      align-self: center;
+    }
+  }
+
+  .splitText {
+    align-items: stretch;
+
+    > :global(.az-eyebrow),
+    > h2,
+    > p {
+      align-self: center;
+      text-align: center;
+    }
+  }
+
+  .splitActions,
+  .stepsAction {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+
+    :global(.az-btn) {
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+    }
+  }
+
+  .steps li {
+    align-items: center;
+    text-align: center;
+  }
+
+  .categoryBody {
+    align-items: center;
+    text-align: center;
+  }
+
+  .categoryHead {
+    align-items: center;
+  }
+
+  .credentials {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .credential {
+    align-items: stretch; // the photo needs the full width; only the text is centred
+    text-align: center;
+
+    h3 {
+      font-size: 0.88rem;
+    }
+  }
+
+  // articles: compact rows with a thumbnail
+  .blogs {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .blog {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 12px;
+    row-gap: 2px;
+    align-items: start;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+
+    .blogMedia {
+      grid-row: 1 / span 2;
+      aspect-ratio: 4 / 3;
+    }
+
+    span {
+      margin-top: 2px;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+  }
+
+  .ctaBody {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}

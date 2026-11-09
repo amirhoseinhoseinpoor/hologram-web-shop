@@ -132,3 +132,38 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
+
+// Phones and tablets: the playlist wraps into a grid instead of scrolling sideways.
+@media (max-width: 992px) {
+  .playlist {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+    padding-bottom: 0;
+
+    li {
+      flex: none;
+      min-width: 0;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    height: 100%;
+    padding: 6px;
+    text-align: center;
+  }
+
+  .thumb {
+    flex: none;
+    width: 100%;
+  }
+
+  .itemTitle {
+    font-size: var(--fs-xs);
+  }
+}

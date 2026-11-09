@@ -42,3 +42,16 @@
     padding-inline-start: 42px;
   }
 }
+
+// filter chips wrap instead of scrolling off the page on phones
+@media (max-width: 576px) {
+  .categories {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: visible;
+  }
+
+  .toolbar {
+    justify-content: center;
+  }
+}

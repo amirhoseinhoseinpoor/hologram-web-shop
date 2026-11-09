@@ -6,7 +6,7 @@ import ShowRoute from "@/app/Components/ShowRoute";
 import JsonLd from "@/app/Components/JsonLd";
 import EditorialSections from "@/app/Components/content/EditorialSections";
 import VideoShowcase from "@/app/Components/VideoShowcase";
-import SectionHeading from "@/app/Components/ui/SectionHeading";
+import SectionHeading, { SectionMore } from "@/app/Components/ui/SectionHeading";
 import ProductCard from "@/app/Components/product/ProductCard";
 import ProductDetails from "@/app/Components/product/ProductDetails";
 import cardStyle from "@/app/Components/product/ProductCard.module.scss";
@@ -144,11 +144,17 @@ export default async function Product({ params }) {
                 </Link>
               }
             />
-            <div className={`${cardStyle.grid} az-rail`}>
+            <div className={`${cardStyle.grid} az-mobile-max-2`}>
               {related.map((item) => (
                 <ProductCard key={item.code} product={item} />
               ))}
             </div>
+            <SectionMore>
+              <Link href={encodePath(category)} className="az-btn">
+                همه محصولات {category}
+                <ArrowBackIcon aria-hidden="true" />
+              </Link>
+            </SectionMore>
           </div>
         </section>
       )}

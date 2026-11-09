@@ -5,7 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MainLayout from "../layouts/MainLayout";
 import HoleProductAndSearch from "../eachPageComponent/ProductPageComponent/HoleProductAndSearch";
 import PageIntro from "../Components/ui/PageIntro";
-import SectionHeading from "../Components/ui/SectionHeading";
+import SectionHeading, { SectionMore } from "../Components/ui/SectionHeading";
 import JsonLd from "../Components/JsonLd";
 import EditorialSections from "../Components/content/EditorialSections";
 import ProductCard from "../Components/product/ProductCard";
@@ -94,6 +94,12 @@ function ProductsHub({ categories, views }) {
                   <ProductCard key={item.code} product={item} />
                 ))}
               </div>
+              <SectionMore>
+                <Link href={encodePath(category.title)} className="az-btn">
+                  همه محصولات {category.title}
+                  <ArrowBackIcon aria-hidden="true" />
+                </Link>
+              </SectionMore>
             </div>
           </section>
         );

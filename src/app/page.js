@@ -17,7 +17,7 @@ import BannerSlider from "./Components/home/BannerSlider";
 import ProductCard from "./Components/product/ProductCard";
 import productCardStyle from "./Components/product/ProductCard.module.scss";
 import Guilloche from "./Components/ui/Guilloche";
-import SectionHeading from "./Components/ui/SectionHeading";
+import SectionHeading, { SectionMore } from "./Components/ui/SectionHeading";
 import style from "./Components/home/Home.module.scss";
 import MainLayout from "./layouts/MainLayout";
 import { COMPANY } from "./utils/company";
@@ -233,6 +233,12 @@ export default async function Home() {
               </Link>
             ))}
           </div>
+          <SectionMore>
+            <Link href={encodePath(PRODUCTS_HUB)} className="az-btn">
+              همه محصولات
+              <ArrowBackIcon aria-hidden="true" />
+            </Link>
+          </SectionMore>
         </div>
       </section>
 
@@ -240,11 +246,17 @@ export default async function Home() {
         <section className="az-section az-section--soft">
           <div className="container">
             <SectionHeading eyebrow="معرفی محصول" title="آشنایی با محصولات" />
-            <div className={`${productCardStyle.grid} az-rail`}>
+            <div className={`${productCardStyle.grid} az-mobile-max-4`}>
               {featured.map((product) => (
                 <ProductCard key={product.code} product={product} showCategory />
               ))}
             </div>
+            <SectionMore>
+              <Link href={encodePath(PRODUCTS_HUB)} className="az-btn">
+                مشاهده همه محصولات
+                <ArrowBackIcon aria-hidden="true" />
+              </Link>
+            </SectionMore>
           </div>
         </section>
       )}
@@ -355,7 +367,7 @@ export default async function Home() {
                 </div>
               }
             />
-            <div className={`${style.credentials} az-rail`}>
+            <div className={style.credentials}>
               {credentials.map((item) => (
                 <Link key={item.href} href={item.href} className={style.credential}>
                   <div className={style.credentialMedia}>
@@ -371,6 +383,16 @@ export default async function Home() {
                 </Link>
               ))}
             </div>
+            <SectionMore>
+              <div>
+                <Link href="/Honors" className="az-btn">
+                  همه افتخارات
+                </Link>
+                <Link href="/Exhibition" className="az-btn">
+                  همه نمایشگاه‌ها
+                </Link>
+              </div>
+            </SectionMore>
           </div>
         </section>
       )}
@@ -390,7 +412,7 @@ export default async function Home() {
                 </Link>
               }
             />
-            <div className={`${style.blogs} az-rail`}>
+            <div className={style.blogs}>
               {latestBlogs.map((blog) => (
                 <Link
                   key={blog.code}
@@ -410,6 +432,12 @@ export default async function Home() {
                 </Link>
               ))}
             </div>
+            <SectionMore>
+              <Link href="/Blog" className="az-btn">
+                همه مقالات
+                <ArrowBackIcon aria-hidden="true" />
+              </Link>
+            </SectionMore>
           </div>
         </section>
       )}
