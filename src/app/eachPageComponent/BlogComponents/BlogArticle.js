@@ -117,6 +117,19 @@ export default function BlogArticle({ post, allBlogs }) {
             </div>
           )}
 
+          {headings.length > 0 && (
+            <details className={style.tocMobile}>
+              <summary>سرفصل‌های این مقاله</summary>
+              <ul>
+                {headings.map((heading) => (
+                  <li key={heading.id}>
+                    <a href={`#${heading.id}`}>{heading.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+
           <div className="az-rich-content">{parse(html)}</div>
 
           {content.product?.link && (

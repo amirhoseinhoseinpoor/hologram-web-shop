@@ -240,7 +240,7 @@ export default async function Home() {
         <section className="az-section az-section--soft">
           <div className="container">
             <SectionHeading eyebrow="معرفی محصول" title="آشنایی با محصولات" />
-            <div className={productCardStyle.grid}>
+            <div className={`${productCardStyle.grid} az-rail`}>
               {featured.map((product) => (
                 <ProductCard key={product.code} product={product} showCategory />
               ))}
@@ -355,7 +355,7 @@ export default async function Home() {
                 </div>
               }
             />
-            <div className={style.credentials}>
+            <div className={`${style.credentials} az-rail`}>
               {credentials.map((item) => (
                 <Link key={item.href} href={item.href} className={style.credential}>
                   <div className={style.credentialMedia}>
@@ -390,7 +390,7 @@ export default async function Home() {
                 </Link>
               }
             />
-            <div className={style.blogs}>
+            <div className={`${style.blogs} az-rail`}>
               {latestBlogs.map((blog) => (
                 <Link
                   key={blog.code}

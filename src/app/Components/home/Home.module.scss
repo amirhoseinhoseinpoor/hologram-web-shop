@@ -52,6 +52,11 @@
   color: var(--on-dark-muted);
   font-size: 1.05rem;
   line-height: 1.95;
+
+  @media (max-width: 576px) {
+    font-size: 0.97rem;
+    line-height: 1.9;
+  }
 }
 
 .heroActions {
@@ -60,10 +65,16 @@
   gap: 10px;
 
   // Stacked on phones: wrapping here depended on the font, so the web font arriving
-  // used to push everything below it down.
+  // used to push everything below it down. Full width makes them easy thumb targets.
   @media (max-width: 576px) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    width: 100%;
+
+    :global(.az-btn) {
+      width: 100%;
+      min-height: 50px;
+    }
   }
 }
 
@@ -72,10 +83,6 @@
   flex-wrap: wrap;
   gap: 8px 22px;
   width: 100%;
-
-  @media (max-width: 992px) {
-    flex-direction: column;
-  }
 
   margin: 10px 0 0;
   padding: 16px 0 0;
@@ -91,6 +98,21 @@
     gap: 8px;
   }
 
+  // phones: a stack of small tinted chips instead of a ruled list
+  @media (max-width: 992px) {
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 14px;
+
+    li {
+      align-self: flex-start;
+      padding: 7px 12px;
+      border: 1px solid var(--line-dark);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+  }
+
   svg {
     font-size: 1.2rem;
     color: var(--accent);
@@ -98,12 +120,16 @@
 }
 
 .heroVisual {
+  position: relative;
   min-width: 0;
   aspect-ratio: 16 / 9; // admin banners carry text, so they must never be cropped
   overflow: hidden;
   border: 1px solid var(--line-dark);
   border-radius: var(--radius-lg);
   background: var(--ink-800);
+  // a soft spectrum halo, as if the banner were foil catching the light
+  box-shadow: 0 30px 80px -40px rgba(90, 143, 216, 0.55),
+    0 20px 60px -45px rgba(243, 128, 44, 0.6);
 }
 
 .bannerSwiper {
@@ -135,8 +161,27 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (max-width: 460px) {
-    grid-template-columns: minmax(0, 1fr);
+  // phones keep two columns of compact tiles: name and count, no product list
+  @media (max-width: 576px) {
+    gap: 10px;
+
+    .categoryBody {
+      padding: 10px 12px 12px;
+
+      p,
+      > svg {
+        display: none;
+      }
+    }
+
+    .categoryHead {
+      flex-direction: column;
+      gap: 2px;
+
+      h3 {
+        font-size: 0.95rem;
+      }
+    }
   }
 }
 
@@ -306,10 +351,6 @@
     row-gap: 28px;
   }
 
-  @media (max-width: 576px) {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   li {
     display: flex;
     flex-direction: column;
@@ -317,6 +358,29 @@
     padding-top: 16px;
     padding-inline-end: 18px;
     border-top: 1px solid var(--line-dark);
+  }
+
+  // phones: two columns of small tiles instead of six full-width rows
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+
+    li {
+      gap: 4px;
+      padding: 12px;
+      border: 1px solid var(--line-dark);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    h3 {
+      font-size: 0.9rem;
+    }
+
+    p {
+      font-size: var(--fs-xs);
+      line-height: 1.7;
+    }
   }
 
   h3 {

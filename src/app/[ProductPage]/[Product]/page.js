@@ -144,7 +144,7 @@ export default async function Product({ params }) {
                 </Link>
               }
             />
-            <div className={cardStyle.grid}>
+            <div className={`${cardStyle.grid} az-rail`}>
               {related.map((item) => (
                 <ProductCard key={item.code} product={item} />
               ))}

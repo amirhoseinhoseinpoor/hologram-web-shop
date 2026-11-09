@@ -688,3 +688,48 @@ textarea.az-input {
     border-inline-start: 3px solid var(--accent);
   }
 }
+
+// ---------------------------------------------------------------------------
+// Phone layout helpers
+
+// A card grid that becomes one swipeable row on phones: each card takes most of
+// the width and the next one peeks in, so long lists stop stacking into a tower.
+@media (max-width: 640px) {
+  .az-rail {
+    display: grid;
+    grid-template-columns: none !important;
+    grid-auto-flow: column;
+    grid-auto-columns: 78%;
+    gap: 12px !important;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    padding-bottom: 4px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > * {
+      scroll-snap-align: start;
+    }
+  }
+}
+
+// Pages with a fixed action bar keep their last line clear of it.
+@media (max-width: 768px) {
+  body:has([data-mobile-bar]) {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+}
+
+// a slightly shorter header leaves more of a phone screen for content
+@media (max-width: 576px) {
+  :root {
+    --header-h: 64px;
+  }
+}

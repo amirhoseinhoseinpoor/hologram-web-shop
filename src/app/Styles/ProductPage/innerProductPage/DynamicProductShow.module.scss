@@ -264,3 +264,61 @@
   max-width: 76ch;
   font-size: 1.02rem;
 }
+
+// Fixed inquiry bar for phones; hidden while the in-page action box is visible.
+.mobileBar {
+  display: none;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 1020; // below the header, so the open mobile menu stays on top
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 -10px 30px -18px rgba(11, 21, 36, 0.35);
+    backdrop-filter: saturate(1.4) blur(10px);
+    transform: translateY(110%);
+    transition: transform 220ms var(--ease);
+
+    :global(.az-btn) {
+      min-height: 46px;
+    }
+  }
+}
+
+.mobileBarVisible {
+  transform: translateY(0);
+}
+
+.mobileBarText {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.5;
+
+  span {
+    overflow: hidden;
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  small {
+    color: var(--text-subtle);
+    font-size: var(--fs-xs);
+  }
+}
+
+.mobileBarCall {
+  flex: none;
+  width: 46px;
+  padding: 0 !important;
+}

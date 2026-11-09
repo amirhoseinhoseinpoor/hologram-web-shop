@@ -133,7 +133,56 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  // phones: two compact columns; the summary lives on the product page
   @media (max-width: 520px) {
-    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+
+    .body {
+      gap: 4px;
+      padding: 10px 12px 12px;
+    }
+
+    .title {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .summary {
+      display: none;
+    }
+
+    .more {
+      padding-top: 6px;
+      font-size: var(--fs-xs);
+    }
+  }
+
+  // ...but a swipe rail has room for two lines of it
+  @media (max-width: 640px) {
+    &:global(.az-rail) {
+      .body {
+        padding: 12px 14px 14px;
+      }
+
+      .title {
+        font-size: 0.98rem;
+      }
+
+      .summary {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .card {
+    transition: border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+
+    &:hover {
+      transform: translateY(-3px);
+    }
   }
 }

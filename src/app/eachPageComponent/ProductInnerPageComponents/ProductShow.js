@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -106,9 +106,27 @@ function Gallery({ gallery, title, onZoom }) {
   );
 }
 
+// Phones get a fixed price-inquiry bar whenever the in-page action box is off screen.
+function useOffscreen(ref) {
+  const [offscreen, setOffscreen] = useState(false);
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || typeof IntersectionObserver === "undefined") return undefined;
+    const observer = new IntersectionObserver(([entry]) =>
+      setOffscreen(!entry.isIntersecting),
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [ref]);
+  return offscreen;
+}
+
 export default function ProductShow({ product }) {
   const isLoggedIn = Boolean(useSelector(token));
   const [zoomSrc, setZoomSrc] = useState(null);
+  const actionBoxRef = useRef(null);
+  const showMobileBar = useOffscreen(actionBoxRef);
+  const inquiryHref = orderHref(isLoggedIn, product.rawName, product.code);
 
   return (
     <section className={`container ${style.summary}`}>
@@ -160,14 +178,14 @@ export default function ProductShow({ product }) {
           </dl>
         )}
 
-        <div className={style.actionBox}>
+        <div className={style.actionBox} ref={actionBoxRef}>
           <p>
             برای دریافت قیمت این محصول، مشخصات سفارش خود را ثبت کنید. قیمت بر
             اساس تیراژ، ابعاد و جنس محاسبه می‌شود.
           </p>
           <div className={style.actions}>
             <Link
-              href={orderHref(isLoggedIn, product.rawName, product.code)}
+              href={inquiryHref}
               className="az-btn az-btn--primary"
               onClick={() => storeSessionData(product.code)}
             >
@@ -180,6 +198,33 @@ export default function ProductShow({ product }) {
             </a>
           </div>
         </div>
+      </div>
+
+      <div
+        className={`${style.mobileBar} ${showMobileBar ? style.mobileBarVisible : ""}`}
+        data-mobile-bar
+        aria-hidden={!showMobileBar}
+      >
+        <div className={style.mobileBarText}>
+          <span>{product.title}</span>
+          <small>قیمت بر اساس تیراژ و ابعاد</small>
+        </div>
+        <a
+          href={COMPANY.phoneHref}
+          className={`az-btn az-btn--outline ${style.mobileBarCall}`}
+          aria-label="تماس و مشاوره"
+          tabIndex={showMobileBar ? 0 : -1}
+        >
+          <CallOutlinedIcon aria-hidden="true" />
+        </a>
+        <Link
+          href={inquiryHref}
+          className="az-btn az-btn--primary"
+          onClick={() => storeSessionData(product.code)}
+          tabIndex={showMobileBar ? 0 : -1}
+        >
+          استعلام قیمت
+        </Link>
       </div>
 
       <ZoomModal
