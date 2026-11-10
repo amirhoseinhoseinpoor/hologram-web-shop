@@ -1,58 +1,46 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 import SearchIcon from "@mui/icons-material/Search";
 import style from "../../Styles/BlogStyle/Blog.module.scss";
-import { homePageBlogList } from "@/app/Store/thunks";
 import { formatPersianDate } from "@/app/utils/persionDateUtils";
 import { mediaUrl } from "@/app/utils/productContent";
 import Pagination from "@/app/BaseComponent/Pagination";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 12;
 const OTHER_TYPE = "غیره";
 
 const normalizeString = (str = "") => str.replace(/\s+/g, "").toLowerCase();
 
-export default function BlogRegular() {
-  const dispatch = useDispatch();
-  const searchParams = useSearchParams();
-
+// The list arrives from the server, so the first page of article links is in the HTML
+// that search engines read. Filtering, search and paging then run in the browser over
+// the whole list.
+export default function BlogRegular({ blogs = [] }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeType, setActiveType] = useState(searchParams.get("type"));
-  const [blogs, setBlogs] = useState([]);
-  const [status, setStatus] = useState("loading");
+  const [activeType, setActiveType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+
+  // Read ?type= after hydration: useSearchParams would keep this list out of the
+  // server-rendered HTML.
+  useEffect(() => {
+    const type = new URLSearchParams(window.location.search).get("type");
+    if (type) setActiveType(type);
+  }, []);
 
   useEffect(() => {
-    let ignore = false;
-    setStatus("loading");
-    dispatch(homePageBlogList({ page: currentPage, limit: PAGE_SIZE }))
-      .unwrap()
-      .then((response) => {
-        if (ignore) return;
-        setBlogs(response.data || []);
-        setTotalPages(response.pageCount || 1);
-        setStatus("ready");
-      })
-      .catch(() => {
-        if (!ignore) setStatus("error");
-      });
-    return () => {
-      ignore = true;
-    };
-  }, [currentPage, dispatch]);
+    setCurrentPage(1);
+  }, [searchTerm, activeType]);
+
+  const status = blogs.length ? "ready" : "error";
 
   const blogTypes = [
     ...new Set(blogs.map((blog) => blog.content?.type || OTHER_TYPE)),
   ];
 
   const term = normalizeString(searchTerm);
-  const visibleBlogs = blogs.filter((blog) => {
+  const matches = blogs.filter((blog) => {
     const type = blog.content?.type || OTHER_TYPE;
     return (
       (!activeType || type === activeType) &&
@@ -60,6 +48,11 @@ export default function BlogRegular() {
         normalizeString(blog.content?.time).includes(term))
     );
   });
+  const totalPages = Math.max(1, Math.ceil(matches.length / PAGE_SIZE));
+  const visibleBlogs = matches.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
 
   return (
     <section className="az-section container">
@@ -98,14 +91,6 @@ export default function BlogRegular() {
         </div>
       </div>
 
-      {status === "loading" && (
-        <div className={style.grid} aria-hidden="true">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className={`az-skeleton ${style.skeleton}`} />
-          ))}
-        </div>
-      )}
-
       {status === "error" && (
         <div className="az-alert az-alert--error" role="alert">
           دریافت مقالات با خطا مواجه شد. لطفا دوباره تلاش کنید.
@@ -140,7 +125,7 @@ export default function BlogRegular() {
                 <div className={style.body}>
                   <p className={style.meta}>
                     {blog.content.time}
-                    {blog.createdAt && ` | ${formatPersianDate(blog.createdAt)}`}
+                    {blog.date && ` | ${formatPersianDate(blog.date)}`}
                   </p>
                   <h2>{blog.content.title}</h2>
                 </div>
