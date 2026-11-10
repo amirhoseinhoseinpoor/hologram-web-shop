@@ -265,8 +265,8 @@ export default async function Home() {
         <div className={`container ${style.split}`}>
           <div className={style.splitMedia}>
             <Image
-              src="/HomeImages/Intro-image.png"
-              alt="نمای نزدیک هولوگرام امنیتی"
+              src="/HomeImages/Intro-hologram.jpg"
+              alt="برچسب هولوگرام امنیتی با نوشته VOID IF REMOVED روی سطح فلزی"
               fill
               sizes="(max-width: 992px) 100vw, 50vw"
             />
