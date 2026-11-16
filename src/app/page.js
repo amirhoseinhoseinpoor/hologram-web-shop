@@ -157,7 +157,8 @@ export default async function Home() {
           <div className={style.heroText}>
             <span className="az-eyebrow">{COMPANY.legalName}</span>
             <h1 className={style.heroTitle}>
-              تولید و چاپ هولوگرام و لیبل‌های امنیتی در ایران
+              تولید و چاپ <span className={style.heroAccent}>هولوگرام</span> و
+              لیبل‌های امنیتی در ایران
             </h1>
             <p className={style.heroLead}>{COMPANY.intro}</p>
             <div className={style.heroActions}>
@@ -443,22 +444,26 @@ export default async function Home() {
       )}
 
       <section className={style.cta}>
-        <Guilloche className={style.ctaMotif} />
-        <div className={`container ${style.ctaBody}`}>
-          <div>
-            <h2 className="az-h2">برای محصول خود هولوگرام می‌خواهید؟</h2>
-            <p>
-              مشخصات سفارش خود را ثبت کنید یا برای مشاوره با کارشناسان ما تماس
-              بگیرید.
-            </p>
-          </div>
-          <div className={style.heroActions}>
-            <a href="#products" className="az-btn az-btn--primary">
-              انتخاب محصول و استعلام قیمت
-            </a>
-            <Link href="/ContactUs" className="az-btn az-btn--outline-dark">
-              تماس با ما
-            </Link>
+        <div className="container">
+          <div className={style.ctaCard}>
+            <Guilloche className={style.ctaMotif} />
+            <div className={style.ctaBody}>
+              <div>
+                <h2 className="az-h2">برای محصول خود هولوگرام می‌خواهید؟</h2>
+                <p>
+                  مشخصات سفارش خود را ثبت کنید یا برای مشاوره با کارشناسان ما تماس
+                  بگیرید.
+                </p>
+              </div>
+              <div className={style.heroActions}>
+                <a href="#products" className="az-btn az-btn--primary">
+                  انتخاب محصول و استعلام قیمت
+                </a>
+                <Link href="/ContactUs" className="az-btn az-btn--outline-dark">
+                  تماس با ما
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>

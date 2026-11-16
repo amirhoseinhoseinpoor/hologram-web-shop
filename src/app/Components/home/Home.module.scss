@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  background: var(--ink-900);
+  background: var(--glow-dark), var(--ink-900);
   color: var(--on-dark);
 }
 
@@ -23,10 +23,43 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: 32px clamp(32px, 5vw, 72px);
   align-items: center;
-  padding-block: clamp(36px, 6vw, 80px);
+  padding-block: clamp(32px, 7vw, 96px);
 
+  // single column: the banner sits right under the title, so the first screen
+  // on a phone shows the product instead of a long block of text
   @media (max-width: 992px) {
     grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+
+    .heroText {
+      display: contents;
+    }
+
+    .heroVisual {
+      order: 3;
+      margin-block: 4px 6px;
+    }
+
+    // grid items now, so the pill and buttons are placed with justify-self
+    .heroText > :global(.az-eyebrow) {
+      justify-self: start;
+    }
+
+    .heroText > :nth-child(1) {
+      order: 1;
+    }
+    .heroText > :nth-child(2) {
+      order: 2;
+    }
+    .heroText > :nth-child(3) {
+      order: 4;
+    }
+    .heroText > :nth-child(4) {
+      order: 5;
+    }
+    .heroText > :nth-child(5) {
+      order: 6;
+    }
   }
 }
 
@@ -37,9 +70,26 @@
   gap: 16px;
   min-width: 0;
 
+  // the company name as a small outlined pill above the title
   :global(.az-eyebrow) {
-    color: var(--accent);
+    align-self: flex-start;
+    padding: 5px 14px;
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffb27a;
+    font-size: var(--fs-xs);
   }
+}
+
+// one word of the title in foil colours
+.heroAccent {
+  background: linear-gradient(270deg, #f3802c, #e4c14f 38%, #58c3a2 68%, #5a8fd8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .heroTitle {
@@ -124,9 +174,11 @@
   min-width: 0;
   aspect-ratio: 16 / 9; // admin banners carry text, so they must never be cropped
   overflow: hidden;
-  border: 1px solid var(--line-dark);
+  // a thin spectrum frame, like the edge of a foil label
+  border: 2px solid transparent;
   border-radius: var(--radius-lg);
-  background: var(--ink-800);
+  background: linear-gradient(var(--ink-800), var(--ink-800)) padding-box,
+    var(--spectrum-diag) border-box;
   // a soft spectrum halo, as if the banner were foil catching the light
   box-shadow: 0 30px 80px -40px rgba(90, 143, 216, 0.55),
     0 20px 60px -45px rgba(243, 128, 44, 0.6);
@@ -205,7 +257,7 @@
   flex: 1 1 auto;
   flex-direction: column;
   gap: 6px;
-  padding: 14px 16px 16px;
+  padding: 16px 18px 18px;
 
   p {
     color: var(--text-muted);
@@ -226,16 +278,20 @@
   flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--surface);
   color: var(--text);
   transition: border-color var(--dur) var(--ease),
-    box-shadow var(--dur) var(--ease);
+    box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
 
   &:hover {
     border-color: var(--line-strong);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-lg);
     color: var(--text);
+
+    @media (hover: hover) {
+      transform: translateY(-4px);
+    }
 
     img {
       transform: scale(1.03);
@@ -256,9 +312,12 @@
   flex-wrap: wrap;
 
   span {
-    color: var(--text-subtle);
+    padding: 1px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
     font-size: var(--fs-xs);
-    font-weight: 500;
+    font-weight: 600;
     white-space: nowrap;
   }
 }
@@ -280,6 +339,7 @@
   aspect-ratio: 3 / 2;
   border-radius: var(--radius-lg);
   background: var(--surface-3);
+  box-shadow: var(--shadow-lg);
 
   img {
     display: block;
@@ -307,22 +367,28 @@
 .features {
   display: flex;
   flex-direction: column;
+  gap: 10px;
   width: 100%;
-  margin: 0;
+  margin: 4px 0 0;
   padding: 0;
-  border-top: 1px solid var(--line);
   list-style: none;
 
   li {
     display: flex;
+    align-items: center;
     gap: 14px;
-    padding-block: 12px;
-    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
   }
 
   svg {
     flex-shrink: 0;
-    margin-top: 3px;
+    box-sizing: content-box;
+    padding: 9px;
+    border-radius: 12px;
+    background: var(--accent-soft);
     color: var(--accent-ink);
   }
 
@@ -355,22 +421,52 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding-top: 16px;
+    padding-top: 18px;
     padding-inline-end: 18px;
-    border-top: 1px solid var(--line-dark);
+    border-top: 2px solid var(--line-dark);
+    transition: border-color var(--dur) var(--ease);
+
+    &:first-child,
+    &:hover {
+      border-top-color: var(--accent);
+    }
   }
 
-  // phones: two columns of small tiles instead of six full-width rows
+  // phones: a vertical timeline, the number beside the text
   @media (max-width: 576px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
 
     li {
-      gap: 4px;
-      padding: 12px;
-      border: 1px solid var(--line-dark);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      column-gap: 12px;
+      row-gap: 0;
+      padding: 0 0 18px;
+      border: 0;
+
+      &:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        inset-inline-start: 17px;
+        top: 40px;
+        bottom: 4px;
+        width: 2px;
+        background: var(--line-dark);
+      }
+
+      > span {
+        grid-row: 1 / span 2;
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--line-dark);
+        border-radius: 50%;
+        background: var(--ink-800);
+        font-size: 1rem;
+      }
     }
 
     h3 {
@@ -398,7 +494,7 @@
 
 .stepNumber {
   color: var(--accent);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 800;
   line-height: 1.2;
 }
@@ -494,23 +590,40 @@
 
 .cta {
   position: relative;
-  overflow: hidden;
-  border-top: 2px solid transparent;
-  border-image: var(--spectrum) 1;
-  background: var(--ink-800);
+  padding-block: clamp(28px, 5vw, 64px);
+  background: var(--surface);
   color: var(--on-dark);
 }
 
 .ctaMotif {
   position: absolute;
   top: 50%;
-  inset-inline-end: -180px;
+  inset-inline-end: -160px;
   width: 520px;
   height: 520px;
   transform: translateY(-50%);
   color: var(--on-dark);
   opacity: 0.08;
   pointer-events: none;
+}
+
+.ctaCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--glow-dark), var(--ink-900);
+  box-shadow: var(--shadow-lg);
+
+  // the spectrum hairline along the card's top edge
+  &::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    z-index: 1;
+    height: 2px;
+    background: var(--spectrum);
+  }
 }
 
 .ctaBody {
@@ -520,7 +633,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px 40px;
-  padding-block: clamp(32px, 5vw, 56px);
+  padding: clamp(28px, 4.5vw, 52px) clamp(20px, 4.5vw, 56px);
 
   p {
     margin-top: 6px;
@@ -532,9 +645,12 @@
 // Phones: centred short texts, full-width buttons, lists that stay in the page.
 // Long paragraphs and list rows keep their right alignment for readability.
 @media (max-width: 576px) {
-  .heroText {
-    align-items: center;
+  .heroGrid {
     text-align: center;
+  }
+
+  .heroText > :global(.az-eyebrow) {
+    justify-self: center;
   }
 
   .heroFacts {
@@ -569,10 +685,6 @@
     }
   }
 
-  .steps li {
-    align-items: center;
-    text-align: center;
-  }
 
   .categoryBody {
     align-items: center;

@@ -17,7 +17,7 @@
 .pageIntro {
   position: relative;
   overflow: hidden;
-  background: var(--ink-900);
+  background: var(--glow-dark), var(--ink-900);
   color: var(--on-dark);
   padding-block: clamp(32px, 5vw, 56px);
 }

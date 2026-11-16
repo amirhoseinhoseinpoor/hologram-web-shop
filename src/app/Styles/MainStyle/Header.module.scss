@@ -60,42 +60,42 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  align-self: center;
   gap: 2px;
-  height: 100%;
-  padding: 0 10px;
+  height: 40px;
+  padding: 0 14px;
   border: 0;
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--text-muted);
   font-size: var(--fs-sm);
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition: color var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
 
   &:hover,
   &[aria-expanded="true"] {
+    background: var(--surface-2);
     color: var(--text);
   }
+}
+
+// the current section: a filled pill with a small accent dot under it
+.navLinkActive {
+  background: var(--surface-2);
+  color: var(--text);
 
   &::after {
     content: "";
     position: absolute;
-    inset-inline: 10px;
-    bottom: 0;
-    height: 2px;
-    background: transparent;
-    transition: background-color var(--dur) var(--ease);
-  }
-
-  &[aria-expanded="true"]::after {
-    background: var(--line-strong);
-  }
-}
-
-.navLinkActive {
-  color: var(--text);
-
-  &::after {
+    bottom: 3px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    margin-left: -2px;
+    border-radius: 50%;
     background: var(--accent);
   }
 }
@@ -250,9 +250,9 @@
   align-items: center;
   gap: 4px;
   min-height: 40px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--text);
   font-size: var(--fs-sm);
@@ -353,10 +353,10 @@
   display: none;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
+  border-radius: 12px;
   background: var(--surface);
   color: var(--text);
   cursor: pointer;

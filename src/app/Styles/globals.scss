@@ -45,24 +45,43 @@
     #a07bd6 100%
   );
 
+  // the same spectrum on a diagonal, for frames around hero media
+  --spectrum-diag: linear-gradient(
+    135deg,
+    #f3802c 0%,
+    #e4c14f 28%,
+    #58c3a2 52%,
+    #5a8fd8 76%,
+    #a07bd6 100%
+  );
+  // soft light behind dark sections
+  --glow-dark: radial-gradient(
+      900px 480px at 12% 20%,
+      rgba(90, 143, 216, 0.16),
+      transparent 60%
+    ),
+    radial-gradient(700px 420px at 92% 95%, rgba(243, 128, 44, 0.12), transparent 60%);
+
   // shape
-  --radius-sm: 6px;
-  --radius: 10px;
-  --radius-lg: 16px;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
   --shadow-sm: 0 1px 2px rgba(11, 21, 36, 0.06);
-  --shadow: 0 8px 24px -12px rgba(11, 21, 36, 0.2);
-  --shadow-lg: 0 24px 48px -24px rgba(11, 21, 36, 0.35);
+  --shadow: 0 12px 28px -16px rgba(11, 21, 36, 0.22);
+  --shadow-lg: 0 28px 56px -28px rgba(11, 21, 36, 0.38);
+  --shadow-accent: 0 10px 24px -10px rgba(243, 128, 44, 0.6);
 
   // layout
   --page-max: 1240px;
   --gutter: clamp(16px, 4vw, 32px);
-  --section-y: clamp(48px, 7vw, 88px);
+  --section-y: clamp(52px, 7.5vw, 96px);
   --header-h: 72px;
 
   // type
-  --fs-display: clamp(1.9rem, 1.35rem + 2.3vw, 3.1rem);
+  --fs-display: clamp(1.85rem, 1.3rem + 2.5vw, 3.35rem);
   --fs-h1: clamp(1.6rem, 1.3rem + 1.3vw, 2.35rem);
-  --fs-h2: clamp(1.35rem, 1.2rem + 0.75vw, 1.85rem);
+  --fs-h2: clamp(1.4rem, 1.2rem + 0.95vw, 2.1rem);
   --fs-h3: clamp(1.05rem, 1rem + 0.25vw, 1.2rem);
   --fs-body: 1rem;
   --fs-sm: 0.875rem;
@@ -229,7 +248,7 @@ input[type="number"] {
   background: var(--surface-2);
 }
 .az-section--dark {
-  background: var(--ink-900);
+  background: var(--glow-dark), var(--ink-900);
   color: var(--on-dark);
 }
 
@@ -294,7 +313,7 @@ input[type="number"] {
   min-height: 46px;
   padding: 10px 22px;
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--text);
   font-size: 0.95rem;
@@ -305,7 +324,7 @@ input[type="number"] {
   white-space: nowrap;
   transition: background-color var(--dur) var(--ease),
     border-color var(--dur) var(--ease), color var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+    box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
 
   &:active:not(:disabled) {
     transform: translateY(1px);
@@ -329,6 +348,7 @@ input[type="number"] {
   &:hover:not(:disabled) {
     background: var(--accent-hover);
     color: var(--ink-900);
+    box-shadow: var(--shadow-accent);
   }
 }
 .az-btn--dark {
