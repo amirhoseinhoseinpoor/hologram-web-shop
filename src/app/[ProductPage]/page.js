@@ -12,11 +12,13 @@ import ProductCard from "../Components/product/ProductCard";
 import cardStyle from "../Components/product/ProductCard.module.scss";
 import { toProductView } from "../utils/productContent";
 import {
+  absoluteUrl,
   breadcrumbLd,
   decodeFully,
   encodePath,
   isEncodedMoreThanOnce,
   pageMeta,
+  SITE_URL,
 } from "../utils/seo";
 import {
   CATEGORY_SEO,
@@ -31,6 +33,28 @@ import {
 } from "../utils/serverApi";
 
 export const revalidate = 60; // ISR every 60 seconds
+
+// The category as a collection of the products listed on it.
+const categoryLd = (title, seo, products) => ({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: seo.heading,
+  description: seo.description,
+  url: absoluteUrl(encodePath(title)),
+  inLanguage: "fa-IR",
+  about: { "@type": "Thing", name: title },
+  isPartOf: { "@id": `${SITE_URL}/#website` },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: products.length,
+    itemListElement: products.map((product, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: product.title,
+      url: absoluteUrl(product.href),
+    })),
+  },
+});
 
 const seoForCategory = (title) =>
   CATEGORY_SEO[title] || fallbackCategorySeo(title);
@@ -151,6 +175,7 @@ export default async function ProductPage({ params }) {
           { name: category.title, path: encodePath(category.title) },
         ])}
       />
+      <JsonLd data={categoryLd(category.title, seo, products)} />
       <PageIntro
         eyebrow="محصولات"
         title={seo.heading}
